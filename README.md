@@ -136,21 +136,33 @@ chmod +x setup-copilot.sh
 ./setup-copilot.sh
 ```
 
-This script will:
-
+**Claude Code setup will:**
 - Install Claude Code globally
 - Create necessary directories
 - Set up configuration files
 - Create symlinks for cloud sync
 
+**GitHub Copilot setup will:**
+- Install MCP packages globally
+- Create necessary directories
+- Set up GitHub Copilot MCP configuration
+- Configure for VS Code integration
+
 ### 3. Configure Your API Keys
 
+**For Claude Code:**
 ```bash
 # Copy the template to create your config file
 cp config/claude-desktop-config.template.json ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
 
 # Open the file to add your API keys
 open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
+```
+
+**For GitHub Copilot:**
+```bash
+# Edit the GitHub Copilot MCP configuration
+open ~/.github-copilot/mcp.json
 ```
 
 **See [API &amp; Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
@@ -169,11 +181,18 @@ open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-c
 
 ### 5. Test the System
 
+**For Claude Code:**
 ```bash
 claude
 # In Claude, type:
 /mcp  # Should show all servers connected
 ```
+
+**For GitHub Copilot:**
+- Restart VS Code completely
+- Open GitHub Copilot chat
+- You should see MCP servers being detected
+- Try: `@github Search PubMed for HLA antibodies`
 
 ## Repository Structure
 
