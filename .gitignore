@@ -1,0 +1,107 @@
+# Claude MCP Setup - Git Ignore File
+
+# Configuration files with sensitive data
+claude-desktop-config.json
+*.json
+!*.template.json
+
+# API Keys and credentials
+.env
+.env.local
+*.key
+*.pem
+credentials.txt
+
+# Nova Memory database
+nova-memory/
+*.db
+*.sqlite
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+tags
+[._]*.un~
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+*.temp
+~*
+
+# Test files
+test/
+tests/
+*.test.json
+
+# Personal notes (but not documentation)
+personal-notes/
+scratch/
+TODO.personal.md
+
+# Keep templates
+!templates/
