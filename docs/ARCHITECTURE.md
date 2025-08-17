@@ -7,46 +7,43 @@ The HLA Agent-MCP System is a modular AI research assistant built on Claude Code
 ## Architecture Diagram
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│                    User Interface Layer                     │
-│                  VS Code + Claude Code CLI                  │
-└────────────────────────┬───────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                 VS Code + Claude Code                     │
+│         (Works from ANY project folder on ANY machine)    │
+└────────────────────────┬─────────────────────────────────┘
                          │
                          ▼
-┌────────────────────────────────────────────────────────────┐
-│                    Configuration Layer                      │
-│                 ~/.claude.json (symlink) →                  │
-│            iCloud/MCP-Shared/claude-desktop-config.json     │
-└────────────────────────┬───────────────────────────────────┘
+                ~/.claude.json (symlink)
                          │
-            ┌────────────┴────────────┐
-            ▼                          ▼
-┌─────────────────────────┐  ┌──────────────────────────────┐
-│      MCP Servers        │  │      Knowledge Base          │
-├─────────────────────────┤  ├──────────────────────────────┤
-│ • Memory MCP            │  │ • HLA Lecture PDFs           │
-│   - Templates           │  │ • Research Literature        │
-│   - Routing rules       │  │ • Lab Protocols              │
-│   - Search history      │  │ • Meeting Notes              │
-│                         │  │ • Professor Materials        │
-│ • PubMed MCP           │  └──────────────────────────────┘
-│   - PMID verification   │
-│   - Citation lookup     │            ▼
-│   - Auto-triggers       │  ┌──────────────────────────────┐
-│                         │  │     Obsidian Vaults          │
-│ • Obsidian REST API    │  ├──────────────────────────────┤
-│   - Note creation      │  │ • HLA Antibodies/            │
-│   - Search             │  │   - Research Questions/      │
-│   - Command execution  │  │   - Concepts/                │
-│                         │  │                              │
-│ • Obsidian File        │  │ • Research Journal/          │
-│   - Direct access      │  │   - Daily/                   │
-│   - Offline fallback   │  │   - Concepts/                │
-│                         │  └──────────────────────────────┘
-│ • Sequential Thinking   │
-│   - Complex reasoning   │
-│   - Multi-step analysis │
-└─────────────────────────┘
+                         ▼
+    ┌────────────────────────────────────────────────────┐
+    │          iCloud MCP-Shared Configuration           │
+    │            (Syncs across all your machines)        │
+    └────────────────────┬───────────────────────────────┘
+                         │
+             ┌───────────┴───────────────┐
+             ▼                           ▼
+    ┌─────────────────────┐     ┌─────────────────────┐
+    │    MCP Servers      │     │   Knowledge Base    │
+    ├─────────────────────┤     ├─────────────────────┤
+    │ Memory (templates)  │     │ HLA lectures        │
+    │ PubMed (PMIDs)      │     │ Lab protocols       │
+    │ Obsidian (notes)    │     │ Literature PDFs     │
+    │ Agent (automation)  │     │ Meeting notes       │
+    └─────────────────────┘     └─────────────────────┘
+                         │
+                         ▼
+             ┌───────────────────────────┐
+             │     Obsidian Vaults       │
+             ├───────────────────────────┤
+             │ • HLA Antibodies/         │
+             │   - Research Questions/   │
+             │   - Concepts/             │
+             │                           │
+             │ • Research Journal/       │
+             │   - Daily/                │
+             │   - Concepts/             │
+             └───────────────────────────┘
 ```
 
 ## Component Details
