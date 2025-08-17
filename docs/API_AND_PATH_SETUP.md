@@ -275,12 +275,12 @@ cat ~/path/to/test/file.pdf
 
 ## Security Notes
 
-⚠️ **NEVER**:
+**NEVER**:
 - Commit your actual API keys to Git
 - Share your config file with keys
 - Post keys in GitHub issues
 
-✅ **ALWAYS**:
+**ALWAYS**:
 - Use template files for sharing
 - Keep your actual config local
 - Use environment variables when possible

@@ -8,7 +8,7 @@
 [![HLA](https://img.shields.io/badge/HLA-Research-red)](https://www.ashi-hla.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🧬 What This Does
+## What This Does
 
 This system transforms Claude Code into a specialized HLA research assistant that:
 
@@ -30,7 +30,7 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 | Machine sync | No | Full sync via iCloud |
 | HLA expertise | Generic medical | Specialized SAB, MFI, epitope analysis |
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -56,7 +56,7 @@ This system transforms Claude Code into a specialized HLA research assistant tha
     └── Agent (automation)      └── Meeting notes
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 - macOS (Windows/Linux adaptations coming soon)
 - [VS Code](https://code.visualstudio.com/)
@@ -65,7 +65,7 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - Claude API key ([get one here](https://console.anthropic.com/))
 - iCloud Drive enabled (for cross-machine sync)
 
-## 🛠️ Quick Start (15 minutes)
+## Quick Start (15 minutes)
 
 ### 1. Clone This Repository
 
@@ -95,7 +95,7 @@ cp config/claude-desktop-config.template.json config/claude-desktop-config.json
 # Edit the file to add your API keys
 ```
 
-📘 **See [API & Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
+**See [API & Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
 - Getting each API key (with screenshots)
 - Setting up your file paths
 - Common path examples
@@ -116,7 +116,7 @@ claude
 /mcp  # Should show all servers connected
 ```
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 HLA_Agent-MCP_System/
@@ -146,7 +146,7 @@ HLA_Agent-MCP_System/
     └── sample-workflow.md           # Example agent workflow
 ```
 
-## ⚙️ Manual Setup Steps
+## Manual Setup Steps
 
 If you prefer manual setup or need to customize:
 
@@ -179,7 +179,7 @@ Copy `config/claude-desktop-config.template.json` to your MCP-Shared folder and 
 ln -s "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json" ~/.claude.json
 ```
 
-## 🎯 Core Features
+## Core Features
 
 ### MCP Servers Included
 
@@ -202,7 +202,7 @@ The specialized HLA Research Agent can:
 - Build knowledge graphs connecting HLA concepts, testing methods, and clinical outcomes
 - Synthesize conflicting findings across HLA literature for comprehensive reviews
 
-## 💻 Usage Examples
+## Usage Examples
 
 ### HLA Literature Review
 
@@ -241,7 +241,7 @@ Agent executes:
 7. Time: 2 minutes (vs 6+ hours manually)
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### PubMed Setup
 
@@ -280,7 +280,7 @@ Update these to point to your files:
 ]
 ```
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 Based on real-world usage:
 
@@ -289,7 +289,7 @@ Based on real-world usage:
 - **Citation verification**: 100% accuracy vs 70% manual
 - **Knowledge retention**: Everything searchable and linked
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
@@ -298,7 +298,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Improving setup scripts
 - Adding Windows/Linux support
 
-## 📚 Documentation
+## Documentation
 
 - [API & Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
@@ -307,7 +307,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - [Demo Script](docs/DEMO_SCRIPT.md) - For lab presentations
 - [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Issue                      | Solution                                 |
 | -------------------------- | ---------------------------------------- |

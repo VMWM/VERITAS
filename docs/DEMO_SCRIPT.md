@@ -44,11 +44,11 @@ claude
 **Show on screen:**
 ```
 Connected MCP servers:
-✓ memory (persistent templates and context)
-✓ pubmed (medical literature with PMIDs)
-✓ obsidian-rest (note creation)
-✓ obsidian-file (backup access)
-✓ sequential-thinking (complex reasoning)
+- memory (persistent templates and context)
+- pubmed (medical literature with PMIDs)
+- obsidian-rest (note creation)
+- obsidian-file (backup access)
+- sequential-thinking (complex reasoning)
 ```
 
 **Say:**

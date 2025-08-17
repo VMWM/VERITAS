@@ -56,7 +56,7 @@
    ```bash
    # In Claude Code
    /mcp
-   # Should show obsidian-rest ✓
+   # Should show obsidian-rest connected
    ```
 
 ### 3. PubMed Rate Limiting
@@ -125,7 +125,7 @@
 2. **Verify Memory MCP Running**
    ```bash
    /mcp
-   # Should show memory ✓
+   # Should show memory connected
    ```
 
 3. **Test Memory**

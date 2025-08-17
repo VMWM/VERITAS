@@ -6,33 +6,33 @@ tags: [daily, research-journal]
 
 # {{date}} - Research Journal
 
-## 🎯 Today's Focus
+## Today's Focus
 <!-- Main research goals for today -->
 - 
 
-## ✅ Completed Tasks
+## Completed Tasks
 <!-- Tasks finished today -->
 - [ ] 
 
-## 💡 Cross-Project Insights
+## Cross-Project Insights
 <!-- Ideas that span multiple projects -->
 - 
 
-## 🔬 Literature Reviewed
+## Literature Reviewed
 <!-- Papers, PDFs, or resources examined -->
 | Source | Key Finding | Relevance |
 |--------|-------------|-----------|
 | | | |
 
-## 📝 Notes and Observations
+## Notes and Observations
 <!-- General thoughts, questions, or observations -->
 - 
 
-## 🔗 Related Concepts
+## Related Concepts
 <!-- Link to concept pages created or referenced -->
 - [[]]
 
-## 📅 Tomorrow's Priorities
+## Tomorrow's Priorities
 <!-- What needs attention next -->
 1. 
 

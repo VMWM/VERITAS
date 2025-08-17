@@ -15,21 +15,21 @@ tags: [daily, research-journal]
 
 # {{date}} - Research Journal
 
-## 🎯 Today's Focus
+## Today's Focus
 - Main research goals
 
-## ✅ Completed Tasks
+## Completed Tasks
 - [ ] Task items
 
-## 💡 Cross-Project Insights
+## Cross-Project Insights
 - Key insights
 
-## 🔬 Literature Reviewed
+## Literature Reviewed
 | Source | Key Finding | Relevance |
 |--------|-------------|-----------|
 | | | |
 
-## 📝 Notes and Observations
+## Notes and Observations
 - General notes
 ```
 
