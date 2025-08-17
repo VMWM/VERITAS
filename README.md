@@ -16,11 +16,6 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - **Automates** complex HLA antibody analysis workflows
 - **Builds** interconnected knowledge graphs of HLA concepts and relationships
 
-### Real Performance Metrics
-- Literature review: **6 hours → 10 minutes**
-- Citation accuracy: **100% with PMIDs**
-- Cost: **~$20/month** for heavy daily use
-- ROI: **150x** (based on time savings)
 
 ## 📋 Prerequisites
 
