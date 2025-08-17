@@ -122,48 +122,32 @@ git clone https://github.com/yourusername/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
 ```
 
-### 2. Choose Your Setup
+> **Note:** For GitHub Copilot support, use the `github-copilot-support` branch:
+> ```bash
+> git checkout github-copilot-support
+> ```
 
-**Option A: Claude Code (Recommended)**
+### 2. Run Setup
+
 ```bash
-chmod +x setup-claude.sh
-./setup-claude.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
-**Option B: GitHub Copilot**
-```bash
-chmod +x setup-copilot.sh
-./setup-copilot.sh
-```
-
-**Claude Code setup will:**
+This will:
 - Install Claude Code globally
 - Create iCloud-synced directories
 - Set up configuration with iCloud symlink
 - Works from any project folder on any machine
 
-**GitHub Copilot setup will:**
-- Install MCP packages globally
-- Create shared resource directories
-- Set up VS Code MCP configuration
-- Uses VS Code's built-in sync via GitHub account
-- Configure agent-like behavior via custom instructions (see [Agent Setup Guide](docs/GITHUB_COPILOT_AGENT_SETUP.md))
-
 ### 3. Configure Your API Keys
 
-**For Claude Code:**
 ```bash
 # Copy the template to create your config file
 cp config/claude-desktop-config.template.json ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
 
 # Open the file to add your API keys
 open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
-```
-
-**For GitHub Copilot:**
-```bash
-# Edit the GitHub Copilot MCP configuration
-open ~/Library/Application\ Support/Code/User/mcp.json
 ```
 
 **See [API &amp; Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
@@ -182,29 +166,20 @@ open ~/Library/Application\ Support/Code/User/mcp.json
 
 ### 5. Test the System
 
-**For Claude Code:**
 ```bash
 claude
 # In Claude, type:
 /mcp  # Should show all servers connected
 ```
 
-**For GitHub Copilot:**
-- Restart VS Code completely
-- Open GitHub Copilot chat
-- You should see MCP servers being detected
-- Try: `@github Search PubMed for HLA antibodies`
-
 ## Repository Structure
 
 ```
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
-├── setup-claude.sh                    # Automated setup script (Claude Code)
-├── setup-copilot.sh                   # Automated setup script (GitHub Copilot)
+├── setup.sh                           # Automated setup script
 ├── config/
-│   ├── claude-desktop-config.template.json  # Claude Code MCP configuration
-│   ├── copilot-mcp-config.template.json     # GitHub Copilot MCP configuration
+│   ├── claude-desktop-config.template.json  # MCP configuration template
 │   ├── memory-instructions.md        # Templates and routing rules
 │   └── agent-specification.json      # HLA Research Agent config
 ├── templates/
@@ -215,7 +190,6 @@ HLA_Agent-MCP_System/
 │   └── test-connection.sh            # Verify setup
 ├── docs/
 │   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
-│   ├── GITHUB_COPILOT_SETUP.md    # GitHub Copilot MCP setup guide
 │   ├── ARCHITECTURE.md             # System design and components
 │   ├── WORKFLOW_EXAMPLES.md        # Detailed execution traces
 │   ├── DEMO.md                     # For lab presentations
@@ -372,8 +346,6 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 ## Documentation
 
 - [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
-- [GitHub Copilot Setup](docs/GITHUB_COPILOT_SETUP.md) - Alternative setup for VS Code users
-- [GitHub Copilot Agent Setup](docs/GITHUB_COPILOT_AGENT_SETUP.md) - Configure agent-like behavior in Copilot
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
 - [Demo](docs/DEMO.md) - For lab presentations
