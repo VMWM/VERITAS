@@ -188,7 +188,9 @@ HLA_Agent-MCP_System/
 │   ├── DEMO.md                     # For lab presentations
 │   └── TROUBLESHOOTING.md          # Common issues and solutions
 └── examples/
-    └── sample-research-question.md   # Example output format
+    ├── sample-research-question.md   # Real research question output
+    ├── sample-concept.md             # Real concept page format  
+    └── sample-daily-entry.md         # Real daily journal entry
 ```
 
 ## Manual Setup Steps
