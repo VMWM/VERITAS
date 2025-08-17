@@ -298,8 +298,8 @@ cp ~/claude-backup.json ~/.claude.json
 
 ## Frequently Asked Questions
 
-**Q: Can I use this on Windows/Linux?**
-A: Windows PowerShell script coming soon. Linux users can adapt the bash script.
+**Q: Can I use this on non-macOS systems?**
+A: Currently this is macOS-only due to iCloud integration and path structures. The core MCP components could theoretically work on other systems with significant modifications.
 
 **Q: How much does this cost?**
 A: ~$20/month for heavy daily use of Claude API. Other services have free tiers.

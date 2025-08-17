@@ -262,7 +262,6 @@ Routing rules determine:
 ## Future Architecture Considerations
 
 ### Planned Enhancements
-- Windows/Linux support
 - Team collaboration features
 - Advanced caching strategies
 - Plugin architecture for custom MCP servers

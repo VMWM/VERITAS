@@ -205,7 +205,7 @@ Time: 2 minutes (vs 6 hours manual)
 ## Setup Instructions
 
 ### Prerequisites
-- macOS (Windows/Linux coming soon)
+- macOS
 - VS Code
 - Node.js v18+
 - Obsidian
@@ -417,7 +417,6 @@ cat ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/logs/*.log
 ## Future Enhancements
 
 ### Immediate Roadmap
-- Windows/Linux support
 - Team knowledge base sharing
 - Automated weekly literature reports
 

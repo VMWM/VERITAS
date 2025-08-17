@@ -20,22 +20,23 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 
 ### Why This System is Necessary for HLA Research
 
-| Feature | ChatGPT/Claude | GitHub Copilot | RAG Systems | HLA Agent-MCP System |
-|---------|----------------|----------------|-------------|---------------------|
-| **Purpose** | General Q&A | Code completion | Document retrieval | Research automation |
-| **Local file access** | No | Current file only | Read-only retrieval | Full read + create files |
-| **Knowledge source** | Training data only | Code context | Your documents | Your docs + PubMed + memory |
-| **Citation verification** | Often hallucinates | N/A | Shows sources | Verifies every PMID |
-| **Memory persistence** | Per conversation | Per session | None | Permanent SQLite database |
-| **Output format** | Chat text | Code snippets | Retrieved chunks | Structured notes with links |
-| **Cross-machine sync** | No | Via Git only | No | Automatic via iCloud |
-| **Workflow automation** | No | No | No | Complete research workflows |
-| **Domain specificity** | Generic | Programming | Generic | HLA protocols built-in |
-| **Knowledge accumulation** | No | No | No | Grows knowledge graph |
+| Feature                          | ChatGPT/Claude     | GitHub Copilot      | RAG Systems         | HLA Agent-MCP System                    |
+| -------------------------------- | ------------------ | ------------------- | ------------------- | --------------------------------------- |
+| **Purpose**                | General Q&A        | Code completion     | Document retrieval  | Research + coding with domain knowledge |
+| **Local file access**      | No                 | Current file only   | Read-only retrieval | Full read/write/create                  |
+| **Knowledge source**       | Training data only | Code context        | Your documents      | Your docs + PubMed + memory             |
+| **Citation verification**  | Often hallucinates | N/A                 | Shows sources       | Verifies every PMID                     |
+| **Memory persistence**     | Per conversation   | Per session         | None                | Permanent SQLite database               |
+| **Output format**          | Chat text          | Code snippets       | Retrieved chunks    | Code + notes + verified data            |
+| **Domain accuracy**        | Generic values     | No domain knowledge | Your docs only      | Verified HLA-specific values            |
+| **Cross-machine sync**     | No                 | Via Git only        | No                  | Automatic via iCloud                    |
+| **Workflow automation**    | No                 | No                  | No                  | Complete research + coding workflows    |
+| **Knowledge accumulation** | No                 | No                  | No                  | Grows with every query                  |
 
 ### The Key Difference: Active Research Assistant vs Passive Tools
 
 **Traditional AI tools** (ChatGPT, Copilot, RAG):
+
 - Wait for your questions
 - Provide isolated answers
 - Don't remember context
@@ -43,6 +44,7 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - Output stays in chat/code
 
 **This HLA Agent-MCP System**:
+
 - Actively searches multiple sources (local PDFs + PubMed)
 - Creates interconnected knowledge graphs
 - Remembers everything permanently
@@ -50,17 +52,39 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - Outputs directly to your Obsidian vault
 - Automates entire literature review workflows
 
-### Real Example: "What causes prozone effect in SAB testing?"
+### Example 1: Research Query - "What causes prozone effect in SAB testing?"
 
 **ChatGPT**: Generic explanation, possibly outdated, no citations
+
 **Copilot**: Not applicable - this isn't code
+
 **RAG System**: Retrieves PDF chunks about prozone, no synthesis
-**This System**: 
+
+**This System**:
+
 - Searches your HLA lectures + PubMed
 - Finds 70-85% prevalence in cPRA >95% patients
 - Creates linked notes: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
 - Cites: Tambur 2015 (PMID: 25649423), Schnaidt 2011 (PMID: 21199346)
 - Remembers for next time you ask about complement interference
+
+### Example 2: Coding with Domain Knowledge
+
+```python
+# Writing an MFI analysis script
+"What's the standard MFI cutoff for positive DSA in pediatric kidney transplant?"
+
+# ChatGPT: Guesses "maybe 1000 or 5000?"
+# Copilot: Can't help - not in code context
+# This System: Searches your protocols + literature
+#   Returns: "Your lab uses 1500 MFI (from protocol_2024.pdf)
+#            Literature varies: 500-5000 (Garcia 2023, PMID: 37654321)
+#            Pediatric specific: 1000 recommended (Kim 2019, PMID: 31402319)"
+
+# Now you can code with confidence:
+POSITIVE_DSA_CUTOFF = 1500  # Lab standard, see protocol_2024.pdf
+PEDIATRIC_ADJUSTMENT = 1000  # Kim 2019, PMID: 31402319
+```
 
 ## System Architecture
 
@@ -90,7 +114,7 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 
 ## Prerequisites
 
-- macOS (Windows/Linux adaptations coming soon)
+- macOS
 - [VS Code](https://code.visualstudio.com/)
 - [Node.js](https://nodejs.org/) (v18 or higher)
 - [Obsidian](https://obsidian.md/) (for note management)
@@ -123,11 +147,15 @@ This script will:
 ### 3. Configure Your API Keys
 
 ```bash
-cp config/claude-desktop-config.template.json config/claude-desktop-config.json
-# Edit the file to add your API keys
+# Copy the template to create your config file
+cp config/claude-desktop-config.template.json ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
+
+# Open the file to add your API keys
+open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
 ```
 
-**See [API & Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
+**See [API &amp; Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
+
 - Getting each API key (with screenshots)
 - Setting up your file paths
 - Common path examples
@@ -154,7 +182,6 @@ claude
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
 ├── setup.sh                           # Automated setup script
-├── setup-windows.ps1                  # Windows setup (coming soon)
 ├── config/
 │   ├── claude-desktop-config.template.json  # MCP server configuration
 │   ├── memory-instructions.md        # Templates and routing rules
@@ -312,15 +339,6 @@ Update these to point to your files:
 ]
 ```
 
-## Performance Metrics
-
-Based on real-world usage:
-
-- **Literature searches**: 20/month @ 5 hours saved = 100 hours
-- **Note creation**: Automated formatting saves 30 min/day
-- **Citation verification**: 100% accuracy vs 70% manual
-- **Knowledge retention**: Everything searchable and linked
-
 ## Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
@@ -328,11 +346,11 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Adding new MCP servers
 - Creating domain-specific agents
 - Improving setup scripts
-- Adding Windows/Linux support
+- Extending to other research domains
 
 ## Documentation
 
-- [API & Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
+- [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
 - [Complete Guide](docs/COMPLETE_GUIDE.md) - Comprehensive system documentation
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
@@ -343,7 +361,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 | Issue                      | Solution                                 |
 | -------------------------- | ---------------------------------------- |
-| MCP servers not connecting | Restart Claude: `claude`                |
+| MCP servers not connecting | Restart Claude:`claude`                |
 | Obsidian files not created | Check REST API is enabled                |
 | PubMed rate limited        | Automatic 1-second delay between queries |
 | Agent not saving files     | Check file paths in config               |

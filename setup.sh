@@ -32,7 +32,7 @@ print_error() {
 
 # Check if running on macOS
 if [[ "$OSTYPE" != "darwin"* ]]; then
-    print_error "This script is designed for macOS. Please use setup-windows.ps1 for Windows."
+    print_error "This script is designed for macOS."
     exit 1
 fi
 
