@@ -61,16 +61,18 @@ The system:
 #### Coding with Domain Knowledge
 
 ```python
-# Query: "What's the standard MFI cutoff for positive DSA in pediatric kidney transplant?"
+# Query: "What's the standard MFI cutoff for positive DSA in pediatric transplant?"
 
 # System searches your protocols and literature, returns:
-# - Lab protocol: 1500 MFI (from protocol_2024.pdf)
-# - Literature range: 500-5000 (Garcia 2023, PMID: 37654321)
-# - Pediatric specific: 1000 (Kim 2019, PMID: 31402319)
+# - Pediatric heart: MFI >6000 strongly correlates with C4d+ (PMID: 23551503)
+# - Pediatric liver: MFI >1000 as positive threshold (PMID: 39351427)  
+# - Adult kidney: MFI >3000 associated with rejection (PMID: 27140940)
+# - High-risk DSA: MFI >10,000 (PMID: 29159992)
 
-# Your code with verified values:
-POSITIVE_DSA_CUTOFF = 1500  # Lab standard, see protocol_2024.pdf
-PEDIATRIC_ADJUSTMENT = 1000  # Kim 2019, PMID: 31402319
+# Your code can then use verified values:
+POSITIVE_DSA_CUTOFF = 1000  # Conservative threshold
+HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
+# All values traceable to actual PMIDs
 ```
 
 ## System Architecture
