@@ -101,9 +101,9 @@ Close VS Code completely and reopen. GitHub Copilot will detect the MCP servers.
 - ✅ Built-in terminal integration
 
 ### Limitations
-- ❌ No specialized agent workflows (yet)
-- ❌ Less autonomous operation
-- ❌ May require more explicit instructions
+- ❌ No native `/agent` command (but see [Agent Setup Guide](GITHUB_COPILOT_AGENT_SETUP.md))
+- ❌ Less autonomous by default (fixable with custom instructions)
+- ❌ May require initial configuration for agent behavior
 
 ## Example Workflows
 

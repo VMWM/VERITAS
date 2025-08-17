@@ -147,6 +147,7 @@ chmod +x setup-copilot.sh
 - Create shared resource directories
 - Set up VS Code MCP configuration
 - Uses VS Code's built-in sync via GitHub account
+- Configure agent-like behavior via custom instructions (see [Agent Setup Guide](docs/GITHUB_COPILOT_AGENT_SETUP.md))
 
 ### 3. Configure Your API Keys
 
@@ -372,6 +373,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 - [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
 - [GitHub Copilot Setup](docs/GITHUB_COPILOT_SETUP.md) - Alternative setup for VS Code users
+- [GitHub Copilot Agent Setup](docs/GITHUB_COPILOT_AGENT_SETUP.md) - Configure agent-like behavior in Copilot
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
 - [Demo](docs/DEMO.md) - For lab presentations
