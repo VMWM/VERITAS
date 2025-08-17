@@ -119,11 +119,18 @@ git clone https://github.com/yourusername/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
 ```
 
-### 2. Run the Setup Script
+### 2. Choose Your Setup
 
+**Option A: Claude Code (Recommended)**
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
+
+**Option B: GitHub Copilot**
+```bash
+chmod +x setup-copilot.sh
+./setup-copilot.sh
 ```
 
 This script will:
@@ -170,9 +177,11 @@ claude
 ```
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
-├── setup.sh                           # Automated setup script
+├── setup.sh                           # Automated setup script (Claude Code)
+├── setup-copilot.sh                   # Automated setup script (GitHub Copilot)
 ├── config/
-│   ├── claude-desktop-config.template.json  # MCP server configuration
+│   ├── claude-desktop-config.template.json  # Claude Code MCP configuration
+│   ├── copilot-mcp-config.template.json     # GitHub Copilot MCP configuration
 │   ├── memory-instructions.md        # Templates and routing rules
 │   └── agent-specification.json      # HLA Research Agent config
 ├── templates/
@@ -183,6 +192,7 @@ HLA_Agent-MCP_System/
 │   └── test-connection.sh            # Verify setup
 ├── docs/
 │   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
+│   ├── GITHUB_COPILOT_SETUP.md    # GitHub Copilot MCP setup guide
 │   ├── ARCHITECTURE.md             # System design and components
 │   ├── WORKFLOW_EXAMPLES.md        # Detailed execution traces
 │   ├── DEMO.md                     # For lab presentations
@@ -339,6 +349,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 ## Documentation
 
 - [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
+- [GitHub Copilot Setup](docs/GITHUB_COPILOT_SETUP.md) - Alternative setup for VS Code users
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
 - [Demo](docs/DEMO.md) - For lab presentations
