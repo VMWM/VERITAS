@@ -180,18 +180,16 @@ HLA_Agent-MCP_System/
 │   ├── research-question.md          # Question template with citations
 │   └── concept.md                    # Concept page template
 ├── scripts/
-│   ├── install-claude.sh             # Claude Code installation
-│   ├── setup-obsidian.sh             # Obsidian vault structure
 │   └── test-connection.sh            # Verify setup
 ├── docs/
-│   ├── SETUP_GUIDE.md               # Detailed setup instructions
-│   ├── USAGE_GUIDE.md               # How to use the system
-│   ├── TROUBLESHOOTING.md          # Common issues and solutions
-│   └── AGENT_GUIDE.md               # Creating custom agents
+│   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
+│   ├── ARCHITECTURE.md             # System design and components
+│   ├── COMPLETE_GUIDE.md           # Comprehensive documentation
+│   ├── WORKFLOW_EXAMPLES.md        # Detailed execution traces
+│   ├── DEMO.md                     # For lab presentations
+│   └── TROUBLESHOOTING.md          # Common issues and solutions
 └── examples/
-    ├── sample-research-question.md   # Example output
-    ├── sample-daily-entry.md        # Example journal
-    └── sample-workflow.md           # Example agent workflow
+    └── sample-research-question.md   # Example output format
 ```
 
 ## Manual Setup Steps
