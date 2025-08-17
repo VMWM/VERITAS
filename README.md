@@ -233,33 +233,5 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 | PubMed rate limited | Automatic 1-second delay between queries |
 | Agent not saving files | Check file paths in config |
 
-## 🙏 Acknowledgments
-
-- [Anthropic](https://anthropic.com) for Claude and MCP
-- [Model Context Protocol](https://modelcontextprotocol.org) community
-- Obsidian and PubMed for their APIs
-- Our research lab for testing and feedback
-
-## 📜 License
-
-MIT License - see [LICENSE](LICENSE) file
-
-## 💬 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/HLA_Agent-MCP_System/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/HLA_Agent-MCP_System/discussions)
-- **Email**: your.email@university.edu
-
-## 🚦 Status
-
-- ✅ macOS support
-- ✅ Multi-machine sync via iCloud
-- ✅ PubMed integration
-- ✅ Obsidian dual-mode access
-- 🚧 Windows support (coming soon)
-- 🚧 Linux support (planned)
-- 🚧 Shared team knowledge base (in development)
 
 ---
-
-*If this saves you time in your research, please star ⭐ the repository!*
