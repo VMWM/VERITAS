@@ -18,17 +18,49 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - **Automates** complex HLA antibody analysis workflows
 - **Builds** interconnected knowledge graphs of HLA concepts and relationships
 
-### Why This is NOT Just ChatGPT
+### Why This System is Necessary for HLA Research
 
-| Feature | ChatGPT | HLA Agent-MCP System |
-|---------|---------|---------------------|
-| File access | No | Yes - all your PDFs, lectures, protocols |
-| PubMed | No | Automatic with verified PMIDs |
-| Memory | Per conversation | Permanent across all sessions |
-| Citations | Often fabricated | Always verified with PMIDs |
-| Output location | Chat only | Creates files in Obsidian vaults |
-| Machine sync | No | Full sync via iCloud |
-| HLA expertise | Generic medical | Specialized SAB, MFI, epitope analysis |
+| Feature | ChatGPT/Claude | GitHub Copilot | RAG Systems | HLA Agent-MCP System |
+|---------|----------------|----------------|-------------|---------------------|
+| **Purpose** | General Q&A | Code completion | Document retrieval | Research automation |
+| **Local file access** | No | Current file only | Read-only retrieval | Full read + create files |
+| **Knowledge source** | Training data only | Code context | Your documents | Your docs + PubMed + memory |
+| **Citation verification** | Often hallucinates | N/A | Shows sources | Verifies every PMID |
+| **Memory persistence** | Per conversation | Per session | None | Permanent SQLite database |
+| **Output format** | Chat text | Code snippets | Retrieved chunks | Structured notes with links |
+| **Cross-machine sync** | No | Via Git only | No | Automatic via iCloud |
+| **Workflow automation** | No | No | No | Complete research workflows |
+| **Domain specificity** | Generic | Programming | Generic | HLA protocols built-in |
+| **Knowledge accumulation** | No | No | No | Grows knowledge graph |
+
+### The Key Difference: Active Research Assistant vs Passive Tools
+
+**Traditional AI tools** (ChatGPT, Copilot, RAG):
+- Wait for your questions
+- Provide isolated answers
+- Don't remember context
+- Can't verify medical claims
+- Output stays in chat/code
+
+**This HLA Agent-MCP System**:
+- Actively searches multiple sources (local PDFs + PubMed)
+- Creates interconnected knowledge graphs
+- Remembers everything permanently
+- Verifies every medical claim with PMIDs
+- Outputs directly to your Obsidian vault
+- Automates entire literature review workflows
+
+### Real Example: "What causes prozone effect in SAB testing?"
+
+**ChatGPT**: Generic explanation, possibly outdated, no citations
+**Copilot**: Not applicable - this isn't code
+**RAG System**: Retrieves PDF chunks about prozone, no synthesis
+**This System**: 
+- Searches your HLA lectures + PubMed
+- Finds 70-85% prevalence in cPRA >95% patients
+- Creates linked notes: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
+- Cites: Tambur 2015 (PMID: 25649423), Schnaidt 2011 (PMID: 21199346)
+- Remembers for next time you ask about complement interference
 
 ## System Architecture
 
