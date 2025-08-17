@@ -138,15 +138,15 @@ chmod +x setup-copilot.sh
 
 **Claude Code setup will:**
 - Install Claude Code globally
-- Create necessary directories
-- Set up configuration files
-- Create symlinks for cloud sync
+- Create iCloud-synced directories
+- Set up configuration with iCloud symlink
+- Works from any project folder on any machine
 
 **GitHub Copilot setup will:**
 - Install MCP packages globally
-- Create necessary directories
-- Set up GitHub Copilot MCP configuration
-- Configure for VS Code integration
+- Create shared resource directories
+- Set up VS Code MCP configuration
+- Uses VS Code's built-in sync via GitHub account
 
 ### 3. Configure Your API Keys
 

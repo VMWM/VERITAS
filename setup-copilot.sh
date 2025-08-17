@@ -62,35 +62,17 @@ else
     exit 1
 fi
 
-# Create directory structure
+# Create directory structure for shared MCP resources
 echo ""
-echo "Step 3: Creating directory structure..."
+echo "Step 3: Creating shared directories for MCP servers..."
 
-# MCP-Shared directory in iCloud
-MCP_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
-if [ ! -d "$MCP_DIR" ]; then
-    mkdir -p "$MCP_DIR"
-    print_success "Created MCP-Shared directory"
-else
-    print_warning "MCP-Shared directory already exists"
-fi
-
-# Nova memory directory
-NOVA_DIR="$MCP_DIR/nova-memory"
+# Nova memory directory (shared across tools)
+NOVA_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/nova-memory"
 if [ ! -d "$NOVA_DIR" ]; then
     mkdir -p "$NOVA_DIR"
     print_success "Created nova-memory directory"
 else
     print_warning "nova-memory directory already exists"
-fi
-
-# Logs directory
-LOGS_DIR="$MCP_DIR/logs"
-if [ ! -d "$LOGS_DIR" ]; then
-    mkdir -p "$LOGS_DIR"
-    print_success "Created logs directory"
-else
-    print_warning "logs directory already exists"
 fi
 
 # Obsidian vault directories (Box)
@@ -144,21 +126,7 @@ else
     print_warning "GitHub Copilot MCP configuration already exists"
 fi
 
-# Copy templates
-echo ""
-echo "Step 5: Installing templates..."
-TEMPLATES_DIR="$MCP_DIR/templates"
-if [ ! -d "$TEMPLATES_DIR" ]; then
-    mkdir -p "$TEMPLATES_DIR"
-    if [ -d "templates" ]; then
-        cp templates/*.md "$TEMPLATES_DIR/" 2>/dev/null || true
-        print_success "Templates copied to MCP-Shared"
-    else
-        print_warning "No templates found to copy"
-    fi
-else
-    print_warning "Templates directory already exists"
-fi
+# Note: Templates are handled by Memory MCP automatically for GitHub Copilot
 
 # Install MCP packages globally for reliability
 echo ""
@@ -191,16 +159,19 @@ echo "   - Search 'Local REST API'"
 echo "   - Install and enable"
 echo "   - Generate API key and add to config"
 echo ""
-echo "3. RESTART VS CODE:"
+echo "3. ENABLE VS CODE SETTINGS SYNC:"
+echo "   - Sign in to GitHub in VS Code"
+echo "   - Enable Settings Sync (your config will sync across machines)"
+echo ""
+echo "4. RESTART VS CODE:"
 echo "   - Close VS Code completely"
 echo "   - Reopen VS Code"
 echo "   - GitHub Copilot should detect the MCP servers"
 echo ""
-echo "4. TEST THE SYSTEM:"
-echo "   - Open VS Code"
+echo "5. TEST THE SYSTEM:"
 echo "   - Start GitHub Copilot chat"
 echo "   - You should see MCP servers being detected"
-echo "   - Try: 'Search PubMed for HLA antibodies'"
+echo "   - Try: '@github Search PubMed for HLA antibodies'"
 echo ""
 echo "For troubleshooting, see docs/TROUBLESHOOTING.md"
 echo ""
