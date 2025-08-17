@@ -162,7 +162,7 @@ open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-c
 **For GitHub Copilot:**
 ```bash
 # Edit the GitHub Copilot MCP configuration
-open ~/.github-copilot/mcp.json
+open ~/Library/Application\ Support/Code/User/mcp.json
 ```
 
 **See [API &amp; Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**

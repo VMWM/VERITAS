@@ -123,7 +123,7 @@ fi
 # Copy GitHub Copilot MCP configuration
 echo ""
 echo "Step 4: Setting up GitHub Copilot MCP configuration..."
-COPILOT_CONFIG="$HOME/.github-copilot/mcp.json"
+COPILOT_CONFIG="$HOME/Library/Application Support/Code/User/mcp.json"
 COPILOT_DIR=$(dirname "$COPILOT_CONFIG")
 
 if [ ! -d "$COPILOT_DIR" ]; then

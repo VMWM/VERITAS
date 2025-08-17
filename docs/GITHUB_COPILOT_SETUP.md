@@ -34,7 +34,7 @@ This will:
 Edit the GitHub Copilot MCP configuration file:
 
 ```bash
-open ~/.github-copilot/mcp.json
+open ~/Library/Application\ Support/Code/User/mcp.json
 ```
 
 Add your API keys:
@@ -132,7 +132,7 @@ Close VS Code completely and reopen. GitHub Copilot will detect the MCP servers.
    ```
 3. Verify configuration file exists:
    ```bash
-   cat ~/.github-copilot/mcp.json
+   cat ~/Library/Application\ Support/Code/User/mcp.json
    ```
 
 ### Obsidian Connection Issues
@@ -155,7 +155,7 @@ Close VS Code completely and reopen. GitHub Copilot will detect the MCP servers.
 
 GitHub Copilot MCP configuration is stored at:
 ```
-~/.github-copilot/mcp.json
+~/Library/Application Support/Code/User/mcp.json
 ```
 
 This is separate from Claude Code's configuration, allowing you to run both systems simultaneously.
