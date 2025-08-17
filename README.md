@@ -184,7 +184,6 @@ HLA_Agent-MCP_System/
 ├── docs/
 │   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
 │   ├── ARCHITECTURE.md             # System design and components
-│   ├── COMPLETE_GUIDE.md           # Comprehensive documentation
 │   ├── WORKFLOW_EXAMPLES.md        # Detailed execution traces
 │   ├── DEMO.md                     # For lab presentations
 │   └── TROUBLESHOOTING.md          # Common issues and solutions
@@ -339,9 +338,8 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 - [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
-- [Complete Guide](docs/COMPLETE_GUIDE.md) - Comprehensive system documentation
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
-- [Demo Script](docs/DEMO_SCRIPT.md) - For lab presentations
+- [Demo](docs/DEMO.md) - For lab presentations
 - [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ## Troubleshooting
