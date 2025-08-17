@@ -123,8 +123,8 @@ cd HLA_Agent-MCP_System
 
 **Option A: Claude Code (Recommended)**
 ```bash
-chmod +x setup.sh
-./setup.sh
+chmod +x setup-claude.sh
+./setup-claude.sh
 ```
 
 **Option B: GitHub Copilot**
@@ -177,7 +177,7 @@ claude
 ```
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
-├── setup.sh                           # Automated setup script (Claude Code)
+├── setup-claude.sh                    # Automated setup script (Claude Code)
 ├── setup-copilot.sh                   # Automated setup script (GitHub Copilot)
 ├── config/
 │   ├── claude-desktop-config.template.json  # Claude Code MCP configuration
