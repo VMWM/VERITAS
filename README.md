@@ -18,70 +18,57 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 - **Automates** complex HLA antibody analysis workflows
 - **Builds** interconnected knowledge graphs of HLA concepts and relationships
 
-### Why This System is Necessary for HLA Research
+### What This System Provides for HLA Research
 
-| Feature                          | ChatGPT/Claude     | GitHub Copilot      | RAG Systems         | HLA Agent-MCP System                    |
-| -------------------------------- | ------------------ | ------------------- | ------------------- | --------------------------------------- |
-| **Purpose**                | General Q&A        | Code completion     | Document retrieval  | Research + coding with domain knowledge |
-| **Local file access**      | No                 | Current file only   | Read-only retrieval | Full read/write/create                  |
-| **Knowledge source**       | Training data only | Code context        | Your documents      | Your docs + PubMed + memory             |
-| **Citation verification**  | Often hallucinates | N/A                 | Shows sources       | Verifies every PMID                     |
-| **Memory persistence**     | Per conversation   | Per session         | None                | Permanent SQLite database               |
-| **Output format**          | Chat text          | Code snippets       | Retrieved chunks    | Code + notes + verified data            |
-| **Domain accuracy**        | Generic values     | No domain knowledge | Your docs only      | Verified HLA-specific values            |
-| **Cross-machine sync**     | No                 | Via Git only        | No                  | Automatic via iCloud                    |
-| **Workflow automation**    | No                 | No                  | No                  | Complete research + coding workflows    |
-| **Knowledge accumulation** | No                 | No                  | No                  | Grows with every query                  |
+This system was built to address specific needs in HLA antibody research that weren't met by existing tools:
 
-### The Key Difference: Active Research Assistant vs Passive Tools
+**Integrated Knowledge Sources**
+- Searches your local HLA lecture PDFs and protocols
+- Queries PubMed with automatic PMID verification
+- Maintains persistent memory across all sessions
+- Combines all sources into synthesized answers
 
-**Traditional AI tools** (ChatGPT, Copilot, RAG):
+**Automated Research Workflows**
+- Completes literature reviews in minutes instead of hours
+- Creates structured notes with proper citations
+- Builds interconnected knowledge graphs
+- Remembers context between sessions
 
-- Wait for your questions
-- Provide isolated answers
-- Don't remember context
-- Can't verify medical claims
-- Output stays in chat/code
+**Domain-Specific Accuracy**
+- Verifies HLA-specific values from your lab protocols
+- Provides accurate MFI thresholds, cPRA calculations, etc.
+- Links to source documents for verification
+- Prevents citation hallucination with PMID checking
 
-**This HLA Agent-MCP System**:
+**Practical Output**
+- Creates files directly in your Obsidian vaults
+- Maintains consistent formatting via templates
+- Cross-links related concepts automatically
+- Syncs across all machines via iCloud
 
-- Actively searches multiple sources (local PDFs + PubMed)
-- Creates interconnected knowledge graphs
-- Remembers everything permanently
-- Verifies every medical claim with PMIDs
-- Outputs directly to your Obsidian vault
-- Automates entire literature review workflows
+### Example Use Cases
 
-### Example 1: Research Query - "What causes prozone effect in SAB testing?"
+#### Research Query: "What causes prozone effect in SAB testing?"
 
-**ChatGPT**: Generic explanation, possibly outdated, no citations
-
-**Copilot**: Not applicable - this isn't code
-
-**RAG System**: Retrieves PDF chunks about prozone, no synthesis
-
-**This System**:
-
-- Searches your HLA lectures + PubMed
+The system:
+- Searches your HLA lecture PDFs for prozone discussions
+- Queries PubMed for recent papers on the topic
 - Finds 70-85% prevalence in cPRA >95% patients
 - Creates linked notes: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
-- Cites: Tambur 2015 (PMID: 25649423), Schnaidt 2011 (PMID: 21199346)
-- Remembers for next time you ask about complement interference
+- Provides verified citations: Tambur 2015 (PMID: 25649423), Schnaidt 2011 (PMID: 21199346)
+- Remembers this information for future related queries
 
-### Example 2: Coding with Domain Knowledge
+#### Coding with Domain Knowledge
 
 ```python
-# Writing an MFI analysis script
-"What's the standard MFI cutoff for positive DSA in pediatric kidney transplant?"
+# Query: "What's the standard MFI cutoff for positive DSA in pediatric kidney transplant?"
 
-# ChatGPT: Guesses "maybe 1000 or 5000?"
-# Copilot: Can't help - not in code context
-# This System: Searches your protocols + literature
-#   Returns: "Your lab uses 1500 MFI (from protocol_2024.pdf)
-#            Literature varies: 500-5000 (Garcia 2023, PMID: 37654321)
-#            Pediatric specific: 1000 recommended (Kim 2019, PMID: 31402319)"
+# System searches your protocols and literature, returns:
+# - Lab protocol: 1500 MFI (from protocol_2024.pdf)
+# - Literature range: 500-5000 (Garcia 2023, PMID: 37654321)
+# - Pediatric specific: 1000 (Kim 2019, PMID: 31402319)
 
-# Now you can code with confidence:
+# Your code with verified values:
 POSITIVE_DSA_CUTOFF = 1500  # Lab standard, see protocol_2024.pdf
 PEDIATRIC_ADJUSTMENT = 1000  # Kim 2019, PMID: 31402319
 ```
