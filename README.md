@@ -95,6 +95,11 @@ cp config/claude-desktop-config.template.json config/claude-desktop-config.json
 # Edit the file to add your API keys
 ```
 
+📘 **See [API & Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
+- Getting each API key (with screenshots)
+- Setting up your file paths
+- Common path examples
+
 ### 4. Install Obsidian Plugin
 
 1. Open Obsidian
@@ -295,6 +300,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ## 📚 Documentation
 
+- [API & Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
 - [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
 - [Complete Guide](docs/COMPLETE_GUIDE.md) - Comprehensive system documentation
 - [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
