@@ -28,12 +28,12 @@ These examples show exactly what happens when you use the HLA Research Agent, in
         
 [00:05] Step 2: Extracting Local Information
         From Tambur_SAB_Interpretation.pdf:
-        - "Prozone observed in 76% of sera with cPRA >95%"
-        - "EDTA treatment resolves 95% of cases"
+        - "Prozone observed in 71% of high titer sera"
+        - "EDTA treatment eliminates the prozone effect"
         
         From professor's notes:
-        - "We see prozone in nearly all highly sensitized patients"
-        - "Standard protocol: Always dilute if cPRA >90%"
+        - "We see prozone in most highly sensitized patients"
+        - "Standard protocol: Always dilute if high PRA or strong positivity"
 
 [00:08] Step 3: PubMed Query
         Query: ("prozone effect"[Title/Abstract] OR "prozone phenomenon"[Title/Abstract]) 
@@ -48,10 +48,10 @@ These examples show exactly what happens when you use the HLA Research Agent, in
         
         | Study | Year | N | Population | Prevalence | PMID |
         |-------|------|---|------------|------------|------|
-        | Tambur et al. | 2015 | 234 | cPRA >95% | 76% | 25649423 |
-        | Schnaidt et al. | 2011 | 156 | Peak PRA >80% | 82% | 21199346 |
-        | Weinstock et al. | 2013 | 89 | Retransplant | 71% | 23294842 |
-        | Guidicelli et al. | 2013 | 445 | All patients | 22% overall, 85% if cPRA >95% | 23238049 |
+        | Tambur et al. | 2015 | 7000+ | High titer sera | 71% with prozone | 25930984 |
+        | Schnaidt et al. | 2011 | Multiple | Highly immunized | Prozone in serum only | 21869744 |
+        | Weinstock & Schnaidt | 2013 | Review | High titer sera | Complement-mediated prozone | 22913810 |
+        | Guidicelli et al. | 2013 | 292 | Transplant patients | Prozone in 9 with high MFI | 24056164 |
 
 [00:22] Step 5: Creating Research Question Note
         Path: ~/Obsidian/HLA Antibodies/Research Questions/
@@ -112,17 +112,17 @@ These examples show exactly what happens when you use the HLA Research Agent, in
 ### Summary Returned to User
 ```
 Found prevalence of prozone effect in highly sensitized patients:
-- Overall: 70-85% in patients with cPRA ≥95%
+- Overall: 71% in high titer sera (Tambur 2015)
 - Mechanism: C1q complement interference at high antibody concentrations
-- Detection: Requires serial dilutions (1:16 recommended)
-- Mitigation: EDTA treatment successful in 95% of cases
+- Detection: Requires serial dilutions or EDTA treatment
+- Mitigation: EDTA treatment eliminates the prozone effect
 
 Created comprehensive documentation:
 - Research question note with 12 verified citations
 - 6 concept pages with cross-links
 - Updated existing pages with new information
 
-Key insight: Your lab's 90% cPRA threshold for automatic dilution aligns with literature recommendations.
+Key insight: Prozone is common in highly sensitized patients and should be suspected with unexpectedly negative or weak results.
 ```
 
 ---
@@ -142,9 +142,9 @@ Key insight: Your lab's 90% cPRA threshold for automatic dilution aligns with li
 Key Steps:
 1. Found 8 PDFs in LitReview folder about pediatric transplantation
 2. PubMed: 127 papers → 23 relevant with pediatric dnDSA data
-3. Extracted incidence rates: 15-25% at 5 years
+3. Extracted incidence rates: 30-35% at 5 years for DSA
 4. Created research question + 5 concept pages
-5. Identified risk factors: Non-adherence (OR 3.2), DQ mismatches (OR 2.8)
+5. Identified risk factors: Non-adherence, DQ mismatches, prior rejection
 ```
 
 ### Generated Research Question Note
@@ -156,22 +156,23 @@ Key Steps:
 
 | Study | N | Age | Follow-up | dnDSA Incidence | Graft Survival Impact | PMID |
 |-------|---|-----|-----------|-----------------|----------------------|------|
-| Kim 2019 | 324 | 12±4 | 5 years | 23% | HR 4.5 for graft loss | 31402319 |
-| Chaudhuri 2013 | 146 | 13±5 | 3 years | 18% | 45% vs 85% at 5yr | 23312360 |
-| Ginevri 2012 | 82 | 11±4 | 5 years | 25% | OR 5.2 for rejection | 22229526 |
+| Kim et al. 2014 | 215 | Pediatric | Median 4.7yr | 35% developed DSA | 50% reduction in eGFR at 5.3yr | 25167892 |
+| CERTAIN 2025 | 337 | Pediatric | 5 years | Class II: 30.6% at 5yr | ABMR in 10% acute, 5.9% chronic | 39283519 |
+| Preka et al. 2021 | 56 | Pediatric | Variable | DSA+ with dysfunction | Better survival without v/t lesions | 34143297 |
 
 ## Analysis
 
 The incidence of de novo DSA in pediatric kidney transplant recipients 
-ranges from 15-25% at 5 years post-transplant, with higher rates observed in:
-- Adolescents (30% vs 12% in younger children)
-- Non-adherent patients (45% vs 14% in adherent)
-- DQ-mismatched recipients (35% vs 15% in matched)
+ranges from 30-35% at 5 years post-transplant, with class II DSA (especially DQ) 
+being most common. Higher rates observed in:
+- Adolescents compared to younger children
+- Non-adherent patients
+- HLA-DR mismatched recipients
 
 ## Risk Factors
-1. **Non-adherence**: Most significant modifiable factor (OR 3.2, p<0.001)
-2. **HLA-DQ mismatch**: Strongest immunological factor (OR 2.8, p<0.001)
-3. **Previous rejection**: Prior TCMR increases risk (OR 2.1, p=0.02)
+1. **HLA-DR mismatch**: Significant risk factor (CERTAIN 2025)
+2. **Non-adherence**: Major modifiable risk factor
+3. **Double DSA positivity**: Class I + II highest risk for ABMR
 
 [Full note continues...]
 ```
