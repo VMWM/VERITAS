@@ -69,7 +69,7 @@ The HLA Agent-MCP System is a modular AI research assistant built on Claude Code
 
 #### Memory MCP (`@nova-mcp/mcp-nova`)
 - **Storage**: SQLite database with vector embeddings
-- **Location**: `~/MCP-Shared/nova-memory/`
+- **Location**: `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/nova-memory/`
 - **Key Features**:
   - Persistent template storage (IDs: 10, 11, 12, 13, 14)
   - Intelligent routing rules for content
@@ -117,13 +117,13 @@ The HLA Agent-MCP System is a modular AI research assistant built on Claude Code
 ### 4. Knowledge Base Structure
 
 ```
-Box-Box/
-├── VM_F31_2025/
-│   ├── Notes/
-│   │   ├── 2025_Specialist_Handouts/   # HLA expert lectures
-│   │   ├── 2025_Basic_Handouts/        # Foundation materials
-│   │   └── LG Stuff/                   # Professor materials
-│   └── LitReview/                      # Research PDFs
+Your-Cloud-Storage/
+├── Research-Materials/
+│   ├── Lecture-Notes/
+│   │   ├── Expert-Lectures/            # Domain expert materials
+│   │   ├── Foundation-Materials/       # Basic concepts
+│   │   └── Lab-Protocols/              # Standard procedures
+│   └── Literature/                     # Research PDFs
 │
 └── Obsidian/
     ├── HLA Antibodies/                 # Domain-specific vault
