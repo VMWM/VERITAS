@@ -1,4 +1,5 @@
 # HLA Agent-MCP System
+
 > AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
@@ -10,12 +11,50 @@
 ## 🧬 What This Does
 
 This system transforms Claude Code into a specialized HLA research assistant that:
+
 - **Searches** PubMed and HLA literature with automatic PMID verification
 - **Creates** structured notes on antibody patterns, epitopes, and transplant outcomes
 - **Maintains** persistent memory of SAB interpretations and clinical protocols
 - **Automates** complex HLA antibody analysis workflows
 - **Builds** interconnected knowledge graphs of HLA concepts and relationships
 
+### Why This is NOT Just ChatGPT
+
+| Feature | ChatGPT | HLA Agent-MCP System |
+|---------|---------|---------------------|
+| File access | No | Yes - all your PDFs, lectures, protocols |
+| PubMed | No | Automatic with verified PMIDs |
+| Memory | Per conversation | Permanent across all sessions |
+| Citations | Often fabricated | Always verified with PMIDs |
+| Output location | Chat only | Creates files in Obsidian vaults |
+| Machine sync | No | Full sync via iCloud |
+| HLA expertise | Generic medical | Specialized SAB, MFI, epitope analysis |
+
+## 🏗️ System Architecture
+
+```
+┌──────────────────────────────────────────────────────┐
+│                 VS Code + Claude Code                 │
+│      (Works from ANY project folder on ANY machine)   │
+└────────────────────┬──────────────────────────────────┘
+                     │
+                     ▼
+            ~/.claude.json (symlink)
+                     │
+                     ▼
+    ┌────────────────────────────────────────┐
+    │  iCloud MCP-Shared Configuration         │
+    │  (Syncs across all your machines)        │
+    └────────────────┬───────────────────────┘
+                     │
+         ┌───────────┴───────────────┐
+         ▼                           ▼
+    MCP Servers                 Knowledge Base
+    ├── Memory (templates)      ├── HLA lectures
+    ├── PubMed (PMIDs)         ├── Lab protocols  
+    ├── Obsidian (notes)       ├── Literature PDFs
+    └── Agent (automation)      └── Meeting notes
+```
 
 ## 📋 Prerequisites
 
@@ -29,30 +68,35 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 ## 🛠️ Quick Start (15 minutes)
 
 ### 1. Clone This Repository
+
 ```bash
 git clone https://github.com/yourusername/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
 ```
 
 ### 2. Run the Setup Script
+
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
 This script will:
+
 - Install Claude Code globally
 - Create necessary directories
 - Set up configuration files
 - Create symlinks for cloud sync
 
 ### 3. Configure Your API Keys
+
 ```bash
 cp config/claude-desktop-config.template.json config/claude-desktop-config.json
 # Edit the file to add your API keys
 ```
 
 ### 4. Install Obsidian Plugin
+
 1. Open Obsidian
 2. Settings → Community Plugins → Browse
 3. Search "Local REST API"
@@ -60,6 +104,7 @@ cp config/claude-desktop-config.template.json config/claude-desktop-config.json
 5. Add API key to your config
 
 ### 5. Test the System
+
 ```bash
 claude
 # In Claude, type:
@@ -101,11 +146,13 @@ HLA_Agent-MCP_System/
 If you prefer manual setup or need to customize:
 
 ### Step 1: Install Claude Code
+
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
 ### Step 2: Create Directory Structure
+
 ```bash
 mkdir -p "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
 mkdir -p "~/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions"
@@ -114,12 +161,15 @@ mkdir -p "~/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily"
 ```
 
 ### Step 3: Configure MCP Servers
+
 Copy `config/claude-desktop-config.template.json` to your MCP-Shared folder and update:
+
 - PubMed API key and email
 - Obsidian REST API key
 - File paths for your knowledge base
 
 ### Step 4: Create Symlink
+
 ```bash
 ln -s "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json" ~/.claude.json
 ```
@@ -128,17 +178,18 @@ ln -s "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-
 
 ### MCP Servers Included
 
-| Server | Purpose | Auto-Triggers On |
-|--------|---------|------------------|
-| **Memory** | Persistent templates & context | Every session |
-| **PubMed** | Medical literature with PMIDs | Medical terms, "how often" |
-| **Obsidian-REST** | Full Obsidian features | When app is running |
-| **Obsidian-File** | Direct file access | Fallback/offline |
-| **Sequential-Thinking** | Complex reasoning | Multi-step problems |
+| Server                        | Purpose                        | Auto-Triggers On           |
+| ----------------------------- | ------------------------------ | -------------------------- |
+| **Memory**              | Persistent templates & context | Every session              |
+| **PubMed**              | Medical literature with PMIDs  | Medical terms, "how often" |
+| **Obsidian-REST**       | Full Obsidian features         | When app is running        |
+| **Obsidian-File**       | Direct file access             | Fallback/offline           |
+| **Sequential-Thinking** | Complex reasoning              | Multi-step problems        |
 
 ### HLA Research Agent Capabilities
 
 The specialized HLA Research Agent can:
+
 - Search PubMed for HLA antibody studies with automatic PMID verification
 - Analyze SAB patterns and prozone effects from literature
 - Create comprehensive notes on DSA, epitopes, and MFI interpretation
@@ -149,6 +200,7 @@ The specialized HLA Research Agent can:
 ## 💻 Usage Examples
 
 ### HLA Literature Review
+
 ```bash
 /agent "What is the prevalence of dnDSA in pediatric kidney transplant recipients?"
 /agent "How do SAB MFI values correlate with C1q positivity?"
@@ -156,21 +208,40 @@ The specialized HLA Research Agent can:
 ```
 
 ### Daily Documentation
+
 ```bash
 "Create today's research journal entry"
 ```
 
 ### HLA Research Synthesis
+
 ```bash
 /agent "Analyze HLA epitope patterns from recent literature"
 /agent "Compare SAB interpretation methods across different laboratories"
 /agent "Synthesize evidence on complement interference in Luminex assays"
 ```
 
+### Real Workflow Example
+
+```
+User: /agent "What is the prevalence of prozone effect in highly sensitized patients?"
+
+Agent executes:
+1. Searches your knowledge base → Finds 3 lecture PDFs
+2. Queries PubMed → Retrieves 12 relevant papers
+3. Extracts statistics → "70-85% in cPRA ≥95% patients"
+4. Creates Research Question note with verified PMIDs
+5. Identifies concepts: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
+6. Creates 4 concept pages with cross-links
+7. Time: 2 minutes (vs 6+ hours manually)
+```
+
 ## 🔧 Configuration
 
 ### PubMed Setup
+
 Add to your config:
+
 ```json
 "pubmed": {
   "env": {
@@ -181,6 +252,7 @@ Add to your config:
 ```
 
 ### Obsidian REST API
+
 ```json
 "obsidian-rest": {
   "env": {
@@ -193,7 +265,9 @@ Add to your config:
 ```
 
 ### Knowledge Base Paths
+
 Update these to point to your files:
+
 ```json
 "knowledge_paths": [
   "/path/to/your/PDFs",
@@ -204,6 +278,7 @@ Update these to point to your files:
 ## 📊 Performance Metrics
 
 Based on real-world usage:
+
 - **Literature searches**: 20/month @ 5 hours saved = 100 hours
 - **Note creation**: Automated formatting saves 30 min/day
 - **Citation verification**: 100% accuracy vs 70% manual
@@ -212,6 +287,7 @@ Based on real-world usage:
 ## 🤝 Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+
 - Adding new MCP servers
 - Creating domain-specific agents
 - Improving setup scripts
@@ -219,19 +295,19 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ## 📚 Documentation
 
-- [Detailed Setup Guide](docs/SETUP_GUIDE.md) - Step-by-step with screenshots
-- [Usage Guide](docs/USAGE_GUIDE.md) - Daily workflows and tips
+- [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
+- [Complete Guide](docs/COMPLETE_GUIDE.md) - Comprehensive system documentation
+- [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
+- [Demo Script](docs/DEMO_SCRIPT.md) - For lab presentations
 - [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
-- [Agent Development](docs/AGENT_GUIDE.md) - Create custom research agents
 
 ## 🐛 Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| MCP servers not connecting | Restart Claude: `claude` |
-| Obsidian files not created | Check REST API is enabled |
-| PubMed rate limited | Automatic 1-second delay between queries |
-| Agent not saving files | Check file paths in config |
-
+| Issue                      | Solution                                 |
+| -------------------------- | ---------------------------------------- |
+| MCP servers not connecting | Restart Claude: `claude`                |
+| Obsidian files not created | Check REST API is enabled                |
+| PubMed rate limited        | Automatic 1-second delay between queries |
+| Agent not saving files     | Check file paths in config               |
 
 ---
