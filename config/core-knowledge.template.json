@@ -2,7 +2,7 @@
   "formatting_rules": {
     "research_questions": {
       "rule": "MUST be phrased as actual questions ending with ?",
-      "folder": "/Research Questions/",
+      "folder": "Research Questions/",
       "examples_correct": [
         "How does prozone effect impact SAB interpretation?",
         "What MFI cutoff strategies optimize virtual crossmatch accuracy?",
@@ -16,7 +16,7 @@
     },
     "concepts": {
       "rule": "Use descriptive noun phrases (NOT questions)",
-      "folder": "/Concepts/",
+      "folder": "Concepts/",
       "examples": [
         "Halifax_Protocol.md",
         "MFI_Cutoffs.md",

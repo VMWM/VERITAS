@@ -7,10 +7,13 @@
 - Works from ANY project folder (no path restrictions)
 - Authentication is handled automatically by the MCP server
 - DO NOT manually add Authorization headers - they're added automatically
+- **CRITICAL PATH FORMAT**: Use vault name in endpoint, NOT duplicate it
+  - CORRECT: `/vault/HLA Antibodies/Concepts/Example.md`
+  - WRONG: `/vault/HLA Antibodies/HLA Antibodies/Concepts/Example.md`
 - Example usage:
   ```
   mcp__obsidian-rest__test_request(
-    endpoint: "/vault/YourVault/Notes/example.md",
+    endpoint: "/vault/HLA Antibodies/Concepts/example.md",
     method: "PUT",
     body: "# Your note content here"
   )
@@ -43,6 +46,7 @@
 
 ### Research Questions
 - **MUST be phrased as actual questions** ending with "?"
+- Store in: `HLA Antibodies/Research Questions/` (NOT nested deeper)
 - Examples of correct titles:
   - "How does prozone effect impact SAB interpretation?"
   - "What MFI cutoff strategies optimize virtual crossmatch accuracy?"
@@ -54,7 +58,7 @@
 
 ### Concepts
 - Use descriptive noun phrases (not questions)
-- Store in: `/Concepts/` folder
+- Store in: `HLA Antibodies/Concepts/` (NOT nested deeper)
 - Examples: `Halifax_Protocol.md`, `MFI_Cutoffs.md`, `Epitope_Analysis.md`
 
 ### Knowledge Graph Linking Rules
