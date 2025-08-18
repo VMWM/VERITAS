@@ -244,13 +244,15 @@ ln -s "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-
 
 ### MCP Servers Included
 
-| Server                        | Purpose                        | Auto-Triggers On           |
+| Server                        | Purpose                        | Key Notes                  |
 | ----------------------------- | ------------------------------ | -------------------------- |
 | **Memory**              | Persistent templates & context | Every session              |
 | **PubMed**              | Medical literature with PMIDs  | Medical terms, "how often" |
-| **Obsidian-REST**       | Full Obsidian features         | When app is running        |
-| **Obsidian-File**       | Direct file access             | Fallback/offline           |
+| **Obsidian-REST**       | Create/edit Obsidian notes    | Works from ANY folder ✅   |
+| **Filesystem-Local**    | Read project files (PDFs)     | Limited to current folder  |
 | **Sequential-Thinking** | Complex reasoning              | Multi-step problems        |
+
+**Important:** Use `obsidian-rest` for all Obsidian operations - it bypasses path restrictions that affect filesystem servers.
 
 ### HLA Research Agent Capabilities
 
