@@ -77,15 +77,15 @@ HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
 ## System Architecture
 
 ```
-        ┌────────────────────────────────────────────────┐
-        │           VS Code + Claude Code                │
-        │  (Works from ANY project folder on ANY machine)│
-        └────────────────────┬───────────────────────────┘
-                             │
-                             ▼
-                    ~/.claude.json (symlink)
-                             │
-                             ▼
+             ┌────────────────────────────────────────────────┐
+             │           VS Code + Claude Code                │
+             │  (Works from ANY project folder on ANY machine)│
+             └────────────────────┬───────────────────────────┘
+                                  │
+                                  ▼
+                         ~/.claude.json (symlink)
+                                  │
+                                  ▼
             ┌────────────────────────────────────────────────┐
             │          iCloud MCP-Shared Configuration       │
             │            (Syncs across all your machines)    │
