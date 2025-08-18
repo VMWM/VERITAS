@@ -39,5 +39,26 @@
 
 3. **Obsidian Must Be Running**: The Local REST API plugin must be enabled in Obsidian for the REST API to work.
 
+## Obsidian Note Formatting Rules
+
+### Research Questions
+- **MUST be phrased as actual questions** ending with "?"
+- Examples of correct titles:
+  - "How does prozone effect impact SAB interpretation?"
+  - "What MFI cutoff strategies optimize virtual crossmatch accuracy?"
+  - "Can machine learning improve HLA antibody specificity assignment?"
+- Examples of incorrect titles:
+  - "Prozone Effect Impact" ❌
+  - "MFI Cutoff Strategies" ❌
+  - "Machine Learning Applications" ❌
+
+### File Naming Conventions
+- Research Questions: Use the actual question as the filename
+  - Example: `How_does_prozone_affect_SAB_interpretation.md`
+- Concepts: Use descriptive noun phrases
+  - Example: `Halifax_Protocol.md`, `MFI_Cutoffs.md`
+- Daily Notes: Use ISO date format
+  - Example: `2025-01-18.md`
+
 ## Project-Specific Instructions
 [Add your project-specific instructions here]
