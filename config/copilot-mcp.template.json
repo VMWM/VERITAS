@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": [
+        "@nova-mcp/mcp-nova@0.3.0"
+      ],
+      "env": {
+        "NOVA_MEMORY_DIR": "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/nova-memory",
+        "LOG_DIR": "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/logs",
+        "LOG_LEVEL": "INFO",
+        "LOG_TO_FILE": "true",
+        "NODE_ENV": "production"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "pubmed": {
+      "command": "npx",
+      "args": [
+        "@ncukondo/pubmed-mcp"
+      ],
+      "env": {
+        "PUBMED_EMAIL": "YOUR_EMAIL@university.edu",
+        "PUBMED_API_KEY": "YOUR_PUBMED_API_KEY_HERE"
+      }
+    },
+    "obsidian-rest": {
+      "command": "npx",
+      "args": [
+        "dkmaker-mcp-rest-api@latest"
+      ],
+      "env": {
+        "REST_BASE_URL": "https://127.0.0.1:27124",
+        "REST_API_KEY": "YOUR_OBSIDIAN_API_KEY_HERE",
+        "REST_DEFAULT_HEADERS": "{\"Authorization\": \"Bearer YOUR_OBSIDIAN_API_KEY_HERE\"}",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
+    },
+    "filesystem-local": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "~/Library/CloudStorage/Box-Box"
+      ]
+    }
+  }
+}

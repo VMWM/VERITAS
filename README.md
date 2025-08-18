@@ -7,9 +7,10 @@
 
 A research system that brings MCP (Model Context Protocol) servers to GitHub Copilot in VS Code, enabling:
 - PubMed literature search with PMID verification
-- Obsidian note creation and management
+- Obsidian note creation and management (via REST API - works from any folder)
 - Sequential thinking for complex analysis
 - Persistent memory storage (experimental)
+- Local filesystem access for reading project files
 
 ## Reality Check
 
@@ -84,7 +85,7 @@ Use the pubmed tool to search for "prozone effect HLA antibodies"
 
 **Create Note**:
 ```
-Use the obsidian-file tool to create a note at /Users/[your-username]/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/Prozone-Effect.md with content about complement interference
+Use the obsidian-rest tool to create a note at /Users/[your-username]/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/Prozone-Effect.md with content about complement interference
 ```
 
 **Complex Analysis**:

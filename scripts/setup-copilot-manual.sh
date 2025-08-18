@@ -156,7 +156,8 @@ echo ""
 
 print_info "Step 5: Test with these commands IN AGENT MODE:"
 echo '   "Use the pubmed tool to search for HLA antibodies 2024"'
-echo '   "Use the obsidian-file tool to list files in /Users/'$USER'/Library/CloudStorage/Box-Box/Obsidian"'
+echo '   "Use the obsidian-rest tool to create a test note in my Obsidian vault"'
+echo '   "Use the filesystem-local tool to list files in /Users/'$USER'/Library/CloudStorage/Box-Box"'
 echo ""
 
 echo "================================================"
