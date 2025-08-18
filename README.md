@@ -1,387 +1,150 @@
-# HLA Agent-MCP System
+# HLA Research MCP System - GitHub Copilot Edition
 
-> AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
+> **Branch**: `github-copilot-support`  
+> **For Claude Code setup**: Switch to `main` branch
 
-[![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
-[![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-green)](https://modelcontextprotocol.org)
-[![PubMed](https://img.shields.io/badge/PubMed-Integrated-orange)](https://pubmed.ncbi.nlm.nih.gov/)
-[![HLA](https://img.shields.io/badge/HLA-Research-red)](https://www.ashi-hla.org/)
+## What This Is
 
-## What This Does
+A research system that brings MCP (Model Context Protocol) servers to GitHub Copilot in VS Code, enabling:
+- PubMed literature search with PMID verification
+- Obsidian note creation and management
+- Sequential thinking for complex analysis
+- Persistent memory storage (experimental)
 
-This system transforms Claude Code into a specialized HLA research assistant that:
+## Reality Check
 
-- **Searches** PubMed and HLA literature with automatic PMID verification
-- **Creates** structured notes on antibody patterns, epitopes, and transplant outcomes
-- **Maintains** persistent memory of SAB interpretations and clinical protocols
-- **Automates** complex HLA antibody analysis workflows
-- **Builds** interconnected knowledge graphs of HLA concepts and relationships
+**This is NOT a drop-in replacement for Claude Code's agent system.**
 
-### What This System Provides for HLA Research
+### What Works
+✅ MCP servers in VS Code Agent Mode  
+✅ PubMed search with real PMIDs  
+✅ Obsidian file operations  
+✅ Sequential thinking  
+⚠️ Memory storage (has issues)
 
-This system was built to address specific needs in HLA antibody research that weren't met by existing tools:
+### What's Different from Claude Code
 
-**Integrated Knowledge Sources**
-- Searches your local HLA lecture PDFs and protocols
-- Queries PubMed with automatic PMID verification
-- Maintains persistent memory across all sessions
-- Combines all sources into synthesized answers
+| Feature | Claude Code | GitHub Copilot |
+|---------|------------|----------------|
+| Setup | Run script → Done | Script + Manual VS Code steps |
+| Agent command | `/agent "question"` | No equivalent |
+| Workflow automation | Fully autonomous | Manual step-by-step |
+| MCP installation | Automatic | Manual via VS Code UI |
+| Works in | Terminal | VS Code only |
 
-**Automated Research Workflows**
-- Completes literature reviews in minutes instead of hours
-- Creates structured notes with proper citations
-- Builds interconnected knowledge graphs
-- Remembers context between sessions
+## Installation
 
-**Domain-Specific Accuracy**
-- Verifies HLA-specific values from your lab protocols
-- Provides accurate MFI thresholds, cPRA calculations, etc.
-- Links to source documents for verification
-- Prevents citation hallucination with PMID checking
-
-**Practical Output**
-- Creates files directly in your Obsidian vaults
-- Maintains consistent formatting via templates
-- Cross-links related concepts automatically
-- Syncs across all machines via iCloud
-
-### Example Use Cases
-
-#### Research Query: "What causes prozone effect in SAB testing?"
-
-The system:
-- Searches your HLA lecture PDFs for prozone discussions
-- Queries PubMed for recent papers on the topic
-- Finds 70-85% prevalence in cPRA >95% patients
-- Creates linked notes: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
-- Provides verified citations: Tambur 2015 (PMID: 25649423), Schnaidt 2011 (PMID: 21199346)
-- Remembers this information for future related queries
-
-#### Coding with Domain Knowledge
-
-```python
-# Query: "What's the standard MFI cutoff for positive DSA in pediatric transplant?"
-
-# System searches your protocols and literature, returns:
-# - Pediatric heart: MFI >6000 strongly correlates with C4d+ (PMID: 23551503)
-# - Pediatric liver: MFI >1000 as positive threshold (PMID: 39351427)  
-# - Adult kidney: MFI >3000 associated with rejection (PMID: 27140940)
-# - High-risk DSA: MFI >10,000 (PMID: 29159992)
-
-# Your code can then use verified values:
-POSITIVE_DSA_CUTOFF = 1000  # Conservative threshold
-HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
-# All values traceable to actual PMIDs
-```
-
-## System Architecture
-
-```
-┌──────────────────────────────────────────────────────┐
-│                 VS Code + Claude Code                 │
-│      (Works from ANY project folder on ANY machine)   │
-└────────────────────┬─────────────────────────────────┘
-                     │
-                     ▼
-            ~/.claude.json (symlink)
-                     │
-                     ▼
-    ┌────────────────────────────────────────────────┐
-    │          iCloud MCP-Shared Configuration       │
-    │            (Syncs across all your machines)    │
-    └────────────────┬───────────────────────────────┘
-                     │
-         ┌───────────┴───────────────┐
-         ▼                           ▼
-    ┌─────────────────┐         ┌─────────────────┐
-    │   MCP Servers   │         │ Knowledge Base  │
-    ├─────────────────┤         ├─────────────────┤
-    │ Memory          │         │ HLA lectures    │
-    │ PubMed          │         │ Lab protocols   │
-    │ Obsidian        │         │ Literature PDFs │
-    │ Agent           │         │ Meeting notes   │
-    └─────────────────┘         └─────────────────┘
-```
-
-## Prerequisites
-
+### Prerequisites
 - macOS
-- [VS Code](https://code.visualstudio.com/)
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [Obsidian](https://obsidian.md/) (for note management)
-- Claude API key ([get one here](https://console.anthropic.com/))
-- iCloud Drive enabled (for cross-machine sync)
+- VS Code with GitHub Copilot extension
+- Node.js v18+
+- Obsidian with Local REST API plugin
 
-## Quick Start (15 minutes)
-
-### 1. Clone This Repository
-
+### Step 1: Run Base Setup
 ```bash
-git clone https://github.com/yourusername/HLA_Agent-MCP_System.git
+git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
-```
-
-### 2. Choose Your Setup
-
-```bash
+git checkout github-copilot-support
 chmod +x setup.sh
 ./setup.sh
-# Then choose option 1 for Claude Code or option 2 for GitHub Copilot
+# Choose option 2 for GitHub Copilot
 ```
 
-**Claude Code setup will:**
-- Install Claude Code globally
-- Create iCloud-synced directories
-- Set up configuration with iCloud symlink
-- Works from any project folder on any machine
+### Step 2: Manual VS Code Configuration
 
-**GitHub Copilot setup will:**
-- Install MCP packages globally
-- Create shared resource directories
-- Set up VS Code MCP configuration
-- Uses VS Code's built-in sync via GitHub account
-- Configure agent-like behavior via custom instructions (see [Agent Setup Guide](docs/GITHUB_COPILOT_AGENT_SETUP.md))
+1. **Restart VS Code completely** (Cmd+Q)
 
-### 3. Configure Your API Keys
+2. **Install MCP servers through VS Code**:
+   - Open Command Palette (Cmd+Shift+P)
+   - Type: "Add MCP Server"
+   - Select "NPM Package"
+   - Install these ONE BY ONE:
+     - `@nova-mcp/mcp-nova`
+     - `@ncukondo/pubmed-mcp`
 
-**For Claude Code:**
-```bash
-# Copy the template to create your config file
-cp config/claude-desktop-config.template.json ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
+3. **Configure API keys** when prompted:
+   - PubMed: Get from https://www.ncbi.nlm.nih.gov/account/
+   - Obsidian: Get from Local REST API plugin
 
-# Open the file to add your API keys
-open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
-```
+### Step 3: Use Agent Mode
 
-**For GitHub Copilot:**
-```bash
-# Edit the GitHub Copilot MCP configuration
-open ~/Library/Application\ Support/Code/User/mcp.json
-```
-
-**See [API &amp; Path Setup Guide](docs/API_AND_PATH_SETUP.md) for detailed instructions on:**
-
-- Getting each API key (with screenshots)
-- Setting up your file paths
-- Common path examples
-
-### 4. Install Obsidian Plugin
-
-1. Open Obsidian
-2. Settings → Community Plugins → Browse
-3. Search "Local REST API"
-4. Install, enable, and generate API key
-5. Add API key to your config
-
-### 5. Test the System
-
-**For Claude Code:**
-```bash
-claude
-# In Claude, type:
-/mcp  # Should show all servers connected
-```
-
-**For GitHub Copilot:**
-- Restart VS Code completely
-- Open GitHub Copilot chat
-- You should see MCP servers being detected
-- Try: `@github Search PubMed for HLA antibodies`
-
-## Repository Structure
-
-```
-HLA_Agent-MCP_System/
-├── README.md                           # This file
-├── setup.sh                           # Main setup script (prompts for choice)
-├── scripts/
-│   ├── setup-claude.sh                # Claude Code setup
-│   ├── setup-copilot-manual.sh        # GitHub Copilot setup
-│   └── test-connection.sh             # Connection verification
-├── config/
-│   ├── claude-desktop-config.template.json  # Claude Code MCP configuration
-│   ├── copilot-mcp-config.template.json     # GitHub Copilot MCP configuration
-│   ├── memory-instructions.md        # Templates and routing rules
-│   └── agent-specification.json      # HLA Research Agent config
-├── templates/
-│   ├── daily-entry.md                # Research journal template
-│   ├── research-question.md          # Question template with citations
-│   └── concept.md                    # Concept page template
-├── scripts/
-│   └── test-connection.sh            # Verify setup
-├── docs/
-│   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
-│   ├── GITHUB_COPILOT_SETUP.md    # GitHub Copilot MCP setup guide
-│   ├── ARCHITECTURE.md             # System design and components
-│   ├── WORKFLOW_EXAMPLES.md        # Detailed execution traces
-│   ├── DEMO.md                     # For lab presentations
-│   └── TROUBLESHOOTING.md          # Common issues and solutions
-└── examples/
-    ├── sample-research-question.md   # Real research question output
-    ├── sample-concept.md             # Real concept page format  
-    └── sample-daily-entry.md         # Real daily journal entry
-```
-
-## Manual Setup Steps
-
-If you prefer manual setup or need to customize:
-
-### Step 1: Install Claude Code
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-### Step 2: Create Directory Structure
-
-```bash
-mkdir -p "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
-mkdir -p "~/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions"
-mkdir -p "~/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts"
-mkdir -p "~/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily"
-```
-
-### Step 3: Configure MCP Servers
-
-Copy `config/claude-desktop-config.template.json` to your MCP-Shared folder and update:
-
-- PubMed API key and email
-- Obsidian REST API key
-- File paths for your knowledge base
-
-### Step 4: Create Symlink
-
-```bash
-ln -s "~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json" ~/.claude.json
-```
-
-## Core Features
-
-### MCP Servers Included
-
-| Server                        | Purpose                        | Auto-Triggers On           |
-| ----------------------------- | ------------------------------ | -------------------------- |
-| **Memory**              | Persistent templates & context | Every session              |
-| **PubMed**              | Medical literature with PMIDs  | Medical terms, "how often" |
-| **Obsidian-REST**       | Full Obsidian features         | When app is running        |
-| **Obsidian-File**       | Direct file access             | Fallback/offline           |
-| **Sequential-Thinking** | Complex reasoning              | Multi-step problems        |
-
-### HLA Research Agent Capabilities
-
-The specialized HLA Research Agent can:
-
-- Search PubMed for HLA antibody studies with automatic PMID verification
-- Analyze SAB patterns and prozone effects from literature
-- Create comprehensive notes on DSA, epitopes, and MFI interpretation
-- Extract transplant outcome statistics and alloimmunization rates
-- Build knowledge graphs connecting HLA concepts, testing methods, and clinical outcomes
-- Synthesize conflicting findings across HLA literature for comprehensive reviews
+1. Open GitHub Copilot chat (Ctrl+Cmd+I)
+2. **Switch dropdown from "Chat" to "Agent"**
+3. Click "Tools" button
+4. Select all MCP servers
 
 ## Usage Examples
 
-### HLA Literature Review
+### In Agent Mode (Required!)
 
-```bash
-/agent "What is the prevalence of dnDSA in pediatric kidney transplant recipients?"
-/agent "How do SAB MFI values correlate with C1q positivity?"
-/agent "What patterns indicate prozone effect in highly sensitized patients?"
+**Literature Search**:
+```
+Use the pubmed tool to search for "prozone effect HLA antibodies"
 ```
 
-### Daily Documentation
-
-```bash
-"Create today's research journal entry"
+**Create Note**:
+```
+Use the obsidian-file tool to create a note at /Users/[your-username]/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/Prozone-Effect.md with content about complement interference
 ```
 
-### HLA Research Synthesis
-
-```bash
-/agent "Analyze HLA epitope patterns from recent literature"
-/agent "Compare SAB interpretation methods across different laboratories"
-/agent "Synthesize evidence on complement interference in Luminex assays"
+**Complex Analysis**:
+```
+Use the sequential-thinking tool to analyze the relationship between C1q binding and prozone effect in SAB assays
 ```
 
-### Real Workflow Example
+### Manual Workflow Example
 
-```
-User: /agent "What is the prevalence of prozone effect in highly sensitized patients?"
+Unlike Claude Code's single `/agent` command, you must orchestrate each step:
 
-Agent executes:
-1. Searches your knowledge base → Finds 3 lecture PDFs
-2. Queries PubMed → Retrieves 12 relevant papers
-3. Extracts statistics → "70-85% in cPRA ≥95% patients"
-4. Creates Research Question note with verified PMIDs
-5. Identifies concepts: [[Prozone Effect]], [[C1q Interference]], [[EDTA Treatment]]
-6. Creates 4 concept pages with cross-links
-7. Time: 2 minutes (vs 6+ hours manually)
-```
+1. "Use pubmed tool to search for dnDSA pediatric"
+2. "Based on those results, use obsidian-file to create a research question note"
+3. "Now create concept pages for the key terms mentioned"
+4. "Cross-link the pages using WikiLinks"
 
-## Configuration
+## Limitations
 
-### PubMed Setup
+1. **No autonomous agent** - You manually control each step
+2. **Memory server issues** - May not persist properly
+3. **Agent Mode only** - Regular chat can't use MCP tools
+4. **Manual orchestration** - No multi-step automation
+5. **VS Code only** - Won't work in other editors
 
-Add to your config:
+## Should You Use This?
 
-```json
-"pubmed": {
-  "env": {
-    "PUBMED_EMAIL": "your.email@university.edu",
-    "PUBMED_API_KEY": "your-api-key-here"
-  }
-}
-```
+### Use GitHub Copilot MCP if:
+- You're already using VS Code/GitHub Copilot daily
+- You prefer manual control over each step
+- You want MCP tools integrated in your IDE
+- You don't mind the setup complexity
 
-### Obsidian REST API
-
-```json
-"obsidian-rest": {
-  "env": {
-    "REST_BASE_URL": "https://127.0.0.1:27124",
-    "REST_API_KEY": "your-obsidian-api-key",
-    "REST_DEFAULT_HEADERS": "{\"Authorization\": \"Bearer your-obsidian-api-key\"}",
-    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
-  }
-}
-```
-
-### Knowledge Base Paths
-
-Update these to point to your files:
-
-```json
-"knowledge_paths": [
-  "/path/to/your/PDFs",
-  "/path/to/your/notes"
-]
-```
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
-
-- Adding new MCP servers
-- Creating domain-specific agents
-- Improving setup scripts
-- Extending to other research domains
-
-## Documentation
-
-- [API &amp; Path Setup](docs/API_AND_PATH_SETUP.md) - **START HERE** - Get your API keys and configure paths
-- [GitHub Copilot Setup](docs/GITHUB_COPILOT_SETUP.md) - Alternative setup for VS Code users
-- [GitHub Copilot Agent Setup](docs/GITHUB_COPILOT_AGENT_SETUP.md) - Configure agent-like behavior in Copilot
-- [System Architecture](docs/ARCHITECTURE.md) - Technical design and components
-- [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Detailed agent execution traces
-- [Demo](docs/DEMO.md) - For lab presentations
-- [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
+### Use Claude Code Instead if:
+- You want autonomous research workflows
+- You need the `/agent` command
+- You prefer "it just works" setup
+- You want terminal-based operation
 
 ## Troubleshooting
 
-| Issue                      | Solution                                 |
-| -------------------------- | ---------------------------------------- |
-| MCP servers not connecting | Restart Claude:`claude`                |
-| Obsidian files not created | Check REST API is enabled                |
-| PubMed rate limited        | Automatic 1-second delay between queries |
-| Agent not saving files     | Check file paths in config               |
+### MCP servers not showing in Tools?
+- Did you restart VS Code completely?
+- Did you install via VS Code's "Add MCP Server" interface?
+- Are you in Agent Mode, not Chat Mode?
 
----
+### Memory server not working?
+- Known issue, use file-based persistence instead
+
+### Can't find Agent Mode?
+- Update GitHub Copilot to latest version
+- Look for dropdown at top of chat panel
+
+## Documentation
+
+- [Reality Check](docs/GITHUB_COPILOT_REALITY_CHECK.md) - Honest assessment
+- [Manual Steps Guide](docs/GITHUB_COPILOT_AGENT_SETUP.md) - Detailed setup
+- [API Setup](docs/API_AND_PATH_SETUP.md) - Get your API keys
+
+## The Bottom Line
+
+This brings MCP capabilities to VS Code, but requires significant manual setup and operation. It's a toolkit you operate manually, not an autonomous assistant.
+
+**For the full autonomous experience, use Claude Code on the `main` branch.**
