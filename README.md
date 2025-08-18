@@ -124,16 +124,10 @@ cd HLA_Agent-MCP_System
 
 ### 2. Choose Your Setup
 
-**Option A: Claude Code (Recommended)**
 ```bash
-chmod +x setup-claude.sh
-./setup-claude.sh
-```
-
-**Option B: GitHub Copilot**
-```bash
-chmod +x setup-copilot.sh
-./setup-copilot.sh
+chmod +x setup.sh
+./setup.sh
+# Then choose option 1 for Claude Code or option 2 for GitHub Copilot
 ```
 
 **Claude Code setup will:**
@@ -200,8 +194,11 @@ claude
 ```
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
-├── setup-claude.sh                    # Automated setup script (Claude Code)
-├── setup-copilot.sh                   # Automated setup script (GitHub Copilot)
+├── setup.sh                           # Main setup script (prompts for choice)
+├── scripts/
+│   ├── setup-claude.sh                # Claude Code setup
+│   ├── setup-copilot-manual.sh        # GitHub Copilot setup
+│   └── test-connection.sh             # Connection verification
 ├── config/
 │   ├── claude-desktop-config.template.json  # Claude Code MCP configuration
 │   ├── copilot-mcp-config.template.json     # GitHub Copilot MCP configuration
