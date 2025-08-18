@@ -45,8 +45,8 @@ A research system that brings MCP (Model Context Protocol) servers to GitHub Cop
 git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
 git checkout github-copilot-support
-chmod +x setup-copilot-real.sh
-./setup-copilot-real.sh
+chmod +x setup-copilot-manual.sh
+./setup-copilot-manual.sh
 ```
 
 ### Step 2: Manual VS Code Configuration

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# GitHub Copilot + MCP Research System Setup Script (REALISTIC VERSION)
+# GitHub Copilot + MCP Research System Setup Script (Manual Steps Required)
 # For macOS systems with GitHub Copilot
-# Version: 2.0 - Based on actual testing
+# Version: 2.0 - Includes manual VS Code configuration steps
 
 set -e  # Exit on error
 
@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 
 echo "================================================"
 echo "GitHub Copilot + MCP Research System Setup"
-echo "REALISTIC VERSION - What Actually Works"
+echo "Manual Configuration Required After Script"
 echo "================================================"
 echo ""
 
