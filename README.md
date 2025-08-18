@@ -177,7 +177,10 @@ claude
 ```
 HLA_Agent-MCP_System/
 ├── README.md                           # This file
-├── setup.sh                           # Automated setup script
+├── setup.sh                           # Main setup script wrapper
+├── scripts/
+│   ├── setup-claude-main.sh          # Claude Code setup script
+│   └── test-connection.sh            # Connection verification
 ├── config/
 │   ├── claude-desktop-config.template.json  # MCP configuration template
 │   ├── memory-instructions.md        # Templates and routing rules
@@ -186,8 +189,6 @@ HLA_Agent-MCP_System/
 │   ├── daily-entry.md                # Research journal template
 │   ├── research-question.md          # Question template with citations
 │   └── concept.md                    # Concept page template
-├── scripts/
-│   └── test-connection.sh            # Verify setup
 ├── docs/
 │   ├── API_AND_PATH_SETUP.md       # API keys and path configuration
 │   ├── ARCHITECTURE.md             # System design and components
