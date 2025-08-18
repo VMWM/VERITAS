@@ -22,24 +22,28 @@ This system transforms Claude Code into a specialized HLA research assistant tha
 This system was built to address specific needs in HLA antibody research that weren't met by existing tools:
 
 **Integrated Knowledge Sources**
+
 - Searches your local HLA lecture PDFs and protocols
 - Queries PubMed with automatic PMID verification
 - Maintains persistent memory across all sessions
 - Combines all sources into synthesized answers
 
 **Automated Research Workflows**
+
 - Completes literature reviews in minutes instead of hours
 - Creates structured notes with proper citations
 - Builds interconnected knowledge graphs
 - Remembers context between sessions
 
 **Domain-Specific Accuracy**
+
 - Verifies HLA-specific values from your lab protocols
 - Provides accurate MFI thresholds, cPRA calculations, etc.
 - Links to source documents for verification
 - Prevents citation hallucination with PMID checking
 
 **Practical Output**
+
 - Creates files directly in your Obsidian vaults
 - Maintains consistent formatting via templates
 - Cross-links related concepts automatically
@@ -50,6 +54,7 @@ This system was built to address specific needs in HLA antibody research that we
 #### Research Query: "What causes prozone effect in SAB testing?"
 
 The system:
+
 - Searches your HLA lecture PDFs for prozone discussions
 - Queries PubMed for recent papers on the topic
 - Finds 70-85% prevalence in cPRA >95% patients
@@ -122,6 +127,7 @@ cd HLA_Agent-MCP_System
 ```
 
 > **Note:** For GitHub Copilot support, use the `github-copilot-support` branch:
+>
 > ```bash
 > git checkout github-copilot-support
 > ```
@@ -134,6 +140,7 @@ chmod +x setup.sh
 ```
 
 This will:
+
 - Install Claude Code globally
 - Create iCloud-synced directories
 - Set up configuration with iCloud symlink

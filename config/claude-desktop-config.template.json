@@ -51,7 +51,7 @@
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-filesystem",
-        "~/Library/CloudStorage/Box-Box/Obsidian"
+        "~/Library/CloudStorage/Box-Box"
       ]
     }
   }
