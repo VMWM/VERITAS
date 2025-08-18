@@ -163,9 +163,19 @@ else
     print_warning "Templates directory already exists"
 fi
 
-# Step 7: Test Claude Code installation
+# Step 7: Initialize Memory with Core Knowledge
 echo ""
-echo "Step 7: Testing Claude Code installation..."
+echo "Step 7: Initializing memory with core knowledge..."
+if [ -f "scripts/initialize-memory.sh" ]; then
+    bash scripts/initialize-memory.sh
+    print_success "Memory initialized with core knowledge"
+else
+    print_warning "Memory initialization script not found"
+fi
+
+# Step 8: Test Claude Code installation
+echo ""
+echo "Step 8: Testing Claude Code installation..."
 if claude --version &> /dev/null; then
     CLAUDE_VERSION=$(claude --version)
     print_success "Claude Code is working: $CLAUDE_VERSION"
@@ -173,9 +183,9 @@ else
     print_error "Claude Code test failed"
 fi
 
-# Step 8: Check for VS Code
+# Step 9: Check for VS Code
 echo ""
-echo "Step 8: Checking for VS Code..."
+echo "Step 9: Checking for VS Code..."
 if command -v code &> /dev/null; then
     print_success "VS Code command line tools installed"
 else
