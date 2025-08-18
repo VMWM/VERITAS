@@ -24,7 +24,7 @@ fi
 
 # Copy core knowledge file if it doesn't exist
 MEMORY_FILE="$MEMORY_DIR/core-knowledge.json"
-KNOWLEDGE_SOURCE="../config/core-knowledge.json"
+KNOWLEDGE_SOURCE="../config/core-knowledge.template.json"
 
 if [ ! -f "$MEMORY_FILE" ]; then
     if [ -f "$KNOWLEDGE_SOURCE" ]; then
