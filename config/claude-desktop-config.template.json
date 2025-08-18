@@ -47,11 +47,11 @@
         "NODE_TLS_REJECT_UNAUTHORIZED": "0"
       }
     },
-    "obsidian-file": {
+    "filesystem-local": {
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-filesystem",
-        "~/Library/CloudStorage/Box-Box/Obsidian"
+        "~/Library/CloudStorage/Box-Box"
       ]
     }
   }
