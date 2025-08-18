@@ -77,10 +77,10 @@ HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
 ## System Architecture
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                 VS Code + Claude Code                 │
-│      (Works from ANY project folder on ANY machine)   │
-└────────────────────┬─────────────────────────────────┘
+┌────────────────────────────────────────────────┐
+│           VS Code + Claude Code                │
+│  (Works from ANY project folder on ANY machine)│
+└────────────────────┬───────────────────────────┘
                      │
                      ▼
             ~/.claude.json (symlink)
