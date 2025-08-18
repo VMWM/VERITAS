@@ -91,16 +91,16 @@ HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
     │            (Syncs across all your machines)    │
     └────────────────┬───────────────────────────────┘
                      │
-         ┌───────────┴───────────────┐
-         ▼                           ▼
-    ┌─────────────────┐         ┌─────────────────┐
-    │   MCP Servers   │         │ Knowledge Base  │
-    ├─────────────────┤         ├─────────────────┤
-    │ Memory          │         │ HLA lectures    │
-    │ PubMed          │         │ Lab protocols   │
-    │ Obsidian        │         │ Literature PDFs │
-    │ Agent           │         │ Meeting notes   │
-    └─────────────────┘         └─────────────────┘
+         ┌───────────┴───────────┐
+         ▼                       ▼
+    ┌─────────────────┐     ┌─────────────────┐
+    │   MCP Servers   │     │ Knowledge Base  │
+    ├─────────────────┤     ├─────────────────┤
+    │ Memory          │     │ HLA lectures    │
+    │ PubMed          │     │ Lab protocols   │
+    │ Obsidian        │     │ Literature PDFs │
+    │ Agent           │     │ Meeting notes   │
+    └─────────────────┘     └─────────────────┘
 ```
 
 ## Prerequisites
