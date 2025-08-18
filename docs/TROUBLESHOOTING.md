@@ -40,19 +40,30 @@
    - Settings → Community Plugins
    - Ensure "Local REST API" is enabled (toggle on)
 
-2. **Verify API Key**
-   - In Obsidian REST API settings, regenerate key
-   - Update in `claude-desktop-config.json`:
+2. **Verify API Key Configuration**
+   - In Obsidian REST API settings, copy your API key
+   - Update in `claude-desktop-config.json` (BOTH places):
    ```json
-   "REST_API_KEY": "your-new-key-here",
-   "REST_DEFAULT_HEADERS": "{\"Authorization\": \"Bearer your-new-key-here\"}"
+   "REST_API_KEY": "your-api-key-here",
+   "REST_DEFAULT_HEADERS": "{\"Authorization\": \"Bearer your-api-key-here\"}"
    ```
+   - **IMPORTANT**: Replace the key in BOTH fields above
 
-3. **Check Obsidian is Running**
+3. **Authentication Issues**
+   - The MCP server handles authentication automatically
+   - Agents should NOT manually add Authorization headers
+   - If you see 401 errors, check both API key fields are updated
+
+4. **Path Restriction Errors**
+   - Error: "Access denied - path outside allowed directories"
+   - Solution: Agent is using wrong MCP server
+   - Tell agent: "Use obsidian-rest, not obsidian-file or obsidian-vault"
+
+5. **Check Obsidian is Running**
    - REST API only works when Obsidian app is open
-   - Fallback to file system access works offline
+   - The Local REST API plugin must be enabled
 
-4. **Test Connection**
+6. **Test Connection**
    ```bash
    # In Claude Code
    /mcp
