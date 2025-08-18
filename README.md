@@ -77,30 +77,30 @@ HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
 ## System Architecture
 
 ```
-┌────────────────────────────────────────────────┐
-│           VS Code + Claude Code                │
-│  (Works from ANY project folder on ANY machine)│
-└────────────────────┬───────────────────────────┘
-                     │
-                     ▼
-            ~/.claude.json (symlink)
-                     │
-                     ▼
-    ┌────────────────────────────────────────────────┐
-    │          iCloud MCP-Shared Configuration       │
-    │            (Syncs across all your machines)    │
-    └────────────────┬───────────────────────────────┘
-                     │
-         ┌───────────┴───────────┐
-         ▼                       ▼
-    ┌─────────────────┐     ┌─────────────────┐
-    │   MCP Servers   │     │ Knowledge Base  │
-    ├─────────────────┤     ├─────────────────┤
-    │ Memory          │     │ HLA lectures    │
-    │ PubMed          │     │ Lab protocols   │
-    │ Obsidian        │     │ Literature PDFs │
-    │ Agent           │     │ Meeting notes   │
-    └─────────────────┘     └─────────────────┘
+        ┌────────────────────────────────────────────────┐
+        │           VS Code + Claude Code                │
+        │  (Works from ANY project folder on ANY machine)│
+        └────────────────────┬───────────────────────────┘
+                             │
+                             ▼
+                    ~/.claude.json (symlink)
+                             │
+                             ▼
+            ┌────────────────────────────────────────────────┐
+            │          iCloud MCP-Shared Configuration       │
+            │            (Syncs across all your machines)    │
+            └────────────────┬───────────────────────────────┘
+                             │
+                 ┌───────────┴───────────┐
+                 ▼                       ▼
+            ┌─────────────────┐     ┌─────────────────┐
+            │   MCP Servers   │     │ Knowledge Base  │
+            ├─────────────────┤     ├─────────────────┤
+            │ Memory          │     │ HLA lectures    │
+            │ PubMed          │     │ Lab protocols   │
+            │ Obsidian        │     │ Literature PDFs │
+            │ Agent           │     │ Meeting notes   │
+            └─────────────────┘     └─────────────────┘
 ```
 
 ## Prerequisites
