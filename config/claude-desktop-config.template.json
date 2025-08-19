@@ -42,8 +42,8 @@
       ],
       "env": {
         "REST_BASE_URL": "https://127.0.0.1:27124",
-        "REST_API_KEY": "YOUR_OBSIDIAN_API_KEY_HERE",
-        "REST_DEFAULT_HEADERS": "{\"Authorization\": \"Bearer YOUR_OBSIDIAN_API_KEY_HERE\"}",
+        "AUTH_BEARER": "YOUR_OBSIDIAN_API_KEY_HERE",
+        "REST_ENABLE_SSL_VERIFY": "false",
         "NODE_TLS_REJECT_UNAUTHORIZED": "0"
       }
     },
