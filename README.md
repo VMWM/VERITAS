@@ -1,5 +1,7 @@
 # HLA Agent-MCP System
 
+> **Current Branch**: `Claude-Code-Setup` | For GitHub Copilot setup, switch to `Github-Copilot-Setup` branch
+
 > AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
