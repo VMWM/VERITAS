@@ -1,7 +1,9 @@
 # HLA Research MCP System - GitHub Copilot Edition
 
-> **Branch**: `github-copilot-support`  
-> **For Claude Code setup**: Switch to `main` branch
+> **Branch**: `Github-Copilot-Setup`  
+> **For Claude Code setup**: Switch to `Claude-Code-Setup` branch
+> 
+> **Note**: These branches are independent - each configured for its specific tool
 
 ## What This Is
 
