@@ -38,9 +38,6 @@ Adapt this system for:
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
 - Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
 
-### ⚠️ Important: Content Validation
-This system includes automatic markdown validation to prevent formatting issues in Obsidian. All content is validated and auto-corrected before writing to vaults. See [Obsidian Validation Guide](docs/OBSIDIAN_VALIDATION.md) for details.
-
 ### Step 0: Install Claude Code (if needed)
 
 **Option A: Via VS Code Extension**
@@ -73,101 +70,64 @@ The setup script will:
 
 **Note**: PubMed MCP may need manual configuration. See [Troubleshooting](docs/TROUBLESHOOTING.md) if it shows "Failed to connect".
 
-### Step 2: Configure Your System
-
-**See [docs/SETUP.md](docs/SETUP.md) for complete configuration instructions.**
-
-Quick overview of required keys:
-1. **Claude API Key** - From [console.anthropic.com](https://console.anthropic.com/)
-2. **PubMed Email** - Required for literature searches
-3. **Obsidian API Key** - From Local REST API plugin
-
-The setup script will show you where to add these keys based on your cloud provider.
-
-**For Single Vault (Simple Setup):**
-```json
-"obsidian-rest": {
-  "env": {
-    "REST_BASE_URL": "https://127.0.0.1:27124",
-    "AUTH_BEARER": "YOUR-OBSIDIAN-API-KEY"
-  }
-}
-```
-
-**For Dual Vault (Recommended - Full Automation):**
-```json
-"obsidian-rest-hla": {
-  "command": "npx",
-  "args": ["dkmaker-mcp-rest-api@latest"],
-  "env": {
-    "REST_BASE_URL": "https://127.0.0.1:27124",
-    "AUTH_BEARER": "YOUR-HLA-VAULT-API-KEY",
-    "REST_ENABLE_SSL_VERIFY": "false",
-    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
-  }
-},
-"obsidian-rest-journal": {
-  "command": "npx",
-  "args": ["dkmaker-mcp-rest-api@latest"],
-  "env": {
-    "REST_BASE_URL": "https://127.0.0.1:27125",
-    "AUTH_BEARER": "YOUR-JOURNAL-VAULT-API-KEY",
-    "REST_ENABLE_SSL_VERIFY": "false",
-    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
-  }
-}
-```
-Get from: Obsidian → Settings → Community Plugins → Local REST API
-
-### Step 3: Set Up Obsidian
+### Step 2: Set Up Obsidian
 
 > **📌 NOTE**: This system comes with HLA research vaults as examples. 
 > **To customize for your research**: See [CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
 
-#### Option A: Single Vault Setup (Simpler)
-1. **Install the Local REST API Plugin:**
-   - Open Obsidian
-   - Settings → Community Plugins → Browse
-   - Search for "Local REST API"
-   - Install and Enable
+#### Option A: Single Vault (Simpler)
+Everything in one Obsidian vault:
+1. Open Obsidian → Settings → Community Plugins → Browse
+2. Search "Local REST API" → Install and Enable
+3. In plugin settings → Copy API key (save for Step 3)
+4. Ensure HTTPS enabled on port 27124
 
-2. **Generate API Key:**
-   - Settings → Local REST API
-   - Copy the API key
-   - Add to config as `obsidian-rest`
+#### Option B: Two-Vault System (Recommended)
+Separate research notes from daily journal:
 
-3. **Verify Settings:**
-   - Ensure HTTPS is enabled (port 27124)
-   - API key is visible
-
-#### Option B: Dual Vault Setup (Recommended for Full Automation)
-1. **Set up HLA Antibodies vault:**
-   - Open HLA Antibodies vault in Obsidian
-   - Install Local REST API plugin
-   - Keep default port 27124
-   - Copy API key for `obsidian-rest-hla`
-
-2. **Set up Research Journal vault:**
-   - Open Research Journal vault in separate Obsidian window
-   - Install Local REST API plugin
-   - **Change port to 27125** in Advanced Settings
-   - Copy API key for `obsidian-rest-journal`
-
-3. **Benefits of Dual Vault:**
-   - ✅ Agent writes to both vaults automatically
-   - ✅ HLA concepts → HLA Antibodies vault
-   - ✅ Daily entries → Research Journal vault
-   - ✅ No manual vault switching needed
-
-### Step 4: Add CLAUDE.md to Your Projects
-
-**CRITICAL:** Copy the CLAUDE.md template to each project folder where you'll use Claude Code:
-
-```bash
-cp templates/CLAUDE.md /path/to/your/project/
+**Vault Structure:**
+```
+Obsidian/
+├── [Your Research Topic]/      # e.g., "HLA Antibodies"
+│   ├── Concepts/
+│   └── Research Questions/
+└── Research Journal/            # Daily notes
+    ├── Daily/
+    └── Projects/
 ```
 
-This prevents Obsidian path issues and ensures proper vault routing.
+**Setup:**
+1. **Research vault** (port 27124):
+   - Install Local REST API → Copy API key for `obsidian-rest-hla`
+2. **Journal vault** (port 27125):
+   - Install Local REST API → Change port to 27125 → Copy API key
+
+**Benefits:**
+- Agent automatically routes content to correct vault
+- Research stays organized separately from daily notes
+- No manual vault switching needed
+
+### Step 3: Configure API Keys
+
+**See [docs/SETUP.md](docs/SETUP.md) for detailed instructions.**
+
+Required keys:
+1. **Claude API Key** - From [console.anthropic.com](https://console.anthropic.com/)
+2. **PubMed Email** - Any valid email (API key optional)
+3. **Obsidian API Key(s)** - From Step 2 above
+
+The setup script shows where to add these based on your cloud provider.
+
+### Step 4: Add CLAUDE.md to Your Project
+
+**CRITICAL:** The agent file MUST be named `CLAUDE.md` in your project folder:
+
+```bash
+# Copy and rename the template
+cp templates/CLAUDE.md /path/to/your/project/CLAUDE.md
+```
+
+This file tells Claude how to behave for your specific research domain.
 
 ### Step 5: Test Your Setup
 
@@ -204,49 +164,45 @@ You should see 5 servers connected:
 
 ## 🎭 Custom Agent System
 
-### Using Pre-Built Agents
+**IMPORTANT:** Agent files must be named `CLAUDE.md` in your project folder.
+
+### Using the HLA Research Agent
 ```bash
-# Copy HLA Research Agent to your project
+# Copy to your project AS CLAUDE.md (not HLA-Research-Agent.md!)
 cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/HLA-Research-Agent.md ./CLAUDE.md
 ```
 
 ### Creating Your Own Agent
 ```bash
-# Start with the template
-cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/AGENT_TEMPLATE.md ./My-Agent.md
-# Edit to add your domain knowledge and rules
-# Use as CLAUDE.md in your projects
+# 1. Start with template
+cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/AGENT_TEMPLATE.md ./CLAUDE.md
+
+# 2. Edit CLAUDE.md to add your domain knowledge
+
+# 3. Save as a reusable agent for future projects
+cp ./CLAUDE.md ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/My-Domain-Agent.md
 ```
 
-Agents can be specialized for:
-- Grant writing
-- Protocol development
-- Data analysis
-- Literature reviews
-- Clinical documentation
+Agents can be specialized for any research domain or task.
 
 ## 📁 System Architecture
 
 ```
 Your Machine
-├── ~/.claude.json                    → Symlink to config
-├── [Your Cloud Provider]/            → Syncs across machines
+├── ~/.claude.json                    → Symlink to cloud config
+├── Your Project/
+│   └── CLAUDE.md                     → Agent personality (REQUIRED NAME)
+│
+├── Cloud Storage (iCloud/Dropbox/Box/etc)
 │   └── MCP-Shared/
-│       ├── claude-desktop-config.json → Your configuration
-│       ├── nova-memory/              → Persistent storage
-│       ├── agents/                   → Agent personality library
-│       │   ├── HLA-Research-Agent.md → Pre-configured HLA expert
-│       │   ├── AGENT_TEMPLATE.md     → Create custom agents
-│       │   └── README.md             → Agent usage guide
+│       ├── claude-desktop-config.json → Synced configuration
+│       ├── nova-memory/              → Persistent memory
+│       ├── agents/                   → Reusable agent library
 │       └── templates/                → Note templates
-└── [Your Obsidian Location]/         → Can be same or different cloud
-    └── Obsidian/
-        ├── [Your Research Area]/     → Research vault (rename from HLA)
-        │   ├── Concepts/
-        │   └── Research Questions/
-        └── Research Journal/         → Daily notes
-            ├── Daily/
-            └── Concepts/
+│
+└── Obsidian Vaults (anywhere)
+    ├── [Your Research]/              → Main research vault
+    └── Research Journal/             → Daily notes vault
 ```
 
 **Supported Cloud Providers:**
@@ -267,15 +223,6 @@ Your Machine
 | **obsidian-rest-journal** | Journal vault access | Daily entries & project notes |
 | **filesystem-local** | Read local files | PDFs, documents in current folder |
 | **sequential-thinking** | Complex reasoning | Multi-step analysis and synthesis |
-
-## 📝 Important: Two-Vault Structure
-
-You have TWO separate Obsidian vaults:
-1. **HLA Antibodies** (Port 27124) - Research questions and HLA concepts
-2. **Research Journal** (Port 27125) - Daily notes and project concepts
-
-**Single Vault Setup:** REST API connects to one vault at a time
-**Dual Vault Setup:** Both vaults accessible simultaneously via different ports
 
 ## 🔧 Troubleshooting
 
