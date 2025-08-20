@@ -35,14 +35,26 @@
         "markitdown-mcp-npx@latest"
       ]
     },
-    "obsidian-rest": {
+    "obsidian-rest-hla": {
       "command": "npx",
       "args": [
         "dkmaker-mcp-rest-api@latest"
       ],
       "env": {
         "REST_BASE_URL": "https://127.0.0.1:27124",
-        "AUTH_BEARER": "YOUR_OBSIDIAN_API_KEY_HERE",
+        "AUTH_BEARER": "YOUR_HLA_VAULT_API_KEY_HERE",
+        "REST_ENABLE_SSL_VERIFY": "false",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
+    },
+    "obsidian-rest-journal": {
+      "command": "npx",
+      "args": [
+        "dkmaker-mcp-rest-api@latest"
+      ],
+      "env": {
+        "REST_BASE_URL": "https://127.0.0.1:27125",
+        "AUTH_BEARER": "YOUR_JOURNAL_VAULT_API_KEY_HERE",
         "REST_ENABLE_SSL_VERIFY": "false",
         "NODE_TLS_REJECT_UNAUTHORIZED": "0"
       }
