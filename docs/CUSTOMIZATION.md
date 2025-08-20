@@ -1,179 +1,248 @@
 # Customization Guide
 
-## Overview
-The HLA Research MCP System comes pre-configured with core knowledge and rules, but is designed to be customized for your specific research needs.
+This guide helps you adapt the system from HLA research to your specific domain.
 
-## What Comes Pre-Configured
+## Quick Customization Steps
 
-### Core Knowledge (Automatically Loaded)
-- Obsidian formatting rules (Research Questions must end with "?")
-- Knowledge graph linking requirements
-- MCP server usage guidelines
-- HLA domain knowledge base (MFI cutoffs, Halifax Protocol, etc.)
+1. **Rename Obsidian vaults** to match your research area
+2. **Copy agent template** and modify for your domain
+3. **Update config paths** if using different folder structure
+4. **Adjust templates** for your note-taking style
 
-### Templates
-- Research Question template
-- Concept page template
-- Daily journal template
-- CLAUDE.md project configuration
+## 🏗️ Vault Customization
 
-## How to Customize
-
-### 1. Add Your Own Domain Knowledge
-
-Edit `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/nova-memory/core-knowledge.json` to add your domain-specific knowledge:
-
-```json
-{
-  "your_domain": {
-    "key_facts": {
-      "fact1": "Your domain-specific fact",
-      "source": "Your citation"
-    }
-  }
-}
-```
-
-### 2. Customize Templates
-
-Templates are located in `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/templates/`
-
-To modify for your field:
-1. Keep the structure but change the content
-2. Update tags to match your domain
-3. Adjust table headers for your data types
-
-Example for cardiology research:
-```markdown
----
-type: research-question
-tags: [research, literature-review, cardiology, cardiac-imaging]
----
-```
-
-### 3. Project-Specific CLAUDE.md
-
-Each project can have its own CLAUDE.md file. Copy the template and customize:
-
-```bash
-cp ~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/templates/CLAUDE.md ~/YourProject/CLAUDE.md
-```
-
-Then edit the "Project-Specific Instructions" section:
-```markdown
-## Project-Specific Instructions
-- Focus on cardiac MRI imaging protocols
-- Use ACC/AHA guideline terminology
-- Link to cardiology-specific concept vault
-```
-
-### 4. Customize Obsidian Vault Structure
-
-The default structure is:
+### Option A: Two-Vault System (Recommended)
+Keep research separate from daily notes:
 ```
 Obsidian/
-├── HLA Antibodies/
-│   ├── Research Questions/
-│   └── Concepts/
-└── Research Journal/
-    ├── Daily/
-    └── Concepts/
-```
-
-Create your own structure:
-```
-Obsidian/
-├── Your Research Area/
-│   ├── Research Questions/
+├── [Your Research Topic]/      # e.g., "Cancer Biology", "Neuroscience"
 │   ├── Concepts/
-│   ├── Protocols/
-│   └── Data Analysis/
-└── Lab Notebook/
-    └── Experiments/
+│   ├── Research Questions/
+│   └── Literature/
+└── Research Journal/            # Daily logs and project notes
+    ├── Daily/
+    └── Projects/
 ```
 
-### 5. Add Custom MCP Servers
+**Config**: Keep both `obsidian-rest-hla` and `obsidian-rest-journal` (rename as needed)
 
-Edit `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json`:
+### Option B: Single Vault (Simpler)
+Everything in one place:
+```
+Obsidian/
+└── Research/
+    ├── Concepts/
+    ├── Questions/
+    ├── Daily/
+    └── Literature/
+```
 
+**Config**: Use only one `obsidian-rest` server, remove the journal server
+
+### Option C: Project-Based Vaults
+Separate vault per project:
+```
+Obsidian/
+├── Grant_F31_2025/
+├── Clinical_Trial_XYZ/
+└── Lab_Protocols/
+```
+
+**Config**: Add MCP server for each vault with unique ports (27124, 27125, 27126...)
+
+## 🎭 Creating Your Domain Agent
+
+### Step 1: Start with Template
+```bash
+cp templates/AGENT_TEMPLATE.md ~/my-project/CLAUDE.md
+```
+
+### Step 2: Customize Core Sections
+
+#### Agent Identity
+```markdown
+# [Your Field] Research Expert Agent
+
+## Role & Expertise
+Expert in [your specific domain] with focus on [your research goals]
+
+## Primary Research Focus
+- **Current Project**: [Your main project]
+- **Key Questions**: [What you're investigating]
+- **Methods**: [Your approaches]
+```
+
+#### Knowledge Sources
+Replace HLA-specific paths with yours:
+```markdown
+## Knowledge Sources
+1. **Literature**: ~/Documents/Papers/[Your Field]/
+2. **Data**: ~/Research/Data/
+3. **Protocols**: ~/Lab/Protocols/
+```
+
+#### Domain Vocabulary
+Add field-specific terms:
+```markdown
+## Domain-Specific Knowledge
+- Key concepts: [List important concepts]
+- Common abbreviations: [Field-specific acronyms]
+- Important methods: [Techniques you use]
+```
+
+### Step 3: Tool Configuration
+
+#### For Wet Lab Research
+Emphasize protocol management:
+```markdown
+## Workflow Priorities
+1. Check protocols folder first
+2. Version control for protocol changes
+3. Link to relevant safety docs
+```
+
+#### For Clinical Research
+Add patient data handling:
+```markdown
+## Data Handling Rules
+- Never include PHI in notes
+- Use study IDs only
+- Follow HIPAA guidelines
+```
+
+#### For Computational Research
+Focus on code and analysis:
+```markdown
+## Code Management
+- Link to GitHub repos
+- Document analysis pipelines
+- Track software versions
+```
+
+## 📝 Template Customization
+
+### Concept Note Template
+Edit `templates/concept.md`:
+```markdown
+# {{title}}
+
+## Definition
+[Adjust for your field's style]
+
+## Clinical Significance  → ## Research Impact
+## Mechanisms           → ## Theoretical Framework
+## References           → ## Citations
+```
+
+### Daily Entry Template
+Edit `templates/daily-entry.md`:
+```markdown
+# {{date}}
+
+## Experiments Completed  → ## Work Completed
+## Lab Observations      → ## Key Findings
+## Protocol Changes      → ## Methods Notes
+```
+
+### Research Question Template
+Adapt to your field's format:
+```markdown
+# Research Question
+
+## Hypothesis        → ## Research Aim
+## Background       → ## Literature Context
+## Methodology      → ## Proposed Approach
+## Expected Impact  → ## Significance
+```
+
+## 🔧 Advanced Customization
+
+### Custom MCP Servers
+Add field-specific tools:
 ```json
 {
   "mcpServers": {
-    // ... existing servers ...
-    "your-custom-server": {
+    "protein-db": {
       "command": "npx",
-      "args": ["your-mcp-package"],
-      "env": {
-        "YOUR_API_KEY": "key-here"
-      }
+      "args": ["@your-org/protein-mcp"]
     }
   }
 }
 ```
 
-### 6. Customize PubMed Searches
+### API Integrations
+Connect to your field's databases:
+- **Biology**: UniProt, NCBI, PDB
+- **Chemistry**: PubChem, ChEMBL
+- **Clinical**: ClinicalTrials.gov, FDA
+- **Physics**: arXiv, INSPIRE-HEP
 
-Add your field-specific search terms to memory:
-```json
-{
-  "search_preferences": {
-    "default_filters": ["your field[MeSH]", "last 5 years"],
-    "priority_journals": ["Nature Medicine", "Your Journal"]
-  }
-}
+### Workflow Automation
+Create field-specific commands:
+```markdown
+## Custom Commands
+- "Update lab notebook" → Creates daily entry with experiment template
+- "Review literature" → Searches field-specific databases
+- "Generate figure legend" → Formats according to journal requirements
 ```
 
-## Sharing Your Customizations
+## 💡 Examples by Field
 
-### With Your Lab
-1. Export your customized templates and memory files
-2. Share via GitHub fork or direct file transfer
-3. Others can merge your customizations with their base setup
+### Neuroscience Example
+```markdown
+## Agent Configuration
+- Focus: Neural circuits and behavior
+- Databases: PubMed, Allen Brain Atlas
+- Vaults: "Neural Circuits", "Behavior Data"
+- Templates: Include imaging protocols
+```
 
-### Creating a Field-Specific Fork
-1. Fork the main repository
-2. Replace HLA-specific content with your field
-3. Update all templates and examples
-4. Share with your community
+### Cancer Biology Example
+```markdown
+## Agent Configuration
+- Focus: Tumor microenvironment
+- Databases: COSMIC, cBioPortal
+- Vaults: "Cancer Mechanisms", "Drug Screening"
+- Templates: Include cell line tracking
+```
 
-## Maintaining Core Functionality
+### Bioinformatics Example
+```markdown
+## Agent Configuration
+- Focus: Genomic analysis pipelines
+- Databases: GEO, SRA, Ensembl
+- Vaults: "Pipelines", "Analysis Results"
+- Templates: Include code snippets
+```
 
-### What NOT to Change
-- MCP server usage rules (obsidian-rest vs filesystem)
-- Basic formatting rules (Research Questions end with "?")
-- Knowledge graph linking syntax (`[[Concept]]`)
-- Template structure (keep frontmatter and sections)
+## 🚀 Quick Start for New Domain
 
-### Safe to Customize
-- Domain knowledge content
-- Tag hierarchies
-- Folder structures
-- Additional templates
-- Custom workflows
+1. **Clone HLA agent as starting point**:
+   ```bash
+   cp agents/HLA-Research-Agent.md agents/My-Field-Agent.md
+   ```
 
-## Examples of Successful Customizations
+2. **Find & Replace**:
+   - "HLA" → Your field
+   - "antibodies" → Your focus
+   - "transplant" → Your application
 
-### For Genomics Research
-- Added VCF file parsing templates
-- Created gene variant concept structure
-- Integrated with genome browsers
+3. **Update paths**:
+   - Change vault names
+   - Update literature folders
+   - Fix protocol locations
 
-### For Clinical Trials
-- Protocol templates
-- Patient cohort tracking
-- Regulatory document links
+4. **Test with simple query**:
+   ```
+   /agent "What are the key concepts in [your field]?"
+   ```
 
-### For Machine Learning Research
-- Model comparison templates
-- Dataset documentation structure
-- Experiment tracking integration
+## 📚 Resources
 
-## Getting Help
-
-- **Issues**: https://github.com/VMWM/HLA_Agent-MCP_System/issues
-- **Customization Examples**: See `examples/` folder
-- **Community Forks**: Listed in README.md
+- **Agent Library**: Share agents at github.com/VMWM/HLA_Agent-MCP_System/agents
+- **Template Collection**: Community templates in `/templates`
+- **Custom MCP Servers**: Build your own at modelcontextprotocol.org
 
 ---
 
-Remember: The system is designed to grow with your research. Start with the base configuration and gradually add your customizations as you identify patterns in your workflow.
+*Remember: The system is flexible - start simple and add complexity as needed*

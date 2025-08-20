@@ -71,11 +71,11 @@ The setup script will:
 - ✅ Set up configuration templates
 - ✅ Copy knowledge base template (includes HLA examples, but customizable for any domain)
 
-**Note**: PubMed MCP may need manual configuration. See [Setup Guide](docs/SETUP_GUIDE.md#troubleshooting) if it shows "Failed to connect".
+**Note**: PubMed MCP may need manual configuration. See [Troubleshooting](docs/TROUBLESHOOTING.md) if it shows "Failed to connect".
 
 ### Step 2: Configure Your System
 
-**See the [Setup Guide](docs/SETUP_GUIDE.md) for detailed configuration instructions.**
+**See [docs/SETUP.md](docs/SETUP.md) for complete configuration instructions.**
 
 Quick overview of required keys:
 1. **Claude API Key** - From [console.anthropic.com](https://console.anthropic.com/)
@@ -122,7 +122,7 @@ Get from: Obsidian → Settings → Community Plugins → Local REST API
 ### Step 3: Set Up Obsidian
 
 > **📌 NOTE**: This system comes with HLA research vaults as examples. 
-> **To customize for your research**: See [Personal Setup Guide](docs/PERSONAL_SETUP.md)
+> **To customize for your research**: See [CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
 
 #### Option A: Single Vault Setup (Simpler)
 1. **Install the Local REST API Plugin:**
@@ -328,18 +328,10 @@ You're using the wrong MCP server. Use `obsidian-rest` for Obsidian operations, 
 
 ## 📚 Documentation
 
-### Essential Guides
-- **[Setup Guide](docs/SETUP_GUIDE.md)** - Complete installation & configuration (START HERE)
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Solutions for common issues
-
-### Customization
-- [Personal Setup](docs/PERSONAL_SETUP.md) - Adapt for your research domain
-- [Agent Customization](docs/AGENT_CUSTOMIZATION.md) - Create specialized agents
-
-### Advanced
-- [Architecture](docs/ARCHITECTURE.md) - Technical system design
-- [Workflow Examples](docs/WORKFLOW_EXAMPLES.md) - Real usage patterns
-- [Documentation Index](docs/README.md) - Complete docs listing
+Just three essential guides:
+- **[SETUP.md](docs/SETUP.md)** - Complete installation & API configuration
+- **[CUSTOMIZATION.md](docs/CUSTOMIZATION.md)** - Adapt for your research domain
+- **[TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Solutions for common issues
 
 ## 🎯 Example Workflows
 
