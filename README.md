@@ -1,11 +1,50 @@
 # HLA Agent-MCP System
 
-> **Claude Code Exclusive** - AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
+> **Transform Claude Code into your personal research assistant** - A complete system that connects Claude to PubMed, Obsidian, and persistent memory for automated literature reviews, knowledge management, and research documentation.
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-green)](https://modelcontextprotocol.org)
 [![PubMed](https://img.shields.io/badge/PubMed-Integrated-orange)](https://pubmed.ncbi.nlm.nih.gov/)
 [![HLA](https://img.shields.io/badge/HLA-Research-red)](https://www.ashi-hla.org/)
+
+## 🤖 What is This?
+
+This system supercharges Claude Code by connecting it to:
+- **PubMed** - Search literature, verify citations, get PMIDs in real-time
+- **Obsidian** - Automatically create structured notes in your knowledge vault
+- **Memory** - Remember your research context across sessions
+- **Your Files** - Read PDFs, analyze data, process documents
+- **Sequential Thinking** - Handle complex multi-step research tasks
+
+### In Practice:
+Instead of manually searching papers, copying citations, and creating notes, you can:
+```
+/agent "Find recent papers on prozone effect in HLA testing and create a summary note"
+```
+
+Claude will:
+1. Search PubMed for relevant papers
+2. Read and synthesize the findings
+3. Create a properly formatted note in Obsidian
+4. Link it to related concepts
+5. Remember the key findings for future queries
+
+### Who Is This For?
+- **Researchers** who want AI-assisted literature reviews
+- **PhD Students** working on systematic reviews or grant proposals
+- **Clinicians** who need quick evidence-based answers
+- **Anyone** drowning in papers who wants organized knowledge management
+
+## 💡 Why This Exists
+
+I built this while working on my F31 grant proposal. I needed to:
+- Review hundreds of papers on HLA antibody testing
+- Keep track of conflicting findings across studies
+- Build a knowledge graph of interconnected concepts
+- Generate evidence-based research questions
+- Document daily progress without losing context
+
+Manual tools weren't cutting it. This system automated the tedious parts while keeping me in control of the thinking.
 
 ## 🎯 Two Ways to Use This System
 
@@ -25,7 +64,7 @@ Adapt this system for:
 - Custom agent personalities
 - Your preferred cloud storage
 
-→ See [Personal Setup Guide](docs/PERSONAL_SETUP.md) for customization
+→ See [CUSTOMIZATION.md](docs/CUSTOMIZATION.md) for adaptation
 
 ## 🚀 Quick Start (10 minutes)
 
@@ -147,20 +186,35 @@ You should see 5 servers connected:
 - ✅ filesystem-local
 - ✅ sequential-thinking
 
-## 🎯 What This System Does
+## ✨ Key Capabilities
 
-### Automated HLA Research
-- **Literature Search**: `/agent "Find recent papers on prozone effect in SAB testing"`
-- **Note Creation**: `/agent "Create a concept note on Halifax Protocol"`
-- **Knowledge Synthesis**: `/agent "Compare MFI cutoff strategies across transplant centers"`
+### What You Can Do
+```bash
+# Literature Review
+/agent "Find papers from 2020-2024 on prozone effect in HLA testing, create summary"
 
-### Key Features
-- 📚 **PubMed Integration** - Real-time literature search with PMID verification
-- 🧠 **Persistent Memory** - Remembers your research context across sessions
-- 📝 **Obsidian Integration** - Creates structured notes in your vaults
-- 🔗 **Knowledge Graphs** - Automatically links related concepts
-- 🚀 **One-Command Agent** - Complex workflows with `/agent`
-- 🎭 **Custom Agents** - Create specialized personalities for different tasks
+# Concept Development
+/agent "Create a concept note on MFI cutoffs with clinical decision thresholds"
+
+# Daily Documentation
+/agent "Create today's research journal entry with progress on Aim 2"
+
+# Knowledge Synthesis
+/agent "Compare Halifax vs EDTA protocols for prozone detection"
+
+# Grant Writing
+/agent "Generate specific aims for studying antibody standardization"
+```
+
+### How It's Different
+| Traditional Workflow | This System |
+|---------------------|-------------|
+| Search PubMed manually | Claude searches and filters |
+| Copy/paste citations | Auto-generates with PMIDs |
+| Create notes manually | Auto-creates in Obsidian |
+| Lose context between sessions | Memory persists everything |
+| Manage references manually | Auto-links related concepts |
+| Switch between tools | Everything in one terminal |
 
 ## 🎭 Custom Agent System
 
