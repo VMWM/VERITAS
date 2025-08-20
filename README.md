@@ -66,7 +66,7 @@ The setup script will:
 - ✅ Ask you to choose your cloud provider (iCloud, Dropbox, Box, Google Drive, OneDrive, or custom)
 - ✅ Create directory structure in your chosen cloud location
 - ✅ Set up configuration templates
-- ✅ Initialize memory with HLA knowledge base
+- ✅ Copy knowledge base template (includes HLA examples, but customizable for any domain)
 
 ### Step 2: Add Your API Keys
 
