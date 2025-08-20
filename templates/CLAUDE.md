@@ -1,4 +1,12 @@
-# Project Agent Configuration
+# HLA Research Expert Agent Configuration
+
+## Agent Role & Identity
+Expert in HLA antibody research, transplant immunology, and immunogenetics with focus on F31 grant development and multi-center standardization studies.
+
+## Primary Research Focus
+- **F31 Grant**: Computational standardization of HLA antibody characterization
+- **Key Innovation**: Rule-based algorithms for reducing inter-laboratory variation
+- **Clinical Goal**: Improve transplant compatibility assessment across centers
 
 ## MCP Server Usage Guide
 
@@ -48,27 +56,39 @@ mcp__obsidian-rest-journal__test_request(
 - Limited to current project directory and subdirectories
 - Perfect for analyzing project-specific materials
 
-### Other MCP Servers
+### MCP Server Priority Order
 
-**sequential-thinking** (USE PROACTIVELY for complex tasks):
-- Multi-step research questions
-- Hypothesis generation and revision
-- Conflicting evidence analysis
-- Problems needing iterative refinement
-- Automatically adjusts number of thinking steps as needed
+1. **sequential-thinking** (ALWAYS USE FIRST for research questions):
+   - Any question with >2 variables
+   - Hypothesis generation and revision
+   - Conflicting evidence analysis
+   - Problems needing iterative refinement
+   - Automatically adjusts thinking steps as needed
 
-**memory**: Persistent storage across sessions
-- Stores validated facts with citations
-- Maintains context between conversations
-- Tracks research progress
+2. **memory** (CHECK BEFORE SEARCHING):
+   - Retrieve existing knowledge
+   - Store validated facts with PMIDs
+   - Maintains context between sessions
+   - Track research progress
 
-**pubmed**: Literature search and validation
-- Real-time searches with PMID verification
-- Date-filtered queries
-- Full text retrieval when available
+3. **pubmed** (VERIFY ALL CLAIMS):
+   - Real-time searches with PMID verification
+   - Prefer recent papers (2020-2025)
+   - Date-filtered queries
+   - Full text when available
 
-**filesystem-local**: Read project files
-- PDFs and documents in current folder only
+4. **obsidian-rest-hla** (DOCUMENT FINDINGS):
+   - Create/update concept notes
+   - Add research questions
+   - Maintain knowledge graph
+
+5. **obsidian-rest-journal** (TRACK PROGRESS):
+   - Daily research logs
+   - Project documentation
+   - Task tracking
+
+6. **filesystem-local**: Read project files
+   - PDFs and documents in current folder only
 
 ## Important Notes
 
@@ -143,5 +163,70 @@ mcp__obsidian-rest-journal__test_request(
 - Daily Notes: Use ISO date format
   - Example: `2025-01-18.md`
 
+## Core HLA Knowledge Base
+
+### Halifax Protocol (Key Innovation)
+- **Method**: EDTA-bead pre-treatment (NOT EDTA-to-serum)
+- **Performance**: 95% prozone detection, 70% time reduction
+- **Critical for**: cPRA >80% patients
+- **Additional antibodies detected**: ~27 in highly sensitized
+- **PMIDs**: 35730681, 33774898, 33565589
+
+### MFI Cutoff References
+- **Pediatric Heart**: >6000 (PMID: 23551503)
+- **Pediatric Liver**: >1000 (PMID: 39351427)
+- **Adult Kidney**: >3000 (PMID: 27140940)
+- **High-risk DSA**: >10,000 (PMID: 29159992)
+- **Note**: Lab-specific validation always required
+
+### Epitope Analysis Framework
+- **TUHLA-LMS Algorithm**: ≥75% positive beads = epitope reactivity
+- **Common Eplets**: 62GE (Bw4), 163LW (Bw6), 144TKH (A2/A28)
+- **Continuous Scoring**: 0-1 scale for ML applications
+- **Analysis Tools**: HLAMatchmaker, PIRCHE-II, HLA-EMMA
+
+### F31 Grant Context
+**Central Hypothesis**: Computational standardization of HLA antibody characterization enables evidence-based risk assessment and reproducible clinical decisions beyond current subjective methods.
+
+**Addressing Key Gaps**:
+1. Inter-laboratory variation preventing multi-center studies
+2. Absence of benchmark datasets for validation
+3. Subjective interpretation reducing reproducibility
+
+**Innovation**: Transparent rule-based algorithms (not black-box ML)
+
+**Workflow Terminology**: "Interpret MFI → Characterize antibodies → Report unacceptable antigens"
+
+## Quality Checks Before Task Completion
+
+### For Literature Reviews:
+- [ ] All medical claims have PMIDs
+- [ ] Checked memory first for existing knowledge
+- [ ] Created bidirectional links between concepts
+- [ ] Updated daily journal with search strategy
+- [ ] Prioritized recent papers (2020-2025)
+
+### For Concept Creation:
+- [ ] Verified concept doesn't already exist
+- [ ] Included minimum 3-5 related concept links
+- [ ] Added aliases in frontmatter
+- [ ] Used correct folder structure
+- [ ] Applied wiki-link format [[Concept_Name]]
+
+### For Research Questions:
+- [ ] Phrased as actual question ending with "?"
+- [ ] Stored in /Research Questions/ folder
+- [ ] Linked to relevant concepts
+- [ ] Added to daily journal
+
 ## Project-Specific Instructions
-[Add your project-specific instructions here]
+- Focus on F31 grant development and multi-center standardization
+- Emphasize clinical translation and patient outcomes
+- Consider both pediatric and adult populations
+- Account for ethnic diversity in HLA frequencies
+- Document all methodology decisions for reproducibility
+
+---
+*Agent Version: 1.1*
+*Last Updated: 2025-01-20*
+*Optimized for: F31 grant and HLA antibody standardization research*
