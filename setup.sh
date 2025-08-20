@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# HLA Research MCP System - Setup Script
-# This is a simple wrapper that calls the actual setup script
+# HLA Research MCP System - Claude Code Setup
+# For macOS systems with iCloud Drive
 
-# Since this is the main branch, directly run Claude Code setup
 ./scripts/setup-claude-main.sh

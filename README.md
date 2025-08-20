@@ -1,8 +1,6 @@
 # HLA Agent-MCP System
 
-> **Current Branch**: `Claude-Code-Setup` | For GitHub Copilot setup, switch to `Github-Copilot-Setup` branch
-
-> AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
+> **Claude Code Exclusive** - AI-powered HLA antibody research assistant with PubMed verification, automated knowledge graphs, and intelligent literature review
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-green)](https://modelcontextprotocol.org)
@@ -124,15 +122,9 @@ HIGH_RISK_DSA = 10000       # Strong DSA requiring intervention
 ### 1. Clone This Repository
 
 ```bash
-git clone https://github.com/yourusername/HLA_Agent-MCP_System.git
+git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
 cd HLA_Agent-MCP_System
 ```
-
-> **Note:** For GitHub Copilot support, use the `github-copilot-support` branch:
->
-> ```bash
-> git checkout github-copilot-support
-> ```
 
 ### 2. Run Setup
 
