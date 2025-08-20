@@ -56,9 +56,64 @@ else
     print_success "Claude Code installed"
 fi
 
-# Step 3: Create directory structure
+# Step 3: Install MCP Servers
 echo ""
-echo "Step 3: Creating directory structure..."
+echo "Step 3: Installing MCP servers..."
+echo "This may take a few minutes..."
+
+# Install each MCP server
+print_warning "Installing MCP servers (this requires npm)..."
+
+# Memory MCP
+echo "  Installing memory server..."
+npm install -g @modelcontextprotocol/server-memory 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "Memory server installed"
+else
+    print_warning "Memory server may already be installed"
+fi
+
+# Sequential Thinking MCP
+echo "  Installing sequential thinking server..."
+npm install -g @modelcontextprotocol/server-sequential-thinking 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "Sequential thinking server installed"
+else
+    print_warning "Sequential thinking server may already be installed"
+fi
+
+# Filesystem MCP
+echo "  Installing filesystem server..."
+npm install -g @modelcontextprotocol/server-filesystem 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "Filesystem server installed"
+else
+    print_warning "Filesystem server may already be installed"
+fi
+
+# Obsidian REST API MCP
+echo "  Installing Obsidian REST API server..."
+npm install -g dkmaker-mcp-rest-api 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "Obsidian REST API server installed"
+else
+    print_warning "Obsidian REST API server may already be installed"
+fi
+
+# PubMed MCP
+echo "  Installing PubMed server..."
+npm install -g @ncukondo/pubmed-mcp 2>/dev/null
+if [ $? -eq 0 ]; then
+    print_success "PubMed server installed"
+else
+    print_warning "PubMed server may already be installed"
+fi
+
+print_success "All MCP servers installed!"
+
+# Step 4: Create directory structure
+echo ""
+echo "Step 4: Creating directory structure..."
 
 # MCP-Shared directory in iCloud
 MCP_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
@@ -105,9 +160,9 @@ else
     print_warning "Research Journal vault already exists"
 fi
 
-# Step 4: Copy configuration template
+# Step 5: Copy configuration template
 echo ""
-echo "Step 4: Setting up configuration..."
+echo "Step 5: Setting up configuration..."
 CONFIG_FILE="$MCP_DIR/claude-desktop-config.json"
 if [ ! -f "$CONFIG_FILE" ]; then
     if [ -f "config/claude-desktop-config.template.json" ]; then
@@ -122,9 +177,9 @@ else
     print_warning "Configuration already exists"
 fi
 
-# Step 5: Create symlink
+# Step 6: Create symlink
 echo ""
-echo "Step 5: Creating symlink for Claude Code..."
+echo "Step 6: Creating symlink for Claude Code..."
 SYMLINK="$HOME/.claude.json"
 if [ ! -L "$SYMLINK" ]; then
     ln -s "$CONFIG_FILE" "$SYMLINK"
@@ -138,9 +193,9 @@ else
     fi
 fi
 
-# Step 6: Copy templates
+# Step 7: Copy templates
 echo ""
-echo "Step 6: Installing templates..."
+echo "Step 7: Installing templates..."
 TEMPLATES_DIR="$MCP_DIR/templates"
 if [ ! -d "$TEMPLATES_DIR" ]; then
     mkdir -p "$TEMPLATES_DIR"
@@ -154,9 +209,9 @@ else
     print_warning "Templates directory already exists"
 fi
 
-# Step 7: Initialize Memory (if script exists)
+# Step 8: Initialize Memory (if script exists)
 echo ""
-echo "Step 7: Initializing memory..."
+echo "Step 8: Initializing memory..."
 if [ -f "scripts/initialize-memory.sh" ]; then
     bash scripts/initialize-memory.sh
     print_success "Memory initialized"
@@ -164,9 +219,9 @@ else
     print_warning "Memory initialization script not found"
 fi
 
-# Step 8: Test Claude Code installation
+# Step 9: Test Claude Code installation
 echo ""
-echo "Step 8: Testing Claude Code installation..."
+echo "Step 9: Testing Claude Code installation..."
 if claude --version &> /dev/null; then
     CLAUDE_VERSION=$(claude --version)
     print_success "Claude Code is working: $CLAUDE_VERSION"
