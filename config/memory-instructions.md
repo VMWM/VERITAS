@@ -54,6 +54,12 @@ When using obsidian-rest for HLA Antibodies vault:
 - ✅ CORRECT: `/vault/Research Questions/How does prozone affect interpretation.md`
 - ❌ WRONG: `/vault/HLA Antibodies/Concepts/MFI_Cutoffs.md` (creates duplicate folder)
 
+### Correct API Format:
+When creating files with obsidian-rest:
+- ✅ CORRECT: Send raw Markdown as body: `"# Title\n\nContent here"`
+- ❌ WRONG: JSON wrapper: `{"content": "# Title\n\nContent here"}`
+- The REST API expects plain text, not JSON objects
+
 ## MCP Server Usage Rules
 
 ### ALWAYS Use:

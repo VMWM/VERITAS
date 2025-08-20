@@ -59,11 +59,38 @@ Get from: https://console.anthropic.com/
 ```
 Get from: https://www.ncbi.nlm.nih.gov/account/settings/
 
-#### Obsidian REST API Key
+#### Obsidian REST API Keys (Dual Vault Setup)
+
+**For Single Vault (Simple Setup):**
 ```json
 "obsidian-rest": {
   "env": {
+    "REST_BASE_URL": "https://127.0.0.1:27124",
     "AUTH_BEARER": "YOUR-OBSIDIAN-API-KEY"
+  }
+}
+```
+
+**For Dual Vault (Recommended - Full Automation):**
+```json
+"obsidian-rest-hla": {
+  "command": "npx",
+  "args": ["dkmaker-mcp-rest-api@latest"],
+  "env": {
+    "REST_BASE_URL": "https://127.0.0.1:27124",
+    "AUTH_BEARER": "YOUR-HLA-VAULT-API-KEY",
+    "REST_ENABLE_SSL_VERIFY": "false",
+    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+  }
+},
+"obsidian-rest-journal": {
+  "command": "npx",
+  "args": ["dkmaker-mcp-rest-api@latest"],
+  "env": {
+    "REST_BASE_URL": "https://127.0.0.1:27125",
+    "AUTH_BEARER": "YOUR-JOURNAL-VAULT-API-KEY",
+    "REST_ENABLE_SSL_VERIFY": "false",
+    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
   }
 }
 ```
@@ -71,6 +98,7 @@ Get from: Obsidian → Settings → Community Plugins → Local REST API
 
 ### Step 3: Set Up Obsidian
 
+#### Option A: Single Vault Setup (Simpler)
 1. **Install the Local REST API Plugin:**
    - Open Obsidian
    - Settings → Community Plugins → Browse
@@ -80,11 +108,30 @@ Get from: Obsidian → Settings → Community Plugins → Local REST API
 2. **Generate API Key:**
    - Settings → Local REST API
    - Copy the API key
-   - Add to config (Step 2)
+   - Add to config as `obsidian-rest`
 
 3. **Verify Settings:**
    - Ensure HTTPS is enabled (port 27124)
    - API key is visible
+
+#### Option B: Dual Vault Setup (Recommended for Full Automation)
+1. **Set up HLA Antibodies vault:**
+   - Open HLA Antibodies vault in Obsidian
+   - Install Local REST API plugin
+   - Keep default port 27124
+   - Copy API key for `obsidian-rest-hla`
+
+2. **Set up Research Journal vault:**
+   - Open Research Journal vault in separate Obsidian window
+   - Install Local REST API plugin
+   - **Change port to 27125** in Advanced Settings
+   - Copy API key for `obsidian-rest-journal`
+
+3. **Benefits of Dual Vault:**
+   - ✅ Agent writes to both vaults automatically
+   - ✅ HLA concepts → HLA Antibodies vault
+   - ✅ Daily entries → Research Journal vault
+   - ✅ No manual vault switching needed
 
 ### Step 4: Add CLAUDE.md to Your Projects
 
@@ -154,17 +201,19 @@ Your Machine
 |--------|---------|-------|
 | **memory** | Persistent knowledge storage | Stores facts, templates, context |
 | **pubmed** | Medical literature search | Real-time PMID-verified searches |
-| **obsidian-rest** | Note creation/editing | Works from ANY project folder |
+| **obsidian-rest-hla** | HLA vault access | Concepts & research questions |
+| **obsidian-rest-journal** | Journal vault access | Daily entries & project notes |
 | **filesystem-local** | Read local files | PDFs, documents in current folder |
 | **sequential-thinking** | Complex reasoning | Multi-step analysis and synthesis |
 
 ## 📝 Important: Two-Vault Structure
 
 You have TWO separate Obsidian vaults:
-1. **HLA Antibodies** - Research questions and HLA concepts
-2. **Research Journal** - Daily notes and project concepts
+1. **HLA Antibodies** (Port 27124) - Research questions and HLA concepts
+2. **Research Journal** (Port 27125) - Daily notes and project concepts
 
-The REST API connects to ONE vault at a time (typically HLA Antibodies).
+**Single Vault Setup:** REST API connects to one vault at a time
+**Dual Vault Setup:** Both vaults accessible simultaneously via different ports
 
 ## 🔧 Troubleshooting
 
@@ -180,6 +229,32 @@ claude
 ### Obsidian REST API connection refused?
 1. Ensure Obsidian is running
 2. Check Local REST API plugin is enabled
+3. For dual vault: Ensure ports are different (27124 & 27125)
+
+### Dual Vault Setup Issues?
+
+**Both vaults using same port?**
+- HLA Antibodies: Keep port 27124
+- Research Journal: Change to port 27125 in Advanced Settings
+
+**Only one vault connecting?**
+- Verify both Obsidian windows are open
+- Check both API keys are different
+- Ensure config has both `obsidian-rest-hla` and `obsidian-rest-journal`
+
+**iCloud sync conflicts?**
+- Choose "Modified recently" when prompted
+- Let iCloud fully sync before testing
+
+### Testing Dual Vault Connection
+```bash
+# In Claude Code, verify both servers:
+/mcp
+
+# Should show:
+✅ obsidian-rest-hla
+✅ obsidian-rest-journal
+```
 3. Verify API key matches in both Obsidian and config
 4. Confirm HTTPS on port 27124
 
