@@ -174,6 +174,30 @@ You should see 5 servers connected:
 - 📝 **Obsidian Integration** - Creates structured notes in your vaults
 - 🔗 **Knowledge Graphs** - Automatically links related concepts
 - 🚀 **One-Command Agent** - Complex workflows with `/agent`
+- 🎭 **Custom Agents** - Create specialized personalities for different tasks
+
+## 🎭 Custom Agent System
+
+### Using Pre-Built Agents
+```bash
+# Copy HLA Research Agent to your project
+cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/HLA-Research-Agent.md ./CLAUDE.md
+```
+
+### Creating Your Own Agent
+```bash
+# Start with the template
+cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/AGENT_TEMPLATE.md ./My-Agent.md
+# Edit to add your domain knowledge and rules
+# Use as CLAUDE.md in your projects
+```
+
+Agents can be specialized for:
+- Grant writing
+- Protocol development
+- Data analysis
+- Literature reviews
+- Clinical documentation
 
 ## 📁 System Architecture
 
@@ -184,6 +208,10 @@ Your Machine
 │   └── MCP-Shared/
 │       ├── claude-desktop-config.json → Your configuration
 │       ├── nova-memory/              → Persistent storage
+│       ├── agents/                   → Agent personality library
+│       │   ├── HLA-Research-Agent.md → Pre-configured HLA expert
+│       │   ├── AGENT_TEMPLATE.md     → Create custom agents
+│       │   └── README.md             → Agent usage guide
 │       └── templates/                → Note templates
 └── ~/Library/CloudStorage/Box-Box/   → Box Drive
     └── Obsidian/
