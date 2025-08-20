@@ -38,6 +38,9 @@ Adapt this system for:
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
 - Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
 
+### ⚠️ Important: Content Validation
+This system includes automatic markdown validation to prevent formatting issues in Obsidian. All content is validated and auto-corrected before writing to vaults. See [Obsidian Validation Guide](docs/OBSIDIAN_VALIDATION.md) for details.
+
 ### Step 0: Install Claude Code (if needed)
 
 **Option A: Via VS Code Extension**

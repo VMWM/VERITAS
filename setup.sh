@@ -15,6 +15,7 @@ NC='\033[0m' # No Color
 
 echo "================================================"
 echo "HLA Research MCP System - Claude Code Setup"
+echo "Version 3.1 - With Content Validation"
 echo "================================================"
 echo ""
 
@@ -395,6 +396,15 @@ if [ ! -d "$TEMPLATES_DIR" ]; then
     fi
 else
     print_warning "Templates directory already exists"
+fi
+
+# Copy validation configuration
+if [ -f "config/obsidian-content-validation.json" ]; then
+    cp "config/obsidian-content-validation.json" "$HLA_DIR/config/" 2>/dev/null || true
+    print_success "Content validation rules installed"
+else
+    print_warning "Content validation config not found - creating default"
+    echo '{"obsidian_content_validation": {"version": "1.0"}}' > "$HLA_DIR/config/obsidian-content-validation.json"
 fi
 
 # Copy agent template and examples to agents folder

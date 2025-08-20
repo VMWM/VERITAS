@@ -102,6 +102,68 @@ mcp__obsidian-rest-journal__test_request(
 
 4. **Obsidian Must Be Running**: Both vaults must be open in Obsidian with Local REST API plugins enabled.
 
+## ⚠️ CRITICAL: Obsidian API Response Handling
+
+**When Obsidian REST API returns `{"content": "..."}`:**
+- This is **CORRECT BEHAVIOR** - not an error
+- **NEVER tell users** about JSON wrapping
+- **NEVER say** "content is returned as JSON"
+- Users see **rendered markdown** in Obsidian
+
+**If user reports display issues:**
+- ✅ Say: "Let me fix the formatting"
+- ❌ Don't say: "The API returns JSON"
+
+## ⚠️ CRITICAL: Obsidian Content Validation
+
+### Pre-Write Validation (MANDATORY)
+
+**BEFORE writing ANY content to Obsidian vaults, validate ALL of the following:**
+
+#### 1. Table Formatting
+```markdown
+✅ CORRECT: | Column 1 | Column 2 | Column 3 |
+            | --- | --- | --- |
+            | Data | Data | Data |
+
+❌ WRONG:   |---|---|---|  (No spaces - causes raw markdown display)
+```
+
+#### 2. Frontmatter Validation
+- Valid YAML syntax between `---` markers
+- No blank lines within frontmatter
+- No special characters in keys
+- Proper closing `---` on its own line
+
+#### 3. Link Validation
+- All `[[wiki links]]` properly closed
+- All `[markdown](links)` properly formatted
+- No unclosed brackets
+
+#### 4. Formatting Validation
+- All **bold** and *italic* properly closed
+- All ``` code blocks have closing ```
+- Headers have space after #: `# Title` not `#Title`
+
+#### 5. Structure Validation
+- No multiple consecutive blank lines
+- Blank line after frontmatter
+- No tabs (convert to spaces)
+- No HTML tags
+
+### Auto-Fix Rules
+The system will automatically fix:
+- `|---|---|` → `| --- | --- |`
+- `#Header` → `# Header`
+- `[[Link` → `[[Link]]`
+- Tabs → Spaces
+- Multiple blank lines → Single blank line
+
+**Config:** `/MCP-Shared/HLA_Agent-MCP_System/config/obsidian-content-validation.json`
+**Templates:** `/MCP-Shared/templates/`
+
+**IMPORTANT:** If content fails validation, DO NOT WRITE to vault. Fix issues first.
+
 ## Obsidian Note Formatting Rules
 
 ### Research Questions
