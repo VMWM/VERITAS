@@ -193,6 +193,13 @@ else
     print_warning "Install from VS Code: Cmd+Shift+P → 'Shell Command: Install code command'"
 fi
 
+# Step 10: Note about CLAUDE.md for project folders
+echo ""
+echo "Step 10: Project Configuration..."
+print_success "CLAUDE.md template available in templates/"
+print_warning "IMPORTANT: Copy templates/CLAUDE.md to each project folder where you'll use Claude Code"
+print_warning "This file contains critical two-vault structure documentation"
+
 # Final instructions
 echo ""
 echo "================================================"
@@ -216,12 +223,16 @@ echo "   - Generate API key and add to config (both places mentioned above)"
 echo "   - IMPORTANT: The MCP server handles authentication automatically"
 echo "   - Agents should NOT manually add Authorization headers"
 echo ""
-echo "3. TEST THE SYSTEM:"
+echo "3. ADD CLAUDE.MD TO YOUR PROJECT:"
+echo "   Copy templates/CLAUDE.md to your project folders"
+echo "   This prevents duplicate Obsidian folder creation issues"
+echo ""
+echo "4. TEST THE SYSTEM:"
 echo "   Run: claude"
 echo "   Then type: /mcp"
 echo "   You should see all servers connected"
 echo ""
-echo "4. TRY YOUR FIRST AGENT:"
+echo "5. TRY YOUR FIRST AGENT:"
 echo "   /agent \"Find recent papers on HLA antibodies\""
 echo ""
 echo "For troubleshooting, see docs/TROUBLESHOOTING.md"

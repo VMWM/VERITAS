@@ -267,6 +267,41 @@ The specialized HLA Research Agent can:
 - Build knowledge graphs connecting HLA concepts, testing methods, and clinical outcomes
 - Synthesize conflicting findings across HLA literature for comprehensive reviews
 
+## Important: Project Configuration (CLAUDE.md)
+
+**CRITICAL**: Each project folder where you use Claude Code needs a `CLAUDE.md` file to prevent Obsidian path issues.
+
+### Why CLAUDE.md is Required
+
+The CLAUDE.md file contains critical documentation about:
+- Two-vault structure (HLA Antibodies and Research Journal are SEPARATE vaults)
+- Correct path formats to prevent duplicate folder creation
+- MCP server usage rules
+
+### How to Add CLAUDE.md to Your Projects
+
+1. **For new projects:**
+   ```bash
+   cp templates/CLAUDE.md /path/to/your/project/
+   ```
+
+2. **For existing projects:**
+   - Copy `templates/CLAUDE.md` from this repository
+   - Place it in the root of any project folder where you'll use Claude Code
+   - Customize the project-specific instructions section if needed
+
+3. **What happens without CLAUDE.md:**
+   - Agent may create duplicate folders like "HLA Antibodies/HLA Antibodies/Concepts"
+   - Files may be placed in wrong locations
+   - REST API path confusion
+
+### Customizing CLAUDE.md
+
+The template includes placeholders for project-specific instructions. You can add:
+- Project-specific file paths
+- Custom workflows
+- Domain-specific knowledge
+
 ## Usage Examples
 
 ### HLA Literature Review
