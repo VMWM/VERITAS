@@ -34,7 +34,7 @@ Adapt this system for:
 - [VS Code](https://code.visualstudio.com/) (required for Claude Code)
 - [Claude Code](https://claude.ai/code) - Install via VS Code or npm
 - [Node.js](https://nodejs.org/) v18 or higher
-- [Obsidian](https://obsidian.md/) (for note management)
+- [Obsidian](https://obsidian.md/) with Local REST API plugin
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
 - Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
 
