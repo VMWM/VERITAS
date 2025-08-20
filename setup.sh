@@ -133,6 +133,15 @@ else
     print_warning "nova-memory directory already exists"
 fi
 
+# Agents directory for custom agent personalities
+AGENTS_DIR="$MCP_DIR/agents"
+if [ ! -d "$AGENTS_DIR" ]; then
+    mkdir -p "$AGENTS_DIR"
+    print_success "Created agents directory"
+else
+    print_warning "agents directory already exists"
+fi
+
 # Obsidian vault directories (Box)
 OBSIDIAN_BASE="$HOME/Library/CloudStorage/Box-Box/Obsidian"
 if [ ! -d "$OBSIDIAN_BASE" ]; then
@@ -193,9 +202,11 @@ else
     fi
 fi
 
-# Step 7: Copy templates
+# Step 7: Copy templates and agent files
 echo ""
-echo "Step 7: Installing templates..."
+echo "Step 7: Installing templates and agent library..."
+
+# Copy general templates
 TEMPLATES_DIR="$MCP_DIR/templates"
 if [ ! -d "$TEMPLATES_DIR" ]; then
     mkdir -p "$TEMPLATES_DIR"
@@ -207,6 +218,85 @@ if [ ! -d "$TEMPLATES_DIR" ]; then
     fi
 else
     print_warning "Templates directory already exists"
+fi
+
+# Copy agent template and examples to agents folder
+if [ -d "$AGENTS_DIR" ]; then
+    # Copy agent template
+    if [ -f "templates/AGENT_TEMPLATE.md" ]; then
+        cp "templates/AGENT_TEMPLATE.md" "$AGENTS_DIR/"
+        print_success "Agent template installed"
+    fi
+    
+    # Copy HLA Research Agent as example
+    if [ -f "templates/CLAUDE.md" ]; then
+        cp "templates/CLAUDE.md" "$AGENTS_DIR/HLA-Research-Agent.md"
+        print_success "HLA Research Agent installed as example"
+    fi
+    
+    # Create README for agents directory
+    cat > "$AGENTS_DIR/README.md" << 'EOF'
+# Agent Library
+
+This folder contains different agent personalities for Claude Code. Each agent is configured for specific tasks and workflows.
+
+## How to Use
+
+1. **Choose an agent** from the list below
+2. **Copy it to your project** as `CLAUDE.md`:
+   ```bash
+   cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/[Agent-Name].md ./CLAUDE.md
+   ```
+3. **Use `/agent`** in Claude Code to activate that personality
+
+## Available Agents
+
+### 🧬 HLA-Research-Agent.md
+**Purpose**: HLA antibody research, transplant immunology, immunogenetics
+- Dual vault support (HLA Antibodies + Research Journal)
+- PubMed integration with PMID verification
+- Sequential thinking for complex immunology questions
+- Knowledge graph linking for Obsidian
+
+### 📝 AGENT_TEMPLATE.md
+**Purpose**: Template for creating new agents
+- Complete structure for defining agent behavior
+- Sections for knowledge, tools, workflows
+- Customizable for any domain
+- Copy and modify for new agents
+
+## Creating New Agents
+
+1. Copy `AGENT_TEMPLATE.md` to a new file:
+   ```bash
+   cp AGENT_TEMPLATE.md My-New-Agent.md
+   ```
+
+2. Fill in each section:
+   - Define the agent's role and expertise
+   - Specify which MCP servers it uses
+   - Set behavioral rules and response style
+   - Add domain-specific knowledge
+
+3. Test in a project:
+   ```bash
+   cp My-New-Agent.md ~/my-project/CLAUDE.md
+   cd ~/my-project
+   claude
+   /agent [test prompt]
+   ```
+
+## Tips
+
+- **Keep agents focused**: One domain per agent works best
+- **Document changes**: Update version and date in agent file
+- **Test thoroughly**: Verify MCP server access before sharing
+- **Backup originals**: Keep copies before major edits
+
+---
+*Last updated: $(date +%Y-%m-%d)*
+EOF
+    print_success "Agent library README created"
 fi
 
 # Step 8: Initialize Memory (if script exists)
@@ -248,11 +338,16 @@ echo "   - Open Obsidian"
 echo "   - Install 'Local REST API' plugin"
 echo "   - Generate API key and add to config"
 echo ""
-echo "3. ADD CLAUDE.MD TO YOUR PROJECTS:"
-echo "   Copy templates/CLAUDE.md to each project folder"
-echo "   This prevents duplicate folder creation issues"
+echo "3. CHOOSE YOUR AGENT:"
+echo "   Your agent library is at: $AGENTS_DIR"
+echo "   Copy an agent to your project as CLAUDE.md:"
+echo "   cp $AGENTS_DIR/HLA-Research-Agent.md ./CLAUDE.md"
 echo ""
-echo "4. TEST THE SYSTEM:"
+echo "4. CREATE CUSTOM AGENTS:"
+echo "   Use the template: $AGENTS_DIR/AGENT_TEMPLATE.md"
+echo "   Create specialized agents for different tasks"
+echo ""
+echo "5. TEST THE SYSTEM:"
 echo "   Run: claude"
 echo "   Then type: /mcp"
 echo "   You should see all servers connected"
