@@ -150,23 +150,40 @@ Obsidian/
 
 **See [docs/SETUP.md](docs/SETUP.md) for detailed instructions.**
 
+Edit the configuration file:
+```bash
+# Location depends on your cloud provider:
+# iCloud: ~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
+# Dropbox: ~/Dropbox/MCP-Shared/claude-desktop-config.json
+# Box: ~/Library/CloudStorage/Box-Box/MCP-Shared/claude-desktop-config.json
+```
+
 Required keys:
 1. **Claude API Key** - From [console.anthropic.com](https://console.anthropic.com/)
 2. **PubMed Email** - Any valid email (API key optional)
 3. **Obsidian API Key(s)** - From Step 2 above
 
-The setup script shows where to add these based on your cloud provider.
+The setup script creates a template showing exactly where to add these.
 
 ### Step 4: Add CLAUDE.md to Your Project
 
 **CRITICAL:** The agent file MUST be named `CLAUDE.md` in your project folder:
 
 ```bash
-# Copy and rename the template
-cp templates/CLAUDE.md /path/to/your/project/CLAUDE.md
+# Option 1: Use the included HLA research agent
+cp ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_System/CLAUDE.md /path/to/your/project/
+
+# Option 2: Create your own custom agent
+cp ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_System/templates/AGENT_TEMPLATE.md /path/to/your/project/CLAUDE.md
 ```
 
-This file tells Claude how to behave for your specific research domain.
+This file tells Claude how to behave for your specific research domain. 
+
+**⚠️ IMPORTANT:** The included CLAUDE.md has strict information verification requirements:
+- Prevents fabrication of data or citations
+- Requires PMIDs for all medical claims
+- Prioritizes your project files over web searches
+- Explicitly states uncertainty when information can't be verified
 
 ### Step 5: Test Your Setup
 
@@ -222,18 +239,19 @@ You should see 5 servers connected:
 
 ### Using the HLA Research Agent
 ```bash
-# Copy to your project AS CLAUDE.md (not HLA-Research-Agent.md!)
-cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/HLA-Research-Agent.md ./CLAUDE.md
+# Copy to your project AS CLAUDE.md
+cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_System/CLAUDE.md ./CLAUDE.md
 ```
 
 ### Creating Your Own Agent
 ```bash
 # 1. Start with template
-cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/AGENT_TEMPLATE.md ./CLAUDE.md
+cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_System/templates/AGENT_TEMPLATE.md ./CLAUDE.md
 
 # 2. Edit CLAUDE.md to add your domain knowledge
 
-# 3. Save as a reusable agent for future projects
+# 3. Save as a reusable agent for future projects (optional)
+mkdir -p ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/
 cp ./CLAUDE.md ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/My-Domain-Agent.md
 ```
 
@@ -243,20 +261,27 @@ Agents can be specialized for any research domain or task.
 
 ```
 Your Machine
-├── ~/.claude.json                    → Symlink to cloud config
+├── ~/.config/claude/
+│   └── claude-desktop-config.json    → Main Claude configuration
+│
 ├── Your Project/
 │   └── CLAUDE.md                     → Agent personality (REQUIRED NAME)
 │
 ├── Cloud Storage (iCloud/Dropbox/Box/etc)
 │   └── MCP-Shared/
-│       ├── claude-desktop-config.json → Synced configuration
-│       ├── nova-memory/              → Persistent memory
-│       ├── agents/                   → Reusable agent library
-│       └── templates/                → Note templates
+│       ├── HLA_Agent-MCP_System/     → This repository
+│       │   ├── CLAUDE.md             → Master agent personality
+│       │   ├── config/               → Templates & validation
+│       │   ├── docs/                 → Documentation
+│       │   ├── scripts/              → Setup scripts
+│       │   └── templates/            → Note templates
+│       ├── claude-desktop-config.json → Synced MCP configuration
+│       ├── nova-memory/              → Persistent memory database
+│       └── CLAUDE.md                 → Shared agent personality
 │
 └── Obsidian Vaults (anywhere)
     ├── [Your Research]/              → Main research vault
-    └── Research Journal/             → Daily notes vault
+    └── Research Journal/             → Daily notes vault (optional)
 ```
 
 **Supported Cloud Providers:**
@@ -273,8 +298,9 @@ Your Machine
 |--------|---------|-------|
 | **memory** | Persistent knowledge storage | Stores facts, templates, context |
 | **pubmed** | Medical literature search | Real-time PMID-verified searches |
-| **obsidian-rest-hla** | HLA vault access | Concepts & research questions |
-| **obsidian-rest-journal** | Journal vault access | Daily entries & project notes |
+| **obsidian-rest** | Obsidian vault access | Single vault setup (default) |
+| **obsidian-rest-hla** | HLA vault access | Dual vault: Concepts & research questions |
+| **obsidian-rest-journal** | Journal vault access | Dual vault: Daily entries & project notes |
 | **filesystem-local** | Read local files | PDFs, documents in current folder |
 | **sequential-thinking** | Complex reasoning | Multi-step analysis and synthesis |
 
