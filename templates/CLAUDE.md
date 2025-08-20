@@ -49,9 +49,26 @@ mcp__obsidian-rest-journal__test_request(
 - Perfect for analyzing project-specific materials
 
 ### Other MCP Servers
-- **memory**: Persistent storage across sessions
-- **pubmed**: Literature search and validation
-- **sequential-thinking**: Complex problem solving
+
+**sequential-thinking** (USE PROACTIVELY for complex tasks):
+- Multi-step research questions
+- Hypothesis generation and revision
+- Conflicting evidence analysis
+- Problems needing iterative refinement
+- Automatically adjusts number of thinking steps as needed
+
+**memory**: Persistent storage across sessions
+- Stores validated facts with citations
+- Maintains context between conversations
+- Tracks research progress
+
+**pubmed**: Literature search and validation
+- Real-time searches with PMID verification
+- Date-filtered queries
+- Full text retrieval when available
+
+**filesystem-local**: Read project files
+- PDFs and documents in current folder only
 
 ## Important Notes
 

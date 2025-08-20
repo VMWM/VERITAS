@@ -30,6 +30,28 @@ This provides the exact same experience for all users while allowing customizati
 4. **Hierarchical Tags** - Use tags like `[concept, HLA, antibodies]`
 5. **In-Text Linking** - Link first mention of concepts
 
+## MCP Server Usage Strategy
+
+### Sequential Thinking (USE PROACTIVELY):
+Use `sequential-thinking` MCP for:
+- Complex research questions with multiple variables
+- Multi-step analysis requiring hypothesis revision
+- Problems where initial approach might need adjustment
+- Conflicting evidence requiring iterative refinement
+- Tasks requiring: plan → execute → verify → revise cycle
+
+Example triggers:
+- "Why do some patients with low MFI still reject?"
+- "How do we optimize cutoffs for different populations?"
+- "Analyze conflicting literature on epitope matching"
+
+### Tool Coordination:
+1. **Sequential Thinking** - Plan approach, revise as needed
+2. **PubMed** - Verify with literature (PMIDs required)
+3. **Memory** - Store validated facts and retrieve context
+4. **Obsidian-rest-hla** - Document HLA concepts
+5. **Obsidian-rest-journal** - Record research process
+
 ## CRITICAL: Two-Vault Structure
 
 ### Understanding the Vault Setup:
