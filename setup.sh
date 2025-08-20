@@ -416,8 +416,8 @@ if [ -d "$AGENTS_DIR" ]; then
     fi
     
     # Copy HLA Research Agent as example
-    if [ -f "templates/CLAUDE.md" ]; then
-        cp "templates/CLAUDE.md" "$AGENTS_DIR/HLA-Research-Agent.md"
+    if [ -f "CLAUDE.md" ]; then
+        cp "CLAUDE.md" "$AGENTS_DIR/HLA-Research-Agent.md"
         print_success "HLA Research Agent installed as example"
     fi
     
