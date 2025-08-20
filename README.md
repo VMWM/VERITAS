@@ -98,6 +98,9 @@ Get from: Obsidian → Settings → Community Plugins → Local REST API
 
 ### Step 3: Set Up Obsidian
 
+> **📌 NOTE**: This system comes with HLA research vaults as examples. 
+> **To customize for your research**: See [Personal Setup Guide](docs/PERSONAL_SETUP.md)
+
 #### Option A: Single Vault Setup (Simpler)
 1. **Install the Local REST API Plugin:**
    - Open Obsidian

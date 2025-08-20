@@ -149,17 +149,21 @@ if [ ! -d "$OBSIDIAN_BASE" ]; then
     print_success "Created Obsidian base directory"
 fi
 
-# HLA Antibodies vault
-HLA_VAULT="$OBSIDIAN_BASE/HLA Antibodies"
-if [ ! -d "$HLA_VAULT" ]; then
-    mkdir -p "$HLA_VAULT/Research Questions"
-    mkdir -p "$HLA_VAULT/Concepts"
-    print_success "Created HLA Antibodies vault structure"
+# Example vault structure (customize for your research)
+# See docs/PERSONAL_SETUP.md for customization instructions
+
+# Example Research vault (rename to your field)
+RESEARCH_VAULT="$OBSIDIAN_BASE/HLA Antibodies"  # Change to your research area
+if [ ! -d "$RESEARCH_VAULT" ]; then
+    mkdir -p "$RESEARCH_VAULT/Research Questions"
+    mkdir -p "$RESEARCH_VAULT/Concepts"
+    print_success "Created example research vault structure"
+    print_warning "Rename 'HLA Antibodies' to your research field"
 else
-    print_warning "HLA Antibodies vault already exists"
+    print_warning "Research vault already exists"
 fi
 
-# Research Journal vault
+# Research Journal vault (recommended to keep)
 JOURNAL_VAULT="$OBSIDIAN_BASE/Research Journal"
 if [ ! -d "$JOURNAL_VAULT" ]; then
     mkdir -p "$JOURNAL_VAULT/Daily"
@@ -168,6 +172,10 @@ if [ ! -d "$JOURNAL_VAULT" ]; then
 else
     print_warning "Research Journal vault already exists"
 fi
+
+echo ""
+print_warning "IMPORTANT: Customize vault names for your research!"
+print_warning "See docs/PERSONAL_SETUP.md for instructions"
 
 # Step 5: Copy configuration template
 echo ""
@@ -351,6 +359,12 @@ echo "5. TEST THE SYSTEM:"
 echo "   Run: claude"
 echo "   Then type: /mcp"
 echo "   You should see all servers connected"
+echo ""
+echo "6. CUSTOMIZE FOR YOUR RESEARCH:"
+echo "   Read: docs/PERSONAL_SETUP.md"
+echo "   - Rename vaults to match your field"
+echo "   - Create custom agents for your domain"
+echo "   - Modify templates for your workflow"
 echo ""
 echo "Documentation: https://github.com/VMWM/HLA_Agent-MCP_System"
 echo ""
