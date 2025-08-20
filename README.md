@@ -7,6 +7,26 @@
 [![PubMed](https://img.shields.io/badge/PubMed-Integrated-orange)](https://pubmed.ncbi.nlm.nih.gov/)
 [![HLA](https://img.shields.io/badge/HLA-Research-red)](https://www.ashi-hla.org/)
 
+## 🎯 Two Ways to Use This System
+
+### Option 1: Use My Exact HLA Setup
+Perfect if you're working on:
+- HLA antibody research
+- Transplant immunology
+- F31/grant writing in immunogenetics
+- Any HLA-related research
+
+→ Follow the setup as-is and get my complete HLA research environment
+
+### Option 2: Customize for Your Research Domain
+Adapt this system for:
+- Cancer biology, neuroscience, cardiology, etc.
+- Different vault structures
+- Custom agent personalities
+- Your preferred cloud storage
+
+→ See [Personal Setup Guide](docs/PERSONAL_SETUP.md) for customization
+
 ## 🚀 Quick Start (10 minutes)
 
 ### Prerequisites
