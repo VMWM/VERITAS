@@ -31,10 +31,25 @@ Adapt this system for:
 
 ### Prerequisites
 - macOS
+- [VS Code](https://code.visualstudio.com/) (required for Claude Code)
+- [Claude Code](https://claude.ai/code) - Install via VS Code or npm
 - [Node.js](https://nodejs.org/) v18 or higher
 - [Obsidian](https://obsidian.md/) (for note management)
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
 - Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
+
+### Step 0: Install Claude Code (if needed)
+
+**Option A: Via VS Code Extension**
+1. Open VS Code
+2. Go to Extensions (⌘⇧X)
+3. Search for "Claude Code"
+4. Install the extension
+
+**Option B: Via npm**
+```bash
+npm install -g @anthropic-ai/claude-code
+```
 
 ### Step 1: Clone and Run Setup
 
@@ -46,7 +61,7 @@ chmod +x setup.sh
 ```
 
 The setup script will:
-- ✅ Install Claude Code CLI tool
+- ✅ Install Claude Code CLI tool (if not already installed)
 - ✅ Install all 5 MCP servers (Memory, PubMed, Obsidian, Filesystem, Sequential Thinking)
 - ✅ Ask you to choose your cloud provider (iCloud, Dropbox, Box, Google Drive, OneDrive, or custom)
 - ✅ Create directory structure in your chosen cloud location
