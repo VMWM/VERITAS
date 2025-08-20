@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # HLA Research MCP System - Claude Code Setup
-# For macOS systems with iCloud Drive
-# Version: 2.0 (Simplified)
+# For macOS systems with cloud storage
+# Version: 3.0 (Cloud-agnostic)
 
 set -e  # Exit on error
 
@@ -10,6 +10,7 @@ set -e  # Exit on error
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo "================================================"
@@ -28,6 +29,10 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}✗${NC} $1"
+}
+
+print_info() {
+    echo -e "${BLUE}ℹ${NC} $1"
 }
 
 # Check if running on macOS
@@ -111,18 +116,168 @@ fi
 
 print_success "All MCP servers installed!"
 
-# Step 4: Create directory structure
+# Step 4: Choose cloud provider
 echo ""
-echo "Step 4: Creating directory structure..."
+echo "Step 4: Configuring cloud storage location..."
+echo ""
+echo "Choose your cloud storage provider:"
+echo "  1) iCloud Drive (default)"
+echo "  2) Dropbox"
+echo "  3) Google Drive"
+echo "  4) Box"
+echo "  5) OneDrive"
+echo "  6) Custom path"
+echo ""
+read -p "Enter your choice (1-6) [1]: " cloud_choice
+cloud_choice=${cloud_choice:-1}
 
-# MCP-Shared directory in iCloud
-MCP_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
+# Set the base cloud directory based on choice
+case $cloud_choice in
+    1)
+        CLOUD_BASE="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+        CLOUD_NAME="iCloud Drive"
+        ;;
+    2)
+        CLOUD_BASE="$HOME/Dropbox"
+        CLOUD_NAME="Dropbox"
+        ;;
+    3)
+        CLOUD_BASE="$HOME/Google Drive"
+        if [ ! -d "$CLOUD_BASE" ]; then
+            # Try alternate path
+            CLOUD_BASE="$HOME/Library/CloudStorage/GoogleDrive-*"
+            CLOUD_BASE=$(echo $CLOUD_BASE | head -n1)
+        fi
+        CLOUD_NAME="Google Drive"
+        ;;
+    4)
+        CLOUD_BASE="$HOME/Library/CloudStorage/Box-Box"
+        CLOUD_NAME="Box"
+        ;;
+    5)
+        CLOUD_BASE="$HOME/OneDrive"
+        if [ ! -d "$CLOUD_BASE" ]; then
+            # Try alternate path
+            CLOUD_BASE="$HOME/Library/CloudStorage/OneDrive-*"
+            CLOUD_BASE=$(echo $CLOUD_BASE | head -n1)
+        fi
+        CLOUD_NAME="OneDrive"
+        ;;
+    6)
+        read -p "Enter the full path to your cloud storage folder: " CLOUD_BASE
+        CLOUD_NAME="Custom location"
+        ;;
+    *)
+        print_error "Invalid choice. Using iCloud Drive as default."
+        CLOUD_BASE="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+        CLOUD_NAME="iCloud Drive"
+        ;;
+esac
+
+# Verify cloud directory exists
+if [ ! -d "$CLOUD_BASE" ]; then
+    print_warning "Cloud directory not found at: $CLOUD_BASE"
+    read -p "Would you like to create it? (y/n) [y]: " create_cloud
+    create_cloud=${create_cloud:-y}
+    if [[ "$create_cloud" == "y" ]]; then
+        mkdir -p "$CLOUD_BASE"
+        print_success "Created cloud directory"
+    else
+        print_error "Please ensure your cloud storage is set up and try again."
+        exit 1
+    fi
+else
+    print_success "Using $CLOUD_NAME at: $CLOUD_BASE"
+fi
+
+# Step 5: Choose Obsidian location
+echo ""
+echo "Step 5: Configuring Obsidian vault location..."
+echo ""
+echo "Where do you store your Obsidian vaults?"
+echo "  1) Same cloud provider as MCP config"
+echo "  2) Different location"
+echo ""
+read -p "Enter your choice (1-2) [1]: " obsidian_choice
+obsidian_choice=${obsidian_choice:-1}
+
+if [[ "$obsidian_choice" == "2" ]]; then
+    echo ""
+    echo "Choose Obsidian storage location:"
+    echo "  1) iCloud Drive"
+    echo "  2) Dropbox"
+    echo "  3) Google Drive"
+    echo "  4) Box"
+    echo "  5) OneDrive"
+    echo "  6) Local folder (not synced)"
+    echo "  7) Custom path"
+    echo ""
+    read -p "Enter your choice (1-7): " obs_location
+    
+    case $obs_location in
+        1)
+            OBSIDIAN_BASE="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Obsidian"
+            ;;
+        2)
+            OBSIDIAN_BASE="$HOME/Dropbox/Obsidian"
+            ;;
+        3)
+            OBSIDIAN_BASE="$HOME/Google Drive/Obsidian"
+            if [ ! -d "$(dirname "$OBSIDIAN_BASE")" ]; then
+                OBSIDIAN_BASE="$HOME/Library/CloudStorage/GoogleDrive-*/Obsidian"
+                OBSIDIAN_BASE=$(echo $OBSIDIAN_BASE | head -n1)
+            fi
+            ;;
+        4)
+            OBSIDIAN_BASE="$HOME/Library/CloudStorage/Box-Box/Obsidian"
+            ;;
+        5)
+            OBSIDIAN_BASE="$HOME/OneDrive/Obsidian"
+            if [ ! -d "$(dirname "$OBSIDIAN_BASE")" ]; then
+                OBSIDIAN_BASE="$HOME/Library/CloudStorage/OneDrive-*/Obsidian"
+                OBSIDIAN_BASE=$(echo $OBSIDIAN_BASE | head -n1)
+            fi
+            ;;
+        6)
+            OBSIDIAN_BASE="$HOME/Documents/Obsidian"
+            ;;
+        7)
+            read -p "Enter the full path to your Obsidian folder: " OBSIDIAN_BASE
+            ;;
+        *)
+            OBSIDIAN_BASE="$CLOUD_BASE/Obsidian"
+            ;;
+    esac
+else
+    OBSIDIAN_BASE="$CLOUD_BASE/Obsidian"
+fi
+
+print_info "Obsidian vaults will be at: $OBSIDIAN_BASE"
+
+# Step 6: Create directory structure
+echo ""
+echo "Step 6: Creating directory structure..."
+
+# MCP-Shared directory
+MCP_DIR="$CLOUD_BASE/MCP-Shared"
 if [ ! -d "$MCP_DIR" ]; then
     mkdir -p "$MCP_DIR"
     print_success "Created MCP-Shared directory"
 else
     print_warning "MCP-Shared directory already exists"
 fi
+
+# Save the paths to a config file for reference
+CONFIG_PATHS="$MCP_DIR/.setup-paths"
+cat > "$CONFIG_PATHS" << EOF
+# Cloud Storage Configuration
+# Generated by setup.sh on $(date)
+CLOUD_PROVIDER="$CLOUD_NAME"
+CLOUD_BASE="$CLOUD_BASE"
+MCP_DIR="$MCP_DIR"
+OBSIDIAN_BASE="$OBSIDIAN_BASE"
+EOF
+print_success "Saved configuration paths for reference"
 
 # Nova memory directory
 NOVA_DIR="$MCP_DIR/nova-memory"
@@ -142,23 +297,24 @@ else
     print_warning "agents directory already exists"
 fi
 
-# Obsidian vault directories (Box)
-OBSIDIAN_BASE="$HOME/Library/CloudStorage/Box-Box/Obsidian"
+# Obsidian vault directories
 if [ ! -d "$OBSIDIAN_BASE" ]; then
     mkdir -p "$OBSIDIAN_BASE"
     print_success "Created Obsidian base directory"
 fi
 
 # Example vault structure (customize for your research)
-# See docs/PERSONAL_SETUP.md for customization instructions
+echo ""
+print_info "Creating example vault structure..."
+print_warning "IMPORTANT: Rename these vaults to match your research area!"
 
 # Example Research vault (rename to your field)
 RESEARCH_VAULT="$OBSIDIAN_BASE/HLA Antibodies"  # Change to your research area
 if [ ! -d "$RESEARCH_VAULT" ]; then
     mkdir -p "$RESEARCH_VAULT/Research Questions"
     mkdir -p "$RESEARCH_VAULT/Concepts"
-    print_success "Created example research vault structure"
-    print_warning "Rename 'HLA Antibodies' to your research field"
+    print_success "Created example research vault: 'HLA Antibodies'"
+    print_warning "➜ Rename 'HLA Antibodies' to your research field (e.g., 'Cancer Biology', 'Neuroscience')"
 else
     print_warning "Research vault already exists"
 fi
@@ -168,24 +324,25 @@ JOURNAL_VAULT="$OBSIDIAN_BASE/Research Journal"
 if [ ! -d "$JOURNAL_VAULT" ]; then
     mkdir -p "$JOURNAL_VAULT/Daily"
     mkdir -p "$JOURNAL_VAULT/Concepts"
-    print_success "Created Research Journal vault structure"
+    print_success "Created Research Journal vault"
 else
     print_warning "Research Journal vault already exists"
 fi
 
 echo ""
-print_warning "IMPORTANT: Customize vault names for your research!"
-print_warning "See docs/PERSONAL_SETUP.md for instructions"
+print_warning "Remember to customize vault names for your research!"
+print_info "See docs/PERSONAL_SETUP.md for detailed instructions"
 
-# Step 5: Copy configuration template
+# Step 7: Copy configuration template
 echo ""
-echo "Step 5: Setting up configuration..."
+echo "Step 7: Setting up configuration..."
 CONFIG_FILE="$MCP_DIR/claude-desktop-config.json"
 if [ ! -f "$CONFIG_FILE" ]; then
     if [ -f "config/claude-desktop-config.template.json" ]; then
         cp "config/claude-desktop-config.template.json" "$CONFIG_FILE"
         print_success "Configuration template copied to MCP-Shared"
-        print_warning "IMPORTANT: Edit $CONFIG_FILE to add your API keys"
+        print_warning "IMPORTANT: Edit the config file to add your API keys"
+        print_info "Config location: $CONFIG_FILE"
     else
         print_error "Configuration template not found. Please ensure you're running from the repository root."
         exit 1
@@ -194,9 +351,9 @@ else
     print_warning "Configuration already exists"
 fi
 
-# Step 6: Create symlink
+# Step 8: Create symlink
 echo ""
-echo "Step 6: Creating symlink for Claude Code..."
+echo "Step 8: Creating symlink for Claude Code..."
 SYMLINK="$HOME/.claude.json"
 if [ ! -L "$SYMLINK" ]; then
     ln -s "$CONFIG_FILE" "$SYMLINK"
@@ -204,15 +361,27 @@ if [ ! -L "$SYMLINK" ]; then
 else
     if [ -L "$SYMLINK" ]; then
         print_warning "Symlink already exists"
+        # Verify it points to the right place
+        CURRENT_TARGET=$(readlink "$SYMLINK")
+        if [ "$CURRENT_TARGET" != "$CONFIG_FILE" ]; then
+            print_warning "Symlink points to different location: $CURRENT_TARGET"
+            read -p "Update symlink to new location? (y/n) [y]: " update_link
+            update_link=${update_link:-y}
+            if [[ "$update_link" == "y" ]]; then
+                rm "$SYMLINK"
+                ln -s "$CONFIG_FILE" "$SYMLINK"
+                print_success "Symlink updated"
+            fi
+        fi
     else
         print_error "~/.claude.json exists but is not a symlink. Please remove it manually."
         exit 1
     fi
 fi
 
-# Step 7: Copy templates and agent files
+# Step 9: Copy templates and agent files
 echo ""
-echo "Step 7: Installing templates and agent library..."
+echo "Step 9: Installing templates and agent library..."
 
 # Copy general templates
 TEMPLATES_DIR="$MCP_DIR/templates"
@@ -253,7 +422,7 @@ This folder contains different agent personalities for Claude Code. Each agent i
 1. **Choose an agent** from the list below
 2. **Copy it to your project** as `CLAUDE.md`:
    ```bash
-   cp ~/Library/"Mobile Documents"/com~apple~CloudDocs/MCP-Shared/agents/[Agent-Name].md ./CLAUDE.md
+   cp [agent-file] ~/my-project/CLAUDE.md
    ```
 3. **Use `/agent`** in Claude Code to activate that personality
 
@@ -307,9 +476,9 @@ EOF
     print_success "Agent library README created"
 fi
 
-# Step 8: Initialize Memory (if script exists)
+# Step 10: Initialize Memory (if script exists)
 echo ""
-echo "Step 8: Initializing memory..."
+echo "Step 10: Initializing memory..."
 if [ -f "scripts/initialize-memory.sh" ]; then
     bash scripts/initialize-memory.sh
     print_success "Memory initialized"
@@ -317,9 +486,9 @@ else
     print_warning "Memory initialization script not found"
 fi
 
-# Step 9: Test Claude Code installation
+# Step 11: Test Claude Code installation
 echo ""
-echo "Step 9: Testing Claude Code installation..."
+echo "Step 11: Testing Claude Code installation..."
 if claude --version &> /dev/null; then
     CLAUDE_VERSION=$(claude --version)
     print_success "Claude Code is working: $CLAUDE_VERSION"
@@ -332,6 +501,11 @@ echo ""
 echo "================================================"
 echo "Setup Complete!"
 echo "================================================"
+echo ""
+echo "📁 YOUR CONFIGURATION:"
+echo "   Cloud Provider: $CLOUD_NAME"
+echo "   MCP Config: $MCP_DIR"
+echo "   Obsidian Vaults: $OBSIDIAN_BASE"
 echo ""
 echo "NEXT STEPS:"
 echo ""
@@ -346,21 +520,25 @@ echo "   - Open Obsidian"
 echo "   - Install 'Local REST API' plugin"
 echo "   - Generate API key and add to config"
 echo ""
-echo "3. CHOOSE YOUR AGENT:"
+echo "3. CUSTOMIZE VAULTS:"
+echo "   Current example vault: '$OBSIDIAN_BASE/HLA Antibodies'"
+echo "   ➜ Rename to your research area (e.g., 'Cancer Biology')"
+echo ""
+echo "4. CHOOSE YOUR AGENT:"
 echo "   Your agent library is at: $AGENTS_DIR"
 echo "   Copy an agent to your project as CLAUDE.md:"
-echo "   cp $AGENTS_DIR/HLA-Research-Agent.md ./CLAUDE.md"
+echo "   cp \"$AGENTS_DIR/HLA-Research-Agent.md\" ./CLAUDE.md"
 echo ""
-echo "4. CREATE CUSTOM AGENTS:"
+echo "5. CREATE CUSTOM AGENTS:"
 echo "   Use the template: $AGENTS_DIR/AGENT_TEMPLATE.md"
 echo "   Create specialized agents for different tasks"
 echo ""
-echo "5. TEST THE SYSTEM:"
+echo "6. TEST THE SYSTEM:"
 echo "   Run: claude"
 echo "   Then type: /mcp"
 echo "   You should see all servers connected"
 echo ""
-echo "6. CUSTOMIZE FOR YOUR RESEARCH:"
+echo "7. CUSTOMIZE FOR YOUR RESEARCH:"
 echo "   Read: docs/PERSONAL_SETUP.md"
 echo "   - Rename vaults to match your field"
 echo "   - Create custom agents for your domain"

@@ -14,6 +14,7 @@
 - [Node.js](https://nodejs.org/) v18 or higher
 - [Obsidian](https://obsidian.md/) (for note management)
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
+- Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
 
 ### Step 1: Clone and Run Setup
 
@@ -24,19 +25,21 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-This single command will:
+The setup script will:
 - ✅ Install Claude Code CLI tool
 - ✅ Install all 5 MCP servers (Memory, PubMed, Obsidian, Filesystem, Sequential Thinking)
-- ✅ Create directory structure in iCloud and Box
+- ✅ Ask you to choose your cloud provider (iCloud, Dropbox, Box, Google Drive, OneDrive, or custom)
+- ✅ Create directory structure in your chosen cloud location
 - ✅ Set up configuration templates
 - ✅ Initialize memory with HLA knowledge base
 
 ### Step 2: Add Your API Keys
 
-Edit the configuration file:
-```bash
-open ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json
-```
+The setup script will tell you the exact location of your config file based on your chosen cloud provider.
+For example:
+- **iCloud**: `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json`
+- **Dropbox**: `~/Dropbox/MCP-Shared/claude-desktop-config.json`
+- **Box**: `~/Library/CloudStorage/Box-Box/MCP-Shared/claude-desktop-config.json`
 
 Add your keys in these sections:
 
@@ -207,7 +210,7 @@ Agents can be specialized for:
 ```
 Your Machine
 ├── ~/.claude.json                    → Symlink to config
-├── ~/Library/Mobile Documents/       → iCloud (syncs across machines)
+├── [Your Cloud Provider]/            → Syncs across machines
 │   └── MCP-Shared/
 │       ├── claude-desktop-config.json → Your configuration
 │       ├── nova-memory/              → Persistent storage
@@ -216,15 +219,23 @@ Your Machine
 │       │   ├── AGENT_TEMPLATE.md     → Create custom agents
 │       │   └── README.md             → Agent usage guide
 │       └── templates/                → Note templates
-└── ~/Library/CloudStorage/Box-Box/   → Box Drive
+└── [Your Obsidian Location]/         → Can be same or different cloud
     └── Obsidian/
-        ├── HLA Antibodies/           → Research vault
+        ├── [Your Research Area]/     → Research vault (rename from HLA)
         │   ├── Concepts/
         │   └── Research Questions/
         └── Research Journal/         → Daily notes
             ├── Daily/
             └── Concepts/
 ```
+
+**Supported Cloud Providers:**
+- iCloud Drive (`~/Library/Mobile Documents/com~apple~CloudDocs`)
+- Dropbox (`~/Dropbox`)
+- Google Drive (`~/Google Drive` or `~/Library/CloudStorage/GoogleDrive-*`)
+- Box (`~/Library/CloudStorage/Box-Box`)
+- OneDrive (`~/OneDrive` or `~/Library/CloudStorage/OneDrive-*`)
+- Custom path (any local or mounted directory)
 
 ## 🛠️ MCP Servers Included
 
