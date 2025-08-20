@@ -3,29 +3,38 @@
 ## MCP Server Usage Guide
 
 ### For Obsidian Operations
-**✅ ALWAYS USE `obsidian-rest`**
-- Works from ANY project folder (no path restrictions)
-- Authentication is handled automatically by the MCP server
+
+**Dual Vault Configuration (ACTIVE):**
+- **✅ USE `obsidian-rest-hla`** for HLA Antibodies vault (Port 27124)
+- **✅ USE `obsidian-rest-journal`** for Research Journal vault (Port 27125)
+- Both work from ANY project folder (no path restrictions)
+- Authentication is handled automatically by each MCP server
 - DO NOT manually add Authorization headers - they're added automatically
 
 **⚠️ CRITICAL: Two-Vault Structure**
 The user has TWO SEPARATE Obsidian vaults:
-1. **HLA Antibodies** vault - Contains `/Concepts/` and `/Research Questions/` folders
-2. **Research Journal** vault - Contains `/Daily/` and `/Concepts/` folders
+1. **HLA Antibodies** vault (Port 27124) - Contains `/Concepts/` and `/Research Questions/` folders
+2. **Research Journal** vault (Port 27125) - Contains `/Daily/` and `/Concepts/` folders
 
-**REST API connects to ONE vault at a time** (typically HLA Antibodies)
-
-**CORRECT PATH FORMAT for HLA Antibodies vault:**
-- ✅ `/vault/Concepts/Example.md`
+**CORRECT PATH FORMAT:**
+- ✅ `/vault/Concepts/Example.md` (creates in appropriate vault)
 - ✅ `/vault/Research Questions/How does X affect Y.md`
 - ❌ `/vault/HLA Antibodies/Concepts/Example.md` (creates duplicate folder!)
 
 Example usage:
 ```
-mcp__obsidian-rest__test_request(
+# For HLA concepts:
+mcp__obsidian-rest-hla__test_request(
   endpoint: "/vault/Concepts/MFI_Cutoffs.md",
   method: "PUT",
   body: "# Your note content here"
+)
+
+# For Journal entries:
+mcp__obsidian-rest-journal__test_request(
+  endpoint: "/vault/Daily/2025-01-20.md",
+  method: "PUT",
+  body: "# Daily journal content here"
 )
 ```
 
@@ -46,11 +55,15 @@ mcp__obsidian-rest__test_request(
 
 ## Important Notes
 
-1. **Authentication**: The obsidian-rest server automatically includes your API key in all requests. You don't need to handle authentication manually.
+1. **Authentication**: Both obsidian-rest servers automatically include their respective API keys. You don't need to handle authentication manually.
 
-2. **Error Messages**: If you see "Access denied - path outside allowed directories", you're using the wrong MCP server. Switch to `obsidian-rest` immediately.
+2. **Vault Selection**: The agent automatically routes content:
+   - HLA concepts, research questions → `obsidian-rest-hla`
+   - Daily entries, journal notes → `obsidian-rest-journal`
 
-3. **Obsidian Must Be Running**: The Local REST API plugin must be enabled in Obsidian for the REST API to work.
+3. **Error Messages**: If you see "Access denied - path outside allowed directories", you're using the wrong MCP server. Use the appropriate obsidian-rest server.
+
+4. **Obsidian Must Be Running**: Both vaults must be open in Obsidian with Local REST API plugins enabled.
 
 ## Obsidian Note Formatting Rules
 
