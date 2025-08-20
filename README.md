@@ -354,14 +354,6 @@ You're using the wrong MCP server. Use `obsidian-rest` for Obsidian operations, 
 
 This system is designed for HLA research but can be adapted for other domains. Pull requests welcome!
 
-## 📄 License
-
-MIT License - See LICENSE file for details
-
-## 🙏 Acknowledgments
-
-Built for the transplant immunology community to accelerate HLA antibody research.
-
 ---
 
 **Need help?** Open an issue on [GitHub](https://github.com/VMWM/HLA_Agent-MCP_System/issues)
