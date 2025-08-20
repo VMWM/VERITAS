@@ -30,6 +30,30 @@ This provides the exact same experience for all users while allowing customizati
 4. **Hierarchical Tags** - Use tags like `[concept, HLA, antibodies]`
 5. **In-Text Linking** - Link first mention of concepts
 
+## CRITICAL: Two-Vault Structure
+
+### Understanding the Vault Setup:
+The user has TWO SEPARATE Obsidian vaults (not folders within one vault):
+
+1. **HLA Antibodies** (vault)
+   - `/Concepts/` folder - for concept notes
+   - `/Research Questions/` folder - for research questions
+   
+2. **Research Journal** (vault)
+   - `/Daily/` folder - for daily notes (format: YYYY-MM-DD.md)
+   - `/Concepts/` folder - for journal concepts
+
+### REST API Limitation:
+- The Obsidian REST API can only connect to ONE vault at a time
+- Currently connected to: HLA Antibodies vault
+- Research Journal entries must be created through filesystem or when API is connected to that vault
+
+### Correct File Paths:
+When using obsidian-rest for HLA Antibodies vault:
+- ✅ CORRECT: `/vault/Concepts/MFI_Cutoffs.md`
+- ✅ CORRECT: `/vault/Research Questions/How does prozone affect interpretation.md`
+- ❌ WRONG: `/vault/HLA Antibodies/Concepts/MFI_Cutoffs.md` (creates duplicate folder)
+
 ## MCP Server Usage Rules
 
 ### ALWAYS Use:

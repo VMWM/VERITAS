@@ -7,17 +7,27 @@
 - Works from ANY project folder (no path restrictions)
 - Authentication is handled automatically by the MCP server
 - DO NOT manually add Authorization headers - they're added automatically
-- **CRITICAL PATH FORMAT**: Use vault name in endpoint, NOT duplicate it
-  - CORRECT: `/vault/HLA Antibodies/Concepts/Example.md`
-  - WRONG: `/vault/HLA Antibodies/HLA Antibodies/Concepts/Example.md`
-- Example usage:
-  ```
-  mcp__obsidian-rest__test_request(
-    endpoint: "/vault/HLA Antibodies/Concepts/example.md",
-    method: "PUT",
-    body: "# Your note content here"
-  )
-  ```
+
+**⚠️ CRITICAL: Two-Vault Structure**
+The user has TWO SEPARATE Obsidian vaults:
+1. **HLA Antibodies** vault - Contains `/Concepts/` and `/Research Questions/` folders
+2. **Research Journal** vault - Contains `/Daily/` and `/Concepts/` folders
+
+**REST API connects to ONE vault at a time** (typically HLA Antibodies)
+
+**CORRECT PATH FORMAT for HLA Antibodies vault:**
+- ✅ `/vault/Concepts/Example.md`
+- ✅ `/vault/Research Questions/How does X affect Y.md`
+- ❌ `/vault/HLA Antibodies/Concepts/Example.md` (creates duplicate folder!)
+
+Example usage:
+```
+mcp__obsidian-rest__test_request(
+  endpoint: "/vault/Concepts/MFI_Cutoffs.md",
+  method: "PUT",
+  body: "# Your note content here"
+)
+```
 
 **❌ NEVER USE `obsidian-file` or `obsidian-vault`**
 - These are filesystem-based and restricted to current project folder
