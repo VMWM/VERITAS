@@ -1,49 +1,53 @@
----
-type: research-question
-tags: [research, literature-review, {{domain}}]
-created: {{date}}
-verified: true
----
+# [Research Question Title - Must End with ?]
 
-# {{Question Title}}
+## Background
+[Brief context explaining why this question is important and what prompted the investigation]
+
+## Hypothesis
+[Clear statement of what you expect to find or the proposed answer to the research question]
+
+## Methods
+- Literature search strategy: [databases, search terms, inclusion/exclusion criteria]
+- Analysis approach: [systematic review, meta-analysis, narrative synthesis]
+- Data sources: [PubMed, clinical trials, cohort studies, etc.]
 
 ## Key Findings
 
-| Study | Population | Finding | PMID |
-|-------|------------|---------|------|
-| | | | |
+### Summary Table
+| Study | Year | Population | Key Finding | PMID |
+|-------|------|------------|-------------|------|
+| [Author et al.] | [Year] | [n=X, characteristics] | [Main result] | [PMID] |
 
-## Analysis
+### Primary Evidence
+[Detailed discussion of the most important studies addressing this question]
 
-### Current Evidence
-<!-- Summary of what the literature shows -->
+### Conflicting Evidence
+[Any studies that contradict the main findings and possible explanations]
 
-### Knowledge Gaps
-<!-- What remains unknown or controversial -->
+## Clinical Significance
+[How these findings impact clinical practice, patient care, or research directions]
 
-### Clinical Implications
-<!-- How this affects practice -->
+## Expected Outcomes
+[What you anticipate the implications of this research will be]
 
-## Detailed Findings
+## Knowledge Gaps
+[What remains unknown and requires further investigation]
 
-### Primary Studies
-<!-- Major research findings with citations -->
-
-### Meta-Analyses
-<!-- Systematic reviews if available -->
-
-### Expert Consensus
-<!-- Guidelines or expert opinions -->
-
-## Methodological Considerations
-<!-- Study design issues, limitations -->
-
-## Related Questions
-- [[]]
+## Related Concepts
+- [[Related Concept 1]]
+- [[Related Concept 2]]
+- [[Related Concept 3]]
 
 ## References
-<!-- All citations with PMIDs -->
-1. 
+1. [Full citation with PMID]
+2. [Full citation with PMID]
+
+## Next Steps
+- [Planned analyses or investigations]
+- [Additional literature to review]
+- [Experiments or validations needed]
 
 ---
-*Verified with PubMed MCP | Created: {{date}}*
+*Created: {{date}}*
+*Last Updated: {{date}}*
+*Status: [Active/Under Review/Resolved]*

@@ -1,40 +1,70 @@
----
-type: concept
-tags: [concept, {{domain}}, {{category}}]
-aliases: [{{alternate names}}]
----
-
-# {{Concept Name}}
+# [Concept Name]
 
 ## Definition
-<!-- Clear, concise definition -->
+[Clear, concise definition of the concept in 1-2 sentences]
 
-## Key Points
-<!-- Bullet points of essential information -->
-- 
-- 
-- 
+## Clinical Significance
+[Why this concept matters in clinical practice or research]
 
-## Detailed Explanation
-<!-- In-depth discussion of the concept -->
+## Key Characteristics
+- [Characteristic 1]
+- [Characteristic 2]
+- [Characteristic 3]
+
+## Methods/Techniques
+[How this concept is measured, detected, or implemented in practice]
+
+### Laboratory Methods
+[Specific assays, tests, or procedures]
+
+### Computational Methods
+[Algorithms, software, or analysis approaches]
+
+## Current Evidence
+
+### Established Knowledge
+[Well-accepted facts with citations]
+
+### Recent Developments
+[New findings or evolving understanding]
+
+### Controversies
+[Areas of disagreement or ongoing debate]
 
 ## Clinical Applications
-<!-- How this concept applies in practice -->
+
+### Diagnostic Use
+[How used in diagnosis or assessment]
+
+### Therapeutic Implications
+[Impact on treatment decisions]
+
+### Prognostic Value
+[Role in predicting outcomes]
+
+## Limitations and Challenges
+- [Known limitations]
+- [Technical challenges]
+- [Interpretation difficulties]
 
 ## Related Concepts
-<!-- Links to other concept pages -->
-- [[]]
-- [[]]
-
-## Common Misconceptions
-<!-- Frequently misunderstood aspects -->
-
-## Current Research
-<!-- Active areas of investigation -->
+- [[Related Concept 1]]
+- [[Related Concept 2]]
+- [[Related Concept 3]]
+- [[Related Concept 4]]
+- [[Related Concept 5]]
 
 ## References
-<!-- Key papers or resources -->
-- 
+1. [Author et al. (Year). Title. Journal. PMID: XXXXXXXX]
+2. [Author et al. (Year). Title. Journal. PMID: XXXXXXXX]
+3. [Project file: /path/to/relevant/document.pdf]
+
+## Quality Metrics
+- Evidence Level: [High/Moderate/Low]
+- Clinical Validation: [Yes/No/Ongoing]
+- Multi-center Validation: [Yes/No/Needed]
 
 ---
-*Part of the {{domain}} knowledge graph*
+*Created: {{date}}*
+*Last Updated: {{date}}*
+*Category: [Technical/Clinical/Research/Statistical]*
