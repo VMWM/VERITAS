@@ -7,6 +7,8 @@
 [![PubMed](https://img.shields.io/badge/PubMed-Integrated-orange)](https://pubmed.ncbi.nlm.nih.gov/)
 [![HLA](https://img.shields.io/badge/HLA-Research-red)](https://www.ashi-hla.org/)
 
+[🎥 Video Demonstration](https://tulane.box.com/s/xvn2vjap776cuj4y3gpidhfv1ixecz9b)
+
 ## 🤖 What is This?
 
 This system supercharges Claude Code by connecting it to:
