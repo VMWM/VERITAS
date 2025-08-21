@@ -107,6 +107,12 @@ The setup script will:
 - ✅ Set up configuration templates
 - ✅ Copy knowledge base template (includes HLA examples, but customizable for any domain)
 
+**After setup, run validation:**
+```bash
+./scripts/validate_setup.sh
+```
+This checks all components are properly installed and configured.
+
 **Note**: PubMed MCP may need manual configuration. See [Troubleshooting](docs/TROUBLESHOOTING.md) if it shows "Failed to connect".
 
 ### Step 2: Set Up Obsidian
@@ -147,6 +153,8 @@ Obsidian/
 - No manual vault switching needed
 
 ### Step 3: Configure API Keys
+
+> **📋 NEW**: Use [docs/SETUP_CHECKLIST.md](docs/SETUP_CHECKLIST.md) for a complete walkthrough with validation steps!
 
 **See [docs/SETUP.md](docs/SETUP.md) for detailed instructions.**
 

@@ -65,6 +65,8 @@ Experienced HLA Laboratory Director with 20+ years managing clinical histocompat
   - Always include .md extension in all file paths
   - Use system date for daily entries: `date +"%Y-%m-%d"`
   - Verify date format shows correct month (08 for August, not 01)
+- **Local Override (if applicable):**
+  - Check local CLAUDE.md for user-specific absolute paths
 
 ## Technical Knowledge
 
@@ -129,20 +131,23 @@ Experienced HLA Laboratory Director with 20+ years managing clinical histocompat
 ### Research Questions
 - Must end with "?"
 - Store in `/Research Questions/`
-- **CRITICAL: Always include .md extension in filename (e.g., `/Research Questions/Question Title?.md`)**
+- **CRITICAL: Always include .md extension in filename**
+- Example: `/Research Questions/How often do US kidney transplant recipients develop de novo DSA post-transplant.md`
 - Include hypothesis, background, methods, expected outcomes
 - Link to related concepts using `[[Wiki_Links]]`
 
 ### Concept Notes
 - Descriptive noun phrases (not questions)
 - Store in `/Concepts/`
-- **CRITICAL: Always include .md extension in filename (e.g., `/Concepts/Concept Name.md`)**
+- **CRITICAL: Always include .md extension in filename**
+- Example: `/Concepts/Sensitization.md`
 - Include definition, clinical significance, methods, references
 - Minimum 3-5 related concept links
 
 ### Daily Journal
 - Path: `/Daily/YYYY-MM-DD.md`
 - **IMPORTANT: Use system date command to get current date: `date +"%Y-%m-%d"`**
+- Example: `/Daily/2025-08-09.md`
 - Document progress, decisions, insights
 - Include next steps and blockers
 
