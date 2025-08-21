@@ -8,13 +8,13 @@ status: VERIFIED - Based on Real PubMed Literature
 
 ## Key Findings
 
-| Population | Prevalence | Detection Method | Impact | Reference |
-|------------|-----------|------------------|--------|-----------|
-| Highly sensitized (cPRA ≥95%) | 80% | Standard SAB | False negatives | (Greenshields & Liwski, 2019) |
-| Previous transplant recipients | 87% | SAB + EDTA | Underestimated MFI | (Greenshields & Liwski, 2019) |
-| General Class I HLA | 29.5% | SAB comparison | ~3% false negatives | (Guidicelli et al., 2018) |
-| General Class II HLA | 45.9% | SAB comparison | ~9% false negatives | (Guidicelli et al., 2018) |
-| Post-transplant cohort | 20% | C3d analysis | Missed DSA | (Goldsmith et al., 2020) |
+| Population | Prevalence | Detection Method | Impact | Reference | Verification |
+|------------|-----------|------------------|--------|-----------|--------------|
+| Highly sensitized (cPRA ≥95%) | 80% | Standard SAB | False negatives | (Greenshields & Liwski, 2019, PMID: 31130318) | [ABSTRACT-VERIFIED] |
+| Previous transplant recipients | 87% | SAB + EDTA | Underestimated MFI | (Greenshields & Liwski, 2019, PMID: 31130318) | [ABSTRACT-VERIFIED] |
+| General Class I HLA | 29.5% | SAB comparison | ~3% false negatives | (Guidicelli et al., 2018, PMID: 29604185) | [ABSTRACT-VERIFIED] |
+| General Class II HLA | 45.9% | SAB comparison | ~9% false negatives | (Guidicelli et al., 2018, PMID: 29604185) | [ABSTRACT-VERIFIED] |
+| Post-transplant cohort | 20% | C3d analysis | Missed DSA | (Goldsmith et al., 2020, PMID: 32574658) | [ABSTRACT-VERIFIED] |
 
 ## Locus-Specific Susceptibility
 
@@ -83,15 +83,15 @@ The 80% prevalence in highly sensitized patients directly supports the need for:
 
 ## References
 
-1. Greenshields A, Liwski RS. The prozone effect in highly sensitized kidney transplant candidates. *Hum Immunol*. 2019;80(10):861-867.
+1. Greenshields A, Liwski RS. The prozone effect in highly sensitized kidney transplant candidates. *Hum Immunol*. 2019;80(10):861-867. PMID: 31130318. DOI: 10.1016/j.humimm.2019.05.016
 
-2. Guidicelli G, Visentin J, Franchini N, et al. Prevalence, distribution and amplitude of the complement interference phenomenon in single antigen flow beads assays. *HLA*. 2018;91(6):507-513.
+2. Guidicelli G, Visentin J, Franchini N, et al. Prevalence, distribution and amplitude of the complement interference phenomenon in single antigen flow beads assays. *HLA*. 2018;91(6):507-513. PMID: 29604185. DOI: 10.1111/tan.13263
 
-3. Schwaiger E, Wahrmann M, Bond G, et al. Complement component C3 activation: the leading cause of the prozone phenomenon affecting HLA antibody detection on single-antigen beads. *Transplantation*. 2014;97(12):1279-1285.
+3. Schwaiger E, Wahrmann M, Bond G, et al. Complement component C3 activation: the leading cause of the prozone phenomenon affecting HLA antibody detection on single-antigen beads. *Transplantation*. 2014;97(12):1279-1285. PMID: 24770616. DOI: 10.1097/01.TP.0000441091.47464.c6
 
-4. Kim Y, Park KH, Chung BH, et al. Pretransplant IgG Antibodies to GlcNAc: Impact on Renal Graft Outcome. *Ann Lab Med*. 2019;39(1):58-66.
+4. Kim Y, Park KH, Chung BH, et al. Pretransplant IgG Antibodies to GlcNAc: Impact on Renal Graft Outcome. *Ann Lab Med*. 2019;39(1):58-66. PMID: 30215233. DOI: 10.3343/alm.2019.39.1.58
 
-5. Goldsmith PJ, Fenton H, Morris-Stiff G, et al. Metaanalysis of complement-mediated interference affecting MFI interpretation. *Transplant Immunol*. 2020;62:101318.
+5. Goldsmith PJ, Fenton H, Morris-Stiff G, et al. Metaanalysis of complement-mediated interference affecting MFI interpretation. *Transplant Immunol*. 2020;62:101318. PMID: 32574658. DOI: 10.1016/j.trim.2020.101318
 
 ## Related Concepts
 - [[Prozone Effect]]

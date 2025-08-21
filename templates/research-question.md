@@ -1,53 +1,75 @@
-# [Research Question Title - Must End with ?]
+---
+tags: [research-question, {specific-topics}]
+created: YYYY-MM-DD
+status: DRAFT | IN-PROGRESS | VERIFIED | NEEDS-UPDATE
+---
 
-## Background
-[Brief context explaining why this question is important and what prompted the investigation]
-
-## Hypothesis
-[Clear statement of what you expect to find or the proposed answer to the research question]
-
-## Methods
-- Literature search strategy: [databases, search terms, inclusion/exclusion criteria]
-- Analysis approach: [systematic review, meta-analysis, narrative synthesis]
-- Data sources: [PubMed, clinical trials, cohort studies, etc.]
+# [Research Question - Must End with ?]
 
 ## Key Findings
 
-### Summary Table
-| Study | Year | Population | Key Finding | PMID |
-|-------|------|------------|-------------|------|
-| [Author et al.] | [Year] | [n=X, characteristics] | [Main result] | [PMID] |
+| Metric | Value/Estimate | Citation | Verification |
+|--------|---------------|----------|--------------|
+| [Primary outcome] | XX% (range) | (Author et al., Year, PMID: XXXXXXXX) | [ABSTRACT-VERIFIED] |
+| [Secondary metric] | Value ± SD | (Author et al., Year, PMID: XXXXXXXX) | [FT-VERIFIED] |
+| [Key comparison] | XX vs YY | (Author et al., Year, PMID: XXXXXXXX) | [NEEDS-FT-REVIEW] |
 
-### Primary Evidence
-[Detailed discussion of the most important studies addressing this question]
+## Detailed Analysis
 
-### Conflicting Evidence
-[Any studies that contradict the main findings and possible explanations]
+### Historical Baseline Data (Year Range)
+[Establish foundation with landmark studies. Every claim must include (Author et al., Year, PMID: XXXXXXXX)]
 
-## Clinical Significance
-[How these findings impact clinical practice, patient care, or research directions]
+### Mechanisms/Biological Basis
+[Explain underlying processes with evidence. Link to [[Related Concepts]] using wiki links]
 
-## Expected Outcomes
-[What you anticipate the implications of this research will be]
+### Recent Data (2024-2025)
+[Current literature with emphasis on what's new. All statistics need PMIDs]
 
-## Knowledge Gaps
-[What remains unknown and requires further investigation]
+### Risk Factors/Stratification
+**High-risk groups**:
+- Group 1: OR/HR with CI (Author et al., Year, PMID: XXXXXXXX)
+- Group 2: Quantified risk factors (Author et al., Year, PMID: XXXXXXXX)
 
-## Related Concepts
-- [[Related Concept 1]]
-- [[Related Concept 2]]
-- [[Related Concept 3]]
+## Current Understanding (2024-2025)
+[Synthesis paragraph of current knowledge, recent advances, remaining questions]
+
+## Limitations
+- Study design limitations with examples
+- Methodological concerns (measurement issues, bias)
+- Gaps in current literature
+- Conflicting findings and potential explanations
+
+## Clinical/Research Implications
+1. **Monitoring/Screening**: Evidence-based recommendations with PMIDs
+2. **Risk assessment**: Actionable stratification criteria
+3. **Interventions**: Treatment options with supporting evidence
+4. **Implementation**: Practical considerations for application
+
+## Conclusion
+[One paragraph directly answering the research question based on all evidence presented]
 
 ## References
-1. [Full citation with PMID]
-2. [Full citation with PMID]
+Author, A. B., Author, C. D., & Author, E. F. (Year). Title of article. *Journal Name*, Volume(Issue), pages. PMID: XXXXXXXX. DOI: 10.xxxx/xxxxx
+
+[Continue with all references in standard format]
+
+## DOIs for Zotero Import
+```
+10.xxxx/xxxxx
+10.yyyy/yyyyy
+```
+
+## Related Concepts
+- [[Concept 1]]
+- [[Concept 2]]
+- [[Related Research Question]]
 
 ## Next Steps
-- [Planned analyses or investigations]
-- [Additional literature to review]
-- [Experiments or validations needed]
+- [ ] Additional literature needed on [specific topic]
+- [ ] Verify [specific claim] with full text
+- [ ] Update with [forthcoming study]
 
 ---
-*Created: {{date}}*
-*Last Updated: {{date}}*
-*Status: [Active/Under Review/Resolved]*
+*Last Updated: YYYY-MM-DD*
+*Based on verified PubMed literature searches*
+*Verification levels: FT-VERIFIED = Full text confirmed | ABSTRACT-VERIFIED = Abstract supports | NEEDS-FT-REVIEW = Requires full text*
