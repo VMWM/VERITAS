@@ -82,7 +82,7 @@ Adapt this system for:
 - Claude API key from [Anthropic Console](https://console.anthropic.com/)
 - Cloud storage (iCloud, Dropbox, Box, Google Drive, or OneDrive)
 
-### Step 0: Install Claude Code (if needed)
+### Step 1: Install Claude Code (if needed)
 
 **Option A: Via VS Code Extension**
 1. Open VS Code
@@ -95,7 +95,7 @@ Adapt this system for:
 npm install -g @anthropic-ai/claude-code
 ```
 
-### Step 1: Clone and Run Setup
+### Step 2: Clone and Run Setup
 
 ```bash
 git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
@@ -120,7 +120,7 @@ This checks all components are properly installed and configured.
 
 **Note**: PubMed MCP may need manual configuration. See [Troubleshooting](docs/TROUBLESHOOTING.md) if it shows "Failed to connect".
 
-### Step 2: Set Up Obsidian
+### Step 3: Set Up Obsidian
 
 > **📌 NOTE**: This system comes with HLA research vaults as examples. 
 > **To customize for your research**: See [CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
@@ -157,7 +157,7 @@ Obsidian/
 - Research stays organized separately from daily notes
 - No manual vault switching needed
 
-### Step 3: Configure API Keys
+### Step 4: Configure API Keys
 
 > **📋 NEW**: Use [docs/SETUP_CHECKLIST.md](docs/SETUP_CHECKLIST.md) for a complete walkthrough with validation steps!
 
@@ -178,7 +178,7 @@ Required keys:
 
 The setup script creates a template showing exactly where to add these.
 
-### Step 4: Add CLAUDE.md to Your Project
+### Step 5: Add CLAUDE.md to Your Project
 
 **CRITICAL:** The agent file MUST be named `CLAUDE.md` in your project folder:
 
@@ -200,7 +200,7 @@ This file tells Claude how to behave for your specific research domain.
 - **Template-based note creation** - ensures consistent, high-quality documentation
 - **Suitable for public sharing** - proprietary research details removed
 
-### Step 5: Test Your Setup
+### Step 6: Test Your Setup
 
 ```bash
 claude
