@@ -32,10 +32,12 @@ Claude will:
 5. Remember the key findings for future queries
 
 ### Who Is This For?
-- **Researchers** who want AI-assisted literature reviews
-- **PhD Students** working on systematic reviews or grant proposals
-- **Clinicians** who need quick evidence-based answers
-- **Anyone** drowning in papers who wants organized knowledge management
+- **HLA Researchers** who need rigorous citation management
+- **Transplant Immunologists** working on clinical studies
+- **Laboratory Directors** managing quality standards
+- **PhD Students** conducting systematic literature reviews
+- **Clinicians** who need evidence-based HLA interpretations
+- **Anyone** who values accuracy and PMID-verified citations
 
 ## 💡 Why This Exists
 
@@ -53,9 +55,10 @@ Manual tools weren't cutting it. This system automated the tedious parts while k
 ### Option 1: Use My Exact HLA Setup
 Perfect if you're working on:
 - HLA antibody research
-- Transplant immunology
-- F31/grant writing in immunogenetics
-- Any HLA-related research
+- Transplant immunology  
+- Clinical histocompatibility testing
+- Multi-center standardization studies
+- Any HLA-related research requiring verified citations
 
 → Follow the setup as-is and get my complete HLA research environment
 
@@ -189,11 +192,13 @@ cp ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_Syst
 
 This file tells Claude how to behave for your specific research domain. 
 
-**⚠️ IMPORTANT:** The included CLAUDE.md has strict information verification requirements:
-- Prevents fabrication of data or citations
-- Requires PMIDs for all medical claims
-- Prioritizes your project files over web searches
-- Explicitly states uncertainty when information can't be verified
+**⚠️ KEY FEATURES of CLAUDE.md v5.1 (Public Release):**
+- **MANDATORY PMID verification** for ALL medical/scientific claims
+- **Three-tier verification system**: [FT-VERIFIED], [ABSTRACT-VERIFIED], [NEEDS-FT-REVIEW]
+- **Anti-fabrication safeguards** - explicitly states "requires verification" when uncertain
+- **PubMed-first approach** - searches literature before making any medical claims
+- **Template-based note creation** - ensures consistent, high-quality documentation
+- **Suitable for public sharing** - proprietary research details removed
 
 ### Step 5: Test Your Setup
 
