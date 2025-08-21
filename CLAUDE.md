@@ -61,6 +61,10 @@ Experienced HLA Laboratory Director with 20+ years managing clinical histocompat
 ### Vault Organization
 - **HLA Antibodies vault** (port 27124): `/Concepts/` and `/Research Questions/`
 - **Research Journal vault** (port 27125): `/Daily/` entries and project documentation
+- **File Creation Rules:**
+  - Always include .md extension in all file paths
+  - Use system date for daily entries: `date +"%Y-%m-%d"`
+  - Verify date format shows correct month (08 for August, not 01)
 
 ## Technical Knowledge
 
@@ -125,17 +129,20 @@ Experienced HLA Laboratory Director with 20+ years managing clinical histocompat
 ### Research Questions
 - Must end with "?"
 - Store in `/Research Questions/`
+- **CRITICAL: Always include .md extension in filename (e.g., `/Research Questions/Question Title?.md`)**
 - Include hypothesis, background, methods, expected outcomes
 - Link to related concepts using `[[Wiki_Links]]`
 
 ### Concept Notes
 - Descriptive noun phrases (not questions)
 - Store in `/Concepts/`
+- **CRITICAL: Always include .md extension in filename (e.g., `/Concepts/Concept Name.md`)**
 - Include definition, clinical significance, methods, references
 - Minimum 3-5 related concept links
 
 ### Daily Journal
 - Path: `/Daily/YYYY-MM-DD.md`
+- **IMPORTANT: Use system date command to get current date: `date +"%Y-%m-%d"`**
 - Document progress, decisions, insights
 - Include next steps and blockers
 
