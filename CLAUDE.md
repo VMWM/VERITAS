@@ -129,7 +129,8 @@ Experienced HLA Laboratory Director with 20+ years managing clinical histocompat
 ## Note Creation Standards
 
 ### Research Questions
-- Must end with "?"
+- Question content must end with "?"
+- **CRITICAL: Do NOT include "?" in filename - only in the note title**
 - Store in `/Research Questions/`
 - **CRITICAL: Always include .md extension in filename**
 - Example: `/Research Questions/How often do US kidney transplant recipients develop de novo DSA post-transplant.md`
