@@ -165,7 +165,7 @@ See `docs/TROUBLESHOOTING.md` for common issues and solutions.
 
 ## Next Steps
 
-1. Review `docs/MCP_INSTALLATION.md` for MCP details
+1. Review `docs/MCP_INFO.md` for MCP details
 2. Study templates in `templates/obsidian/`
 3. Read agent documentation in `.claude/agents/`
 4. Start creating research content!
