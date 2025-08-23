@@ -1,188 +1,81 @@
 # Research Agent-MCP System
 
-Transform Claude into your intelligent research assistant with enforced best practices, automated knowledge management, and seamless Obsidian integration.
+A hook-based enforcement system that ensures Claude Code follows consistent workflows for research documentation, citation management, and Obsidian integration.
 
-## What Is This?
+## What This System Does
 
-A comprehensive enforcement and automation system that ensures Claude Code consistently follows your research workflow, maintains citation standards, and organizes knowledge exactly how you need it. No more repeated instructions, no more formatting fixes, no more missed citations.
+This system creates a multi-layer enforcement framework that:
+- Routes research tasks to appropriate MCP tools automatically
+- Enforces PMID citation requirements for all scientific claims
+- Creates properly formatted Obsidian notes using predefined templates
+- Blocks incorrect tool usage before execution
+- Validates output compliance after generation
 
-## Who Is This For?
+## Primary Use Cases
 
-### Academic Researchers
-- Writing grants, papers, or dissertations
-- Managing literature reviews across hundreds of papers
-- Building interconnected knowledge graphs
-- Tracking daily research progress
+- **Literature Review Management**: Automatic PubMed citation verification with PMID enforcement
+- **Research Question Documentation**: Structured templates for grant-ready research questions
+- **Concept Note Creation**: Wiki-linked knowledge base entries with validation requirements
+- **Daily Research Journals**: Progress tracking with automatic date-based organization
+- **Knowledge Graph Building**: Memory MCP integration for persistent concept storage
+- **Multi-Vault Support**: Separate Obsidian vaults for different research areas
 
-### Graduate Students
-- Preparing for qualifying exams
-- Organizing thesis research
-- Managing citations and references
-- Creating study notes that connect concepts
+## System Components
 
-### Research Teams
-- Standardizing documentation practices
-- Sharing knowledge bases
-- Maintaining consistent citation standards
-- Collaborative literature reviews
-
-### Knowledge Workers
-- Building personal knowledge management systems
-- Connecting ideas across domains
-- Maintaining professional notebooks
-- Creating reference documentation
-
-## Core Features
-
-### Multi-Layer Enforcement System
-Never repeat instructions again. The system enforces your requirements through:
-- **Pre-execution validation** - Checks tasks before they start
-- **Smart routing** - Automatically uses correct tools for each task
-- **Output verification** - Validates all content meets standards
-- **Compliance blocking** - Prevents incorrect operations entirely
-
-### Integrated Literature Management
-Seamless PubMed integration with automatic citation verification:
-- Every claim backed by peer-reviewed sources
-- Automatic PMID verification
-- Full-text retrieval when available
-- Citation formatting that never fails
-
-### Intelligent Task Planning
-Sequential thinking that breaks down complex research:
-- Automatic problem decomposition
-- Step-by-step execution tracking
-- Context-aware decision making
-- Progress visualization
-
-### Obsidian Knowledge Graph
-Direct integration with your Obsidian vaults:
-- Automatic note creation with proper templates
-- Wiki-link knowledge connections
-- Structured folders for different content types
-- Daily research journals with metrics
-
-### Living Knowledge Base
-Memory system that grows with your research:
-- Persistent concept storage
-- Relationship mapping between ideas
-- Quick retrieval of past findings
-- Knowledge evolution tracking
-
-## Example Use Case
-
-Imagine you're preparing for qualifying exams and need to master 200 papers across 5 research areas:
-
-```
-You: "Create a research question about how MFI thresholds affect organ allocation"
-
-Claude: [Automatically]
-1. Starts with sequential thinking to plan approach
-2. Searches PubMed for latest evidence 
-3. Creates formatted research question in Obsidian
-4. Includes all citations with PMIDs
-5. Links to related concepts
-6. Generates grant-ready prose
-7. Updates your knowledge graph
-```
-
-No manual formatting. No missing citations. No repeated instructions.
-
-## What Makes This Different?
-
-### Traditional Approach
-```
-You: "Search for papers about X (remember to include PMIDs)"
-Claude: [Might forget PMIDs]
-
-You: "Create a note in my Obsidian vault"
-Claude: [Creates file in wrong location]
-
-You: "Format it properly with wiki links"
-Claude: [Uses wrong formatting]
-
-[Repeat instructions every conversation...]
-```
-
-### With Research Agent System
-```
-You: "Research question about X"
-Claude: [Automatically does everything correctly, every time]
-```
-
-## System Architecture
-
-The system uses five specialized MCP (Model Context Protocol) servers:
-
-1. **Sequential Thinking** - Structured problem-solving and planning
-2. **PubMed** - Direct access to 35+ million biomedical citations
+### MCP Servers (6 total)
+1. **Sequential Thinking** - Task decomposition and planning
+2. **PubMed** - Citation search and verification (35+ million articles)
 3. **Memory** - Persistent knowledge graph storage
 4. **Filesystem** - Local project file access
-5. **Obsidian REST** - Direct vault integration
+5. **Obsidian REST (Primary)** - Main vault operations (port 27124)
+6. **Obsidian REST (Journal)** - Journal vault operations (port 27125)
 
-All coordinated through an intelligent hook system that enforces your workflow automatically.
+### Enforcement Hooks
+- **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
+- **Task router** (`task-router.py`) - Detects and routes Obsidian tasks
+- **Compliance validator** (`compliance-validator.sh`) - Blocks incorrect tool usage
+- **Post-command validator** (`post-command.py`) - Verifies output compliance
 
-## Real Research Templates
+### Templates
+- Research question template with grant-ready sections
+- Concept template with implementation guides
+- Daily journal template with metrics tracking
 
-Professional templates designed for academic research:
+## Example Workflow
 
-### Research Questions
-- Grant-ready narrative sections
-- Evidence-based key points with citations
-- Quantitative impact summaries
-- Knowledge gap identification
-- Direct application to grant writing
+```
+You: "Create a research question about antibody thresholds"
 
-### Concept Notes
-- Innovation details with validation data
-- Implementation guides
-- Quality control specifications
-- Comparison tables with metrics
-- Clinical pearls and key thresholds
-
-### Daily Journals
-- Session metrics and achievements
-- Decision rationale documentation
-- Problem-solving records
-- Progress tracking
-- Reference management
-
-## Success Stories
-
-*"Reduced my literature review time by 60% while improving citation accuracy to 100%"*
-
-*"Finally have a system that maintains my exact formatting requirements without constant reminders"*
-
-*"Built a 500+ note knowledge base for my dissertation in 3 months"*
-
-## Customization
-
-Fully adaptable to your research domain:
-- Medical/Clinical research
-- Computer Science/Engineering
-- Social Sciences
-- Humanities
-- Hard Sciences
-
-Customize citation formats, templates, validation rules, and workflows to match your field's requirements.
-
-## Getting Started
-
-Ready to transform your research workflow?
-
-1. **Quick Start**: See [`docs/SETUP.md`](docs/SETUP.md)
-2. **Full Checklist**: See [`docs/SETUP_CHECKLIST.md`](docs/SETUP_CHECKLIST.md)  
-3. **Customization**: See [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md)
-4. **Troubleshooting**: See [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md)
-5. **MCP Details**: See [`docs/MCP_INSTALLATION.md`](docs/MCP_INSTALLATION.md)
+System automatically:
+1. Triggers task router → Obsidian workflow detected
+2. Starts sequential thinking for planning
+3. Searches PubMed for evidence
+4. Creates note in /Research Questions/ folder
+5. Enforces (Author et al., Year, PMID: XXXXXXXX) format
+6. Adds verification levels [FT-VERIFIED] or [ABSTRACT-VERIFIED]
+7. Creates wiki links to related concepts
+8. Validates output meets all requirements
+```
 
 ## Requirements
 
-- Claude Desktop (Claude Code)
-- Obsidian with REST API plugin
-- Node.js 16+
-- Python 3.8+
-- macOS, Linux, or Windows with WSL
+### Required Software
+- **Claude Desktop** (Claude Code) with API access
+- **VS Code** or compatible editor
+- **Obsidian** with Local REST API plugin installed
+- **Node.js** v16+ and npm
+- **Python** 3.8+ (for validation hooks)
+- **Git** for repository management
+
+### API Requirements
+- **Claude Code API** key configured
+- **Obsidian REST API** bearer token generated
+- **PubMed API** (email address recommended for higher rate limits)
+
+### Operating System
+- **macOS**: Native support
+- **Linux**: Native support
+- **Windows**: Requires WSL (Windows Subsystem for Linux)
 
 ## Installation
 
@@ -193,23 +86,44 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-The setup script handles everything: MCP installation, hook configuration, and path setup.
+The setup script:
+- Installs 4 MCP servers automatically
+- Configures hook system with proper permissions
+- Sets up dynamic path resolution
+- Provides Obsidian configuration template
 
-## Open Source
+Manual steps required:
+1. Install Obsidian Local REST API plugin
+2. Configure bearer token and ports
+3. Add MCP configurations to Claude Desktop
+4. Create vault folder structure
 
-MIT Licensed - Contributions welcome!
+## Documentation
 
-Fork it, customize it, share it with your research community.
+- [`docs/SETUP.md`](docs/SETUP.md) - Detailed setup instructions
+- [`docs/SETUP_CHECKLIST.md`](docs/SETUP_CHECKLIST.md) - Interactive setup checklist
+- [`docs/MCP_INFO.md`](docs/MCP_INFO.md) - MCP server details
+- [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md) - Customization guide
+- [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) - Common issues and solutions
+
+## Customization
+
+The system can be adapted for different research domains by modifying:
+- `.claude/agents/research-director.md` - Template specifications
+- `.claude/config/verification.json` - Validation rules
+- `.claude/hooks/` - Enforcement scripts
+- `CLAUDE.md` - Routing rules and priorities
 
 ## Support
 
-- **Documentation**: Complete guides in `/docs`
-- **Templates**: Professional templates in `/templates/obsidian`
-- **Issues**: [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues) for bugs and features
-- **Customization**: Examples for different research domains
+- **Issues**: [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)
+- **Templates**: `/templates/obsidian/` directory
+- **Logs**: `.claude/logs/` for debugging
+
+## License
+
+This project is provided as-is for research use. See LICENSE file for details.
 
 ---
 
-*Stop managing Claude. Start doing research.*
-
-**[Get Started →](docs/SETUP.md)** | **[View Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)**
+**[Setup Guide →](docs/SETUP.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)**
