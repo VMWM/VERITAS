@@ -41,20 +41,37 @@ This system creates a multi-layer enforcement framework that:
 - Concept template with implementation guides
 - Daily journal template with metrics tracking
 
-## Example Workflow
+## Example Workflows
 
+### Research Question Creation
 ```
-You: "Create a research question about antibody thresholds"
+You: "What evidence exists for MFI thresholds predicting transplant outcomes?"
+
+Claude: [Researches and provides comprehensive answer with citations]
+
+You: "Create this research question and its concept pages in my Obsidian vault"
 
 System automatically:
-1. Triggers task router → Obsidian workflow detected
-2. Starts sequential thinking for planning
-3. Searches PubMed for evidence
-4. Creates note in /Research Questions/ folder
+1. Task router detects "obsidian vault" → triggers enforcement
+2. Routes to primary vault (port 27124) for research content
+3. Creates note in /Research Questions/ folder
+4. Generates concept pages in /Concepts/ folder
 5. Enforces (Author et al., Year, PMID: XXXXXXXX) format
-6. Adds verification levels [FT-VERIFIED] or [ABSTRACT-VERIFIED]
-7. Creates wiki links to related concepts
-8. Validates output meets all requirements
+6. Adds wiki links between related concepts
+7. Validates all citations have PMIDs
+```
+
+### Daily Journal Entry
+```
+You: "I'm done for today, create a research journal entry"
+
+System automatically:
+1. Task router detects "journal" → routes to journal vault (port 27125)
+2. Creates entry in /Daily/ folder with today's date
+3. Summarizes session accomplishments
+4. Lists all research questions explored
+5. Documents key findings with citations
+6. Notes problems solved and next steps
 ```
 
 ## Requirements
