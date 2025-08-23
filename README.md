@@ -137,6 +137,9 @@ The system can be adapted for different research domains by modifying:
 - **Templates**: `/templates/obsidian/` directory
 - **Logs**: `.claude/logs/` for debugging
 
+## License
+
+MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
