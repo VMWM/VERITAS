@@ -1,48 +1,251 @@
 #!/bin/bash
 
 # Research Agent-MCP System Setup Script
+# Complete installation including all MCP servers
 
 echo "Research Agent-MCP System Setup"
 echo "================================"
 echo ""
 
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
 # Check if running from correct directory
 if [ ! -f "CLAUDE.md" ]; then
-    echo "Error: CLAUDE.md not found. Please run from the repository root."
+    echo -e "${RED}Error: CLAUDE.md not found. Please run from the repository root.${NC}"
     exit 1
 fi
 
+# Check prerequisites
+echo "Checking prerequisites..."
+echo ""
+
+# Check for npm
+if ! command -v npm &> /dev/null; then
+    echo -e "${RED}npm is not installed. Please install Node.js and npm first.${NC}"
+    echo "Visit: https://nodejs.org/"
+    exit 1
+fi
+
+# Check for npx
+if ! command -v npx &> /dev/null; then
+    echo -e "${RED}npx is not installed. Please update npm: npm install -g npx${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Prerequisites check passed!${NC}"
+echo ""
+
 # Get project directory
-echo "Enter your project directory path:"
+echo "Enter your project directory path (where CLAUDE.md should be placed):"
 read -r PROJECT_DIR
 
 # Validate directory exists
 if [ ! -d "$PROJECT_DIR" ]; then
-    echo "Error: Directory $PROJECT_DIR does not exist."
+    echo -e "${RED}Error: Directory $PROJECT_DIR does not exist.${NC}"
     exit 1
 fi
 
 echo ""
-echo "Installing files to: $PROJECT_DIR"
+echo "Installing to: $PROJECT_DIR"
+echo ""
+
+# Install MCP Servers
+echo "================================"
+echo "Installing MCP Servers"
+echo "================================"
+echo ""
+
+# Sequential Thinking MCP
+echo "Installing Sequential Thinking MCP..."
+npx @modelcontextprotocol/install sequentialthinking
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Sequential Thinking MCP installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Sequential Thinking MCP installation may have failed${NC}"
+fi
+echo ""
+
+# PubMed MCP
+echo "Installing PubMed MCP..."
+npx @modelcontextprotocol/install pubmed
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ PubMed MCP installed${NC}"
+else
+    echo -e "${YELLOW}⚠ PubMed MCP installation may have failed${NC}"
+fi
+echo ""
+
+# Memory MCP
+echo "Installing Memory MCP..."
+npx @modelcontextprotocol/install memory
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Memory MCP installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Memory MCP installation may have failed${NC}"
+fi
+echo ""
+
+# Filesystem MCP
+echo "Installing Filesystem MCP..."
+npx @modelcontextprotocol/install filesystem
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Filesystem MCP installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Filesystem MCP installation may have failed${NC}"
+fi
 echo ""
 
 # Copy core files
+echo "================================"
+echo "Copying Project Files"
+echo "================================"
+echo ""
+
 echo "Copying CLAUDE.md..."
 cp CLAUDE.md "$PROJECT_DIR/"
+echo -e "${GREEN}✓ CLAUDE.md copied${NC}"
 
 echo "Copying .claude directory..."
 cp -r .claude "$PROJECT_DIR/"
+echo -e "${GREEN}✓ .claude directory copied${NC}"
 
 # Make hooks executable
 echo "Setting hook permissions..."
-chmod +x "$PROJECT_DIR/.claude/hooks/"*.sh
-chmod +x "$PROJECT_DIR/.claude/hooks/"*.py
-chmod +x "$PROJECT_DIR/.claude/scripts/"*.py
+chmod +x "$PROJECT_DIR/.claude/hooks/"*.sh 2>/dev/null
+chmod +x "$PROJECT_DIR/.claude/hooks/"*.py 2>/dev/null
+chmod +x "$PROJECT_DIR/.claude/scripts/"*.py 2>/dev/null
+echo -e "${GREEN}✓ Permissions set${NC}"
 
+# Update paths in CLAUDE.md
 echo ""
-echo "Setup Complete!"
+echo "Updating paths in CLAUDE.md..."
+sed -i.bak "s|\[Your project directory\]|$PROJECT_DIR|g" "$PROJECT_DIR/CLAUDE.md"
+echo -e "${GREEN}✓ Paths updated${NC}"
+
+# Create logs directory
+echo "Creating logs directory..."
+mkdir -p "$PROJECT_DIR/.claude/logs"
+echo -e "${GREEN}✓ Logs directory created${NC}"
+
+# Obsidian Configuration
+echo ""
+echo "================================"
+echo "Obsidian Configuration"
+echo "================================"
+echo ""
+
+echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
+read -r OBSIDIAN_INSTALLED
+
+if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
+    echo "Enter the port for your primary vault (default: 27124):"
+    read -r PRIMARY_PORT
+    PRIMARY_PORT=${PRIMARY_PORT:-27124}
+    
+    echo "Enter the port for your journal vault (default: 27125):"
+    read -r JOURNAL_PORT
+    JOURNAL_PORT=${JOURNAL_PORT:-27125}
+    
+    echo "Enter your bearer token (or press enter to skip):"
+    read -r BEARER_TOKEN
+    
+    echo -e "${GREEN}✓ Obsidian configuration noted${NC}"
+    echo ""
+    echo "Add this to your Claude Desktop configuration:"
+    echo ""
+    cat << EOF
+"obsidian-rest-primary": {
+  "command": "npx",
+  "args": ["@modelcontextprotocol/server-rest", 
+           "--base-url", "http://127.0.0.1:$PRIMARY_PORT",
+           "--auth-type", "bearer",
+           "--auth-token", "$BEARER_TOKEN"]
+}
+EOF
+else
+    echo ""
+    echo -e "${YELLOW}Please install the Obsidian Local REST API plugin:${NC}"
+    echo "1. Open Obsidian"
+    echo "2. Go to Settings > Community Plugins"
+    echo "3. Search for 'Local REST API'"
+    echo "4. Install and enable the plugin"
+    echo "5. Configure authentication if needed"
+fi
+
+# Test hook execution
+echo ""
+echo "================================"
+echo "Testing Installation"
+echo "================================"
+echo ""
+
+echo "Testing hook execution..."
+if bash "$PROJECT_DIR/.claude/hooks/pre-command.sh" > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Hooks are working correctly${NC}"
+else
+    echo -e "${YELLOW}⚠ Hooks may not be configured correctly${NC}"
+    echo "Please check file permissions and paths."
+fi
+
+# Generate Claude Desktop config
+echo ""
+echo "================================"
+echo "Claude Desktop Configuration"
+echo "================================"
+echo ""
+echo "Add the following to your Claude Desktop config file:"
+echo "(Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
+echo ""
+
+cat << EOF
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-sequentialthinking"]
+    },
+    "pubmed": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-pubmed"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-memory"]
+    },
+    "filesystem-local": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem", "$PROJECT_DIR"]
+    }
+  }
+}
+EOF
+
+# Final instructions
+echo ""
+echo "================================"
+echo -e "${GREEN}Setup Complete!${NC}"
+echo "================================"
 echo ""
 echo "Next steps:"
-echo "1. Update PROJECT CONTEXT in CLAUDE.md"
-echo "2. Configure Obsidian REST API"
-echo "3. Test the system"
+echo "1. Update PROJECT CONTEXT section in $PROJECT_DIR/CLAUDE.md"
+echo "2. Add MCP server configuration to Claude Desktop (shown above)"
+echo "3. Configure your Obsidian vault structure:"
+echo "   - Create 'Research Questions' folder"
+echo "   - Create 'Concepts' folder"
+echo "   - Create 'Daily' folder for journals"
+echo "4. Restart Claude Desktop to load MCP servers"
+echo "5. Test the system with a simple task"
+echo ""
+echo "To test, start a new Claude Code conversation and try:"
+echo "  'Create a research question about [your topic] in my vault'"
+echo ""
+echo "For detailed documentation, see:"
+echo "  - docs/MCP_INSTALLATION.md"
+echo "  - docs/SETUP.md"
+echo "  - docs/TROUBLESHOOTING.md"
+echo ""
+echo "Templates are available in: templates/obsidian/"
