@@ -120,6 +120,15 @@ chmod +x "$PROJECT_DIR/.claude/hooks/"*.py 2>/dev/null
 chmod +x "$PROJECT_DIR/.claude/scripts/"*.py 2>/dev/null
 echo -e "${GREEN}✓ Permissions set${NC}"
 
+# Update paths in settings.local.json
+echo "Configuring hook paths..."
+if [ -f "$PROJECT_DIR/.claude/settings.local.json.template" ]; then
+    sed "s|PROJECT_DIR_PLACEHOLDER|$PROJECT_DIR|g" "$PROJECT_DIR/.claude/settings.local.json.template" > "$PROJECT_DIR/.claude/settings.local.json"
+    echo -e "${GREEN}✓ Hook paths configured${NC}"
+else
+    echo -e "${YELLOW}⚠ settings.local.json.template not found, hooks may not work${NC}"
+fi
+
 # Update paths in CLAUDE.md
 echo ""
 echo "Updating paths in CLAUDE.md..."

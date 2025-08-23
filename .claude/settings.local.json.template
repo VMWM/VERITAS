@@ -1,0 +1,103 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__sequential-thinking__sequentialthinking",
+      "mcp__pubmed__search_pubmed",
+      "mcp__pubmed__fetch_summary",
+      "mcp__pubmed__get_fulltext",
+      "mcp__memory__*",
+      "mcp__filesystem-local__*",
+      "mcp__obsidian-rest-hla__test_request",
+      "mcp__obsidian-rest-journal__test_request",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:pmc.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(chmod:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(git:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "PROJECT_DIR_PLACEHOLDER"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash PROJECT_DIR_PLACEHOLDER/.claude/hooks/pre-command.sh",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/task-router.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash PROJECT_DIR_PLACEHOLDER/.claude/hooks/compliance-validator.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/post-command.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/post-command.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__filesystem-local__write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/post-command.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__obsidian*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/post-command.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "outputStyle": "Explanatory"
+}
