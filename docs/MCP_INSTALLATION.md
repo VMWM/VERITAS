@@ -1,6 +1,6 @@
 # MCP Installation Guide
 
-This guide documents all Model Context Protocol (MCP) servers required for the Research Agent system.
+This guide documents all Model Context Protocol (MCP) servers required for the Research Agent system. All MCP servers are installed with the setup.sh run. This is for information purposes only. 
 
 ## Required MCP Servers
 
