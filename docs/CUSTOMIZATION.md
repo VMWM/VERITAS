@@ -1,248 +1,212 @@
 # Customization Guide
 
-This guide helps you adapt the system from HLA research to your specific domain.
+This guide helps you adapt the Research Agent-MCP System to your specific research domain.
 
 ## Quick Customization Steps
 
-1. **Rename Obsidian vaults** to match your research area
-2. **Copy agent template** and modify for your domain
-3. **Update config paths** if using different folder structure
-4. **Adjust templates** for your note-taking style
+1. **Update CLAUDE.md** with your project context
+2. **Modify templates** in `templates/obsidian/` for your field
+3. **Configure Obsidian vaults** for your research structure
+4. **Adjust hook scripts** for domain-specific validation
+5. **Customize agent instructions** in `.claude/agents/`
 
-## 🏗️ Vault Customization
+## Vault Structure Options
 
 ### Option A: Two-Vault System (Recommended)
-Keep research separate from daily notes:
+Separate research content from daily logs:
 ```
 Obsidian/
-├── [Your Research Topic]/      # e.g., "Cancer Biology", "Neuroscience"
-│   ├── Concepts/
+├── [Your Research Topic]/      # Main research vault
 │   ├── Research Questions/
+│   ├── Concepts/
 │   └── Literature/
-└── Research Journal/            # Daily logs and project notes
-    ├── Daily/
-    └── Projects/
+└── Research Journal/           # Daily logs
+    └── Daily/
 ```
 
-**Config**: Keep both `obsidian-rest-hla` and `obsidian-rest-journal` (rename as needed)
+**Configuration**: Use two Obsidian REST servers on different ports
 
 ### Option B: Single Vault (Simpler)
-Everything in one place:
+Everything in one location:
 ```
 Obsidian/
 └── Research/
+    ├── Research Questions/
     ├── Concepts/
-    ├── Questions/
     ├── Daily/
     └── Literature/
 ```
 
-**Config**: Use only one `obsidian-rest` server, remove the journal server
+**Configuration**: Use single Obsidian REST server
 
 ### Option C: Project-Based Vaults
 Separate vault per project:
 ```
 Obsidian/
-├── Grant_F31_2025/
-├── Clinical_Trial_XYZ/
-└── Lab_Protocols/
+├── Project_A/
+├── Project_B/
+└── Shared_Resources/
 ```
 
-**Config**: Add MCP server for each vault with unique ports (27124, 27125, 27126...)
+**Configuration**: Multiple REST servers, one per project
 
-## 🎭 Creating Your Domain Agent
+## Customizing for Your Domain
 
-### Step 1: Start with Template
-```bash
-cp templates/AGENT_TEMPLATE.md ~/my-project/CLAUDE.md
-```
+### 1. Update CLAUDE.md
 
-### Step 2: Customize Core Sections
-
-#### Agent Identity
+Replace the PROJECT CONTEXT section:
 ```markdown
-# [Your Field] Research Expert Agent
+## PROJECT CONTEXT
 
-## Role & Expertise
-Expert in [your specific domain] with focus on [your research goals]
-
-## Primary Research Focus
-- **Current Project**: [Your main project]
-- **Key Questions**: [What you're investigating]
-- **Methods**: [Your approaches]
+[Your research area description]
+[Your timeline]
+Location: [Your project directory]
 ```
 
-#### Knowledge Sources
-Replace HLA-specific paths with yours:
-```markdown
-## Knowledge Sources
-1. **Literature**: ~/Documents/Papers/[Your Field]/
-2. **Data**: ~/Research/Data/
-3. **Protocols**: ~/Lab/Protocols/
-```
+### 2. Modify Templates
 
-#### Domain Vocabulary
-Add field-specific terms:
-```markdown
-## Domain-Specific Knowledge
-- Key concepts: [List important concepts]
-- Common abbreviations: [Field-specific acronyms]
-- Important methods: [Techniques you use]
-```
+Edit files in `templates/obsidian/`:
 
-### Step 3: Tool Configuration
+**For Medical/Biology Research**:
+- Keep PMID citation format
+- Maintain clinical sections
+- Include validation data
 
-#### For Wet Lab Research
-Emphasize protocol management:
-```markdown
-## Workflow Priorities
-1. Check protocols folder first
-2. Version control for protocol changes
-3. Link to relevant safety docs
-```
+**For Computer Science**:
+- Replace PMIDs with DOI/arXiv
+- Add code repository links
+- Include performance metrics
 
-#### For Clinical Research
-Add patient data handling:
-```markdown
-## Data Handling Rules
-- Never include PHI in notes
-- Use study IDs only
-- Follow HIPAA guidelines
-```
+**For Social Sciences**:
+- Adjust citation format (APA/MLA)
+- Add qualitative analysis sections
+- Include participant data fields
 
-#### For Computational Research
-Focus on code and analysis:
-```markdown
-## Code Management
-- Link to GitHub repos
-- Document analysis pipelines
-- Track software versions
-```
+**For Engineering**:
+- Add specification tables
+- Include design parameters
+- Add testing protocols
 
-## 📝 Template Customization
+### 3. Adjust Citation Requirements
 
-### Concept Note Template
-Edit `templates/concept.md`:
-```markdown
-# {{title}}
-
-## Definition
-[Adjust for your field's style]
-
-## Clinical Significance  → ## Research Impact
-## Mechanisms           → ## Theoretical Framework
-## References           → ## Citations
-```
-
-### Daily Entry Template
-Edit `templates/daily-entry.md`:
-```markdown
-# {{date}}
-
-## Experiments Completed  → ## Work Completed
-## Lab Observations      → ## Key Findings
-## Protocol Changes      → ## Methods Notes
-```
-
-### Research Question Template
-Adapt to your field's format:
-```markdown
-# Research Question
-
-## Hypothesis        → ## Research Aim
-## Background       → ## Literature Context
-## Methodology      → ## Proposed Approach
-## Expected Impact  → ## Significance
-```
-
-## 🔧 Advanced Customization
-
-### Custom MCP Servers
-Add field-specific tools:
+Edit `.claude/config/verification.json`:
 ```json
 {
-  "mcpServers": {
-    "protein-db": {
-      "command": "npx",
-      "args": ["@your-org/protein-mcp"]
-    }
+  "citation_format": {
+    "pattern": "your-citation-pattern",
+    "required_fields": ["author", "year", "identifier"]
   }
 }
 ```
 
-### API Integrations
-Connect to your field's databases:
-- **Biology**: UniProt, NCBI, PDB
-- **Chemistry**: PubChem, ChEMBL
-- **Clinical**: ClinicalTrials.gov, FDA
-- **Physics**: arXiv, INSPIRE-HEP
+### 4. Customize Hook Validation
 
-### Workflow Automation
-Create field-specific commands:
+Edit `.claude/hooks/post-command.py`:
+- Modify citation patterns
+- Adjust verification levels
+- Add domain-specific checks
+
+### 5. Agent Customization
+
+Edit `.claude/agents/research-director.md`:
+- Update terminology for your field
+- Modify template structures
+- Adjust quality criteria
+
+## Domain-Specific Examples
+
+### Computational Biology
 ```markdown
-## Custom Commands
-- "Update lab notebook" → Creates daily entry with experiment template
-- "Review literature" → Searches field-specific databases
-- "Generate figure legend" → Formats according to journal requirements
+tags: [computational-biology, algorithm, genomics]
+Include: Algorithm complexity, Dataset size, Validation metrics
+Citations: PMID for biology, DOI for computational papers
 ```
 
-## 💡 Examples by Field
-
-### Neuroscience Example
+### Machine Learning
 ```markdown
-## Agent Configuration
-- Focus: Neural circuits and behavior
-- Databases: PubMed, Allen Brain Atlas
-- Vaults: "Neural Circuits", "Behavior Data"
-- Templates: Include imaging protocols
+tags: [ml-model, dataset, benchmark]
+Include: Model architecture, Training details, Benchmark scores
+Citations: arXiv, conference proceedings
 ```
 
-### Cancer Biology Example
+### Clinical Research
 ```markdown
-## Agent Configuration
-- Focus: Tumor microenvironment
-- Databases: COSMIC, cBioPortal
-- Vaults: "Cancer Mechanisms", "Drug Screening"
-- Templates: Include cell line tracking
+tags: [clinical-trial, patient-outcomes, protocol]
+Include: Trial design, Sample size, Statistical analysis
+Citations: PMID, ClinicalTrials.gov ID
 ```
 
-### Bioinformatics Example
-```markdown
-## Agent Configuration
-- Focus: Genomic analysis pipelines
-- Databases: GEO, SRA, Ensembl
-- Vaults: "Pipelines", "Analysis Results"
-- Templates: Include code snippets
+## Removing Medical-Specific Features
+
+If not doing medical research:
+
+1. **Remove PMID enforcement**:
+   - Edit `.claude/hooks/post-command.py`
+   - Remove PMID validation
+   - Add your citation format
+
+2. **Update templates**:
+   - Remove clinical sections
+   - Remove PMID fields
+   - Add field-specific sections
+
+3. **Modify CLAUDE.md**:
+   - Remove PMID requirements
+   - Update citation format
+   - Adjust verification levels
+
+## Adding Custom Tools
+
+To add field-specific tools:
+
+1. **Install additional MCPs**:
+```bash
+npx @modelcontextprotocol/install [tool-name]
 ```
 
-## 🚀 Quick Start for New Domain
+2. **Update Claude Desktop config**:
+```json
+"your-tool": {
+  "command": "npx",
+  "args": ["@modelcontextprotocol/server-yourtool"]
+}
+```
 
-1. **Clone HLA agent as starting point**:
-   ```bash
-   cp agents/HLA-Research-Agent.md agents/My-Field-Agent.md
+3. **Add to CLAUDE.md tool priority**:
+```markdown
+## TOOL USAGE - STRICT PRIORITY
+1. mcp__sequential-thinking__*
+2. mcp__your-tool__*
+...
+```
+
+## Testing Your Customization
+
+After customizing:
+
+1. Start new Claude conversation
+2. Test with domain-specific task:
    ```
-
-2. **Find & Replace**:
-   - "HLA" → Your field
-   - "antibodies" → Your focus
-   - "transplant" → Your application
-
-3. **Update paths**:
-   - Change vault names
-   - Update literature folders
-   - Fix protocol locations
-
-4. **Test with simple query**:
+   "Create a research question about [your topic]"
    ```
-   /agent "What are the key concepts in [your field]?"
-   ```
+3. Verify:
+   - Correct templates used
+   - Proper citations format
+   - Domain terminology correct
+   - Validation passes
 
-## 📚 Resources
+## Sharing Your Configuration
 
-- **Agent Library**: Share agents at github.com/VMWM/HLA_Agent-MCP_System/agents
-- **Template Collection**: Community templates in `/templates`
-- **Custom MCP Servers**: Build your own at modelcontextprotocol.org
+To share with colleagues:
 
----
+1. Fork the repository
+2. Apply your customizations
+3. Update README with your domain
+4. Share your fork URL
 
-*Remember: The system is flexible - start simple and add complexity as needed*
+## Support for Customization
+
+- Keep base system intact
+- Document your changes
+- Test incrementally
+- Submit domain-specific templates as PRs

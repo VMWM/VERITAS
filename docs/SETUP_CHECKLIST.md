@@ -1,250 +1,204 @@
-# Setup Checklist & Configuration Guide
+# Setup Checklist
 
-## Required User-Specific Configurations
+Complete checklist for setting up the Research Agent-MCP System.
 
-This checklist ensures your HLA Agent-MCP System is properly configured. Check each item as you complete it.
+## Prerequisites
 
-## Prerequisites Checklist
+### System Requirements
+- [ ] **Operating System**: macOS, Linux, or Windows with WSL
+- [ ] **Node.js**: v16 or higher (`node -v` to verify)
+- [ ] **npm**: Latest version (`npm -v` to verify)
+- [ ] **Python**: 3.8+ (`python3 --version` to verify)
+- [ ] **Git**: Installed (`git --version` to verify)
 
-- [ ] **macOS** (required - system uses macOS-specific paths)
-- [ ] **Node.js v18+** installed (`node -v` to verify)
-- [ ] **VS Code** installed
-- [ ] **Claude Code** installed via VS Code or npm
-- [ ] **Obsidian** installed
-- [ ] **Git** installed
+### Required Software
+- [ ] **Claude Desktop**: Downloaded and installed
+- [ ] **Obsidian**: Downloaded and installed
+- [ ] **Text Editor**: VS Code recommended
 
-## Account Requirements
+## Installation Checklist
 
-### 1. Claude/Anthropic
-- [ ] Create account at https://console.anthropic.com/
-- [ ] Generate API key
-- [ ] Save API key securely (you'll need it for config)
+### Step 1: Clone Repository
+- [ ] Clone from GitHub:
+  ```bash
+  git clone https://github.com/[username]/Research_Agent-MCP_System.git
+  cd Research_Agent-MCP_System
+  ```
 
-### 2. PubMed (Optional but Recommended)
-- [ ] Register at https://www.ncbi.nlm.nih.gov/account/
-- [ ] Get API key from Account Settings → API Key Management
-- [ ] Note your registered email address
+### Step 2: Run Setup Script
+- [ ] Make script executable: `chmod +x setup.sh`
+- [ ] Run setup: `./setup.sh`
+- [ ] Note your project directory path
+- [ ] Note Obsidian port numbers
 
-### 3. Cloud Storage
-Choose one and ensure it's set up:
-- [ ] iCloud Drive (built into macOS)
-- [ ] Dropbox (installed and syncing)
-- [ ] Box (installed with "Box-Box" folder in ~/Library/CloudStorage/)
-- [ ] Google Drive (installed and syncing)
-- [ ] OneDrive (installed and syncing)
+### Step 3: Install MCP Servers
+Verify each installation:
+- [ ] **Sequential Thinking**: `npx @modelcontextprotocol/install sequentialthinking`
+- [ ] **PubMed**: `npx @modelcontextprotocol/install pubmed`
+- [ ] **Memory**: `npx @modelcontextprotocol/install memory`
+- [ ] **Filesystem**: `npx @modelcontextprotocol/install filesystem`
 
-## Installation Steps
+### Step 4: Configure Obsidian
+- [ ] Install Obsidian Local REST API plugin:
+  - Open Obsidian Settings
+  - Community Plugins → Browse
+  - Search "Local REST API"
+  - Install and Enable
+- [ ] Configure REST API:
+  - [ ] Set port for primary vault (default: 27124)
+  - [ ] Set port for journal vault (default: 27125)
+  - [ ] Generate bearer token
+  - [ ] Save token securely
 
-### Step 1: Run Setup Script
-```bash
-git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
-cd HLA_Agent-MCP_System
-chmod +x setup.sh
-./setup.sh
-```
+### Step 5: Create Vault Structure
+- [ ] Create primary vault with folders:
+  ```
+  Your Vault/
+  ├── Research Questions/
+  ├── Concepts/
+  └── Literature/
+  ```
+- [ ] Create journal vault (optional):
+  ```
+  Research Journal/
+  └── Daily/
+  ```
 
-During setup, you'll be asked for:
-1. **Cloud provider choice** (1-6)
-2. **Obsidian location** (same as MCP or different)
-3. Script will create all directories automatically
-
-### Step 2: Configure Obsidian Vaults
-
-#### For Research Vault (Port 27124):
-- [ ] Open Obsidian
-- [ ] Open vault at: `[Your Cloud]/Obsidian/HLA Antibodies` (or your renamed vault)
-- [ ] Settings → Community Plugins → Browse
-- [ ] Search "Local REST API" → Install → Enable
-- [ ] Local REST API Settings:
-  - [ ] Enable HTTPS
-  - [ ] Port: 27124 (default)
-  - [ ] Copy the API key → Save somewhere safe
-
-#### For Journal Vault (Port 27125):
-- [ ] Open second vault at: `[Your Cloud]/Obsidian/Research Journal`
-- [ ] Install Local REST API plugin (same process)
-- [ ] Local REST API Settings:
-  - [ ] Enable HTTPS
-  - [ ] **Change port to 27125** (IMPORTANT!)
-  - [ ] Copy the API key → Save somewhere safe
-
-### Step 3: Edit Configuration File
-
-Location: `~/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json`
-(Or your chosen cloud location from setup)
-
-Replace these placeholders:
-
-#### PubMed Configuration:
-```json
-"pubmed": {
-  "env": {
-    "PUBMED_EMAIL": "YOUR_EMAIL@university.edu",  // ← Your email
-    "PUBMED_API_KEY": "YOUR_PUBMED_API_KEY_HERE"   // ← Optional but recommended
+### Step 6: Configure Claude Desktop
+- [ ] Locate config file:
+  - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+  - Linux: `~/.config/Claude/claude_desktop_config.json`
+  - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- [ ] Add MCP server configurations:
+  ```json
+  {
+    "mcpServers": {
+      "sequential-thinking": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-sequentialthinking"]
+      },
+      "pubmed": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-pubmed"]
+      },
+      "memory": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-memory"]
+      },
+      "filesystem-local": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-filesystem", "/path/to/project"]
+      },
+      "obsidian-rest-primary": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-rest",
+                 "--base-url", "http://127.0.0.1:27124",
+                 "--auth-type", "bearer",
+                 "--auth-token", "YOUR_TOKEN"]
+      }
+    }
   }
-}
-```
+  ```
+- [ ] Replace `/path/to/project` with your project directory
+- [ ] Replace `YOUR_TOKEN` with Obsidian bearer token
+- [ ] Save configuration file
 
-#### Obsidian Research Vault:
-```json
-"obsidian-rest-hla": {
-  "env": {
-    "AUTH_BEARER": "YOUR_HLA_VAULT_API_KEY_HERE"   // ← From Step 2, port 27124
-  }
-}
-```
+### Step 7: Project Configuration
+- [ ] Update CLAUDE.md:
+  - [ ] Add project description
+  - [ ] Set timeline
+  - [ ] Verify directory paths
+- [ ] Check hook permissions:
+  ```bash
+  chmod +x .claude/hooks/*.sh
+  chmod +x .claude/hooks/*.py
+  chmod +x .claude/scripts/*.py
+  ```
+- [ ] Create logs directory:
+  ```bash
+  mkdir -p .claude/logs
+  ```
 
-#### Obsidian Journal Vault:
-```json
-"obsidian-rest-journal": {
-  "env": {
-    "AUTH_BEARER": "YOUR_JOURNAL_VAULT_API_KEY_HERE" // ← From Step 2, port 27125
-  }
-}
-```
+### Step 8: Restart and Test
+- [ ] Restart Claude Desktop
+- [ ] Open new conversation
+- [ ] Test each MCP:
+  - [ ] Sequential thinking: "Plan a research task"
+  - [ ] PubMed: "Find papers about [topic]"
+  - [ ] Memory: "Remember this concept: [concept]"
+  - [ ] Filesystem: "Read CLAUDE.md"
+  - [ ] Obsidian: "Create a test research question"
 
-#### Filesystem Access:
-```json
-"filesystem-local": {
-  "args": [
-    "@modelcontextprotocol/server-filesystem",
-    "~/Library/CloudStorage/Box-Box"  // ← Change to your cloud path if different
-  ]
-}
-```
+## Verification Tests
 
-### Step 4: Create/Update CLAUDE.md
+### Hook System
+- [ ] Pre-command hook shows reminders
+- [ ] Task router detects Obsidian tasks
+- [ ] Compliance validator blocks wrong tools
+- [ ] Post-command validator checks output
 
-**For HLA Research (use as-is):**
-- [ ] Copy included CLAUDE.md to your project folder
-
-**For Other Research Domains:**
-- [ ] Copy templates/AGENT_TEMPLATE.md to your project as CLAUDE.md
-- [ ] Edit the following sections:
-  - Professional Identity (your field)
-  - Core Expertise (your specialties)
-  - Knowledge Base paths (your document locations)
-  - Technical Knowledge (domain-specific info)
-  - Research Focus (your hypothesis/aims)
-
-### Step 5: Customize Vault Names (Optional)
-
-If you renamed the vault folders:
-1. [ ] Update vault paths in your local CLAUDE.md
-2. [ ] Keep REST API ports (27124, 27125) unchanged
-3. [ ] Ensure folder structure matches:
-   ```
-   YourResearchVault/
-   ├── Concepts/
-   └── Research Questions/
-   
-   Research Journal/
-   ├── Daily/
-   └── Projects/
-   ```
-
-## Validation Checklist
-
-### Test Each Component:
-
-#### 1. Claude Code
+Test command:
 ```bash
-claude --version
-```
-- [ ] Shows version number
-
-#### 2. MCP Servers
-```bash
-npm list -g | grep "@modelcontextprotocol\|@nova-mcp\|@ncukondo\|dkmaker"
-```
-- [ ] Shows all installed servers
-
-#### 3. Configuration File
-```bash
-cat ~/Library/Mobile\ Documents/com~apple~CloudDocs/MCP-Shared/claude-desktop-config.json | grep "YOUR_"
-```
-- [ ] Should return nothing (all placeholders replaced)
-
-#### 4. Obsidian Connection
-- [ ] Both vaults open in Obsidian
-- [ ] Local REST API enabled in both
-- [ ] Different ports (27124 and 27125)
-- [ ] HTTPS enabled
-- [ ] API keys saved
-
-#### 5. Test in Claude Code
-```bash
-cd /path/to/your/project
-claude
-```
-Then try:
-- [ ] `/mcp` - Should show all connected servers
-- [ ] Ask Claude to create a test note in Obsidian
-- [ ] Ask Claude to search PubMed for a topic
-
-## Common Issues & Solutions
-
-### "Failed to connect to server"
-- Check API keys are correct
-- Ensure Obsidian is running
-- Verify Local REST API is enabled
-- Check ports (27124 for research, 27125 for journal)
-
-### "Permission denied"
-- Run `chmod +x setup.sh` before running script
-- Check cloud storage permissions
-
-### "Directory not found"
-- Ensure cloud storage is set up and syncing
-- Check the path in config matches actual location
-
-### PubMed not working
-- Email is required (API key optional)
-- Check for typos in email address
-- If using API key, verify it's valid
-
-## File Paths Reference
-
-After setup, your structure should look like:
-
-```
-~/Library/Mobile Documents/com~apple~CloudDocs/  (or your cloud)
-├── MCP-Shared/
-│   ├── claude-desktop-config.json   ← Your config file
-│   ├── nova-memory/                 ← Memory storage
-│   ├── agents/                      ← Custom agents
-│   └── HLA_Agent-MCP_System/        ← This repo (optional)
-│
-└── Obsidian/                        (or your chosen location)
-    ├── HLA Antibodies/               ← Research vault (rename for your field)
-    │   ├── Concepts/
-    │   └── Research Questions/
-    └── Research Journal/             ← Daily notes vault
-        ├── Daily/
-        └── Projects/
+bash .claude/hooks/pre-command.sh
 ```
 
-## Final Verification
+### Obsidian Integration
+- [ ] Creates files in correct folders
+- [ ] Uses proper templates
+- [ ] Wiki links formatted correctly
+- [ ] Tables display properly
 
-Run this command to test everything:
-```bash
-cd /path/to/your/project
-claude
+Test command:
+```
+"Create a research question about [topic] in my vault"
 ```
 
-Then in Claude:
-1. Type `/mcp` - Should list all servers
-2. Try: "Create a test concept note about [your topic]"
-3. Try: "Search PubMed for recent papers on [your topic]"
-4. Check Obsidian - notes should appear
+### Citation System
+- [ ] Citations include proper format
+- [ ] Verification levels added
+- [ ] PubMed searches work
+- [ ] References formatted correctly
 
-If all tests pass, your system is ready! 🎉
+## Troubleshooting Quick Checks
 
-## Need Help?
+If something isn't working:
 
-- Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-- Review [README.md](../README.md) for examples
-- Open an issue on GitHub with:
-  - Your OS version
-  - Error messages
-  - Which step failed
+### MCP Not Responding
+- [ ] Claude Desktop restarted?
+- [ ] Config file saved?
+- [ ] Paths absolute, not relative?
+- [ ] Tokens/ports correct?
+
+### Obsidian Issues
+- [ ] REST API plugin enabled?
+- [ ] Port not blocked by firewall?
+- [ ] Bearer token matches config?
+- [ ] Vault folders exist?
+
+### Hook Problems
+- [ ] Files executable?
+- [ ] Python 3 installed?
+- [ ] Paths in settings.local.json correct?
+
+## Final Validation
+
+Complete setup is verified when:
+- [ ] All MCPs respond to commands
+- [ ] Obsidian integration creates proper files
+- [ ] Hooks display and enforce rules
+- [ ] Citations are validated
+- [ ] Templates are followed
+
+## Support
+
+If issues persist after checklist:
+1. Check `docs/TROUBLESHOOTING.md`
+2. Review error logs in `.claude/logs/`
+3. Submit GitHub issue with details
+
+## Success!
+
+When all items checked:
+- System is fully operational
+- Begin creating research content
+- Customize for your domain (see CUSTOMIZATION.md)
