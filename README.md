@@ -139,7 +139,7 @@ The system can be adapted for different research domains by modifying:
 
 ## License
 
-This project is provided as-is for research use. See LICENSE file for details.
+MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
