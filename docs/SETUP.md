@@ -35,9 +35,10 @@ chmod +x setup.sh
 The setup script will:
 - Check prerequisites
 - Install all MCP servers
-- Copy configuration files
-- Set proper permissions
-- Configure paths
+- Copy configuration files (including .claude directory)
+- Copy agent reference documents with templates
+- Set proper permissions for all hooks
+- Configure paths dynamically in settings
 
 ### 3. Configure Claude Desktop
 
@@ -140,6 +141,26 @@ The system includes several hooks that run automatically:
 - Purpose: Verify output compliance
 - Runs: After content generation
 
+## What Gets Installed
+
+### MCP Servers (Software)
+These are actual programs that need installation:
+- Sequential Thinking MCP - For task planning
+- PubMed MCP - For citation search
+- Memory MCP - For knowledge storage
+- Filesystem MCP - For file access
+- Obsidian REST (configured separately)
+
+### Configuration Files (Copied)
+These are configuration and reference files:
+- **CLAUDE.md** - Main instructions and routing rules
+- **research-director.md** - Detailed templates (not software, just reference)
+- **Hooks** - Python/Bash scripts for enforcement
+- **Templates** - Obsidian note templates
+- **settings.local.json** - Hook configuration
+
+Note: The "agent" (research-director.md) is just a reference document with templates, not software that runs. It's automatically included when the .claude directory is copied.
+
 ## Directory Structure
 
 After setup, your project should have:
@@ -149,13 +170,13 @@ Your_Project/
 ├── CLAUDE.md                    # Main configuration
 ├── .claude/
 │   ├── agents/
-│   │   └── research-director.md # Templates and workflows
+│   │   └── research-director.md # Templates and workflows (reference doc)
 │   ├── config/
 │   │   └── verification.json    # Validation rules
 │   ├── hooks/                  # Enforcement scripts
 │   ├── scripts/                 # Additional tools
 │   ├── logs/                    # System logs
-│   └── settings.local.json     # Hook configuration
+│   └── settings.local.json     # Hook configuration (auto-generated)
 └── [Your project files]
 ```
 
