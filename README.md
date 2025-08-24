@@ -8,6 +8,11 @@ A Claude-powered research framework ensuring academic rigor through enforced cit
 
 VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Structuring) embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
 
+### What Each Component Means:
+- **Verification-Enforced** - Active enforcement of citation requirements and validation through hooks and compliance checks
+- **Research Infrastructure** - The comprehensive framework and tools providing a complete research environment
+- **Tracking and Automated Structuring** - Intelligent organization and documentation of all research activities
+
 The name VERITAS, Latin for "truth," reflects our commitment to:
 - **Verification-Enforced** citations with mandatory PMID requirements
 - **Research Infrastructure** providing comprehensive framework
