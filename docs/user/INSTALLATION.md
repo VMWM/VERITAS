@@ -5,7 +5,8 @@ This guide walks through the complete setup of the Research Agent-MCP System.
 ## Prerequisites
 
 ### Required Software
-- Claude Desktop (Claude Code)
+- Claude Desktop application
+- Claude Code CLI (installed via npm)
 - Node.js and npm (v16 or higher)
 - Obsidian with Local REST API plugin
 - Python 3.8+ (for validation hooks)
@@ -21,8 +22,8 @@ This guide walks through the complete setup of the Research Agent-MCP System.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/[your-username]/Research_Agent-MCP_System.git
-cd Research_Agent-MCP_System
+git clone https://github.com/VMWM/VERITAS.git
+cd VERITAS
 ```
 
 ### 2. Run Automated Setup
@@ -39,15 +40,91 @@ The setup script will:
 - Copy agent reference documents with templates
 - Set proper permissions for all hooks
 - Configure paths dynamically in settings
+- Display configuration to copy
 
-### 3. Configure Claude Desktop
+After setup.sh completes, run:
+```bash
+./scripts/configure-claude.sh
+```
 
-Open your Claude Desktop configuration file:
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Linux: `~/.config/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+This configuration script will:
+- Detect existing Claude configurations
+- Offer to merge with or replace existing configs
+- Create backups of any existing configurations
+- Set up both Claude Desktop and CLI with identical MCP servers
+- Optionally create symlinks for unified configuration management
 
-Add the MCP server configurations provided by the setup script.
+#### Configuration Options
+
+The script offers several configuration strategies:
+
+**1. Merge vs Replace**
+- **Merge** (recommended): Adds VERITAS servers to your existing configuration
+- **Replace**: Creates fresh configuration (backs up existing)
+- **Preview**: Shows what will be added without making changes
+
+**2. Separate vs Symlinked Configs**
+- **Separate configs** (default): Desktop and CLI have independent configuration files
+  - Best for: Single machine setups
+  - Changes must be made to each file separately
+- **Symlinked configs**: Both Desktop and CLI use the same configuration file
+  - Best for: Keeping Desktop and CLI in perfect sync
+  - Changes to one automatically affect the other
+  - The CLI config (~/.claude.json) becomes the master file
+
+**3. Multi-Machine Synchronization**
+For syncing configurations across multiple machines:
+1. Place your master config in a cloud-synced directory (iCloud/Dropbox/etc)
+2. Create symlinks from all Claude config locations to the cloud file
+3. All machines will automatically stay in sync
+
+Example multi-machine setup:
+```bash
+# Create master config in iCloud
+cp ~/.claude.json ~/Library/Mobile\ Documents/com~apple~CloudDocs/claude-config.json
+
+# Symlink from all locations
+ln -sf ~/Library/Mobile\ Documents/com~apple~CloudDocs/claude-config.json ~/.claude.json
+ln -sf ~/Library/Mobile\ Documents/com~apple~CloudDocs/claude-config.json ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+### 3. Configuration Complete
+
+After running `configure-claude.sh`:
+- Both Claude Desktop and CLI have identical MCP server configurations
+- Backups are created with timestamps if you had existing configs
+- Your chosen configuration strategy is applied (separate/symlinked)
+- Project .mcp.json is symlinked to CLI config for consistency
+
+Copy the entire JSON configuration provided by the setup script.
+
+**Important:** Make sure the file contains valid JSON only - no comments or extra text.
+
+#### Step 2: Restart Claude Desktop
+Completely quit and restart Claude Desktop to load the MCP servers.
+
+#### Step 3: Configure Claude Code CLI
+After Claude Desktop is configured and running, import the servers to Claude Code CLI:
+
+```bash
+claude mcp add-from-claude-desktop
+```
+
+When prompted:
+1. Use arrow keys to navigate
+2. Press Space to select/deselect servers
+3. Select all servers (they should have checkmarks)
+4. Press Enter to confirm
+
+#### Step 4: Verify Configuration
+```bash
+# Check that servers are imported
+claude mcp list
+
+# Test in a new Claude session
+claude
+> /mcp  # Should show your configured servers
+```
 
 ### 4. Configure Obsidian
 
@@ -86,14 +163,23 @@ Templates are in `templates/obsidian/`:
 
 ### 6. Test the System
 
-#### Test MCP Servers
+#### Test MCP Servers in Claude Code CLI
 ```bash
-# In Claude Desktop, test each MCP:
-"Test sequential thinking by planning a task"
-"Search PubMed for a recent paper"
-"Store a concept in memory"
-"Read a file from the project"
+# Start Claude Code
+claude
+
+# Check MCP servers are available
+/mcp
+
+# Test each MCP:
+"Use sequential thinking to plan a research task"
+"Search PubMed for papers on HLA antibodies"
+"Store a concept about antibody testing in memory"
+"Read the CLAUDE.md file from my project"
 ```
+
+#### Test MCP Servers in Claude Desktop
+Open Claude Desktop and test with similar commands.
 
 #### Test Obsidian Integration
 ```

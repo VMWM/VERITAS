@@ -1,4 +1,4 @@
-# VERITAS - Verified Evidence Research Integration and Tracking Automated System
+# VERITAS - Verified Evidence Research Infrastructure with Tracking and Automated Structuring
 
 A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
 
@@ -6,16 +6,15 @@ A Claude-powered research framework ensuring academic rigor through enforced cit
 
 ## About VERITAS
 
-VERITAS (Verified Evidence Research Integration and Tracking Automated System) embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
+VERITAS (Verified Evidence Research Infrastructure with Tracking and Automated Structuring) embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
 
 The name VERITAS, Latin for "truth," reflects our commitment to:
 - **Verified** citations with PMID requirements
 - **Evidence-based** research documentation
-- **Reproducible** research workflows
-- **Integrity** in academic documentation
-- **Transparency** through conversation tracking
-- **Automated** quality enforcement
-- **Systematic** organization
+- **Research Infrastructure** providing comprehensive framework
+- **Tracking** of all conversations and sources
+- **Automated Structuring** of research content
+- **Scientific** integrity throughout
 
 **GitHub**: https://github.com/VMWM/VERITAS
 
@@ -124,50 +123,55 @@ System automatically:
 ## Installation
 
 ```bash
-git clone https://github.com/VMWM/HLA_Agent-MCP_System.git
-cd HLA_Agent-MCP_System
+git clone https://github.com/VMWM/VERITAS.git
+cd VERITAS
 chmod +x setup.sh
 ./setup.sh
+
+# After setup completes, configure Claude:
+./scripts/configure-claude.sh
 ```
 
-The setup script handles everything:
-- Installs all MCP servers automatically
-- Installs Conversation Logger dependencies
+The setup process handles everything:
+- `setup.sh`: Installs all MCP servers and dependencies
+- `configure-claude.sh`: Interactive configuration with multiple options:
+  - Merges with or replaces existing configurations
+  - Creates automatic backups of existing configs
+  - Offers symlink option for unified Desktop/CLI management
+  - Supports multi-machine synchronization via cloud directories
+- Both interfaces get identical MCP server configurations
 - Configures hook system with proper permissions
 - Sets up dynamic path resolution
 - Creates database directories
-- Provides complete Claude Desktop configuration
 
 Manual steps required:
-1. Install Obsidian Local REST API plugin
+1. Install Obsidian Local REST API plugin (if using Obsidian)
 2. Configure bearer token and ports
-3. Add MCP configurations to Claude Desktop
-4. Create vault folder structure
+3. Create vault folder structure
 
 ## Documentation
 
-**[Complete Documentation Index](docs/README.md)** | **[Repository Structure](STRUCTURE.md)**
+**[📚 Documentation Hub](docs/README.md)** - All documentation organized by audience
 
 ### Quick Links
-- [`docs/SETUP.md`](docs/SETUP.md) - Detailed setup instructions
-- [`docs/CONVERSATION_LOGGER.md`](docs/CONVERSATION_LOGGER.md) - Conversation tracking and journal generation guide
-- [`docs/MCP_INFO.md`](docs/MCP_INFO.md) - MCP server details
-- [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md) - Customization guide
-- [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) - Common issues and solutions
+- **[🚀 Quick Start](docs/user/QUICK_START.md)** - Get running in 5 minutes
+- **[📖 Full Installation](docs/user/INSTALLATION.md)** - Detailed setup
+- **[⚙️ Configuration](docs/user/CONFIGURATION.md)** - All options explained
+- **[🔧 Troubleshooting](docs/user/TROUBLESHOOTING.md)** - Fix common issues
+- **[🔄 Multi-Machine Sync](docs/user/MULTI_MACHINE.md)** - Advanced setup
 
 ## Customization
 
-The system can be adapted for different research domains by modifying:
-- `.claude/agents/research-director.md` - Template specifications
-- `.claude/config/verification.json` - Validation rules
-- `.claude/hooks/` - Enforcement scripts
-- `CLAUDE.md` - Routing rules and priorities
+See **[Developer Documentation](docs/developer/)** for customization options:
+- **[Customization Guide](docs/developer/CUSTOMIZATION.md)** - Adapt for your domain
+- **[MCP Servers](docs/developer/MCP_SERVERS.md)** - Technical details
+- **[Conversation Logger](docs/developer/CONVERSATION_LOGGER.md)** - Logger API
 
 ## Support
 
+- **Documentation**: [📚 Documentation Hub](docs/README.md)
 - **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
-- **Templates**: `/templates/obsidian/` directory
-- **Logs**: `.claude/logs/` for debugging
+- **Templates**: [/templates/](templates/) directory
 
 ## License
 

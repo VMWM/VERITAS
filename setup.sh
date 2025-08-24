@@ -69,11 +69,11 @@ else
 fi
 echo ""
 
-# PubMed MCP
-echo "Installing PubMed MCP..."
-npx @modelcontextprotocol/install pubmed
+# PubMed MCP (using cyanheads version to avoid debug output issues)
+echo "Installing PubMed MCP (cyanheads version)..."
+npm install -g @cyanheads/pubmed-mcp-server
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ PubMed MCP installed${NC}"
+    echo -e "${GREEN}✓ PubMed MCP (cyanheads) installed${NC}"
 else
     echo -e "${YELLOW}⚠ PubMed MCP installation may have failed${NC}"
 fi
@@ -167,28 +167,49 @@ echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
 read -r OBSIDIAN_INSTALLED
 
 if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
-    echo "Enter the port for your primary vault (default: 27124):"
+    echo "Enter the port for your HLA/primary vault (default: 27124):"
     read -r PRIMARY_PORT
     PRIMARY_PORT=${PRIMARY_PORT:-27124}
+    
+    echo "Enter the API key for your HLA/primary vault:"
+    read -r BEARER_TOKEN
     
     echo "Enter the port for your journal vault (default: 27125):"
     read -r JOURNAL_PORT
     JOURNAL_PORT=${JOURNAL_PORT:-27125}
     
-    echo "Enter your bearer token (or press enter to skip):"
-    read -r BEARER_TOKEN
+    echo "Enter the API key for your journal vault (or same as primary):"
+    read -r JOURNAL_TOKEN
+    JOURNAL_TOKEN=${JOURNAL_TOKEN:-$BEARER_TOKEN}
     
     echo -e "${GREEN}✓ Obsidian configuration noted${NC}"
+    echo ""
+    echo "Note: The configuration below uses REST API connections."
+    echo "Claude will connect directly to your Obsidian vaults."
     echo ""
     echo "Add this to your Claude Desktop configuration:"
     echo ""
     cat << EOF
-"obsidian-rest-primary": {
+"obsidian-rest-hla": {
   "command": "npx",
-  "args": ["@modelcontextprotocol/server-rest", 
-           "--base-url", "http://127.0.0.1:$PRIMARY_PORT",
-           "--auth-type", "bearer",
-           "--auth-token", "$BEARER_TOKEN"]
+  "args": ["obsidian-mcp-server"],
+  "env": {
+    "OBSIDIAN_API_KEY": "$BEARER_TOKEN",
+    "OBSIDIAN_BASE_URL": "https://127.0.0.1:$PRIMARY_PORT",
+    "OBSIDIAN_VERIFY_SSL": "false",
+    "OBSIDIAN_ENABLE_CACHE": "true"
+  }
+}
+
+"obsidian-rest-journal": {
+  "command": "npx",
+  "args": ["obsidian-mcp-server"],
+  "env": {
+    "OBSIDIAN_API_KEY": "$JOURNAL_TOKEN",
+    "OBSIDIAN_BASE_URL": "https://127.0.0.1:$JOURNAL_PORT",
+    "OBSIDIAN_VERIFY_SSL": "false",
+    "OBSIDIAN_ENABLE_CACHE": "true"
+  }
 }
 EOF
 else
@@ -222,6 +243,8 @@ echo "================================"
 echo "Claude Desktop Configuration"
 echo "================================"
 echo ""
+echo "Step 1: Configure Claude Desktop"
+echo "---------------------------------"
 echo "Add the following to your Claude Desktop config file:"
 echo "(Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
 echo ""
@@ -233,9 +256,14 @@ cat << EOF
       "command": "npx",
       "args": ["@modelcontextprotocol/server-sequentialthinking"]
     },
-    "pubmed": {
+    "pubmed-cyanheads": {
       "command": "npx",
-      "args": ["@modelcontextprotocol/server-pubmed"]
+      "args": ["@cyanheads/pubmed-mcp-server"],
+      "env": {
+        "MCP_TRANSPORT_TYPE": "stdio",
+        "MCP_LOG_LEVEL": "error",
+        "NODE_ENV": "production"
+      }
     },
     "memory": {
       "command": "npx",
@@ -247,7 +275,7 @@ cat << EOF
     },
     "conversation-logger": {
       "command": "node",
-      "args": ["$(pwd)/conversation-logger/index.js"],
+      "args": ["$SCRIPT_DIR/conversation-logger/index.js"],
       "env": {
         "NODE_ENV": "production"
       }
@@ -256,6 +284,19 @@ cat << EOF
 }
 EOF
 
+echo ""
+echo "Step 2: Configure Claude Code CLI"
+echo "----------------------------------"
+echo "After configuring Claude Desktop and restarting it, run:"
+echo ""
+echo -e "${GREEN}  claude mcp add-from-claude-desktop${NC}"
+echo ""
+echo "This will automatically import all MCP servers to Claude Code CLI."
+echo "Select all servers when prompted and press Enter to confirm."
+echo ""
+echo "To verify the import worked, run:"
+echo -e "${GREEN}  claude mcp list${NC}"
+
 # Final instructions
 echo ""
 echo "================================"
@@ -263,16 +304,16 @@ echo -e "${GREEN}Setup Complete!${NC}"
 echo "================================"
 echo ""
 echo "Next steps:"
-echo "1. Update PROJECT CONTEXT section in $PROJECT_DIR/CLAUDE.md"
-echo "2. Add MCP server configuration to Claude Desktop (shown above)"
-echo "3. Install conversation logger dependencies:"
-echo "   cd conversation-logger && npm install"
-echo "4. Configure your Obsidian vault structure:"
+echo "1. Run the configuration script to set up Claude:"
+echo -e "   ${GREEN}./scripts/configure-claude.sh${NC}"
+echo "   This will create configs for both Claude Desktop and CLI"
+echo "2. Update PROJECT CONTEXT section in $PROJECT_DIR/CLAUDE.md"
+echo "3. Restart Claude Desktop and/or Claude CLI"
+echo "5. Configure your Obsidian vault structure:"
 echo "   - Create 'Research Questions' folder"
 echo "   - Create 'Concepts' folder"
 echo "   - Create 'Daily' folder for journals"
-echo "5. Restart Claude Desktop to load MCP servers"
-echo "5. Test the system with a simple task"
+echo "6. Test the system with a simple task"
 echo ""
 echo "To test, start a new Claude Code conversation and try:"
 echo "  'Create a research question about [your topic] in my vault'"

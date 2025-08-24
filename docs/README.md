@@ -1,143 +1,110 @@
-# VERITAS Documentation
+# VERITAS Documentation Hub
 
-Welcome to the comprehensive documentation for VERITAS (Verified Evidence Research Integration and Tracking Automated System). VERITAS provides a complete research infrastructure for Claude Code with automated citation management, conversation tracking, and Obsidian integration.
+Welcome to the VERITAS documentation. Choose your path:
 
-## Documentation Index
+## 🚀 Getting Started
 
-### Getting Started
-- **[Setup Guide](SETUP.md)** - Complete installation instructions
-- **[Setup Checklist](SETUP_CHECKLIST.md)** - Interactive checklist for verification
-- **[Troubleshooting](TROUBLESHOOTING.md)** - Common issues and solutions
+### New Users
+- **[Quick Start Guide](user/QUICK_START.md)** - Get running in 5 minutes
+- **[Installation Guide](user/INSTALLATION.md)** - Detailed setup instructions
+- **[Configuration Guide](user/CONFIGURATION.md)** - Configuration options explained
 
-### Core Components
-- **[MCP Servers Information](MCP_INFO.md)** - Details on all 7 MCP servers
-- **[Conversation Logger](CONVERSATION_LOGGER.md)** - Complete guide to conversation tracking and journal generation
-- **[Customization Guide](CUSTOMIZATION.md)** - Adapting the system for your needs
+### Existing Users
+- **[Troubleshooting](user/TROUBLESHOOTING.md)** - Fix common issues
 
-## Quick Navigation
+### Advanced Users
+- **[Multi-Machine Sync](user/MULTI_MACHINE.md)** - Sync across devices
 
-### First Time Setup
-1. Start with [SETUP.md](SETUP.md)
-2. Use [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md) to verify
-3. Read [CONVERSATION_LOGGER.md](CONVERSATION_LOGGER.md) for journal features
+## 📚 Documentation Structure
 
-### For Developers
-- [CUSTOMIZATION.md](CUSTOMIZATION.md) - Modify templates and workflows
-- [CONVERSATION_LOGGER.md#api-reference](CONVERSATION_LOGGER.md#api-reference) - API documentation
-- [MCP_INFO.md](MCP_INFO.md) - Technical server details
+```
+docs/
+├── user/                    # End-user guides
+│   ├── QUICK_START.md      # 5-minute setup
+│   ├── INSTALLATION.md     # Complete setup
+│   ├── CONFIGURATION.md    # Config options
+│   ├── MULTI_MACHINE.md    # Multi-device sync
+│   └── TROUBLESHOOTING.md  # Problem solving
+│
+└── developer/              # Technical documentation
+    ├── CUSTOMIZATION.md   # Extending VERITAS
+    ├── MCP_SERVERS.md     # MCP technical details
+    └── CONVERSATION_LOGGER.md  # Logger deep dive
+```
 
-### Need Help?
-- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Fix common problems
-- [CONVERSATION_LOGGER.md#troubleshooting](CONVERSATION_LOGGER.md#troubleshooting) - Logger-specific issues
-- [GitHub Issues](https://github.com/VMWM/VERITAS/issues) - Report bugs
+## 🎯 Quick Links by Task
 
-## Documentation Overview
+### "I want to..."
 
-### [SETUP.md](SETUP.md)
-Complete setup instructions including:
-- Prerequisites and requirements
-- Step-by-step installation
-- MCP server configuration
-- Obsidian integration
-- Hook system setup
+#### Set up VERITAS
+1. [Quick Start](user/QUICK_START.md) - Fastest path
+2. [Full Installation](user/INSTALLATION.md) - All options
+3. [Configuration](user/CONFIGURATION.md) - Customize settings
 
-### [CONVERSATION_LOGGER.md](CONVERSATION_LOGGER.md)
-Comprehensive guide covering:
-- Architecture and data flow
-- Installation and configuration
-- All 5 MCP tools with examples
-- Journal generation templates
-- Database schema and queries
-- Integration workflows
-- Advanced configuration
-- API reference
+#### Use with Obsidian
+1. [Installation Guide](user/INSTALLATION.md#obsidian-configuration) - Obsidian setup
+2. [Templates](../templates/obsidian/) - Note templates
 
-### [MCP_INFO.md](MCP_INFO.md)
-Technical details for all MCP servers:
-- Sequential Thinking MCP
-- PubMed MCP (35+ million articles)
-- Memory MCP (knowledge graphs)
-- Filesystem MCP
-- Obsidian REST APIs (2 instances)
-- Conversation Logger MCP
+#### Sync across machines
+1. [Multi-Machine Guide](user/MULTI_MACHINE.md) - Complete sync setup
 
-### [CUSTOMIZATION.md](CUSTOMIZATION.md)
-Adapt the system to your needs:
-- Template modification
-- Citation format changes
-- Workflow customization
-- Hook configuration
-- Research domain adaptation
+#### Fix problems
+1. [Troubleshooting](user/TROUBLESHOOTING.md) - Common issues
+2. [GitHub Issues](https://github.com/VMWM/VERITAS/issues) - Report bugs
 
-### [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)
-Interactive verification checklist:
-- [ ] All MCP servers connected
-- [ ] Conversation logger active
-- [ ] Database created
-- [ ] Journal generation working
-- [ ] Obsidian integration verified
+#### Customize or extend
+1. [Customization Guide](developer/CUSTOMIZATION.md) - Modify VERITAS
+2. [MCP Servers](developer/MCP_SERVERS.md) - Technical details
+3. [Conversation Logger](developer/CONVERSATION_LOGGER.md) - Logger API
 
-### [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-Solutions for common issues:
-- MCP connection problems
-- Hook execution errors
-- Database issues
-- Journal generation failures
-- Obsidian API problems
+## 📖 Complete Documentation Index
 
-## Key Features Documented
+### User Documentation
+- **[QUICK_START.md](user/QUICK_START.md)** - 5-minute setup guide
+- **[INSTALLATION.md](user/INSTALLATION.md)** - Complete installation with all options
+- **[CONFIGURATION.md](user/CONFIGURATION.md)** - All configuration options explained
+- **[MULTI_MACHINE.md](user/MULTI_MACHINE.md)** - Multi-machine synchronization
+- **[TROUBLESHOOTING.md](user/TROUBLESHOOTING.md)** - Solutions to common problems
 
-### Conversation Tracking
-The [Conversation Logger](CONVERSATION_LOGGER.md) provides:
-- Persistent memory across sessions
-- Automatic activity tracking
-- Journal generation from actual conversation data
-- Project context awareness
-- Integration with Memory MCP
+### Developer Documentation
+- **[CUSTOMIZATION.md](developer/CUSTOMIZATION.md)** - How to customize VERITAS
+- **[MCP_SERVERS.md](developer/MCP_SERVERS.md)** - Technical details of all 7 MCP servers
+- **[CONVERSATION_LOGGER.md](developer/CONVERSATION_LOGGER.md)** - Deep dive into the conversation logger
 
-### Citation Management
-Enforced throughout the system:
-- Automatic PubMed verification
-- PMID requirement for all claims
-- Citation format: (Author et al., Year, PMID: XXXXXXXX)
-- Verification levels: FT-VERIFIED, ABSTRACT-VERIFIED, NEEDS-FT-REVIEW
 
-### Obsidian Integration
-Two-vault system documented:
-- Primary vault (port 27124): Research content
-- Journal vault (port 27125): Daily logs
-- Automatic wiki linking
-- Template-based creation
+## 🔧 Key Components
 
-### Research Workflows
-Complete workflows for:
-- Literature review with citations
-- Research question documentation
-- Concept note creation
-- Daily journal generation
-- Knowledge graph building
+### MCP Servers (7 total)
+1. **Sequential Thinking** - Task planning and decomposition
+2. **PubMed** - Medical literature (35+ million articles)
+3. **Memory** - Knowledge graph storage
+4. **Filesystem** - Local file access
+5. **Obsidian REST (Primary)** - Main vault operations
+6. **Obsidian REST (Journal)** - Journal vault operations
+7. **Conversation Logger** - Session tracking and journals
 
-## Version Information
+### Core Features
+- ✅ Enforced citation requirements (PMID mandatory)
+- ✅ Automatic conversation tracking
+- ✅ Journal generation from sessions
+- ✅ Obsidian integration with templates
+- ✅ Multi-vault support
+- ✅ Knowledge graph building
 
-- **System Version**: 2.0.0
-- **Conversation Logger**: 1.0.0
-- **Documentation Updated**: January 2025
-- **Repository**: [GitHub](https://github.com/VMWM/VERITAS)
+## 🆘 Getting Help
 
-## Contributing
+1. **Documentation**: You're here!
+2. **Quick fixes**: [Troubleshooting](user/TROUBLESHOOTING.md)
+3. **Report issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
+4. **Templates**: Check `/templates/` directory
 
-Documentation improvements welcome! Please:
-1. Follow existing format patterns
-2. Include practical examples
-3. Test all code snippets
-4. Update this index when adding new docs
+## 📊 System Information
 
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
-- **Documentation**: You're here!
-- **Community**: Claude Code users and researchers
+- **Version**: 2.0.0
+- **License**: MIT
+- **Repository**: [github.com/VMWM/VERITAS](https://github.com/VMWM/VERITAS)
+- **Updated**: January 2025
 
 ---
 
-*For the main repository README, see [../README.md](../README.md)*
+*Return to [Main README](../README.md)*

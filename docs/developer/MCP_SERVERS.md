@@ -20,9 +20,10 @@ npx @modelcontextprotocol/install sequentialthinking
 
 ### 2. PubMed MCP
 **Purpose**: Enables citation verification and literature search
-**Repository**: https://github.com/modelcontextprotocol/servers/tree/main/src/pubmed
+**Package**: @cyanheads/pubmed-mcp-server (production-ready version without debug output)
+**Repository**: https://github.com/cyanheads/pubmed-mcp-server
 ```bash
-npx @modelcontextprotocol/install pubmed
+npm install -g @cyanheads/pubmed-mcp-server
 ```
 
 ### 3. Memory MCP
@@ -77,7 +78,12 @@ After installation, add to your Claude Desktop configuration:
     },
     "pubmed": {
       "command": "npx",
-      "args": ["@modelcontextprotocol/server-pubmed"]
+      "args": ["@cyanheads/pubmed-mcp-server"],
+      "env": {
+        "MCP_TRANSPORT_TYPE": "stdio",
+        "MCP_LOG_LEVEL": "error",
+        "NODE_ENV": "production"
+      }
     },
     "memory": {
       "command": "npx",
