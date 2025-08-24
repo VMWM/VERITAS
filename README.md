@@ -120,12 +120,14 @@ Manual steps required:
 
 ## Documentation
 
+📚 **[Complete Documentation Index](docs/README.md)**
+
+### Quick Links
 - [`docs/SETUP.md`](docs/SETUP.md) - Detailed setup instructions
-- [`docs/SETUP_CHECKLIST.md`](docs/SETUP_CHECKLIST.md) - Interactive setup checklist
+- [`docs/CONVERSATION_LOGGER.md`](docs/CONVERSATION_LOGGER.md) ⭐ - **NEW: Comprehensive conversation tracking guide**
 - [`docs/MCP_INFO.md`](docs/MCP_INFO.md) - MCP server details
 - [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md) - Customization guide
 - [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) - Common issues and solutions
-- [`conversation-logger/README.md`](conversation-logger/README.md) - Conversation logger documentation
 
 ## Customization
 
