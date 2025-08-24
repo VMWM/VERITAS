@@ -228,6 +228,13 @@ cat << EOF
     "filesystem-local": {
       "command": "npx",
       "args": ["@modelcontextprotocol/server-filesystem", "$PROJECT_DIR"]
+    },
+    "conversation-logger": {
+      "command": "node",
+      "args": ["$(pwd)/conversation-logger/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
     }
   }
 }
@@ -242,11 +249,13 @@ echo ""
 echo "Next steps:"
 echo "1. Update PROJECT CONTEXT section in $PROJECT_DIR/CLAUDE.md"
 echo "2. Add MCP server configuration to Claude Desktop (shown above)"
-echo "3. Configure your Obsidian vault structure:"
+echo "3. Install conversation logger dependencies:"
+echo "   cd conversation-logger && npm install"
+echo "4. Configure your Obsidian vault structure:"
 echo "   - Create 'Research Questions' folder"
 echo "   - Create 'Concepts' folder"
 echo "   - Create 'Daily' folder for journals"
-echo "4. Restart Claude Desktop to load MCP servers"
+echo "5. Restart Claude Desktop to load MCP servers"
 echo "5. Test the system with a simple task"
 echo ""
 echo "To test, start a new Claude Code conversation and try:"
