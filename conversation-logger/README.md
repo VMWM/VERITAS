@@ -6,7 +6,7 @@ A custom-built MCP server designed specifically for this research system. Unlike
 
 ## About This Component
 
-This is the only custom-built MCP server in the HLA Agent-MCP System. While other MCP servers (Sequential Thinking, PubMed, Memory, Filesystem) are installed from npm packages, the Conversation Logger was developed specifically for this system to address the need for persistent conversation memory and accurate journal generation.
+This is the only custom-built MCP server in VERITAS. While other MCP servers (Sequential Thinking, PubMed, Memory, Filesystem) are installed from npm packages, the Conversation Logger was developed specifically for VERITAS to address the need for persistent conversation memory and accurate journal generation within research workflows.
 
 ## Features
 

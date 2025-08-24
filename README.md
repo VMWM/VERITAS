@@ -1,10 +1,25 @@
-# Research Agent-MCP System
+# VERITAS - Verified Evidence Research Integration and Tracking Automated System
 
-A hook-based enforcement system that ensures Claude Code follows consistent workflows for research documentation, citation management, and Obsidian integration.
+A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
 
-## What This System Does
+**Repository**: `claude-research-framework` (formerly HLA_Agent-MCP_System)
 
-This system creates a multi-layer enforcement framework that:
+## About VERITAS
+
+VERITAS (Verified Evidence Research Integration and Tracking Automated System) embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
+
+The name VERITAS, Latin for "truth," reflects our commitment to:
+- **Verified** citations with PMID requirements
+- **Evidence-based** research documentation
+- **Reproducible** research workflows
+- **Integrity** in academic documentation
+- **Transparency** through conversation tracking
+- **Automated** quality enforcement
+- **Systematic** organization
+
+## What VERITAS Does
+
+VERITAS creates a multi-layer enforcement framework that:
 - Routes research tasks to appropriate MCP tools automatically
 - Enforces PMID citation requirements for all scientific claims
 - Creates properly formatted Obsidian notes using predefined templates

@@ -1,11 +1,11 @@
 # Repository Structure
 
-This document describes the organization of the HLA Agent-MCP System repository.
+This document describes the organization of the VERITAS (claude-research-framework) repository.
 
 ## Directory Layout
 
 ```
-HLA_Agent-MCP_System/
+claude-research-framework/
 │
 ├── Core Files
 │   ├── README.md                    # Main repository documentation

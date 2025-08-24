@@ -1,6 +1,6 @@
-# HLA Agent-MCP System Documentation
+# VERITAS Documentation
 
-Welcome to the comprehensive documentation for the HLA Agent-MCP System. This system provides a complete research infrastructure for Claude Code with automated citation management, conversation tracking, and Obsidian integration.
+Welcome to the comprehensive documentation for VERITAS (Verified Evidence Research Integration and Tracking Automated System). VERITAS provides a complete research infrastructure for Claude Code with automated citation management, conversation tracking, and Obsidian integration.
 
 ## Documentation Index
 
