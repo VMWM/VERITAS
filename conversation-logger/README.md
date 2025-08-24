@@ -158,20 +158,6 @@ Edit `~/.claude/hooks/config.json` to customize:
 }
 ```
 
-## Comparison with MemoriPilot
-
-| Feature | MemoriPilot | Conversation Logger |
-|---------|-------------|-------------------|
-| Persistent Memory | ✅ | ✅ |
-| Conversation Tracking | ✅ | ✅ |
-| Activity Logging | ✅ | ✅ |
-| Journal Generation | ❌ | ✅ |
-| Native IDE Integration | ✅ (Copilot) | ✅ (MCP) |
-| Working Modes | ✅ | 🚧 (Planned) |
-| Decision Tracking | ✅ | ✅ |
-| Project Context | ✅ | ✅ |
-| Obsidian Integration | ❌ | ✅ |
-
 ## Troubleshooting
 
 ### MCP Server Not Connecting
