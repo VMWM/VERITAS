@@ -99,6 +99,22 @@ else
 fi
 echo ""
 
+# Conversation Logger
+echo "Installing Conversation Logger dependencies..."
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR/conversation-logger"
+npm install --silent
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Conversation Logger dependencies installed${NC}"
+    # Initialize database
+    mkdir -p ~/.conversation-logger
+    echo -e "${GREEN}✓ Conversation Logger database directory created${NC}"
+else
+    echo -e "${YELLOW}⚠ Conversation Logger installation may have failed${NC}"
+fi
+cd "$SCRIPT_DIR"
+echo ""
+
 # Copy core files
 echo "================================"
 echo "Copying Project Files"

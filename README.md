@@ -104,11 +104,13 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-The setup script:
-- Installs 4 MCP servers automatically
+The setup script handles everything:
+- Installs all MCP servers automatically
+- Installs Conversation Logger dependencies
 - Configures hook system with proper permissions
 - Sets up dynamic path resolution
-- Provides Obsidian configuration template
+- Creates database directories
+- Provides complete Claude Desktop configuration
 
 Manual steps required:
 1. Install Obsidian Local REST API plugin

@@ -32,13 +32,21 @@ Available tools in Claude Code:
 
 ## Installation
 
-1. Run the installation script:
+### Automatic Installation (Recommended)
+The conversation logger is automatically installed when you run the main setup script from the repository root:
 ```bash
-cd ~/mcp-servers/conversation-logger
-./install.sh
+# From HLA_Agent-MCP_System directory
+./setup.sh
 ```
 
-2. Restart Claude Code to activate the MCP server
+### Manual Configuration (Optional)
+For advanced configuration or reconfiguration after installation:
+```bash
+cd conversation-logger
+./configure.sh
+```
+
+After installation, restart Claude Code to activate the MCP server.
 
 ## Usage
 
