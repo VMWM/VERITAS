@@ -29,7 +29,7 @@ Welcome to the comprehensive documentation for VERITAS (Verified Evidence Resear
 ### Need Help?
 - [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Fix common problems
 - [CONVERSATION_LOGGER.md#troubleshooting](CONVERSATION_LOGGER.md#troubleshooting) - Logger-specific issues
-- [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues) - Report bugs
+- [GitHub Issues](https://github.com/VMWM/VERITAS/issues) - Report bugs
 
 ## Documentation Overview
 
@@ -122,7 +122,7 @@ Complete workflows for:
 - **System Version**: 2.0.0
 - **Conversation Logger**: 1.0.0
 - **Documentation Updated**: January 2025
-- **Repository**: [GitHub](https://github.com/VMWM/HLA_Agent-MCP_System)
+- **Repository**: [GitHub](https://github.com/VMWM/VERITAS)
 
 ## Contributing
 
@@ -134,7 +134,7 @@ Documentation improvements welcome! Please:
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)
+- **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
 - **Documentation**: You're here!
 - **Community**: Claude Code users and researchers
 

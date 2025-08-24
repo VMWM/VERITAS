@@ -1,11 +1,11 @@
 # Repository Structure
 
-This document describes the organization of the VERITAS (claude-research-framework) repository.
+This document describes the organization of the VERITAS repository.
 
 ## Directory Layout
 
 ```
-claude-research-framework/
+VERITAS/
 │
 ├── Core Files
 │   ├── README.md                    # Main repository documentation

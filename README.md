@@ -2,7 +2,7 @@
 
 A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
 
-**Repository**: `claude-research-framework` (formerly HLA_Agent-MCP_System)
+**Repository**: `VERITAS` (formerly HLA_Agent-MCP_System)
 
 ## About VERITAS
 
@@ -16,6 +16,8 @@ The name VERITAS, Latin for "truth," reflects our commitment to:
 - **Transparency** through conversation tracking
 - **Automated** quality enforcement
 - **Systematic** organization
+
+**GitHub**: https://github.com/VMWM/VERITAS
 
 ## What VERITAS Does
 
@@ -163,7 +165,7 @@ The system can be adapted for different research domains by modifying:
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)
+- **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
 - **Templates**: `/templates/obsidian/` directory
 - **Logs**: `.claude/logs/` for debugging
 
@@ -173,4 +175,4 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
-**[Setup Guide →](docs/SETUP.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues)**
+**[Setup Guide →](docs/SETUP.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/VERITAS/issues)**

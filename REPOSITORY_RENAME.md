@@ -1,6 +1,6 @@
 # Repository Renaming Instructions
 
-This document provides instructions for renaming the repository from `HLA_Agent-MCP_System` to `claude-research-framework`.
+This document provides instructions for renaming the repository from `HLA_Agent-MCP_System` to `VERITAS`.
 
 ## GitHub Repository Rename
 
@@ -9,7 +9,7 @@ This document provides instructions for renaming the repository from `HLA_Agent-
 1. Go to https://github.com/VMWM/HLA_Agent-MCP_System
 2. Click on "Settings" tab
 3. Under "General" settings, find "Repository name"
-4. Change from `HLA_Agent-MCP_System` to `claude-research-framework`
+4. Change from `HLA_Agent-MCP_System` to `VERITAS`
 5. Click "Rename"
 
 GitHub will automatically:
@@ -26,7 +26,7 @@ After renaming on GitHub, update your local clone:
 cd "/Users/vmwm/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/HLA_Agent-MCP_System"
 
 # Update the remote URL
-git remote set-url origin https://github.com/VMWM/claude-research-framework.git
+git remote set-url origin https://github.com/VMWM/VERITAS.git
 
 # Verify the change
 git remote -v
@@ -41,10 +41,10 @@ If you want to rename the local directory to match:
 cd "/Users/vmwm/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared"
 
 # Rename the directory
-mv HLA_Agent-MCP_System claude-research-framework
+mv HLA_Agent-MCP_System VERITAS
 
 # Enter the renamed directory
-cd claude-research-framework
+cd VERITAS
 ```
 
 ### Step 4: Update Configuration Files
@@ -80,13 +80,13 @@ claude mcp list | grep conversation-logger
 
 - GitHub's automatic redirects will handle old links for a while
 - Update any bookmarks to use the new URL
-- The system name is now **VERITAS** but the repository uses a descriptive name
+- Both the system and repository are now named **VERITAS**
 - All functionality remains the same, only the name changes
 
 ## New Repository URL
 
 After renaming:
 - **Old**: https://github.com/VMWM/HLA_Agent-MCP_System
-- **New**: https://github.com/VMWM/claude-research-framework
+- **New**: https://github.com/VMWM/VERITAS
 
 The old URL will redirect automatically, but it's best to update references to use the new URL.

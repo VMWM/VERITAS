@@ -1003,7 +1003,7 @@ We welcome contributions! Areas where help is needed:
 - Documentation improvements
 - Bug fixes and testing
 
-Submit issues and PRs to: https://github.com/VMWM/HLA_Agent-MCP_System
+Submit issues and PRs to: https://github.com/VMWM/VERITAS
 
 ---
 
@@ -1011,7 +1011,7 @@ Submit issues and PRs to: https://github.com/VMWM/HLA_Agent-MCP_System
 
 For help and support:
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/VMWM/HLA_Agent-MCP_System/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/VMWM/VERITAS/issues)
 - **Documentation**: This guide and README files
 - **Community**: Claude Code Discord channels
 
