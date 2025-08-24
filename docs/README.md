@@ -2,7 +2,7 @@
 
 Welcome to the comprehensive documentation for the HLA Agent-MCP System. This system provides a complete research infrastructure for Claude Code with automated citation management, conversation tracking, and Obsidian integration.
 
-## 📚 Documentation Index
+## Documentation Index
 
 ### Getting Started
 - **[Setup Guide](SETUP.md)** - Complete installation instructions
@@ -11,22 +11,22 @@ Welcome to the comprehensive documentation for the HLA Agent-MCP System. This sy
 
 ### Core Components
 - **[MCP Servers Information](MCP_INFO.md)** - Details on all 7 MCP servers
-- **[Conversation Logger](CONVERSATION_LOGGER.md)** ⭐ - Complete guide to conversation tracking and journal generation
+- **[Conversation Logger](CONVERSATION_LOGGER.md)** - Complete guide to conversation tracking and journal generation
 - **[Customization Guide](CUSTOMIZATION.md)** - Adapting the system for your needs
 
 ## Quick Navigation
 
-### 🚀 First Time Setup
+### First Time Setup
 1. Start with [SETUP.md](SETUP.md)
 2. Use [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md) to verify
 3. Read [CONVERSATION_LOGGER.md](CONVERSATION_LOGGER.md) for journal features
 
-### 🔧 For Developers
+### For Developers
 - [CUSTOMIZATION.md](CUSTOMIZATION.md) - Modify templates and workflows
 - [CONVERSATION_LOGGER.md#api-reference](CONVERSATION_LOGGER.md#api-reference) - API documentation
 - [MCP_INFO.md](MCP_INFO.md) - Technical server details
 
-### 🆘 Need Help?
+### Need Help?
 - [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Fix common problems
 - [CONVERSATION_LOGGER.md#troubleshooting](CONVERSATION_LOGGER.md#troubleshooting) - Logger-specific issues
 - [GitHub Issues](https://github.com/VMWM/HLA_Agent-MCP_System/issues) - Report bugs
@@ -41,7 +41,7 @@ Complete setup instructions including:
 - Obsidian integration
 - Hook system setup
 
-### [CONVERSATION_LOGGER.md](CONVERSATION_LOGGER.md) ⭐ NEW
+### [CONVERSATION_LOGGER.md](CONVERSATION_LOGGER.md)
 Comprehensive guide covering:
 - Architecture and data flow
 - Installation and configuration
@@ -59,7 +59,7 @@ Technical details for all MCP servers:
 - Memory MCP (knowledge graphs)
 - Filesystem MCP
 - Obsidian REST APIs (2 instances)
-- **Conversation Logger MCP** (NEW)
+- Conversation Logger MCP
 
 ### [CUSTOMIZATION.md](CUSTOMIZATION.md)
 Adapt the system to your needs:
@@ -87,29 +87,29 @@ Solutions for common issues:
 
 ## Key Features Documented
 
-### 🧠 Conversation Tracking (NEW)
+### Conversation Tracking
 The [Conversation Logger](CONVERSATION_LOGGER.md) provides:
 - Persistent memory across sessions
 - Automatic activity tracking
-- Journal generation without fabrication
+- Journal generation from actual conversation data
 - Project context awareness
 - Integration with Memory MCP
 
-### 📚 Citation Management
+### Citation Management
 Enforced throughout the system:
 - Automatic PubMed verification
 - PMID requirement for all claims
 - Citation format: (Author et al., Year, PMID: XXXXXXXX)
 - Verification levels: FT-VERIFIED, ABSTRACT-VERIFIED, NEEDS-FT-REVIEW
 
-### 🔗 Obsidian Integration
+### Obsidian Integration
 Two-vault system documented:
 - Primary vault (port 27124): Research content
 - Journal vault (port 27125): Daily logs
 - Automatic wiki linking
 - Template-based creation
 
-### 🎯 Research Workflows
+### Research Workflows
 Complete workflows for:
 - Literature review with citations
 - Research question documentation

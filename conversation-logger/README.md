@@ -2,29 +2,29 @@
 
 A comprehensive conversation logging and journal generation system for Claude Code, providing MemoriPilot-like functionality.
 
-📚 **For complete documentation, see [docs/CONVERSATION_LOGGER.md](../docs/CONVERSATION_LOGGER.md)**
+**For complete documentation, see [docs/CONVERSATION_LOGGER.md](../docs/CONVERSATION_LOGGER.md)**
 
 ## Features
 
-### 🧠 Persistent Conversation Memory
+### Persistent Conversation Memory
 - Logs all conversations between user and Claude
 - Tracks tool usage and file modifications
 - Maintains session context across Claude restarts
 - Stores data in SQLite database for easy querying
 
-### 📊 Activity Tracking
+### Activity Tracking
 - Automatic activity logging via hooks
 - User intent extraction and categorization
 - Project-aware session management
 - Timestamp-based activity correlation
 
-### 📔 Journal Generation
+### Journal Generation
 - Comprehensive daily research logs
 - Automatic topic extraction and summarization
 - Metrics and statistics tracking
 - Direct integration with Obsidian vaults
 
-### 🔧 MCP Tools
+### MCP Tools
 Available tools in Claude Code:
 - `log_message` - Log conversation messages with context
 - `log_activity` - Track specific activities and events

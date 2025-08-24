@@ -7,7 +7,7 @@ This document describes the organization of the HLA Agent-MCP System repository.
 ```
 HLA_Agent-MCP_System/
 │
-├── 📄 Core Files
+├── Core Files
 │   ├── README.md                    # Main repository documentation
 │   ├── LICENSE                      # MIT License
 │   ├── CLAUDE.md                    # Claude Code instructions
@@ -15,7 +15,7 @@ HLA_Agent-MCP_System/
 │   ├── STRUCTURE.md                 # This file
 │   └── .gitignore                   # Git ignore rules
 │
-├── 📁 .claude/                      # Claude-specific configuration
+├── .claude/                      # Claude-specific configuration
 │   ├── agents/                      # Agent configurations
 │   │   └── research-director.md     # Research workflow templates
 │   ├── hooks/                       # Hook scripts for enforcement
@@ -26,18 +26,18 @@ HLA_Agent-MCP_System/
 │   │   └── task-router.py           # Routes tasks to tools
 │   └── settings.local.json.template # Settings template
 │
-├── 📁 scripts/                      # Utility scripts
+├── scripts/                      # Utility scripts
 │   ├── startup-check.sh            # System startup checks
 │   └── obsidian-enforcer.py        # Obsidian format enforcement
 │
-├── 📁 conversation-logger/          # Conversation tracking MCP server
+├── conversation-logger/          # Conversation tracking MCP server
 │   ├── README.md                   # Module documentation
 │   ├── package.json                # Node.js dependencies
 │   ├── index.js                    # Main MCP server
 │   ├── obsidian-journal-generator.js # Journal generation
 │   └── configure.sh                # Configuration script
 │
-├── 📁 docs/                         # Documentation
+├── docs/                         # Documentation
 │   ├── README.md                   # Documentation index
 │   ├── SETUP.md                    # Installation guide
 │   ├── SETUP_CHECKLIST.md          # Setup verification
@@ -46,7 +46,7 @@ HLA_Agent-MCP_System/
 │   ├── CUSTOMIZATION.md            # Customization guide
 │   └── TROUBLESHOOTING.md          # Problem solving
 │
-└── 📁 templates/                    # Templates
+└── templates/                    # Templates
     └── obsidian/                   # Obsidian templates
         ├── concept_template.md      # Concept note template
         ├── daily_journal_template.md # Journal template

@@ -34,7 +34,7 @@ The Conversation Logger MCP Server provides persistent conversation memory for C
 
 This tool was created to provide MemoriPilot-like functionality for Claude Code users who need:
 - Persistent memory across coding sessions
-- Accurate daily journal generation without fabrication
+- Accurate daily journal generation from conversation history
 - Activity tracking for research documentation
 - Project context awareness
 - Integration with existing knowledge management systems (Obsidian)

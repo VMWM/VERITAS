@@ -29,7 +29,7 @@ This system creates a multi-layer enforcement framework that:
 4. **Filesystem** - Local project file access
 5. **Obsidian REST (Primary)** - Main vault operations (port 27124)
 6. **Obsidian REST (Journal)** - Journal vault operations (port 27125)
-7. **Conversation Logger** - Full conversation tracking and journal generation
+7. **Conversation Logger** - Conversation tracking and journal generation
 
 ### Enforcement Hooks
 - **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
@@ -120,11 +120,11 @@ Manual steps required:
 
 ## Documentation
 
-📚 **[Complete Documentation Index](docs/README.md)** | 🗂️ **[Repository Structure](STRUCTURE.md)**
+**[Complete Documentation Index](docs/README.md)** | **[Repository Structure](STRUCTURE.md)**
 
 ### Quick Links
 - [`docs/SETUP.md`](docs/SETUP.md) - Detailed setup instructions
-- [`docs/CONVERSATION_LOGGER.md`](docs/CONVERSATION_LOGGER.md) ⭐ - **NEW: Comprehensive conversation tracking guide**
+- [`docs/CONVERSATION_LOGGER.md`](docs/CONVERSATION_LOGGER.md) - Conversation tracking and journal generation guide
 - [`docs/MCP_INFO.md`](docs/MCP_INFO.md) - MCP server details
 - [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md) - Customization guide
 - [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) - Common issues and solutions
