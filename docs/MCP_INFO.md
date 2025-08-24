@@ -1,8 +1,15 @@
 # MCP Installation Guide
 
-This guide documents all Model Context Protocol (MCP) servers required for the Research Agent system. All MCP servers are installed with the setup.sh run. This is for information purposes only. 
+This guide documents all Model Context Protocol (MCP) servers required for the Research Agent system. All MCP servers are installed with the setup.sh run. This is for information purposes only.
 
-## Required MCP Servers
+## MCP Server Types
+
+This system uses three categories of MCP servers:
+1. **Third-Party MCP Servers** - External npm packages from the MCP community
+2. **Obsidian REST API** - Integration via Obsidian's Local REST API plugin
+3. **Custom-Built MCP Server** - The Conversation Logger, developed specifically for this system
+
+## Third-Party MCP Servers (External npm packages)
 
 ### 1. Sequential Thinking MCP
 **Purpose**: Provides structured problem-solving and planning capabilities
@@ -32,12 +39,30 @@ npx @modelcontextprotocol/install memory
 npx @modelcontextprotocol/install filesystem
 ```
 
-### 5. Obsidian REST API
+## Obsidian Integration
+
+### Obsidian REST API
 **Purpose**: Direct integration with Obsidian vaults
 **Installation**: 
 1. Install Obsidian Local REST API plugin from Community Plugins
 2. Configure authentication (Bearer token recommended)
 3. Set unique ports for each vault (e.g., 27124, 27125)
+
+## Custom-Built MCP Server
+
+### Conversation Logger
+**Purpose**: Conversation tracking and journal generation
+**Location**: `conversation-logger/` directory in this repository
+**Development**: Custom-built specifically for this research system
+
+This is the only MCP server in this system that was developed from scratch rather than installed from external sources. Key features:
+- Persistent conversation memory across Claude sessions
+- Automatic journal generation from actual conversation data
+- SQLite database for conversation storage
+- Direct integration with Obsidian for journal posting
+
+**Why Custom-Built?**
+No existing MCP server provided the specific combination of conversation tracking, journal generation, and research-oriented features needed for this system. The Conversation Logger fills this gap with functionality tailored to research documentation workflows.
 
 ## Configuration in Claude Desktop
 

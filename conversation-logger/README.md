@@ -1,8 +1,12 @@
 # Conversation Logger MCP Server
 
-A comprehensive conversation logging and journal generation system for Claude Code, providing MemoriPilot-like functionality.
+A custom-built MCP server designed specifically for this research system. Unlike the third-party MCP servers used elsewhere in this setup, this component was developed from scratch to provide conversation tracking and journal generation tailored to research documentation needs.
 
 **For complete documentation, see [docs/CONVERSATION_LOGGER.md](../docs/CONVERSATION_LOGGER.md)**
+
+## About This Component
+
+This is the only custom-built MCP server in the HLA Agent-MCP System. While other MCP servers (Sequential Thinking, PubMed, Memory, Filesystem) are installed from npm packages, the Conversation Logger was developed specifically for this system to address the need for persistent conversation memory and accurate journal generation.
 
 ## Features
 

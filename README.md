@@ -23,13 +23,22 @@ This system creates a multi-layer enforcement framework that:
 ## System Components
 
 ### MCP Servers (7 total)
+
+#### Third-Party MCP Servers (via npm)
 1. **Sequential Thinking** - Task decomposition and planning
 2. **PubMed** - Citation search and verification (35+ million articles)
 3. **Memory** - Persistent knowledge graph storage
 4. **Filesystem** - Local project file access
+
+#### Obsidian Integration (via REST API)
 5. **Obsidian REST (Primary)** - Main vault operations (port 27124)
 6. **Obsidian REST (Journal)** - Journal vault operations (port 27125)
+
+#### Custom-Built MCP Server (included in this repository)
 7. **Conversation Logger** - Conversation tracking and journal generation
+   - Built specifically for this system
+   - Source code in `conversation-logger/` directory
+   - Fully customizable and extendable
 
 ### Enforcement Hooks
 - **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
