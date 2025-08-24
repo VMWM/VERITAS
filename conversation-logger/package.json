@@ -1,0 +1,20 @@
+{
+  "name": "conversation-logger-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for logging conversations and generating journal entries",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1",
+    "marked": "^11.1.1",
+    "node-fetch": "^3.3.2"
+  },
+  "bin": {
+    "conversation-logger": "./index.js"
+  }
+}

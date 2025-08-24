@@ -120,7 +120,7 @@ Manual steps required:
 
 ## Documentation
 
-📚 **[Complete Documentation Index](docs/README.md)**
+📚 **[Complete Documentation Index](docs/README.md)** | 🗂️ **[Repository Structure](STRUCTURE.md)**
 
 ### Quick Links
 - [`docs/SETUP.md`](docs/SETUP.md) - Detailed setup instructions

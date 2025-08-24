@@ -1,0 +1,115 @@
+{
+  "name": "HLA Research Assistant Verification",
+  "version": "1.0.0",
+  "description": "Strict enforcement of PMID citations and HLA research standards",
+  "enabled": true,
+  
+  "verification_rules": {
+    "pmid_citations": {
+      "enabled": true,
+      "priority": "critical",
+      "patterns": {
+        "valid_citation": "\\([A-Z][a-z]+ et al\\., \\d{4}, PMID: \\d{8}\\)",
+        "missing_pmid": "\\([A-Z][a-z]+ et al\\., \\d{4}\\)",
+        "bare_claim": "(\\d+%|\\d+\\.\\d+%|incidence|prevalence|rate|risk|odds|hazard|significant|associated|correlation)"
+      },
+      "enforcement": {
+        "mode": "strict",
+        "action_on_violation": "block",
+        "require_verification_level": true,
+        "allowed_levels": ["[FT-VERIFIED]", "[ABSTRACT-VERIFIED]", "[NEEDS-FT-REVIEW]"]
+      }
+    },
+    
+    "obsidian_formatting": {
+      "enabled": true,
+      "rules": {
+        "no_escaped_newlines": true,
+        "proper_table_spacing": true,
+        "no_html_entities": true,
+        "no_underscores_in_h1": true,
+        "wiki_links_required": true
+      }
+    },
+    
+    "template_compliance": {
+      "enabled": true,
+      "enforce_structure": true,
+      "templates": {
+        "research_question": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/research_question_template.md",
+        "concept": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/concept_template.md",
+        "daily_journal": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/daily_journal_template.md"
+      }
+    },
+    
+    "tool_usage": {
+      "required_sequence": [
+        "mcp__memory__*",
+        "mcp__pubmed__search_pubmed",
+        "mcp__pubmed__fetch_summary",
+        "mcp__pubmed__get_fulltext"
+      ],
+      "enforce_pubmed_for_claims": true
+    },
+    
+    "grant_context": {
+      "enforce_grant_ready_prose": true,
+      "require_nih_relevance": true,
+      "embedded_citations_required": true
+    }
+  },
+  
+  "output_validation": {
+    "check_all_outputs": true,
+    "validation_checks": [
+      {
+        "name": "pmid_present",
+        "description": "Every medical/scientific claim must have PMID",
+        "regex": "(?<!PMID: )\\b(increased|decreased|associated|correlated|significant|risk|rate|incidence|prevalence)\\b(?!.*PMID: \\d{8})",
+        "severity": "error"
+      },
+      {
+        "name": "verification_level",
+        "description": "Verification levels must be present",
+        "required_tags": ["[FT-VERIFIED]", "[ABSTRACT-VERIFIED]", "[NEEDS-FT-REVIEW]"],
+        "severity": "warning"
+      },
+      {
+        "name": "no_unsupported_claims",
+        "description": "No claims without evidence",
+        "forbidden_phrases": ["it is known", "studies show", "research indicates", "evidence suggests"],
+        "unless_followed_by": "PMID:",
+        "severity": "error"
+      }
+    ]
+  },
+  
+  "auto_corrections": {
+    "enabled": false,
+    "corrections": [
+      {
+        "pattern": "\\n",
+        "replacement": "\n",
+        "context": "markdown_files"
+      },
+      {
+        "pattern": "&gt;",
+        "replacement": ">",
+        "context": "markdown_files"
+      },
+      {
+        "pattern": "&lt;",
+        "replacement": "<",
+        "context": "markdown_files"
+      }
+    ]
+  },
+  
+  "logging": {
+    "enabled": true,
+    "log_path": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs/",
+    "log_level": "verbose",
+    "log_violations": true,
+    "log_corrections": true
+  }
+}

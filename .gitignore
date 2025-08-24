@@ -1,26 +1,62 @@
-# Claude MCP Setup - Git Ignore File
+# HLA Agent-MCP System - Git Ignore File
 
-# Configuration files with sensitive data
+# =============================================================================
+# Dependencies and Package Management
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm
+
+# =============================================================================
+# Configuration and Sensitive Data
+# =============================================================================
+# Local configuration files
 claude-desktop-config.json
-*.json
+settings.local.json
+!settings.local.json.template
 !*.template.json
 
-# API Keys and credentials
+# Environment variables and credentials
 .env
 .env.local
+.env.*.local
 *.key
 *.pem
 credentials.txt
+*_token.txt
 
-# Nova Memory database
-nova-memory/
+# API configurations
+api-config.json
+bearer-token.txt
+
+# =============================================================================
+# Databases and Data Files
+# =============================================================================
 *.db
 *.sqlite
+*.sqlite3
+nova-memory/
+conversations.db
+memory.db
 
-# Logs
+# =============================================================================
+# Logs and Debug Files
+# =============================================================================
 logs/
 *.log
+npm-debug.log*
+debug.log
+error.log
+activity.log
+sessions.log
+.claude/logs/
 
+# =============================================================================
+# Operating System Files
+# =============================================================================
 # macOS
 .DS_Store
 .AppleDouble
@@ -55,13 +91,16 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.npm
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
 
+# =============================================================================
+# IDE and Editor Files
+# =============================================================================
 # VS Code
 .vscode/
 *.code-workspace
@@ -72,6 +111,7 @@ yarn-error.log*
 *.iml
 *.iws
 *.ipr
+out/
 
 # Vim
 [._]*.s[a-v][a-z]
@@ -82,26 +122,53 @@ yarn-error.log*
 Session.vim
 Sessionx.vim
 .netrwhist
-*~
 tags
 [._]*.un~
 
-# Backup files
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# Temporary and Backup Files
+# =============================================================================
 *.backup
 *.bak
 *.tmp
 *.temp
-~*
+*.swp
+*.swo
+*~
+.cache/
 
-# Test files
+# =============================================================================
+# Test Files and Personal Notes
+# =============================================================================
 test/
 tests/
 *.test.json
-
-# Personal notes (but not documentation)
 personal-notes/
 scratch/
 TODO.personal.md
+drafts/
 
-# Keep templates
+# =============================================================================
+# Build Artifacts
+# =============================================================================
+dist/
+build/
+*.tgz
+
+# =============================================================================
+# Exceptions - Files to Keep
+# =============================================================================
 !templates/
+!docs/
+!.claude/
+!conversation-logger/package.json

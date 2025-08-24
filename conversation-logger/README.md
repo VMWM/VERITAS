@@ -2,6 +2,8 @@
 
 A comprehensive conversation logging and journal generation system for Claude Code, providing MemoriPilot-like functionality.
 
+📚 **For complete documentation, see [docs/CONVERSATION_LOGGER.md](../docs/CONVERSATION_LOGGER.md)**
+
 ## Features
 
 ### 🧠 Persistent Conversation Memory
