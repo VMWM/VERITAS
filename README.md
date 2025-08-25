@@ -10,7 +10,7 @@ A Claude Code research infrastructure that enforces citation compliance, validat
 
 ## About VERITAS
 
-VERITAS embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
+VERITAS embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every process is tracked to maintain complete research integrity.
 
 - **Verification-Enforced** - Active enforcement of citation requirements and validation through hooks and compliance checks
 - **Research Infrastructure** - The comprehensive framework and tools providing a complete research environment
