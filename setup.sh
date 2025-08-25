@@ -14,8 +14,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check if running from correct directory
-if [ ! -f "CLAUDE.md" ]; then
-    echo -e "${RED}Error: CLAUDE.md not found. Please run from the repository root.${NC}"
+if [ ! -f "templates/CLAUDE.md.template" ]; then
+    echo -e "${RED}Error: CLAUDE.md.template not found. Please run from the repository root.${NC}"
     exit 1
 fi
 
@@ -165,9 +165,9 @@ echo "Copying Project Files"
 echo "================================"
 echo ""
 
-echo "Copying CLAUDE.md..."
-cp CLAUDE.md "$PROJECT_DIR/"
-echo -e "${GREEN}✓ CLAUDE.md copied${NC}"
+echo "Copying CLAUDE.md template..."
+cp templates/CLAUDE.md.template "$PROJECT_DIR/CLAUDE.md"
+echo -e "${GREEN}✓ CLAUDE.md template copied - please customize it for your project${NC}"
 
 echo "Copying .claude directory..."
 cp -r .claude "$PROJECT_DIR/"
@@ -189,11 +189,9 @@ else
     echo -e "${YELLOW}⚠ settings.local.json.template not found, hooks may not work${NC}"
 fi
 
-# Update paths in CLAUDE.md
+# Note about CLAUDE.md customization
 echo ""
-echo "Updating paths in CLAUDE.md..."
-sed -i.bak "s|\[Your project directory\]|$PROJECT_DIR|g" "$PROJECT_DIR/CLAUDE.md"
-echo -e "${GREEN}✓ Paths updated${NC}"
+echo -e "${YELLOW}Note: CLAUDE.md is a template - please customize it for your project${NC}"
 
 # Create logs directory
 echo "Creating logs directory..."
@@ -360,7 +358,7 @@ echo "Next steps:"
 echo "1. Run the configuration script to set up Claude:"
 echo -e "   ${GREEN}./scripts/configure-claude.sh${NC}"
 echo "   This will create configs for both Claude Desktop and CLI"
-echo "2. Update PROJECT CONTEXT section in $PROJECT_DIR/CLAUDE.md"
+echo "2. Customize $PROJECT_DIR/CLAUDE.md for your specific project"
 echo "3. Restart Claude Desktop and/or Claude CLI"
 echo "5. Configure your Obsidian vault structure:"
 echo "   - Create 'Research Questions' folder"

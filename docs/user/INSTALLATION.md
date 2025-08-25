@@ -159,11 +159,13 @@ Your Vault/
 
 ### 5. Project Configuration
 
-#### Update CLAUDE.md
-Edit the PROJECT CONTEXT section:
-- Add your project description
-- Set your timeline
-- Update directory paths
+#### Customize CLAUDE.md
+The setup script copies CLAUDE.md from templates/CLAUDE.md.template.
+Edit it to match your project:
+- Update PROJECT CONTEXT with your project details
+- Configure ROUTING RULES for your workflow
+- Set TOOL PRIORITIES for your domain
+- Add CITATION REQUIREMENTS as needed
 
 #### Customize Templates
 Templates are in `templates/obsidian/`:
