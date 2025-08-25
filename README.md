@@ -54,6 +54,9 @@ VERITAS creates a multi-layer enforcement framework that:
    - Built specifically for this system
    - Source code in `conversation-logger/` directory
    - Fully customizable and extendable
+   - **5-day retention policy**: Automatically maintains last 5 days of conversations
+   - **Automatic cleanup**: Optional 2 AM daily cleanup via cron job
+   - **Database management**: SQLite database at `~/.conversation-logger/conversations.db`
 
 ### Enforcement Hooks
 - **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
@@ -168,6 +171,29 @@ Manual steps for Obsidian:
 3. Create vault folder structure
 
 
+
+## Conversation Preservation & Privacy
+
+VERITAS includes automatic conversation logging with intelligent retention management:
+
+### Data Retention
+- **5-Day History Window**: Maintains last 5 days of research conversations
+- **Automatic Cleanup**: Optional 2 AM daily cleanup removes older entries
+- **Database Location**: All data stored locally in `~/.conversation-logger/conversations.db`
+- **Privacy First**: No cloud storage - all conversations remain on your local machine
+
+### Journal Generation
+Generate comprehensive research journals from your conversations:
+- Daily journals: "Create journal entry for today"
+- Historical journals: "Create journal entry for 2025-01-20"
+- Weekly summaries: "Generate weekly research summary"
+
+### Manual Maintenance
+- **View database stats**: `session-stats` command
+- **Manual cleanup**: `node ~/VERITAS/conversation-logger/cleanup-old-logs.js`
+- **Disable automatic cleanup**: Remove cron job with `crontab -e`
+
+This ensures your research history is preserved for reference while preventing unlimited database growth.
 
 ## Documentation
 
