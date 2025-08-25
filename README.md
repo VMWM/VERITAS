@@ -160,10 +160,12 @@ The setup process handles everything:
 - Sets up dynamic path resolution
 - Creates database directories
 
-Manual steps required:
-1. Install Obsidian Local REST API plugin (if using Obsidian)
+Manual steps for Obsidian:
+1. Install Obsidian Local REST API plugin
 2. Configure bearer token and ports
 3. Create vault folder structure
+
+
 
 ## Documentation
 
