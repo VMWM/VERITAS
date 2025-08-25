@@ -28,6 +28,12 @@ This is the only custom-built MCP server in VERITAS. While other MCP servers (Se
 - Metrics and statistics tracking
 - Direct integration with Obsidian vaults
 
+### Automatic Retention Management
+- 5-day rolling retention window
+- Automatic cleanup via `cleanup-old-logs.js`
+- Optional cron job for 2 AM daily cleanup
+- Prevents database bloat while preserving recent history
+
 ### MCP Tools
 Available tools in Claude Code:
 - `log_message` - Log conversation messages with context
