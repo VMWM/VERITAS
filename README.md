@@ -4,7 +4,7 @@
 
 # VERITAS: Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
-A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
+A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
 **Repository**: `VERITAS` (formerly HLA_Agent-MCP_System)
 
