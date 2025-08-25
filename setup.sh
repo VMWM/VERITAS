@@ -115,6 +115,17 @@ fi
 cd "$SCRIPT_DIR"
 echo ""
 
+# Obsidian MCP Server (for REST API integration)
+echo "Installing Obsidian MCP Server..."
+npm install -g obsidian-mcp-server
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Obsidian MCP Server installed${NC}"
+else
+    echo -e "${YELLOW}⚠ Obsidian MCP Server installation may have failed${NC}"
+    echo "  You can install it later with: npm install -g obsidian-mcp-server"
+fi
+echo ""
+
 # Copy core files
 echo "================================"
 echo "Copying Project Files"
