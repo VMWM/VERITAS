@@ -120,6 +120,24 @@ System automatically:
 
 ## Installation
 
+### 🤖 Automated Installation with Claude Code
+
+Copy and paste this prompt into a new Claude Code conversation:
+
+```
+Please install VERITAS from https://github.com/VMWM/VERITAS.git for me. 
+Clone it to my home directory, run the setup script to install all MCP servers, 
+then run the configure-claude.sh script. When configure-claude prompts for choices, 
+use option 1 (merge) if I have existing configs, and option 1 (separate configs) 
+for the configuration management. Use the current directory as the project directory 
+and skip Obsidian configuration for now (just press Enter). After everything is 
+installed, remind me to restart Claude Desktop or run 'claude restart' for CLI.
+```
+
+### 📝 Manual Installation
+
+Alternatively, you can install manually:
+
 ```bash
 git clone https://github.com/VMWM/VERITAS.git
 cd VERITAS
