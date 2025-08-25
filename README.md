@@ -153,7 +153,7 @@ chmod +x setup.sh
 ./scripts/configure-claude.sh
 ```
 
-The setup process handles everything:
+The setup process handles all but the manual Obsidian steps below:
 - `setup.sh`: Installs all MCP servers and dependencies
 - `configure-claude.sh`: Interactive configuration with multiple options:
   - Merges with or replaces existing configurations
