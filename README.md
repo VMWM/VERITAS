@@ -120,9 +120,9 @@ System automatically:
 
 ## Installation
 
-### 🤖 Automated Installation with Claude Code
+### Automated Installation with Claude Code
 
-Copy and paste this prompt into a new Claude Code conversation:
+If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation:
 
 ```
 Please install VERITAS from https://github.com/VMWM/VERITAS.git for me. 
@@ -134,7 +134,7 @@ and skip Obsidian configuration for now (just press Enter). After everything is
 installed, remind me to restart Claude Desktop or run 'claude restart' for CLI.
 ```
 
-### 📝 Manual Installation
+### Manual Installation
 
 Alternatively, you can install manually:
 
