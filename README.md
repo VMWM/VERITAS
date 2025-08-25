@@ -122,7 +122,7 @@ System automatically:
 
 ### Automated Installation with Claude Code
 
-If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation:
+If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation (dont forget the additional setup steps for Obsidian, which must be done manually (see documentation):
 
 ```
 Please install VERITAS from https://github.com/VMWM/VERITAS.git for me. 
@@ -132,8 +132,8 @@ then run the configure-claude.sh script. When configure-claude.sh asks:
 - "Configuration management options?" → Choose 1 (separate config files)
 Use the current directory as the project directory and skip Obsidian 
 configuration for now (just press Enter when asked about Obsidian). 
-After everything is installed, remind me to restart Claude Desktop 
-or run 'claude restart' for CLI.
+After everything is installed, remind me to complete the manual Obsidian
+set up steps and restart Claude Desktop or run 'claude restart' for CLI.
 ```
 
 ### Manual Installation
