@@ -135,8 +135,10 @@ then run the configure-claude.sh script. When configure-claude.sh asks:
 - "Configuration management options?" → Choose 1 (separate config files)
 Use the current directory as the project directory and skip Obsidian 
 configuration for now (just press Enter when asked about Obsidian). 
-After everything is installed, remind me to complete the manual Obsidian
-set up steps and restart Claude Desktop or run 'claude restart' for CLI.
+After everything is installed, remind me to:
+1. Customize the CLAUDE.md file for my project
+2. Complete the manual Obsidian setup steps
+3. Restart Claude Desktop or run 'claude restart' for CLI
 ```
 
 ### Manual Installation
@@ -165,10 +167,26 @@ The setup process handles all but the manual Obsidian steps below:
 - Sets up dynamic path resolution
 - Creates database directories
 
-Manual steps for Obsidian:
-1. Install Obsidian Local REST API plugin
-2. Configure bearer token and ports
-3. Create vault folder structure
+### Required Manual Steps for Obsidian:
+1. **Install Obsidian Local REST API plugin**:
+   - Open Obsidian Settings → Community Plugins
+   - Search for "Local REST API"
+   - Install and enable the plugin
+
+2. **Configure the plugin**:
+   - Go to plugin settings
+   - Generate a bearer token (save this!)
+   - Set port to 27124 for main vault
+   - For journal vault: install plugin again, set port to 27125
+
+3. **Create vault folder structure**:
+   - Main vault: Create folders for "Research Questions", "Concepts"
+   - Journal vault: Create folder for "Daily"
+
+4. **Set environment variable**:
+   ```bash
+   export OBSIDIAN_API_TOKEN="your-bearer-token-here"
+   ```
 
 
 
