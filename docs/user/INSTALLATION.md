@@ -40,7 +40,17 @@ The setup script will:
 - Copy agent reference documents with templates
 - Set proper permissions for all hooks
 - Configure paths dynamically in settings
+- **Configure conversation logger cleanup** (interactive prompt)
 - Display configuration to copy
+
+#### Conversation Logger Cleanup
+
+During setup, you'll be asked about automatic log cleanup:
+- **5-day retention**: Keeps last 5 days of conversations
+- **Automatic cleanup**: Optional 2 AM daily cron job
+- **Manual option**: Run `node conversation-logger/cleanup-old-logs.js` as needed
+
+This prevents unlimited database growth while preserving recent research history.
 
 After setup.sh completes, run:
 ```bash
