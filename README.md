@@ -2,7 +2,8 @@
   <img src="assets/VERITAS.png" alt="VERITAS" width="600">
 </p>
 
-# VERITAS: Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
+# VERITAS
+Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
 A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
 
