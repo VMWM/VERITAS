@@ -2,7 +2,8 @@
   <img src="assets/VERITAS.png" alt="VERITAS" width="600">
 </p>
 
-# VERITAS: Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
+# VERITAS
+Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
 A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
