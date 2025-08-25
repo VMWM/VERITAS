@@ -7,23 +7,14 @@ Verification-Enforced Research Infrastructure with Tracking and Automated Struct
 
 A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
-**Repository**: `VERITAS` (formerly HLA_Agent-MCP_System)
 
 ## About VERITAS
 
-VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Structuring) embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
+VERITAS embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every conversation is tracked to maintain complete research integrity.
 
-### What Each Component Means:
 - **Verification-Enforced** - Active enforcement of citation requirements and validation through hooks and compliance checks
 - **Research Infrastructure** - The comprehensive framework and tools providing a complete research environment
 - **Tracking and Automated Structuring** - Intelligent organization and documentation of all research activities
-
-The name VERITAS, Latin for "truth," reflects our commitment to:
-- **Verification-Enforced** citations with mandatory PMID requirements
-- **Research Infrastructure** providing comprehensive framework
-- **Tracking** of all conversations and sources
-- **Automated Structuring** of research content
-- **Scientific** integrity through active validation
 
 **GitHub**: https://github.com/VMWM/VERITAS
 
@@ -41,9 +32,8 @@ VERITAS creates a multi-layer enforcement framework that:
 - **Literature Review Management**: Automatic PubMed citation verification with PMID enforcement
 - **Research Question Documentation**: Structured templates for grant-ready research questions
 - **Concept Note Creation**: Wiki-linked knowledge base entries with validation requirements
-- **Daily Research Journals**: Progress tracking with automatic date-based organization
-- **Knowledge Graph Building**: Memory MCP integration for persistent concept storage
-- **Multi-Vault Support**: Separate Obsidian vaults for different research areas
+- **Progress Tracking**: Progress tracking withautomatic date-based organization
+- **Knowledge Graph Building**: Memory MCP and Conversation Logging integration for persistent concept storage
 
 ## System Components
 
@@ -127,7 +117,6 @@ System automatically:
 ### Operating System
 - **macOS**: Native support
 - **Linux**: Native support
-- **Windows**: Requires WSL (Windows Subsystem for Linux)
 
 ## Installation
 
@@ -160,14 +149,14 @@ Manual steps required:
 
 ## Documentation
 
-**[📚 Documentation Hub](docs/README.md)** - All documentation organized by audience
+**[Documentation Hub](docs/README.md)** - All documentation organized by audience
 
 ### Quick Links
-- **[🚀 Quick Start](docs/user/QUICK_START.md)** - Get running in 5 minutes
-- **[📖 Full Installation](docs/user/INSTALLATION.md)** - Detailed setup
-- **[⚙️ Configuration](docs/user/CONFIGURATION.md)** - All options explained
-- **[🔧 Troubleshooting](docs/user/TROUBLESHOOTING.md)** - Fix common issues
-- **[🔄 Multi-Machine Sync](docs/user/MULTI_MACHINE.md)** - Advanced setup
+- **[Quick Start](docs/user/QUICK_START.md)** - Get running in 5 minutes
+- **[Full Installation](docs/user/INSTALLATION.md)** - Detailed setup
+- **[Configuration](docs/user/CONFIGURATION.md)** - All options explained
+- **[Troubleshooting](docs/user/TROUBLESHOOTING.md)** - Fix common issues
+- **[Multi-Machine Sync](docs/user/MULTI_MACHINE.md)** - Advanced setup
 
 ## Customization
 
