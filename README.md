@@ -167,7 +167,7 @@ See **[Developer Documentation](docs/developer/)** for customization options:
 
 ## Support
 
-- **Documentation**: [📚 Documentation Hub](docs/README.md)
+- **Documentation**: [Documentation Hub](docs/README.md)
 - **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
 - **Templates**: [/templates/](templates/) directory
 
