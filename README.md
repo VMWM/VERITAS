@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/VERITAS.png" alt="VERITAS" width="200">
+</p>
+
 # VERITAS: Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
 A Claude-powered research framework ensuring academic rigor through enforced citations, intelligent conversation tracking, and automated documentation generation.
@@ -183,4 +187,4 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
-**[Setup Guide →](docs/SETUP.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/VERITAS/issues)**
+**[Quick Start →](docs/user/QUICK_START.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/VERITAS/issues)**
