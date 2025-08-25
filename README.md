@@ -127,11 +127,13 @@ If you're already set up with Claude Code in your IDE, copy and paste this promp
 ```
 Please install VERITAS from https://github.com/VMWM/VERITAS.git for me. 
 Clone it to my home directory, run the setup script to install all MCP servers, 
-then run the configure-claude.sh script. When configure-claude prompts for choices, 
-use option 1 (merge) if I have existing configs, and option 1 (separate configs) 
-for the configuration management. Use the current directory as the project directory 
-and skip Obsidian configuration for now (just press Enter). After everything is 
-installed, remind me to restart Claude Desktop or run 'claude restart' for CLI.
+then run the configure-claude.sh script. When configure-claude.sh asks:
+- "How would you like to proceed?" → Choose 1 (merge with existing)
+- "Configuration management options?" → Choose 1 (separate config files)
+Use the current directory as the project directory and skip Obsidian 
+configuration for now (just press Enter when asked about Obsidian). 
+After everything is installed, remind me to restart Claude Desktop 
+or run 'claude restart' for CLI.
 ```
 
 ### Manual Installation
