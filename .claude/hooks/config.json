@@ -10,10 +10,20 @@
     },
     "post-command": {
       "enabled": true,
-      "script": "post-command.py",
-      "type": "python",
-      "description": "Verifies output compliance with PMID requirements",
-      "events": ["after_output", "after_file_write"],
+      "scripts": [
+        {
+          "name": "post-command.py",
+          "type": "python",
+          "checks": ["pmid_citations", "verification_levels", "unsupported_claims"]
+        },
+        {
+          "name": "post-command.sh",
+          "type": "bash",
+          "checks": ["file_extensions", "table_formatting", "obsidian_compliance"]
+        }
+      ],
+      "description": "Validates output compliance after generation",
+      "events": ["after_output", "after_file_write", "after_obsidian_create"],
       "priority": 1
     },
     "pre-file-write": {

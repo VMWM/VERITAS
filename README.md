@@ -20,12 +20,27 @@ VERITAS embodies the core principle of truth in research. Every claim must be ve
 
 ## What VERITAS Does
 
-VERITAS creates a multi-layer enforcement framework that:
-- Routes research tasks to appropriate MCP tools automatically
-- Enforces PMID citation requirements for all scientific claims
-- Creates properly formatted Obsidian notes using predefined templates
-- Blocks incorrect tool usage before execution
-- Validates output compliance after generation
+VERITAS creates a multi-layer guidance and validation framework that:
+- **Routes research tasks** to appropriate MCP tools through task detection and guidance
+- **Enforces PMID citation requirements** through instruction compliance and reminders
+- **Creates properly formatted Obsidian notes** using predefined templates in CLAUDE.md
+- **Guides tool usage** through pre-execution warnings and workflow recommendations
+- **✅ Validates output compliance** after generation (NOW IMPLEMENTED via post-command.sh)
+
+### How VERITAS Works - System Architecture
+
+```
+User Message → Pre-Command Hooks → Claude Processes → Tool Calls → POST-VALIDATION → Response
+                    ↓                      ↓                            ↓
+              (Shows reminders)    (Reads CLAUDE.md)         (Checks what was created)
+                    ↓                      ↓                            ↓
+              (Sets env vars)     (Follows instructions)    (Logs violations & reports)
+```
+
+This architecture ensures multiple checkpoints for compliance:
+1. **Pre-Command**: Displays requirements and routing guidance
+2. **During Processing**: Claude follows CLAUDE.md instructions
+3. **Post-Execution**: Validates actual output and logs any violations
 
 ## Primary Use Cases
 
@@ -100,6 +115,39 @@ System automatically:
 4. Lists all research questions explored
 5. Documents key findings with citations
 6. Notes problems solved and next steps
+```
+
+## Output Validation System
+
+VERITAS includes a comprehensive post-execution validation system that automatically checks all created content for compliance with formatting and citation requirements.
+
+### What Gets Validated
+
+The validation system checks:
+- ✅ **File Extensions**: All Obsidian files must have `.md` extension
+- ✅ **Table Formatting**: Tables must have spaces around pipes `| Cell |`
+- ✅ **Citation Compliance**: Medical claims must have PMID citations
+- ✅ **Wiki Link Format**: Multi-word concepts use underscores `[[De_Novo_DSA]]`
+- ✅ **Character Escaping**: No `\n` or HTML entities like `&gt;`
+- ✅ **Header Formatting**: No underscores in H1 headings
+
+### Validation Reports
+
+After each operation, the system:
+1. Scans files modified in the last 5 minutes
+2. Checks against all formatting rules
+3. Logs violations to `.claude/logs/validation-YYYYMMDD.log`
+4. Displays summary with fix instructions
+5. Provides auto-fix commands when available
+
+### Example Validation Output
+
+```
+🔍 POST-EXECUTION VALIDATOR
+============================
+✅ Output Validation: PASSED
+All recently created files meet formatting requirements
+============================
 ```
 
 ## Requirements
