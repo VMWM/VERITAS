@@ -43,10 +43,20 @@ echo ""
 echo "Enter your project directory path (where CLAUDE.md should be placed):"
 read -r PROJECT_DIR
 
+# Expand tilde if present
+PROJECT_DIR="${PROJECT_DIR/#\~/$HOME}"
+
 # Validate directory exists
 if [ ! -d "$PROJECT_DIR" ]; then
     echo -e "${RED}Error: Directory $PROJECT_DIR does not exist.${NC}"
-    exit 1
+    echo "Would you like to create it? (y/n)"
+    read -r CREATE_DIR
+    if [[ $CREATE_DIR =~ ^[Yy]$ ]]; then
+        mkdir -p "$PROJECT_DIR"
+        echo -e "${GREEN}✓ Created directory: $PROJECT_DIR${NC}"
+    else
+        exit 1
+    fi
 fi
 
 echo ""
@@ -333,6 +343,8 @@ if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
         echo "Enter the path to your '$VAULT_NAME' vault:"
         echo "(e.g., /Users/yourname/Obsidian/$VAULT_NAME)"
         read -r VAULT_PATH
+        # Expand tilde if present
+        VAULT_PATH="${VAULT_PATH/#\~/$HOME}"
         VAULT_PATHS+=("$VAULT_PATH")
         
         SUGGESTED_PORT=$((DEFAULT_PORT + VAULT_COUNT - 1))
