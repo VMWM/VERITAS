@@ -157,8 +157,9 @@ tramp
 # =============================================================================
 # Test Files and Personal Notes
 # =============================================================================
-test/
-tests/
+# Test output directories (but not test scripts)
+test-output/
+test-results/
 *.test.json
 personal-notes/
 scratch/
