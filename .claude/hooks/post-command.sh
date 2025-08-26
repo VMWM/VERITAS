@@ -3,11 +3,12 @@
 # Post-Command Validation Hook for VERITAS
 # Validates output compliance after generation
 
-# Configuration
-OBSIDIAN_HLA="/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies"
-OBSIDIAN_JOURNAL="/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal"
-LOG_FILE="/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs/validation-$(date +%Y%m%d).log"
-VIOLATIONS_FILE="/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs/violations.json"
+# Configuration - UPDATE THESE PATHS FOR YOUR SYSTEM
+# Default paths - users should modify these in their local setup
+OBSIDIAN_HLA="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
+OBSIDIAN_JOURNAL="${OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
+LOG_FILE="${CLAUDE_PROJECT_DIR:-$HOME/Projects}/.claude/logs/validation-$(date +%Y%m%d).log"
+VIOLATIONS_FILE="${CLAUDE_PROJECT_DIR:-$HOME/Projects}/.claude/logs/violations.json"
 
 # Colors for output
 RED='\033[0;31m'
@@ -164,8 +165,7 @@ else
     echo "2. For table formatting: Use | Cell | with spaces"
     echo "3. For other issues: Check $LOG_FILE"
     echo ""
-    echo -e "${YELLOW}Run this to auto-fix:${NC}"
-    echo "bash ~/.claude/scripts/quick-fix-obsidian.sh"
+    echo -e "${YELLOW}To fix: Add .md extension to file paths in your Obsidian API calls${NC}"
 fi
 
 # Create JSON report for programmatic access
