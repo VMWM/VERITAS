@@ -128,17 +128,25 @@ System automatically:
 If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation (dont forget the additional setup steps for Obsidian, which must be done manually (see documentation):
 
 ```
-Please install VERITAS from https://github.com/VMWM/VERITAS.git for me. 
-Clone it to my home directory, run the setup script to install all MCP servers, 
-then run the configure-claude.sh script. When configure-claude.sh asks:
-- "How would you like to proceed?" → Choose 1 (merge with existing)
-- "Configuration management options?" → Choose 1 (separate config files)
-Use the current directory as the project directory and skip Obsidian 
-configuration for now (just press Enter when asked about Obsidian). 
-After everything is installed, remind me to:
-1. Customize the CLAUDE.md file for my project
-2. Complete the manual Obsidian setup steps
-3. Restart Claude Desktop or run 'claude restart' for CLI
+Please install VERITAS from https://github.com/VMWM/VERITAS.git for me.
+  Clone it to ~/VERITAS (in my home directory), then run the setup script
+  to install all MCP servers. When setup.sh asks about conversation cleanup,
+  choose yes for automatic 2 AM cleanup.
+
+  Then run the configure-claude.sh script. When prompted:
+  - "How would you like to proceed?" → Choose 1 (merge with existing)
+  - "Configuration management options?" → Choose 1 (separate config files)
+
+  Use my current working directory as the project directory. Skip Obsidian
+  configuration for now (just press Enter when asked about Obsidian tokens/ports).
+
+  After installation completes, verify the servers are loaded by running:
+  'claude mcp list' (for CLI) or checking /mcp in Claude Desktop.
+
+  Finally, remind me to:
+  1. Customize the CLAUDE.md file for my project
+  2. Complete the manual Obsidian setup steps (enable HTTPS server!)
+  3. Restart Claude Desktop or run 'claude restart' for CLI
 ```
 
 ### Manual Installation
