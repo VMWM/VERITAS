@@ -77,7 +77,8 @@ echo ""
 
 # PubMed MCP (using cyanheads version to avoid debug output issues)
 echo "Installing PubMed MCP (cyanheads version)..."
-npm install -g @cyanheads/pubmed-mcp-server
+echo "  (Note: Deprecation warnings are expected and safe to ignore)"
+npm install -g @cyanheads/pubmed-mcp-server --loglevel=error
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ PubMed MCP (cyanheads) installed${NC}"
 else
@@ -193,7 +194,7 @@ echo ""
 
 # Obsidian MCP Server (for REST API integration)
 echo "Installing Obsidian MCP Server..."
-npm install -g obsidian-mcp-server
+npm install -g obsidian-mcp-server --loglevel=error
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Obsidian MCP Server installed${NC}"
 else
