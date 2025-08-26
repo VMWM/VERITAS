@@ -188,6 +188,24 @@ The setup process handles all but the manual Obsidian steps below:
    export OBSIDIAN_API_TOKEN="your-bearer-token-here"
    ```
 
+### Additional Manual Configuration:
+
+If you installed manually without using `configure-claude.sh`, update these paths in your Claude configuration:
+
+**For conversation-logger** - Update the path in your config files:
+- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Claude CLI: `~/.claude.json`
+
+Change `/path/to/conversation-logger/index.js` to your actual installation path, for example:
+```json
+"conversation-logger": {
+  "command": "node",
+  "args": ["/Users/yourname/VERITAS/conversation-logger/index.js"]
+}
+```
+
+Note: The `configure-claude.sh` script handles these path updates automatically.
+
 
 
 ## Conversation Preservation & Privacy
