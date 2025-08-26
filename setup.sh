@@ -65,7 +65,9 @@ npx @modelcontextprotocol/install sequentialthinking
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Sequential Thinking MCP installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Sequential Thinking MCP installation may have failed${NC}"
+    echo -e "${RED}✗ Sequential Thinking MCP installation failed${NC}"
+    echo "This is a critical component. Please fix and re-run setup."
+    exit 1
 fi
 echo ""
 
@@ -75,7 +77,9 @@ npm install -g @cyanheads/pubmed-mcp-server
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ PubMed MCP (cyanheads) installed${NC}"
 else
-    echo -e "${YELLOW}⚠ PubMed MCP installation may have failed${NC}"
+    echo -e "${RED}✗ PubMed MCP installation failed${NC}"
+    echo "This is a critical component. Please fix and re-run setup."
+    exit 1
 fi
 echo ""
 
@@ -85,7 +89,9 @@ npx @modelcontextprotocol/install memory
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Memory MCP installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Memory MCP installation may have failed${NC}"
+    echo -e "${RED}✗ Memory MCP installation failed${NC}"
+    echo "This is a critical component. Please fix and re-run setup."
+    exit 1
 fi
 echo ""
 
@@ -95,7 +101,9 @@ npx @modelcontextprotocol/install filesystem
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Filesystem MCP installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Filesystem MCP installation may have failed${NC}"
+    echo -e "${RED}✗ Filesystem MCP installation failed${NC}"
+    echo "This is a critical component. Please fix and re-run setup."
+    exit 1
 fi
 echo ""
 
@@ -192,14 +200,23 @@ fi
 # Create environment setup file
 echo "Creating environment configuration..."
 ENV_FILE="$PROJECT_DIR/.claude/env.sh"
+
+# Use user-provided paths if available, otherwise defaults
+FINAL_VAULT_PATH="${USER_OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
+FINAL_JOURNAL_PATH="${USER_OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
+
 cat > "$ENV_FILE" << EOF
 #!/bin/bash
 # VERITAS Environment Configuration
 # Source this file or add to your shell profile
 
 export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
-export OBSIDIAN_VAULT_PATH="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
-export OBSIDIAN_JOURNAL_PATH="${OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
+export OBSIDIAN_VAULT_PATH="$FINAL_VAULT_PATH"
+export OBSIDIAN_JOURNAL_PATH="$FINAL_JOURNAL_PATH"
+export OBSIDIAN_API_KEY="$BEARER_TOKEN"
+export OBSIDIAN_JOURNAL_API_KEY="${JOURNAL_TOKEN:-$BEARER_TOKEN}"
+export OBSIDIAN_PRIMARY_PORT="${PRIMARY_PORT:-27124}"
+export OBSIDIAN_JOURNAL_PORT="${JOURNAL_PORT:-27125}"
 export ENFORCE_OBSIDIAN_MCP=1
 EOF
 chmod +x "$ENV_FILE"
@@ -228,11 +245,11 @@ read -r OBSIDIAN_INSTALLED
 if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
     echo "Enter the path to your HLA/primary vault:"
     echo "(e.g., /Users/yourname/Obsidian/HLA Antibodies)"
-    read -r OBSIDIAN_VAULT_PATH
+    read -r USER_OBSIDIAN_VAULT_PATH
     
     echo "Enter the path to your journal vault:"
     echo "(e.g., /Users/yourname/Obsidian/Research Journal)"
-    read -r OBSIDIAN_JOURNAL_PATH
+    read -r USER_OBSIDIAN_JOURNAL_PATH
     
     echo "Enter the port for your HLA/primary vault (default: 27124):"
     read -r PRIMARY_PORT
@@ -316,6 +333,9 @@ echo "Add the following to your Claude Desktop config file:"
 echo "(Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
 echo ""
 
+# Get absolute path for conversation logger
+CONV_LOGGER_PATH="$SCRIPT_DIR/conversation-logger/index.js"
+
 cat << EOF
 {
   "mcpServers": {
@@ -342,7 +362,7 @@ cat << EOF
     },
     "conversation-logger": {
       "command": "node",
-      "args": ["$SCRIPT_DIR/conversation-logger/index.js"],
+      "args": ["$CONV_LOGGER_PATH"],
       "env": {
         "NODE_ENV": "production"
       }
