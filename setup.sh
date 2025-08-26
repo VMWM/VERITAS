@@ -232,55 +232,8 @@ else
     echo -e "${YELLOW}⚠ settings.local.json.template not found, hooks may not work${NC}"
 fi
 
-# Create environment setup file
-echo "Creating environment configuration..."
+# Environment file will be created after Obsidian configuration
 ENV_FILE="$PROJECT_DIR/.claude/env.sh"
-
-cat > "$ENV_FILE" << EOF
-#!/bin/bash
-# VERITAS Environment Configuration
-# Source this file or add to your shell profile
-
-export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
-export ENFORCE_OBSIDIAN_MCP=1
-
-# Obsidian vault configurations
-EOF
-
-# Add vault configurations if any were provided
-if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
-    echo "# Configured vaults: ${VAULT_NAMES[*]}" >> "$ENV_FILE"
-    for i in "${!VAULT_NAMES[@]}"; do
-        VAULT_NAME_UPPER=$(echo "${VAULT_NAMES[$i]}" | tr '[:lower:]' '[:upper:]')
-        cat >> "$ENV_FILE" << EOF
-export OBSIDIAN_${VAULT_NAME_UPPER}_PATH="${VAULT_PATHS[$i]}"
-export OBSIDIAN_${VAULT_NAME_UPPER}_PORT="${VAULT_PORTS[$i]}"
-export OBSIDIAN_${VAULT_NAME_UPPER}_TOKEN="${VAULT_TOKENS[$i]}"
-EOF
-    done
-    
-    # For backward compatibility, set the first vault as primary
-    if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
-        cat >> "$ENV_FILE" << EOF
-
-# Backward compatibility - first vault as primary
-export OBSIDIAN_VAULT_PATH="${VAULT_PATHS[0]}"
-export OBSIDIAN_API_KEY="${VAULT_TOKENS[0]}"
-export OBSIDIAN_PRIMARY_PORT="${VAULT_PORTS[0]}"
-EOF
-    fi
-else
-    # No vaults configured, use defaults
-    cat >> "$ENV_FILE" << EOF
-# No vaults configured - using defaults
-export OBSIDIAN_VAULT_PATH="$HOME/Obsidian/Vault"
-export OBSIDIAN_API_KEY=""
-export OBSIDIAN_PRIMARY_PORT="27124"
-EOF
-fi
-chmod +x "$ENV_FILE"
-echo -e "${GREEN}✓ Environment configuration created at .claude/env.sh${NC}"
-echo "  Add this to your shell profile: source $ENV_FILE"
 
 # Note about CLAUDE.md customization
 echo ""
@@ -413,6 +366,57 @@ else
     echo "4. Install and enable the plugin"
     echo "5. Configure authentication if needed"
 fi
+
+# Create environment setup file AFTER Obsidian configuration
+echo ""
+echo "Creating environment configuration..."
+
+cat > "$ENV_FILE" << EOF
+#!/bin/bash
+# VERITAS Environment Configuration  
+# Source this file or add to your shell profile
+
+export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
+export ENFORCE_OBSIDIAN_MCP=1
+
+# Obsidian vault configurations
+EOF
+
+# Add vault configurations if any were provided
+if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+    echo "# Configured vaults: ${VAULT_NAMES[*]}" >> "$ENV_FILE"
+    for i in "${!VAULT_NAMES[@]}"; do
+        VAULT_NAME_UPPER=$(echo "${VAULT_NAMES[$i]}" | tr '[:lower:]' '[:upper:]')
+        cat >> "$ENV_FILE" << EOF
+export OBSIDIAN_${VAULT_NAME_UPPER}_PATH="${VAULT_PATHS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_PORT="${VAULT_PORTS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_TOKEN="${VAULT_TOKENS[$i]}"
+EOF
+    done
+    
+    # For backward compatibility, set the first vault as primary
+    if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+        cat >> "$ENV_FILE" << EOF
+
+# Backward compatibility - first vault as primary
+export OBSIDIAN_VAULT_PATH="${VAULT_PATHS[0]}"
+export OBSIDIAN_API_KEY="${VAULT_TOKENS[0]}"
+export OBSIDIAN_PRIMARY_PORT="${VAULT_PORTS[0]}"
+EOF
+    fi
+else
+    # No vaults configured, use defaults
+    cat >> "$ENV_FILE" << EOF
+# No vaults configured - using defaults
+export OBSIDIAN_VAULT_PATH="$HOME/Obsidian/Vault"
+export OBSIDIAN_API_KEY=""
+export OBSIDIAN_PRIMARY_PORT="27124"
+EOF
+fi
+
+chmod +x "$ENV_FILE"
+echo -e "${GREEN}✓ Environment configuration created at .claude/env.sh${NC}"
+echo "  Add this to your shell profile: source $ENV_FILE"
 
 # Test hook execution
 echo ""
