@@ -92,15 +92,27 @@ VERITAS follows a clean, organized directory structure:
 VERITAS/
 ├── .claude/                    # Claude-specific configuration
 │   ├── agents/                # Agent templates
-│   ├── config/               # Configuration files
+│   ├── config/               # Configuration files  
 │   ├── hooks/                # All validation and enforcement hooks
 │   ├── logs/                 # Validation and verification logs
 │   └── settings.local.json.template
 ├── conversation-logger/       # Custom MCP server for conversation tracking
 ├── docs/                      # Documentation
+│   ├── developer/            # Developer documentation
+│   │   ├── CONVERSATION_LOGGER.md
+│   │   ├── CUSTOMIZATION.md
+│   │   └── MCP_SERVERS.md
+│   ├── user/                 # User guides
+│   │   ├── CONFIGURATION.md
+│   │   ├── INSTALLATION.md
+│   │   ├── MULTI_MACHINE.md
+│   │   ├── QUICK_START.md
+│   │   ├── SETUP_ERRORS.md
+│   │   └── TROUBLESHOOTING.md
 │   ├── MCP_INSTALLATION.md  # MCP server setup guide
-│   ├── TROUBLESHOOTING.md   # Common issues and solutions
-│   └── SETUP_CHECKLIST.md   # Installation checklist
+│   ├── TROUBLESHOOTING.md   # Main troubleshooting guide
+│   ├── SETUP_CHECKLIST.md   # Installation checklist
+│   └── README.md             # Documentation overview
 ├── scripts/                   # Utility scripts
 │   ├── setup/                # Setup and configuration scripts
 │   │   └── configure-claude.sh
@@ -108,6 +120,9 @@ VERITAS/
 │       ├── obsidian-enforcer.py
 │       └── startup-check.sh
 ├── templates/                 # Project templates
+│   ├── config/               # Configuration templates
+│   ├── obsidian/             # Obsidian note templates
+│   └── CLAUDE.md.template    # Main project instructions template
 ├── tests/                     # Test scripts
 │   └── test-setup.sh         # Installation testing script
 ├── assets/                    # Images and resources
