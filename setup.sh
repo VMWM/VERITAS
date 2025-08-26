@@ -112,11 +112,54 @@ if [ -f "$CLEANUP_SCRIPT" ]; then
     
     # Check if user wants automatic cleanup
     echo ""
-    echo "The conversation logger can automatically clean up logs older than 5 days."
-    read -p "Enable automatic cleanup at 2 AM daily? (y/n) " -n 1 -r
+    echo "How would you like to manage conversation logs?"
+    echo "1) Auto-cleanup after 5 days (recommended)"
+    echo "2) Keep indefinitely (no automatic cleanup)"
+    echo "3) Custom retention period"
     echo ""
+    read -p "Choose an option (1-3): " CLEANUP_CHOICE
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    case $CLEANUP_CHOICE in
+        1)
+            # Default 5-day cleanup
+            RETENTION_DAYS=5
+            ENABLE_CLEANUP=true
+            echo -e "${GREEN}✓ Will auto-cleanup logs older than 5 days${NC}"
+            ;;
+        2)
+            # Keep indefinitely
+            ENABLE_CLEANUP=false
+            echo -e "${GREEN}✓ Logs will be kept indefinitely${NC}"
+            ;;
+        3)
+            # Custom retention
+            echo ""
+            read -p "Enter retention period in days (1-365): " CUSTOM_DAYS
+            if [[ $CUSTOM_DAYS =~ ^[0-9]+$ ]] && [ $CUSTOM_DAYS -ge 1 ] && [ $CUSTOM_DAYS -le 365 ]; then
+                RETENTION_DAYS=$CUSTOM_DAYS
+                ENABLE_CLEANUP=true
+                echo -e "${GREEN}✓ Will auto-cleanup logs older than $RETENTION_DAYS days${NC}"
+            else
+                echo -e "${YELLOW}⚠ Invalid input. Using default 5 days${NC}"
+                RETENTION_DAYS=5
+                ENABLE_CLEANUP=true
+            fi
+            ;;
+        *)
+            # Default to 5 days for invalid input
+            RETENTION_DAYS=5
+            ENABLE_CLEANUP=true
+            echo -e "${YELLOW}⚠ Invalid choice. Using default 5-day cleanup${NC}"
+            ;;
+    esac
+    
+    if [ "$ENABLE_CLEANUP" = true ]; then
+        # Update the cleanup script with custom retention if needed
+        if [ "$RETENTION_DAYS" != "5" ]; then
+            sed -i.bak "s/RETENTION_DAYS = 5/RETENTION_DAYS = $RETENTION_DAYS/" "$CLEANUP_SCRIPT"
+            echo "  Updated retention period to $RETENTION_DAYS days"
+        fi
+        
         CRON_CMD="0 2 * * * cd '$SCRIPT_DIR/conversation-logger' && node cleanup-old-logs.js > /tmp/conversation-cleanup.log 2>&1"
         
         # Check if cron job already exists
@@ -126,12 +169,12 @@ if [ -f "$CLEANUP_SCRIPT" ]; then
             # Add to crontab
             (crontab -l 2>/dev/null; echo "$CRON_CMD") | crontab -
             echo -e "${GREEN}✓ Automatic cleanup scheduled for 2 AM daily${NC}"
-            echo "  Logs older than 5 days will be automatically removed"
+            echo "  Logs older than $RETENTION_DAYS days will be automatically removed"
         fi
     else
-        echo -e "${YELLOW}⚠ Skipped automatic cleanup setup${NC}"
-        echo "  To enable later, add to crontab:"
-        echo "  0 2 * * * cd '$SCRIPT_DIR/conversation-logger' && node cleanup-old-logs.js"
+        echo "  No automatic cleanup configured"
+        echo "  To manually clean old logs, run:"
+        echo "  node '$SCRIPT_DIR/conversation-logger/cleanup-old-logs.js'"
     fi
 else
     echo -e "${YELLOW}⚠ Cleanup script not found${NC}"
@@ -183,24 +226,48 @@ fi
 echo "Creating environment configuration..."
 ENV_FILE="$PROJECT_DIR/.claude/env.sh"
 
-# Use user-provided paths if available, otherwise defaults
-FINAL_VAULT_PATH="${USER_OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
-FINAL_JOURNAL_PATH="${USER_OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
-
 cat > "$ENV_FILE" << EOF
 #!/bin/bash
 # VERITAS Environment Configuration
 # Source this file or add to your shell profile
 
 export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
-export OBSIDIAN_VAULT_PATH="$FINAL_VAULT_PATH"
-export OBSIDIAN_JOURNAL_PATH="$FINAL_JOURNAL_PATH"
-export OBSIDIAN_API_KEY="$BEARER_TOKEN"
-export OBSIDIAN_JOURNAL_API_KEY="${JOURNAL_TOKEN:-$BEARER_TOKEN}"
-export OBSIDIAN_PRIMARY_PORT="${PRIMARY_PORT:-27124}"
-export OBSIDIAN_JOURNAL_PORT="${JOURNAL_PORT:-27125}"
 export ENFORCE_OBSIDIAN_MCP=1
+
+# Obsidian vault configurations
 EOF
+
+# Add vault configurations if any were provided
+if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+    echo "# Configured vaults: ${VAULT_NAMES[*]}" >> "$ENV_FILE"
+    for i in "${!VAULT_NAMES[@]}"; do
+        VAULT_NAME_UPPER=$(echo "${VAULT_NAMES[$i]}" | tr '[:lower:]' '[:upper:]')
+        cat >> "$ENV_FILE" << EOF
+export OBSIDIAN_${VAULT_NAME_UPPER}_PATH="${VAULT_PATHS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_PORT="${VAULT_PORTS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_TOKEN="${VAULT_TOKENS[$i]}"
+EOF
+    done
+    
+    # For backward compatibility, set the first vault as primary
+    if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+        cat >> "$ENV_FILE" << EOF
+
+# Backward compatibility - first vault as primary
+export OBSIDIAN_VAULT_PATH="${VAULT_PATHS[0]}"
+export OBSIDIAN_API_KEY="${VAULT_TOKENS[0]}"
+export OBSIDIAN_PRIMARY_PORT="${VAULT_PORTS[0]}"
+EOF
+    fi
+else
+    # No vaults configured, use defaults
+    cat >> "$ENV_FILE" << EOF
+# No vaults configured - using defaults
+export OBSIDIAN_VAULT_PATH="$HOME/Obsidian/Vault"
+export OBSIDIAN_API_KEY=""
+export OBSIDIAN_PRIMARY_PORT="27124"
+EOF
+fi
 chmod +x "$ENV_FILE"
 echo -e "${GREEN}✓ Environment configuration created at .claude/env.sh${NC}"
 echo "  Add this to your shell profile: source $ENV_FILE"
@@ -225,59 +292,106 @@ echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
 read -r OBSIDIAN_INSTALLED
 
 if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
-    echo "Enter the path to your HLA/primary vault:"
-    echo "(e.g., /Users/yourname/Obsidian/HLA Antibodies)"
-    read -r USER_OBSIDIAN_VAULT_PATH
+    # Arrays to store vault configurations
+    VAULT_NAMES=()
+    VAULT_PATHS=()
+    VAULT_PORTS=()
+    VAULT_TOKENS=()
     
-    echo "Enter the path to your journal vault:"
-    echo "(e.g., /Users/yourname/Obsidian/Research Journal)"
-    read -r USER_OBSIDIAN_JOURNAL_PATH
+    VAULT_COUNT=0
+    DEFAULT_PORT=27124
     
-    echo "Enter the port for your HLA/primary vault (default: 27124):"
-    read -r PRIMARY_PORT
-    PRIMARY_PORT=${PRIMARY_PORT:-27124}
+    # Loop to add vaults
+    while true; do
+        VAULT_COUNT=$((VAULT_COUNT + 1))
+        echo ""
+        echo "Vault #$VAULT_COUNT Configuration"
+        echo "------------------------"
+        
+        if [ $VAULT_COUNT -eq 1 ]; then
+            echo "Enter a name for your first vault (e.g., 'hla', 'research', 'main'):"
+        else
+            echo "Enter a name for vault #$VAULT_COUNT (or press Enter to finish):"
+        fi
+        read -r VAULT_NAME
+        
+        # If no name entered and not the first vault, we're done
+        if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -gt 1 ]; then
+            VAULT_COUNT=$((VAULT_COUNT - 1))
+            break
+        fi
+        
+        # First vault is required
+        if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -eq 1 ]; then
+            echo -e "${RED}At least one vault is required${NC}"
+            VAULT_NAME="primary"
+            echo "Using default name: $VAULT_NAME"
+        fi
+        
+        VAULT_NAMES+=("$VAULT_NAME")
+        
+        echo "Enter the path to your '$VAULT_NAME' vault:"
+        echo "(e.g., /Users/yourname/Obsidian/$VAULT_NAME)"
+        read -r VAULT_PATH
+        VAULT_PATHS+=("$VAULT_PATH")
+        
+        SUGGESTED_PORT=$((DEFAULT_PORT + VAULT_COUNT - 1))
+        echo "Enter the port for '$VAULT_NAME' vault (default: $SUGGESTED_PORT):"
+        read -r VAULT_PORT
+        VAULT_PORT=${VAULT_PORT:-$SUGGESTED_PORT}
+        VAULT_PORTS+=("$VAULT_PORT")
+        
+        echo "Enter the API key for '$VAULT_NAME' vault:"
+        read -r VAULT_TOKEN
+        VAULT_TOKENS+=("$VAULT_TOKEN")
+        
+        echo -e "${GREEN}✓ Vault '$VAULT_NAME' configured${NC}"
+        
+        # Ask if they want to add another vault
+        if [ $VAULT_COUNT -ge 1 ]; then
+            echo ""
+            read -p "Add another vault? (y/n): " ADD_MORE
+            if [[ ! $ADD_MORE =~ ^[Yy]$ ]]; then
+                break
+            fi
+        fi
+    done
     
-    echo "Enter the API key for your HLA/primary vault:"
-    read -r BEARER_TOKEN
-    
-    echo "Enter the port for your journal vault (default: 27125):"
-    read -r JOURNAL_PORT
-    JOURNAL_PORT=${JOURNAL_PORT:-27125}
-    
-    echo "Enter the API key for your journal vault (or same as primary):"
-    read -r JOURNAL_TOKEN
-    JOURNAL_TOKEN=${JOURNAL_TOKEN:-$BEARER_TOKEN}
-    
-    echo -e "${GREEN}✓ Obsidian configuration noted${NC}"
+    echo ""
+    echo -e "${GREEN}✓ Configured $VAULT_COUNT vault(s)${NC}"
+    for i in "${!VAULT_NAMES[@]}"; do
+        echo "  - ${VAULT_NAMES[$i]}: ${VAULT_PATHS[$i]} (port ${VAULT_PORTS[$i]})"
+    done
     echo ""
     echo "Note: The configuration below uses REST API connections."
     echo "Claude will connect directly to your Obsidian vaults."
     echo ""
     echo "Add this to your Claude Desktop configuration:"
     echo ""
-    cat << EOF
-"obsidian-rest-hla": {
-  "command": "npx",
-  "args": ["obsidian-mcp-server"],
-  "env": {
-    "OBSIDIAN_API_KEY": "$BEARER_TOKEN",
-    "OBSIDIAN_BASE_URL": "https://127.0.0.1:$PRIMARY_PORT",
-    "OBSIDIAN_VERIFY_SSL": "false",
-    "OBSIDIAN_ENABLE_CACHE": "true"
-  }
-}
-
-"obsidian-rest-journal": {
-  "command": "npx",
-  "args": ["obsidian-mcp-server"],
-  "env": {
-    "OBSIDIAN_API_KEY": "$JOURNAL_TOKEN",
-    "OBSIDIAN_BASE_URL": "https://127.0.0.1:$JOURNAL_PORT",
-    "OBSIDIAN_VERIFY_SSL": "false",
-    "OBSIDIAN_ENABLE_CACHE": "true"
-  }
-}
+    echo "{"
+    echo '  "mcpServers": {'
+    
+    # Generate config for each vault
+    for i in "${!VAULT_NAMES[@]}"; do
+        if [ $i -gt 0 ]; then
+            echo ","
+        fi
+        cat << EOF
+    "obsidian-rest-${VAULT_NAMES[$i]}": {
+      "command": "npx",
+      "args": ["obsidian-mcp-server"],
+      "env": {
+        "OBSIDIAN_API_KEY": "${VAULT_TOKENS[$i]}",
+        "OBSIDIAN_BASE_URL": "https://127.0.0.1:${VAULT_PORTS[$i]}",
+        "OBSIDIAN_VERIFY_SSL": "false",
+        "OBSIDIAN_ENABLE_CACHE": "true"
+      }
+    }
 EOF
+    done
+    
+    echo "  }"
+    echo "}"
 else
     echo ""
     echo -e "${YELLOW}Please install the Obsidian Local REST API plugin:${NC}"
