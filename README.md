@@ -32,7 +32,7 @@ VERITAS creates a multi-layer enforcement framework that:
 - **Literature Review Management**: Automatic PubMed citation verification with PMID enforcement
 - **Research Question Documentation**: Structured templates for grant-ready research questions
 - **Concept Note Creation**: Wiki-linked knowledge base entries with validation requirements
-- **Progress Tracking**: Progress tracking withautomatic date-based organization
+- **Progress Tracking**: Progress tracking with automatic date-based organization
 - **Knowledge Graph Building**: Memory MCP and Conversation Logging integration for persistent concept storage
 
 ## System Components
