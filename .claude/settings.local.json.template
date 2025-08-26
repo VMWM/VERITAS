@@ -7,6 +7,8 @@
       "mcp__pubmed__get_fulltext",
       "mcp__memory__*",
       "mcp__filesystem-local__*",
+      "mcp__conversation-logger__log_message",
+      "mcp__conversation-logger__generate_journal",
       "mcp__obsidian-rest-hla__test_request",
       "mcp__obsidian-rest-journal__test_request",
       "WebSearch",
@@ -94,6 +96,18 @@
             "type": "command",
             "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/post-command.py",
             "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 PROJECT_DIR_PLACEHOLDER/.claude/hooks/auto-conversation-logger.py",
+            "timeout": 5
           }
         ]
       }

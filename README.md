@@ -222,6 +222,12 @@ Note: The `configure-claude.sh` script handles these path updates automatically.
 
 VERITAS includes automatic conversation logging with intelligent retention management:
 
+### Automatic Logging
+- **SessionEnd Hook**: Conversations automatically logged when sessions end
+- **No Manual Steps**: Logging happens transparently via hooks
+- **Smart Capture**: Only logs substantial content (>10 chars)
+- **Tool Tracking**: Records which tools were used in each conversation
+
 ### Data Retention
 - **5-Day History Window**: Maintains last 5 days of research conversations
 - **Automatic Cleanup**: Optional 2 AM daily cleanup removes older entries
@@ -233,9 +239,17 @@ Generate comprehensive research journals from your conversations:
 - Daily journals: "Create journal entry for today"
 - Historical journals: "Create journal entry for 2025-01-20"
 - Weekly summaries: "Generate weekly research summary"
+- Session-based journals: All conversations are preserved for journal creation
+
+### Automatic Features
+- **Session Detection**: Logs activate via SessionEnd hook (no /exit required)
+- **Content Filtering**: Skips empty or trivial messages
+- **Database Management**: SQLite with automatic schema creation
+- **Cleanup Schedule**: Configurable via cron (default: 2 AM daily)
 
 ### Manual Maintenance
-- **View database stats**: `session-stats` command
+- **View database stats**: `mcp__conversation-logger__get_session_stats`
+- **Generate journal**: `mcp__conversation-logger__generate_journal`
 - **Manual cleanup**: `node ~/VERITAS/conversation-logger/cleanup-old-logs.js`
 - **Disable automatic cleanup**: Remove cron job with `crontab -e`
 
