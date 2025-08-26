@@ -5,8 +5,42 @@
 # VERITAS
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/badge/GitHub-VMWM%2FVERITAS-blue)](https://github.com/VMWM/VERITAS)
+[![Claude Desktop Compatible](https://img.shields.io/badge/Claude%20Desktop-Compatible-green)](https://claude.ai)
+[![Obsidian Plugin Required](https://img.shields.io/badge/Obsidian-REST%20API%20Required-purple)](https://obsidian.md)
+
 A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
+## 🚀 Quick Start
+
+```bash
+# For experienced users who want to get started immediately
+git clone https://github.com/VMWM/VERITAS.git && cd VERITAS
+./setup.sh  # Follow prompts
+./scripts/setup/configure-claude.sh
+source ~/.claude/env.sh  # Or your project directory's .claude/env.sh
+# Restart Claude Desktop
+```
+**Then:** Configure Obsidian REST API plugin (see [Manual Steps](#required-manual-steps-for-obsidian))
+
+## 📑 Table of Contents
+
+- [About VERITAS](#about-veritas)
+- [What VERITAS Does](#what-veritas-does)
+- [System Architecture](#how-veritas-works---system-architecture)
+- [Primary Use Cases](#primary-use-cases)
+- [System Components](#system-components)
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#after-installation---critical-steps)
+- [Example Workflows](#example-workflows)
+- [Documentation](#documentation)
+- [FAQ](#frequently-asked-questions)
+- [Support](#support)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## About VERITAS
 
@@ -216,6 +250,22 @@ All recently created files meet formatting requirements
 ### Operating System
 - **macOS**: Native support
 - **Linux**: Native support
+- **Windows**: Via WSL2 (Windows Subsystem for Linux)
+
+### Prerequisites Check
+
+Run this command to verify your system is ready:
+
+```bash
+# Check all prerequisites at once
+echo "Checking prerequisites..." && \
+command -v node >/dev/null 2>&1 && echo "✅ Node.js: $(node -v)" || echo "❌ Node.js: Not installed" && \
+command -v npm >/dev/null 2>&1 && echo "✅ npm: $(npm -v)" || echo "❌ npm: Not installed" && \
+command -v python3 >/dev/null 2>&1 && echo "✅ Python: $(python3 --version)" || echo "❌ Python 3: Not installed" && \
+command -v git >/dev/null 2>&1 && echo "✅ Git: $(git --version)" || echo "❌ Git: Not installed" && \
+command -v claude >/dev/null 2>&1 && echo "✅ Claude CLI: Installed" || echo "⚠️  Claude CLI: Not installed (optional)" && \
+[ -d "/Applications/Claude.app" ] && echo "✅ Claude Desktop: Installed" || echo "⚠️  Claude Desktop: Check manually"
+```
 
 ## Installation
 
@@ -437,11 +487,60 @@ See **[Developer Documentation](docs/developer/)** for customization options:
 - **[MCP Servers](docs/developer/MCP_SERVERS.md)** - Technical details
 - **[Conversation Logger](docs/developer/CONVERSATION_LOGGER.md)** - Logger API
 
+## Frequently Asked Questions
+
+### General Questions
+
+**Q: What makes VERITAS different from plain Claude Desktop?**
+A: VERITAS adds research-specific enforcement layers, automatic citation validation, Obsidian integration for knowledge management, and conversation logging with journal generation.
+
+**Q: Can I use VERITAS without Obsidian?**
+A: Yes, but you'll lose the automatic knowledge base creation features. The citation enforcement and conversation logging still work.
+
+**Q: Does VERITAS work with Claude.ai (web version)?**
+A: No, VERITAS requires Claude Desktop (Claude Code) for MCP server support.
+
+### Setup Issues
+
+**Q: Why do I see "MCP server not found" errors?**
+A: Usually means you haven't restarted Claude Desktop after installation. Completely quit and restart Claude Desktop.
+
+**Q: Why aren't my Obsidian notes being created?**
+A: Check that: 1) Obsidian is running, 2) REST API plugin is enabled with HTTPS, 3) Bearer token is correctly set in environment variables.
+
+**Q: Can I use different port numbers for Obsidian?**
+A: Yes! The setup script asks for your preferred ports. Default are 27124 (main) and 27125 (journal).
+
+### Usage Questions
+
+**Q: How do I trigger the conversation logger?**
+A: It logs automatically. View logs with: `mcp__conversation-logger__generate_journal`
+
+**Q: Can I customize the citation format?**
+A: Yes, edit the validation rules in `.claude/hooks/post-command.sh`
+
+**Q: How do I sync VERITAS across multiple machines?**
+A: See [Multi-Machine Sync Guide](docs/user/MULTI_MACHINE.md)
+
 ## Support
 
-- **Documentation**: [Documentation Hub](docs/README.md)
-- **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
-- **Templates**: [/templates/](templates/) directory
+- **📖 Documentation**: [Complete Documentation Hub](docs/README.md)
+- **🐛 Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/VMWM/VERITAS/discussions)
+- **📧 Contact**: Open an issue with the "question" label
+- **🎯 Templates**: [/templates/](templates/) directory
+
+## Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon) for detailed guidelines.
 
 ## License
 
@@ -449,4 +548,8 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
-**[Quick Start →](docs/user/QUICK_START.md)** | **[Documentation](docs/)** | **[Report Issues](https://github.com/VMWM/VERITAS/issues)**
+<p align="center">
+  <b>Built with ❤️ for the research community</b><br>
+  Enforcing truth in research, one citation at a time<br><br>
+  <a href="#-table-of-contents">Back to Top ↑</a>
+</p>
