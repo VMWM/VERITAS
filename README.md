@@ -125,30 +125,49 @@ System automatically:
 
 ⚠️ **CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](SETUP_CHECKLIST.md)** for guaranteed success, or see **[Common Setup Errors](docs/user/SETUP_ERRORS.md)** if you encounter problems.
 
+### What's Automated vs. Manual
+
+**✅ Automated by setup.sh:**
+- All MCP server installations (7 servers)
+- Hook scripts and configuration files
+- Environment variable setup (.claude/env.sh)
+- Path configuration in settings
+- Conversation logger with optional cleanup
+- CLAUDE.md template placement
+
+**⚠️ Manual Steps Required:**
+1. **Source environment file** (critical!)
+2. **Configure Claude Desktop/CLI** (run configure-claude.sh)
+3. **Obsidian plugin setup** (install, enable HTTPS, generate token)
+4. **Create vault folder structure**
+5. **Restart Claude Desktop**
+
 ### Automated Installation with Claude Code
 
-If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation (dont forget the additional setup steps for Obsidian, which must be done manually (see documentation):
+If you're already using Claude Code, copy and paste this prompt for automated setup:
 
 ```
 Please install VERITAS from https://github.com/VMWM/VERITAS.git for me.
-  Clone it to ~/VERITAS (in my home directory), then run the setup script
-  to install all MCP servers. When setup.sh asks about conversation cleanup,
-  choose yes for automatic 2 AM cleanup.
 
-  Then run the configure-claude.sh script. When prompted:
-  - "How would you like to proceed?" → Choose 1 (merge with existing)
-  - "Configuration management options?" → Choose 1 (separate config files)
+1. Clone it to ~/VERITAS in my home directory
+2. Run ./setup.sh and when prompted:
+   - Enter my current directory as the project directory
+   - Choose 'y' for automatic 2 AM conversation cleanup
+3. Source the environment file: source [project-dir]/.claude/env.sh
+4. Run ./scripts/configure-claude.sh and choose:
+   - Option 1 (merge with existing)
+   - Option 1 (separate config files)
+5. Verify servers loaded: claude mcp list
 
-  Use my current working directory as the project directory. Skip Obsidian
-  configuration for now (just press Enter when asked about Obsidian tokens/ports).
-
-  After installation completes, verify the servers are loaded by running:
-  'claude mcp list' (for CLI) or checking /mcp in Claude Desktop.
-
-  Finally, remind me to:
-  1. Customize the CLAUDE.md file for my project
-  2. Complete the manual Obsidian setup steps (enable HTTPS server!)
-  3. Restart Claude Desktop or run 'claude restart' for CLI
+After you're done, remind me of these MANUAL steps I must do:
+- Install Obsidian Local REST API plugin
+- Enable HTTPS server (NOT HTTP) in plugin settings
+- Set ports: 27124 (main), 27125 (journal)
+- Generate and save bearer token
+- Export OBSIDIAN_API_TOKEN="[token]"
+- Create vault folders: Research Questions/, Concepts/, Daily/
+- Keep Obsidian running while using Claude
+- Restart Claude Desktop completely
 ```
 
 ### Manual Installation
@@ -165,17 +184,29 @@ chmod +x setup.sh
 ./scripts/configure-claude.sh
 ```
 
-The setup process handles all but the manual Obsidian steps below:
-- `setup.sh`: Installs all MCP servers and dependencies
-- `configure-claude.sh`: Interactive configuration with multiple options:
-  - Merges with or replaces existing configurations
-  - Creates automatic backups of existing configs
-  - Offers symlink option for unified Desktop/CLI management
-  - Supports multi-machine synchronization via cloud directories
-- Both interfaces get identical MCP server configurations
-- Configures hook system with proper permissions
-- Sets up dynamic path resolution
-- Creates database directories
+#### What the setup scripts do:
+
+**setup.sh automatically:**
+- ✅ Installs all 7 MCP servers via npm/npx
+- ✅ Copies .claude directory with hooks and configs
+- ✅ Creates environment configuration file
+- ✅ Sets executable permissions on all hooks
+- ✅ Configures conversation logger with retention settings
+- ✅ Creates project structure and logs directory
+- ✅ Generates customized settings.local.json
+
+**configure-claude.sh automatically:**
+- ✅ Updates Claude Desktop configuration
+- ✅ Creates backups of existing configs
+- ✅ Syncs Desktop and CLI configurations
+- ✅ Sets up MCP server paths
+- ✅ Handles multi-machine sync options
+
+**You must manually:**
+- ⚠️ Source the environment file (critical!)
+- ⚠️ Install and configure Obsidian plugin
+- ⚠️ Create vault folder structure
+- ⚠️ Restart Claude Desktop
 
 ### Required Manual Steps for Obsidian:
 
@@ -207,6 +238,31 @@ The setup process handles all but the manual Obsidian steps below:
    - Both vaults must be open in Obsidian while using Claude
    - The REST API only works when Obsidian is running
    - If Claude can't connect, check that Obsidian is open with the correct vaults
+
+## After Installation - Critical Steps
+
+**Before using Claude with VERITAS, you MUST:**
+
+1. **Source the environment** (every new terminal session):
+   ```bash
+   source ~/your-project/.claude/env.sh
+   ```
+
+2. **Keep Obsidian running** with your vaults open
+
+3. **Verify everything works**:
+   ```bash
+   # Check environment
+   echo $CLAUDE_PROJECT_DIR
+   
+   # Check MCP servers
+   claude mcp list
+   
+   # Test in Claude
+   "Generate a test journal entry"
+   ```
+
+4. **If something doesn't work**, see [Setup Errors](docs/user/SETUP_ERRORS.md)
 
 ### Additional Manual Configuration:
 
