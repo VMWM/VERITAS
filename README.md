@@ -5,7 +5,7 @@
 # VERITAS
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
-A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and helps structure your knowledge base through Obsidian integration.
+A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
 ## Table of Contents
 
@@ -159,7 +159,7 @@ Claude: [Researches and provides comprehensive answer with citations]
 
 You: "Create this research question and its concept pages in my Obsidian vault"
 
-System will:
+System automatically:
 1. Task router detects "obsidian vault" → triggers enforcement
 2. Routes to primary vault (port 27124) for research content
 3. Creates note in /Research Questions/ folder
@@ -173,7 +173,7 @@ System will:
 ```
 You: "I'm done for today, create a research journal entry"
 
-System will:
+System automatically:
 1. Task router detects "journal" → routes to journal vault (port 27125)
 2. Creates entry in /Daily/ folder with today's date
 3. Summarizes session accomplishments
@@ -184,7 +184,7 @@ System will:
 
 ## Output Validation System
 
-VERITAS includes validation hooks configured to check content for compliance with formatting and citation requirements (Note: validation reporting is currently inactive).
+VERITAS includes a comprehensive post-execution validation system that automatically checks all created content for compliance with formatting and citation requirements.
 
 ### What Gets Validated
 
