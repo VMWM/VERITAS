@@ -11,6 +11,7 @@ Welcome to the VERITAS documentation. Choose your path:
 
 ### Existing Users
 - **[Troubleshooting](user/TROUBLESHOOTING.md)** - Fix common issues
+- **[Setup Errors](user/SETUP_ERRORS.md)** - Solutions to installation problems
 
 ### Advanced Users
 - **[Multi-Machine Sync](user/MULTI_MACHINE.md)** - Sync across devices
@@ -24,7 +25,8 @@ docs/
 │   ├── INSTALLATION.md     # Complete setup
 │   ├── CONFIGURATION.md    # Config options
 │   ├── MULTI_MACHINE.md    # Multi-device sync
-│   └── TROUBLESHOOTING.md  # Problem solving
+│   ├── TROUBLESHOOTING.md  # Problem solving
+│   └── SETUP_ERRORS.md     # Installation fixes
 │
 └── developer/              # Technical documentation
     ├── CUSTOMIZATION.md   # Extending VERITAS
@@ -49,8 +51,9 @@ docs/
 1. [Multi-Machine Guide](user/MULTI_MACHINE.md) - Complete sync setup
 
 #### Fix problems
-1. [Troubleshooting](user/TROUBLESHOOTING.md) - Common issues
-2. [GitHub Issues](https://github.com/VMWM/VERITAS/issues) - Report bugs
+1. [Setup Errors](user/SETUP_ERRORS.md) - Installation problems
+2. [Troubleshooting](user/TROUBLESHOOTING.md) - Common issues
+3. [GitHub Issues](https://github.com/VMWM/VERITAS/issues) - Report bugs
 
 #### Customize or extend
 1. [Customization Guide](developer/CUSTOMIZATION.md) - Modify VERITAS
@@ -65,6 +68,7 @@ docs/
 - **[CONFIGURATION.md](user/CONFIGURATION.md)** - All configuration options explained
 - **[MULTI_MACHINE.md](user/MULTI_MACHINE.md)** - Multi-machine synchronization
 - **[TROUBLESHOOTING.md](user/TROUBLESHOOTING.md)** - Solutions to common problems
+- **[SETUP_ERRORS.md](user/SETUP_ERRORS.md)** - Installation error solutions
 
 ### Developer Documentation
 - **[CUSTOMIZATION.md](developer/CUSTOMIZATION.md)** - How to customize VERITAS

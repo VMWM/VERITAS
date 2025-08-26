@@ -95,6 +95,35 @@ Or run manually when needed:
 node cleanup-old-logs.js
 ```
 
+## Automatic Logging with SessionEnd Hook
+
+The conversation logger can automatically capture all conversations using Claude's SessionEnd hook:
+
+### Configure Automatic Logging
+
+Add to your `.claude/settings.local.json`:
+
+```json
+{
+  "hooks": {
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/.claude/hooks/auto-conversation-logger.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Note**: Sessions log automatically when they end naturally - no `/exit` command required!
+
 ## Usage
 
 ### Basic Commands in Claude

@@ -96,7 +96,7 @@ After installation, add to your Claude Desktop configuration:
     "obsidian-rest-hla": {
       "command": "npx",
       "args": ["@modelcontextprotocol/server-rest", 
-               "--base-url", "http://127.0.0.1:27124",
+               "--base-url", "https://127.0.0.1:27124",
                "--auth-type", "bearer",
                "--auth-token", "YOUR_TOKEN"]
     }

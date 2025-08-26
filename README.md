@@ -123,7 +123,7 @@ System automatically:
 
 ## Installation
 
-⚠️ **CRITICAL**: Many setup issues are caused by missed steps. See **[Common Setup Errors](docs/user/SETUP_ERRORS.md)** for solutions to frequent problems.
+⚠️ **CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](SETUP_CHECKLIST.md)** for guaranteed success, or see **[Common Setup Errors](docs/user/SETUP_ERRORS.md)** if you encounter problems.
 
 ### Automated Installation with Claude Code
 
