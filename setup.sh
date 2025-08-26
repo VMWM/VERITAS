@@ -61,7 +61,7 @@ echo ""
 
 # Sequential Thinking MCP
 echo "Installing Sequential Thinking MCP..."
-npx @modelcontextprotocol/install sequentialthinking
+npm install -g @modelcontextprotocol/server-sequentialthinking
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Sequential Thinking MCP installed${NC}"
 else
@@ -85,7 +85,7 @@ echo ""
 
 # Memory MCP
 echo "Installing Memory MCP..."
-npx @modelcontextprotocol/install memory
+npm install -g @modelcontextprotocol/server-memory
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Memory MCP installed${NC}"
 else
@@ -97,7 +97,7 @@ echo ""
 
 # Filesystem MCP
 echo "Installing Filesystem MCP..."
-npx @modelcontextprotocol/install filesystem
+npm install -g @modelcontextprotocol/server-filesystem
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Filesystem MCP installed${NC}"
 else
