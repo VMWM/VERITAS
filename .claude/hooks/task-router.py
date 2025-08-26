@@ -65,9 +65,9 @@ class TaskRouter:
                     "Edit"
                 ],
                 "paths": {
-                    "research_questions": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/",
-                    "concepts": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/",
-                    "journal": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/"
+                    "research_questions": "Research Questions/",
+                    "concepts": "Concepts/",
+                    "journal": "Daily/"
                 }
             }
         return {"required": [], "forbidden": []}

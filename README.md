@@ -123,6 +123,8 @@ System automatically:
 
 ## Installation
 
+⚠️ **CRITICAL**: Many setup issues are caused by missed steps. See **[Common Setup Errors](docs/user/SETUP_ERRORS.md)** for solutions to frequent problems.
+
 ### Automated Installation with Claude Code
 
 If you're already set up with Claude Code in your IDE, copy and paste this prompt into a new Claude Code conversation (dont forget the additional setup steps for Obsidian, which must be done manually (see documentation):

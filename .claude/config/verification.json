@@ -36,9 +36,9 @@
       "enabled": true,
       "enforce_structure": true,
       "templates": {
-        "research_question": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/research_question_template.md",
-        "concept": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/concept_template.md",
-        "daily_journal": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Templates/daily_journal_template.md"
+        "research_question": "templates/research_question_template.md",
+        "concept": "templates/concept_template.md",
+        "daily_journal": "templates/daily_journal_template.md"
       }
     },
     
@@ -107,7 +107,7 @@
   
   "logging": {
     "enabled": true,
-    "log_path": "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs/",
+    "log_path": ".claude/logs/",
     "log_level": "verbose",
     "log_violations": true,
     "log_corrections": true

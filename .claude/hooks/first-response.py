@@ -33,8 +33,8 @@ def enforce_instruction_check():
 ║                                                                  ║
 ║  BEFORE RESPONDING, YOU MUST:                                   ║
 ║                                                                  ║
-║  1. READ: /Users/vmwm/.../VM_F31_2025/CLAUDE.md                ║
-║  2. READ: /Users/vmwm/.../VM_F31_2025/.claude/agents/*         ║
+║  1. READ: ${PROJECT_DIR}/CLAUDE.md                             ║
+║  2. READ: ${PROJECT_DIR}/.claude/agents/*                      ║
 ║  3. START WITH: mcp__sequential-thinking__sequentialthinking    ║
 ║                                                                  ║
 ║  CRITICAL RULES:                                                ║

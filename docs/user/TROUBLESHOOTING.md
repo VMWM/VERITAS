@@ -106,7 +106,7 @@ which -a claude
    ```json
    "conversation-logger": {
      "command": "node",
-     "args": ["/Users/vmwm/Library/Mobile Documents/com~apple~CloudDocs/MCP-Shared/conversation-logger/index.js"]
+     "args": ["~/VERITAS/conversation-logger/index.js"]
    }
    ```
 

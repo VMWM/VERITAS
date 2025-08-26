@@ -16,13 +16,38 @@ class HLAOutputVerifier:
     def __init__(self):
         self.violations = []
         self.warnings = []
-        self.log_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs")
+        # Get project directory from environment or use current directory
+        project_dir = os.environ.get('CLAUDE_PROJECT_DIR', os.getcwd())
+        self.log_path = Path(project_dir) / ".claude" / "logs"
         self.log_path.mkdir(parents=True, exist_ok=True)
         
         # Load verification config
-        config_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/config/verification.json")
-        with open(config_path, 'r') as f:
-            self.config = json.load(f)
+        config_path = Path(project_dir) / ".claude" / "config" / "verification.json"
+        if config_path.exists():
+            with open(config_path, 'r') as f:
+                self.config = json.load(f)
+        else:
+            # Use default config if file doesn't exist
+            self.config = self.get_default_config()
+    
+    def get_default_config(self):
+        """Return default configuration if config file is missing"""
+        return {
+            "verification_rules": {
+                "pmid_citations": {
+                    "enabled": True,
+                    "enforcement": {
+                        "action_on_violation": "warn"
+                    }
+                },
+                "obsidian_formatting": {
+                    "enabled": True
+                },
+                "unsupported_claims": {
+                    "enabled": True
+                }
+            }
+        }
     
     def check_pmid_citations(self, content):
         """Verify all medical claims have proper PMID citations"""

@@ -31,5 +31,6 @@ echo "════════════════════════�
 
 # Set environment variables
 export ENFORCE_OBSIDIAN_MCP=1
-export CLAUDE_PROJECT_ROOT="/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025"
-export OBSIDIAN_VAULT_PATH="/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies"
+# These should be set by the user in their environment or during setup
+export CLAUDE_PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-$(pwd)}"
+export OBSIDIAN_VAULT_PATH="${OBSIDIAN_VAULT_PATH:-Obsidian/Vault}"

@@ -40,8 +40,11 @@ EOF
 
 # Function to check if CLAUDE.md exists
 check_claude_md() {
-    if [ ! -f "/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/CLAUDE.md" ]; then
-        echo "⚠️  WARNING: CLAUDE.md not found!"
+    # Get project directory from environment or use current directory
+    PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+    
+    if [ ! -f "$PROJECT_DIR/CLAUDE.md" ]; then
+        echo "⚠️  WARNING: CLAUDE.md not found in $PROJECT_DIR!"
         return 1
     else
         echo "✅ CLAUDE.md found and loaded"

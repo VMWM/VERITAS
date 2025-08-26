@@ -189,6 +189,23 @@ else
     echo -e "${YELLOW}⚠ settings.local.json.template not found, hooks may not work${NC}"
 fi
 
+# Create environment setup file
+echo "Creating environment configuration..."
+ENV_FILE="$PROJECT_DIR/.claude/env.sh"
+cat > "$ENV_FILE" << EOF
+#!/bin/bash
+# VERITAS Environment Configuration
+# Source this file or add to your shell profile
+
+export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
+export OBSIDIAN_VAULT_PATH="\${OBSIDIAN_VAULT_PATH:-Obsidian/Vault}"
+export OBSIDIAN_JOURNAL_PATH="\${OBSIDIAN_JOURNAL_PATH:-Obsidian/Journal}"
+export ENFORCE_OBSIDIAN_MCP=1
+EOF
+chmod +x "$ENV_FILE"
+echo -e "${GREEN}✓ Environment configuration created at .claude/env.sh${NC}"
+echo "  Add this to your shell profile: source $ENV_FILE"
+
 # Note about CLAUDE.md customization
 echo ""
 echo -e "${YELLOW}Note: CLAUDE.md is a template - please customize it for your project${NC}"
