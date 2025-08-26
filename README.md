@@ -5,24 +5,7 @@
 # VERITAS
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub](https://img.shields.io/badge/GitHub-VMWM%2FVERITAS-blue)](https://github.com/VMWM/VERITAS)
-[![Claude Desktop Compatible](https://img.shields.io/badge/Claude%20Desktop-Compatible-green)](https://claude.ai)
-[![Obsidian Plugin Required](https://img.shields.io/badge/Obsidian-REST%20API%20Required-purple)](https://obsidian.md)
-
 A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
-
-## Quick Start
-
-```bash
-# For experienced users who want to get started immediately
-git clone https://github.com/VMWM/VERITAS.git && cd VERITAS
-./setup.sh  # Follow prompts
-./scripts/setup/configure-claude.sh
-source ~/.claude/env.sh  # Or your project directory's .claude/env.sh
-# Restart Claude Desktop
-```
-**Then:** Configure Obsidian REST API plugin (see [Manual Steps](#required-manual-steps-for-obsidian))
 
 ## Table of Contents
 
@@ -225,7 +208,7 @@ After each operation, the system:
 ### Example Validation Output
 
 ```
-🔍 POST-EXECUTION VALIDATOR
+POST-EXECUTION VALIDATOR
 ============================
 Output Validation: PASSED
 All recently created files meet formatting requirements
@@ -352,7 +335,7 @@ chmod +x setup.sh
 - Install and configure Obsidian plugin
 - Create vault folder structure
 - Restart Claude Desktop
-- 💡 Source environment file (optional if working from project directory)
+- Source environment file (optional if working from project directory)
 
 ### Required Manual Steps for Obsidian:
 
@@ -556,8 +539,3 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
-<p align="center">
-  <b>Built for the research community</b><br>
-  Enforcing truth in research, one citation at a time<br><br>
-  <a href="#-table-of-contents">Back to Top ↑</a>
-</p>
