@@ -145,9 +145,14 @@ claude
 4. Install and Enable
 
 #### Configure Authentication
-1. In plugin settings, enable authentication
-2. Generate a bearer token
-3. Note the port number (default: 27124)
+1. In plugin settings:
+   - **CRITICAL**: Enable "Encrypted (HTTPS) Server" (must show green checkmark ✓)
+   - **IMPORTANT**: Disable "Non-encrypted (HTTP) Server" (must show red X)
+   - VERITAS uses HTTPS (https://127.0.0.1:27124) NOT HTTP
+2. Generate a bearer token (copy the full token exactly)
+3. Set port numbers:
+   - Primary vault: Set "Encrypted (HTTPS) Server Port" to 27124
+   - Journal vault (if using): Set "Encrypted (HTTPS) Server Port" to 27125
 
 #### Create Vault Structure
 ```

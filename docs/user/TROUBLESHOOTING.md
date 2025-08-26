@@ -161,13 +161,16 @@ which -a claude
 - If you close Obsidian, Claude will immediately lose connection
 
 ### REST API Connection Failed
-**Symptoms**: Cannot connect to Obsidian vault, tools fail silently
+**Symptoms**: Cannot connect to Obsidian vault, tools fail silently, "disconnected" errors
 **Solutions**:
 1. **FIRST: Ensure Obsidian is running with the vault open**
-2. Verify REST API plugin is enabled in the open vault
-3. Check port is not blocked: `lsof -i :27124`
-4. Confirm authentication token matches
-5. Try disabling authentication temporarily
+2. **Check HTTPS vs HTTP settings**:
+   - VERITAS expects **HTTPS (encrypted)** connections
+   - In Obsidian REST API settings: "Enable Encrypted (HTTPS) Server" should be ON (green ✓)
+   - The config uses `https://127.0.0.1:27124` not `http://`
+3. Verify REST API plugin is enabled in the open vault
+4. Check port is not blocked: `lsof -i :27124`
+5. Confirm authentication token matches **exactly** (copy the full token)
 6. Check Obsidian console for errors (Cmd+Option+I on Mac)
 
 ### Wrong File Location

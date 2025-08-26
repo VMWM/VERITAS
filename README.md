@@ -178,9 +178,11 @@ The setup process handles all but the manual Obsidian steps below:
 
 2. **Configure the plugin**:
    - Go to plugin settings
-   - Generate a bearer token (save this!)
-   - Set port to 27124 for main vault
-   - For journal vault: install plugin again, set port to 27125
+   - **IMPORTANT**: Make sure "Enable Encrypted (HTTPS) Server" is ON (green checkmark)
+   - The "Enable Non-encrypted (HTTP) Server" should be OFF (red X) for security
+   - Generate a bearer token (save this - you'll need the exact full token!)
+   - Set **Encrypted (HTTPS) Server Port** to 27124 for main vault
+   - For journal vault: install plugin again, set **Encrypted (HTTPS) Server Port** to 27125
 
 3. **Create vault folder structure**:
    - Main vault: Create folders for "Research Questions", "Concepts"
