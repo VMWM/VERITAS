@@ -168,6 +168,9 @@ The setup process handles all but the manual Obsidian steps below:
 - Creates database directories
 
 ### Required Manual Steps for Obsidian:
+
+⚠️ **IMPORTANT: Obsidian must be running with your vaults open for the MCP servers to work!**
+
 1. **Install Obsidian Local REST API plugin**:
    - Open Obsidian Settings → Community Plugins
    - Search for "Local REST API"
@@ -187,6 +190,11 @@ The setup process handles all but the manual Obsidian steps below:
    ```bash
    export OBSIDIAN_API_TOKEN="your-bearer-token-here"
    ```
+
+5. **Keep Obsidian Running**:
+   - Both vaults must be open in Obsidian while using Claude
+   - The REST API only works when Obsidian is running
+   - If Claude can't connect, check that Obsidian is open with the correct vaults
 
 ### Additional Manual Configuration:
 

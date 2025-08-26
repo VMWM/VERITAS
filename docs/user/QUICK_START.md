@@ -73,6 +73,8 @@ Try these commands to verify everything works:
 
 ## Optional: Obsidian Integration
 
+⚠️ **Remember: Obsidian must stay open while using Claude for the integration to work!**
+
 If you want to use Obsidian for research notes:
 
 1. Install Obsidian Local REST API plugin

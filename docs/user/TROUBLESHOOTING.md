@@ -154,14 +154,21 @@ which -a claude
 
 ## Obsidian Integration Issues
 
+### ⚠️ CRITICAL: Obsidian Must Be Running!
+**The #1 cause of Obsidian MCP failures**: Obsidian is not open
+- **Both vaults must be open** in Obsidian for the MCP servers to work
+- The REST API plugin only responds when Obsidian is actively running
+- If you close Obsidian, Claude will immediately lose connection
+
 ### REST API Connection Failed
-**Symptoms**: Cannot connect to Obsidian vault
+**Symptoms**: Cannot connect to Obsidian vault, tools fail silently
 **Solutions**:
-1. Verify REST API plugin is enabled
-2. Check port is not blocked: `lsof -i :27124`
-3. Confirm authentication token matches
-4. Try disabling authentication temporarily
-5. Check Obsidian console for errors
+1. **FIRST: Ensure Obsidian is running with the vault open**
+2. Verify REST API plugin is enabled in the open vault
+3. Check port is not blocked: `lsof -i :27124`
+4. Confirm authentication token matches
+5. Try disabling authentication temporarily
+6. Check Obsidian console for errors (Cmd+Option+I on Mac)
 
 ### Wrong File Location
 **Symptoms**: Files created in wrong folder
