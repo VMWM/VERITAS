@@ -514,7 +514,7 @@ fi
 echo ""
 echo "Next steps:"
 echo "1. Run the configuration script to set up Claude:"
-echo -e "   ${GREEN}./scripts/configure-claude.sh${NC}"
+echo -e "   ${GREEN}./scripts/setup/configure-claude.sh${NC}"
 echo "   This will create configs for both Claude Desktop and CLI"
 echo "2. Customize $PROJECT_DIR/CLAUDE.md for your specific project"
 echo "3. Restart Claude Desktop and/or Claude CLI"

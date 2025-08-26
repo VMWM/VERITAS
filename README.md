@@ -84,6 +84,39 @@ This architecture ensures multiple checkpoints for compliance:
 - Concept template with implementation guides
 - Daily journal template with metrics tracking
 
+## Project Structure
+
+VERITAS follows a clean, organized directory structure:
+
+```
+VERITAS/
+├── .claude/                    # Claude-specific configuration
+│   ├── agents/                # Agent templates
+│   ├── config/               # Configuration files
+│   ├── hooks/                # All validation and enforcement hooks
+│   ├── logs/                 # Validation and verification logs
+│   └── settings.local.json.template
+├── conversation-logger/       # Custom MCP server for conversation tracking
+├── docs/                      # Documentation
+│   ├── MCP_INSTALLATION.md  # MCP server setup guide
+│   ├── TROUBLESHOOTING.md   # Common issues and solutions
+│   └── SETUP_CHECKLIST.md   # Installation checklist
+├── scripts/                   # Utility scripts
+│   ├── setup/                # Setup and configuration scripts
+│   │   └── configure-claude.sh
+│   └── utils/                # Utility and maintenance scripts
+│       ├── obsidian-enforcer.py
+│       └── startup-check.sh
+├── templates/                 # Project templates
+├── tests/                     # Test scripts
+│   └── test-setup.sh         # Installation testing script
+├── assets/                    # Images and resources
+├── setup.sh                   # Main installation script
+├── README.md                  # This file
+├── LICENSE                    # MIT License
+└── .gitignore
+```
+
 ## Example Workflows
 
 ### Research Question Creation
@@ -171,7 +204,7 @@ All recently created files meet formatting requirements
 
 ## Installation
 
-⚠️ **CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](SETUP_CHECKLIST.md)** for guaranteed success, or see **[Common Setup Errors](docs/user/SETUP_ERRORS.md)** if you encounter problems.
+⚠️ **CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](docs/SETUP_CHECKLIST.md)** for guaranteed success, or see **[Troubleshooting Guide](docs/TROUBLESHOOTING.md)** if you encounter problems.
 
 ### What's Automated vs. Manual
 
