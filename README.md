@@ -12,7 +12,7 @@ Verification-Enforced Research Infrastructure with Tracking and Automated Struct
 
 A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # For experienced users who want to get started immediately
@@ -24,7 +24,7 @@ source ~/.claude/env.sh  # Or your project directory's .claude/env.sh
 ```
 **Then:** Configure Obsidian REST API plugin (see [Manual Steps](#required-manual-steps-for-obsidian))
 
-## 📑 Table of Contents
+## Table of Contents
 
 - [About VERITAS](#about-veritas)
 - [What VERITAS Does](#what-veritas-does)
@@ -59,7 +59,7 @@ VERITAS creates a multi-layer guidance and validation framework that:
 - **Enforces PMID citation requirements** through instruction compliance and reminders
 - **Creates properly formatted Obsidian notes** using predefined templates in CLAUDE.md
 - **Guides tool usage** through pre-execution warnings and workflow recommendations
-- **✅ Validates output compliance** after generation (NOW IMPLEMENTED via post-command.sh)
+- **Validates output compliance** after generation (NOW IMPLEMENTED via post-command.sh)
 
 ### How VERITAS Works - System Architecture
 
@@ -206,12 +206,12 @@ VERITAS includes a comprehensive post-execution validation system that automatic
 ### What Gets Validated
 
 The validation system checks:
-- ✅ **File Extensions**: All Obsidian files must have `.md` extension
-- ✅ **Table Formatting**: Tables must have spaces around pipes `| Cell |`
-- ✅ **Citation Compliance**: Medical claims must have PMID citations
-- ✅ **Wiki Link Format**: Multi-word concepts use underscores `[[De_Novo_DSA]]`
-- ✅ **Character Escaping**: No `\n` or HTML entities like `&gt;`
-- ✅ **Header Formatting**: No underscores in H1 headings
+- **File Extensions**: All Obsidian files must have `.md` extension
+- **Table Formatting**: Tables must have spaces around pipes `| Cell |`
+- **Citation Compliance**: Medical claims must have PMID citations
+- **Wiki Link Format**: Multi-word concepts use underscores `[[De_Novo_DSA]]`
+- **Character Escaping**: No `\n` or HTML entities like `&gt;`
+- **Header Formatting**: No underscores in H1 headings
 
 ### Validation Reports
 
@@ -227,7 +227,7 @@ After each operation, the system:
 ```
 🔍 POST-EXECUTION VALIDATOR
 ============================
-✅ Output Validation: PASSED
+Output Validation: PASSED
 All recently created files meet formatting requirements
 ============================
 ```
@@ -259,21 +259,21 @@ Run this command to verify your system is ready:
 ```bash
 # Check all prerequisites at once
 echo "Checking prerequisites..." && \
-command -v node >/dev/null 2>&1 && echo "✅ Node.js: $(node -v)" || echo "❌ Node.js: Not installed" && \
-command -v npm >/dev/null 2>&1 && echo "✅ npm: $(npm -v)" || echo "❌ npm: Not installed" && \
-command -v python3 >/dev/null 2>&1 && echo "✅ Python: $(python3 --version)" || echo "❌ Python 3: Not installed" && \
-command -v git >/dev/null 2>&1 && echo "✅ Git: $(git --version)" || echo "❌ Git: Not installed" && \
-command -v claude >/dev/null 2>&1 && echo "✅ Claude CLI: Installed" || echo "⚠️  Claude CLI: Not installed (optional)" && \
-[ -d "/Applications/Claude.app" ] && echo "✅ Claude Desktop: Installed" || echo "⚠️  Claude Desktop: Check manually"
+command -v node >/dev/null 2>&1 && echo "[OK] Node.js: $(node -v)" || echo "[MISSING] Node.js: Not installed" && \
+command -v npm >/dev/null 2>&1 && echo "[OK] npm: $(npm -v)" || echo "[MISSING] npm: Not installed" && \
+command -v python3 >/dev/null 2>&1 && echo "[OK] Python: $(python3 --version)" || echo "[MISSING] Python 3: Not installed" && \
+command -v git >/dev/null 2>&1 && echo "[OK] Git: $(git --version)" || echo "[MISSING] Git: Not installed" && \
+command -v claude >/dev/null 2>&1 && echo "[OK] Claude CLI: Installed" || echo "[WARNING] Claude CLI: Not installed (optional)" && \
+[ -d "/Applications/Claude.app" ] && echo "[OK] Claude Desktop: Installed" || echo "[WARNING] Claude Desktop: Check manually"
 ```
 
 ## Installation
 
-⚠️ **CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](docs/SETUP_CHECKLIST.md)** for guaranteed success, or see **[Troubleshooting Guide](docs/TROUBLESHOOTING.md)** if you encounter problems.
+**CRITICAL**: Many setup issues are caused by missed steps. Follow the **[Setup Checklist](docs/SETUP_CHECKLIST.md)** for guaranteed success, or see **[Troubleshooting Guide](docs/TROUBLESHOOTING.md)** if you encounter problems.
 
 ### What's Automated vs. Manual
 
-**✅ Automated by setup.sh:**
+**Automated by setup.sh:**
 - All MCP server installations (7 servers)
 - Hook scripts and configuration files
 - Environment variable setup (.claude/env.sh)
@@ -281,7 +281,7 @@ command -v claude >/dev/null 2>&1 && echo "✅ Claude CLI: Installed" || echo "�
 - Conversation logger with optional cleanup
 - CLAUDE.md template placement
 
-**⚠️ Manual Steps Required:**
+**Manual Steps Required:**
 1. **Source environment file** (critical!)
 2. **Configure Claude Desktop/CLI** (run configure-claude.sh)
 3. **Obsidian plugin setup** (install, enable HTTPS, generate token)
@@ -333,30 +333,30 @@ chmod +x setup.sh
 #### What the setup scripts do:
 
 **setup.sh automatically:**
-- ✅ Installs all 7 MCP servers via npm/npx
-- ✅ Copies .claude directory with hooks and configs
-- ✅ Creates environment configuration file
-- ✅ Sets executable permissions on all hooks
-- ✅ Configures conversation logger with retention settings
-- ✅ Creates project structure and logs directory
-- ✅ Generates customized settings.local.json
+- Installs all 7 MCP servers via npm/npx
+- Copies .claude directory with hooks and configs
+- Creates environment configuration file
+- Sets executable permissions on all hooks
+- Configures conversation logger with retention settings
+- Creates project structure and logs directory
+- Generates customized settings.local.json
 
 **configure-claude.sh automatically:**
-- ✅ Updates Claude Desktop configuration
-- ✅ Creates backups of existing configs
-- ✅ Syncs Desktop and CLI configurations
-- ✅ Sets up MCP server paths
-- ✅ Handles multi-machine sync options
+- Updates Claude Desktop configuration
+- Creates backups of existing configs
+- Syncs Desktop and CLI configurations
+- Sets up MCP server paths
+- Handles multi-machine sync options
 
 **You must manually:**
-- ⚠️ Install and configure Obsidian plugin
-- ⚠️ Create vault folder structure
-- ⚠️ Restart Claude Desktop
+- Install and configure Obsidian plugin
+- Create vault folder structure
+- Restart Claude Desktop
 - 💡 Source environment file (optional if working from project directory)
 
 ### Required Manual Steps for Obsidian:
 
-⚠️ **IMPORTANT: Obsidian must be running with your vaults open for the MCP servers to work!**
+**IMPORTANT: Obsidian must be running with your vaults open for the MCP servers to work!**
 
 1. **Install Obsidian Local REST API plugin**:
    - Open Obsidian Settings → Community Plugins
@@ -524,11 +524,11 @@ A: See [Multi-Machine Sync Guide](docs/user/MULTI_MACHINE.md)
 
 ## Support
 
-- **📖 Documentation**: [Complete Documentation Hub](docs/README.md)
-- **🐛 Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/VMWM/VERITAS/discussions)
-- **📧 Contact**: Open an issue with the "question" label
-- **🎯 Templates**: [/templates/](templates/) directory
+- **Documentation**: [Complete Documentation Hub](docs/README.md)
+- **Issues**: [GitHub Issues](https://github.com/VMWM/VERITAS/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/VMWM/VERITAS/discussions)
+- **Contact**: Open an issue with the "question" label
+- **Templates**: [/templates/](templates/) directory
 
 ## Contributing
 
@@ -549,7 +549,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
 ---
 
 <p align="center">
-  <b>Built with ❤️ for the research community</b><br>
+  <b>Built for the research community</b><br>
   Enforcing truth in research, one citation at a time<br><br>
   <a href="#-table-of-contents">Back to Top ↑</a>
 </p>
