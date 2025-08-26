@@ -198,8 +198,8 @@ cat > "$ENV_FILE" << EOF
 # Source this file or add to your shell profile
 
 export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
-export OBSIDIAN_VAULT_PATH="\${OBSIDIAN_VAULT_PATH:-Obsidian/Vault}"
-export OBSIDIAN_JOURNAL_PATH="\${OBSIDIAN_JOURNAL_PATH:-Obsidian/Journal}"
+export OBSIDIAN_VAULT_PATH="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
+export OBSIDIAN_JOURNAL_PATH="${OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
 export ENFORCE_OBSIDIAN_MCP=1
 EOF
 chmod +x "$ENV_FILE"
@@ -226,6 +226,14 @@ echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
 read -r OBSIDIAN_INSTALLED
 
 if [ "$OBSIDIAN_INSTALLED" = "y" ]; then
+    echo "Enter the path to your HLA/primary vault:"
+    echo "(e.g., /Users/yourname/Obsidian/HLA Antibodies)"
+    read -r OBSIDIAN_VAULT_PATH
+    
+    echo "Enter the path to your journal vault:"
+    echo "(e.g., /Users/yourname/Obsidian/Research Journal)"
+    read -r OBSIDIAN_JOURNAL_PATH
+    
     echo "Enter the port for your HLA/primary vault (default: 27124):"
     read -r PRIMARY_PORT
     PRIMARY_PORT=${PRIMARY_PORT:-27124}

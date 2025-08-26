@@ -3,12 +3,18 @@
 # Post-Command Validation Hook for VERITAS
 # Validates output compliance after generation
 
-# Configuration - UPDATE THESE PATHS FOR YOUR SYSTEM
-# Default paths - users should modify these in their local setup
+# Source environment configuration if it exists
+if [ -f "$HOME/.claude/env.sh" ]; then
+    source "$HOME/.claude/env.sh"
+elif [ -f ".claude/env.sh" ]; then
+    source ".claude/env.sh"
+fi
+
+# Configuration with fallback defaults
 OBSIDIAN_HLA="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
 OBSIDIAN_JOURNAL="${OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
-LOG_FILE="${CLAUDE_PROJECT_DIR:-$HOME/Projects}/.claude/logs/validation-$(date +%Y%m%d).log"
-VIOLATIONS_FILE="${CLAUDE_PROJECT_DIR:-$HOME/Projects}/.claude/logs/violations.json"
+LOG_FILE="${CLAUDE_PROJECT_DIR:-$PWD}/.claude/logs/validation-$(date +%Y%m%d).log"
+VIOLATIONS_FILE="${CLAUDE_PROJECT_DIR:-$PWD}/.claude/logs/violations.json"
 
 # Colors for output
 RED='\033[0;31m'
