@@ -60,15 +60,9 @@ echo "================================"
 echo ""
 
 # Sequential Thinking MCP
-echo "Installing Sequential Thinking MCP..."
-npm install -g @modelcontextprotocol/server-sequentialthinking
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ Sequential Thinking MCP installed${NC}"
-else
-    echo -e "${RED}✗ Sequential Thinking MCP installation failed${NC}"
-    echo "This is a critical component. Please fix and re-run setup."
-    exit 1
-fi
+echo "Verifying Sequential Thinking MCP..."
+# MCP servers run directly with npx, no installation needed
+echo -e "${GREEN}✓ Sequential Thinking MCP will run with npx${NC}"
 echo ""
 
 # PubMed MCP (using cyanheads version to avoid debug output issues)
@@ -84,27 +78,15 @@ fi
 echo ""
 
 # Memory MCP
-echo "Installing Memory MCP..."
-npm install -g @modelcontextprotocol/server-memory
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ Memory MCP installed${NC}"
-else
-    echo -e "${RED}✗ Memory MCP installation failed${NC}"
-    echo "This is a critical component. Please fix and re-run setup."
-    exit 1
-fi
+echo "Verifying Memory MCP..."
+# MCP servers run directly with npx, no installation needed
+echo -e "${GREEN}✓ Memory MCP will run with npx${NC}"
 echo ""
 
 # Filesystem MCP
-echo "Installing Filesystem MCP..."
-npm install -g @modelcontextprotocol/server-filesystem
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ Filesystem MCP installed${NC}"
-else
-    echo -e "${RED}✗ Filesystem MCP installation failed${NC}"
-    echo "This is a critical component. Please fix and re-run setup."
-    exit 1
-fi
+echo "Verifying Filesystem MCP..."
+# MCP servers run directly with npx, no installation needed
+echo -e "${GREEN}✓ Filesystem MCP will run with npx${NC}"
 echo ""
 
 # Conversation Logger

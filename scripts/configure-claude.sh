@@ -179,7 +179,7 @@ create_veritas_servers() {
   },
   "sequential-thinking": {
     "command": "npx",
-    "args": ["@modelcontextprotocol/server-sequential-thinking"]
+    "args": ["@modelcontextprotocol/server-sequentialthinking"]
   }$(if [ -n "$HLA_KEY" ]; then echo ","; fi)
 EOF
 
