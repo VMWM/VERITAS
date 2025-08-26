@@ -46,8 +46,8 @@ VERITAS creates a multi-layer enforcement framework that:
 4. **Filesystem** - Local project file access
 
 #### Obsidian Integration (via REST API)
-5. **Obsidian REST (Primary)** - Main vault operations (port 27124)
-6. **Obsidian REST (Journal)** - Journal vault operations (port 27125)
+5. **Obsidian REST (Primary)** - Main vault operations
+6. **Obsidian REST (Journal)** - Journal vault operations
 
 #### Custom-Built MCP Server (included in this repository)
 7. **Conversation Logger** - Conversation tracking and journal generation
