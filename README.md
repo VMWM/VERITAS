@@ -203,10 +203,10 @@ chmod +x setup.sh
 - ✅ Handles multi-machine sync options
 
 **You must manually:**
-- ⚠️ Source the environment file (critical!)
 - ⚠️ Install and configure Obsidian plugin
 - ⚠️ Create vault folder structure
 - ⚠️ Restart Claude Desktop
+- 💡 Source environment file (optional if working from project directory)
 
 ### Required Manual Steps for Obsidian:
 
@@ -243,10 +243,12 @@ chmod +x setup.sh
 
 **Before using Claude with VERITAS, you MUST:**
 
-1. **Source the environment** (every new terminal session):
+1. **Source the environment** (once, or add to shell profile):
    ```bash
    source ~/your-project/.claude/env.sh
+   # OR add to ~/.bashrc or ~/.zshrc for automatic loading
    ```
+   Note: If you always work from your project directory, the hooks will work without this
 
 2. **Keep Obsidian running** with your vaults open
 

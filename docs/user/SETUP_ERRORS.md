@@ -5,16 +5,18 @@ This document lists the most common errors users encounter when setting up VERIT
 ## Critical Setup Steps Often Missed
 
 ### 1. Environment Variables Not Set
-**Error**: "CLAUDE.md not found!" or hooks failing to find files
+**Error**: "CLAUDE.md not found!" or hooks failing to find files when running Claude from a different directory
 
-**Solution**: After running `setup.sh`, you MUST:
+**Solution**: The hooks use your current directory by default. If you need to run Claude from elsewhere:
 ```bash
-# Source the environment file
-source ~/.claude/env.sh
+# Option 1: Source the environment file when needed
+source ~/your-project-path/.claude/env.sh
 
-# Or add to your shell profile (.bashrc, .zshrc, etc.):
+# Option 2: Add to your shell profile for permanent setup
 echo "source ~/your-project-path/.claude/env.sh" >> ~/.bashrc
 ```
+
+**Note**: If you always run Claude from your project directory, this step is optional - the hooks will automatically use the current directory.
 
 ### 2. Obsidian HTTPS Configuration
 **Error**: "MCP server obsidian-rest-hla is disconnected"
