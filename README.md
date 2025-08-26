@@ -99,11 +99,11 @@ This architecture ensures multiple checkpoints for compliance:
 6. **Obsidian REST (Journal)** - Journal vault operations
 
 #### Custom-Built MCP Server (included in this repository)
-7. **Conversation Logger** - Conversation tracking and journal generation
+7. **Conversation Logger** - Manual conversation tracking and journal generation
    - Built specifically for this system
    - Source code in `conversation-logger/` directory
-   - Fully customizable and extendable
-   - **5-day retention policy**: Automatically maintains last 5 days of conversations
+   - **Manual logging required**: Use `/exit` or explicit commands to log
+   - **5-day retention policy**: Maintains last 5 days of logged conversations
    - **Automatic cleanup**: Optional 2 AM daily cleanup via cron job
    - **Database management**: SQLite database at `~/.conversation-logger/conversations.db`
 
@@ -434,32 +434,36 @@ Note: The `configure-claude.sh` script handles these path updates automatically.
 
 ## Conversation Preservation & Privacy
 
-VERITAS includes automatic conversation logging with intelligent retention management:
+VERITAS includes a conversation logger that requires explicit action to capture conversations:
 
-### Automatic Logging
-- **SessionEnd Hook**: Conversations automatically logged when sessions end
-- **No Manual Steps**: Logging happens transparently via hooks
-- **Smart Capture**: Only logs substantial content (>10 chars)
-- **Tool Tracking**: Records which tools were used in each conversation
+### How Logging Actually Works
+- **Manual Trigger Required**: Conversations are NOT logged automatically
+- **Explicit Commands**: Use `/exit` or call `mcp__conversation-logger__log_message` to log
+- **Session Tracking**: Sessions are created but messages aren't captured without explicit action
+- **Tool Tracking**: Records which tools were used when explicitly logged
 
 ### Data Retention
-- **5-Day History Window**: Maintains last 5 days of research conversations
+- **5-Day History Window**: Maintains last 5 days of explicitly logged conversations
 - **Automatic Cleanup**: Optional 2 AM daily cleanup removes older entries
 - **Database Location**: All data stored locally in `~/.conversation-logger/conversations.db`
 - **Privacy First**: No cloud storage - all conversations remain on your local machine
 
 ### Journal Generation
-Generate comprehensive research journals from your conversations:
-- Daily journals: "Create journal entry for today"
-- Historical journals: "Create journal entry for 2025-01-20"
-- Weekly summaries: "Generate weekly research summary"
-- Session-based journals: All conversations are preserved for journal creation
+Generate research journals from explicitly logged conversations:
+- Daily journals: Use `mcp__conversation-logger__generate_journal` with date parameter
+- Historical journals: Specify date in YYYY-MM-DD format
+- **Important**: Only conversations you explicitly logged will appear in journals
 
-### Automatic Features
-- **Session Detection**: Logs activate via SessionEnd hook (no /exit required)
+### Features When Logging is Triggered
+- **Session Management**: New sessions created automatically
 - **Content Filtering**: Skips empty or trivial messages
 - **Database Management**: SQLite with automatic schema creation
 - **Cleanup Schedule**: Configurable via cron (default: 2 AM daily)
+
+### How to Log Conversations
+- **Log current conversation**: Ask Claude to "log this conversation"
+- **End session with logging**: Type `/exit` (this triggers the logging)
+- **Manually log a message**: Call `mcp__conversation-logger__log_message` directly
 
 ### Manual Maintenance
 - **View database stats**: `mcp__conversation-logger__get_session_stats`
@@ -514,7 +518,11 @@ A: Yes! The setup script asks for your preferred ports. Default are 27124 (main)
 ### Usage Questions
 
 **Q: How do I trigger the conversation logger?**
-A: It logs automatically. View logs with: `mcp__conversation-logger__generate_journal`
+A: Logging is NOT automatic. You must either:
+- Type `/exit` to end a session and trigger logging
+- Explicitly call `mcp__conversation-logger__log_message` 
+- Ask Claude to "log this conversation"
+View logs with: `mcp__conversation-logger__generate_journal`
 
 **Q: Can I customize the citation format?**
 A: Yes, edit the validation rules in `.claude/hooks/post-command.sh`
