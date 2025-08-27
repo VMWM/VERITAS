@@ -237,13 +237,13 @@ if [ -f "$VERITAS_DIR/install/settings.local.json.template" ]; then
                     echo "$PROCESSED_SETTINGS" | jq --slurpfile existing "$SETTINGS_FILE" '
                         {
                             permissions: {
-                                allow: (.permissions.allow + $existing[0].permissions.allow // []) | unique,
-                                deny: (.permissions.deny + $existing[0].permissions.deny // []) | unique,
-                                ask: (.permissions.ask + $existing[0].permissions.ask // []) | unique,
+                                allow: ((.permissions.allow // []) + ($existing[0].permissions.allow // [])) | unique,
+                                deny: ((.permissions.deny // []) + ($existing[0].permissions.deny // [])) | unique,
+                                ask: ((.permissions.ask // []) + ($existing[0].permissions.ask // [])) | unique,
                                 defaultMode: (.permissions.defaultMode // $existing[0].permissions.defaultMode // "acceptEdits"),
-                                additionalDirectories: (.permissions.additionalDirectories + $existing[0].permissions.additionalDirectories // []) | unique
+                                additionalDirectories: ((.permissions.additionalDirectories // []) + ($existing[0].permissions.additionalDirectories // [])) | unique
                             },
-                            hooks: (.hooks * $existing[0].hooks // {}),
+                            hooks: ((.hooks // {}) + ($existing[0].hooks // {})),
                             outputStyle: (.outputStyle // $existing[0].outputStyle // "Explanatory")
                         }
                     ' > "$SETTINGS_FILE"
