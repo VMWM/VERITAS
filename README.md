@@ -37,12 +37,12 @@ VERITAS embodies the core principle of truth in research. Every claim must be ve
 
 ## What VERITAS Does
 
-VERITAS creates a multi-layer guidance and validation framework that:
-- **Routes research tasks** to appropriate MCP tools through task detection and guidance
-- **Enforces PMID citation requirements** through instruction compliance and reminders
-- **Creates properly formatted Obsidian notes** using predefined templates in CLAUDE.md
-- **Guides tool usage** through pre-execution warnings and workflow recommendations
-- **Validates output compliance** after generation (NOW IMPLEMENTED via post-command.sh)
+VERITAS enforces the HLA F31 grant research workflow from CLAUDE.md:
+- **Starts complex tasks** with `mcp__sequential-thinking__sequentialthinking` for planning
+- **Verifies all claims** using `mcp__pubmed__*` tools (Author et al., Year, PMID: XXXXXXXX format)
+- **Checks existing knowledge** via `mcp__memory__*` before creating new content
+- **Creates Obsidian notes** using REST API with templates from hla-research-director.md
+- **Validates compliance** through hooks that check formatting and citations
 
 ### How VERITAS Works - System Architecture
 
@@ -59,13 +59,13 @@ This architecture ensures multiple checkpoints for compliance:
 2. **During Processing**: Claude follows CLAUDE.md instructions
 3. **Post-Execution**: Validates actual output and logs any violations
 
-## Primary Use Cases
+## Primary Use Cases (per CLAUDE.md)
 
-- **Literature Review Management**: Automatic PubMed citation verification with PMID enforcement
-- **Research Question Documentation**: Structured templates for grant-ready research questions
-- **Concept Note Creation**: Wiki-linked knowledge base entries with validation requirements
-- **Progress Tracking**: Progress tracking with automatic date-based organization
-- **Knowledge Graph Building**: Memory MCP and Conversation Logging integration for persistent concept storage
+- **Research Aim 1**: Develop rule-based algorithm for standardized unacceptable antigen reporting
+- **Research Aim 2**: Establish evidence-based risk classification for weak anti-HLA (MFI 500-5000)
+- **Research Aim 3**: Develop AMR risk prediction tool integrating antibody and dnDSA risk
+- **Grant Writing**: Create NIH F31-ready content with embedded citations following templates
+- **Knowledge Management**: Build wiki-linked Obsidian vault with Research Questions, Concepts, and Rules
 
 ## System Components
 
@@ -82,13 +82,13 @@ This architecture ensures multiple checkpoints for compliance:
 6. **Obsidian REST (Journal)** - Journal vault operations
 
 #### Custom-Built MCP Server (included in this repository)
-7. **Conversation Logger** - Manual conversation tracking and journal generation
+7. **Conversation Logger** - Memory database for recent conversations
    - Built specifically for this system
    - Source code in `conversation-logger/` directory
-   - **Manual logging required**: Use `/exit` or explicit commands to log
-   - **5-day retention policy**: Maintains last 5 days of logged conversations
-   - **Automatic cleanup**: Optional 2 AM daily cleanup via cron job
-   - **Database management**: SQLite database at `~/.conversation-logger/conversations.db`
+   - **Memory database**: Stores conversation history as one data source for journals
+   - **5-day retention policy**: Maintains rolling 5-day window
+   - **Automatic cleanup**: Daily at 2 AM via cron job
+   - **Database location**: SQLite at `~/.conversation-logger/conversations.db`
 
 ### Enforcement Hooks
 - **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
@@ -151,35 +151,32 @@ VERITAS/
 
 ## Example Workflows
 
-### Research Question Creation
+### Research Question Creation (per CLAUDE.md workflow)
 ```
 You: "What evidence exists for MFI thresholds predicting transplant outcomes?"
 
-Claude: [Researches and provides comprehensive answer with citations]
-
-You: "Create this research question and its concept pages in my Obsidian vault"
-
-System automatically:
-1. Task router detects "obsidian vault" → triggers enforcement
-2. Routes to primary vault (port 27124) for research content
-3. Creates note in /Research Questions/ folder
-4. Generates concept pages in /Concepts/ folder
-5. Enforces (Author et al., Year, PMID: XXXXXXXX) format
-6. Adds wiki links between related concepts
-7. Validates all citations have PMIDs
+System follows CLAUDE.md workflow:
+1. Starts with mcp__sequential-thinking__sequentialthinking to plan
+2. Checks mcp__memory__* for existing knowledge
+3. Uses mcp__pubmed__* to verify all claims
+4. Reads hla-research-director.md for template
+5. Creates note using mcp__obsidian-rest-hla__obsidian_update_note
+6. File path: "Research Questions/What_evidence_exists_for_MFI_thresholds.md"
+7. Formats with (Author et al., Year, PMID: XXXXXXXX) citations
+8. Creates linked Concept pages for key terms
 ```
 
-### Daily Journal Entry
+### Daily Journal Entry (per hla-research-director.md template)
 ```
-You: "I'm done for today, create a research journal entry"
+You: "Create a journal entry for today"
 
-System automatically:
-1. Task router detects "journal" → routes to journal vault (port 27125)
-2. Creates entry in /Daily/ folder with today's date
-3. Summarizes session accomplishments
-4. Lists all research questions explored
-5. Documents key findings with citations
-6. Notes problems solved and next steps
+System follows hla-research-director.md template:
+1. Uses date +"%Y-%m-%d" for filename
+2. Creates via mcp__obsidian-rest-journal__obsidian_update_note
+3. Path: "Daily/2025-08-26.md" (system date)
+4. Includes: Session summary, technical implementations, research insights
+5. Adds metrics table: Papers reviewed (PMIDs), notes created, time invested
+6. Links to previous/next day: [[2025-08-25]] and [[2025-08-27]]
 ```
 
 ## Output Validation System
@@ -368,6 +365,33 @@ chmod +x setup.sh
    - The REST API only works when Obsidian is running
    - If Claude can't connect, check that Obsidian is open with the correct vaults
 
+## Testing
+
+### Environment Setup (Required First Time)
+
+Before running tests in terminal, set up environment variables:
+
+```bash
+# One-time setup: Get your Obsidian API token
+# 1. Open Obsidian > Settings > Community Plugins > Local REST API
+# 2. Copy the API token
+# 3. Save it:
+echo 'YOUR_TOKEN_HERE' > ~/.obsidian_api_token
+
+# Set environment variables for current session
+source /Users/vmwm/VERITAS/setup-env.sh
+```
+
+### Run Tests
+
+```bash
+cd tests/
+./veritas-test.sh                 # Main system test
+./veritas-multi-location-test.sh  # Multi-location consistency test
+```
+
+These test all constitutional articles, hooks, MCP servers, and enforcement mechanisms.
+
 ## After Installation - Critical Steps
 
 **Before using Claude with VERITAS, you MUST:**
@@ -415,46 +439,46 @@ Note: The `configure-claude.sh` script handles these path updates automatically.
 
 
 
-## Conversation Preservation & Privacy
+## Conversation Memory Database
 
-VERITAS includes a conversation logger that requires explicit action to capture conversations:
+The conversation logger MCP server maintains a memory database of recent conversations:
 
-### How Logging Actually Works
-- **Manual Trigger Required**: Conversations are NOT logged automatically
-- **Explicit Commands**: Use `/exit` or call `mcp__conversation-logger__log_message` to log
-- **Session Tracking**: Sessions are created but messages aren't captured without explicit action
-- **Tool Tracking**: Records which tools were used when explicitly logged
-
-### Data Retention
-- **5-Day History Window**: Maintains last 5 days of explicitly logged conversations
-- **Automatic Cleanup**: Optional 2 AM daily cleanup removes older entries
+### Architecture
+- **Memory Database**: SQLite database stores conversation history for 5 days
+- **Data Sources for Journals**: Conversation logs are combined with file changes, discoveries, and task progress
+- **Automatic Cleanup**: Daily at 2 AM via cron job removes data older than 5 days
 - **Database Location**: All data stored locally in `~/.conversation-logger/conversations.db`
 - **Privacy First**: No cloud storage - all conversations remain on your local machine
 
-### Journal Generation
-Generate research journals from explicitly logged conversations:
-- Daily journals: Use `mcp__conversation-logger__generate_journal` with date parameter
-- Historical journals: Specify date in YYYY-MM-DD format
-- **Important**: Only conversations you explicitly logged will appear in journals
+### Journal Generation in Obsidian
+Daily journal entries follow the template in `.claude/agents/hla-research-director.md`:
+- **Location**: `/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/YYYY-MM-DD.md`
+- **Structure**: Session summary, technical implementations, research insights, problems solved
+- **Metrics**: Papers reviewed (with PMIDs), notes created, time invested
+- **Navigation**: Links to previous/next day entries
 
-### Features When Logging is Triggered
-- **Session Management**: New sessions created automatically
-- **Content Filtering**: Skips empty or trivial messages
-- **Database Management**: SQLite with automatic schema creation
-- **Cleanup Schedule**: Configurable via cron (default: 2 AM daily)
+To create a research journal entry:
+```
+Create a journal entry for today
+```
 
-### How to Log Conversations
-- **Log current conversation**: Ask Claude to "log this conversation"
-- **End session with logging**: Type `/exit` (this triggers the logging)
-- **Manually log a message**: Call `mcp__conversation-logger__log_message` directly
+Journal entries are created in Obsidian using `mcp__obsidian-rest-journal__obsidian_update_note`, NOT the conversation logger.
 
-### Manual Maintenance
-- **View database stats**: `mcp__conversation-logger__get_session_stats`
+### Database Management
+- **View statistics**: `mcp__conversation-logger__get_session_stats`
 - **Generate journal**: `mcp__conversation-logger__generate_journal`
 - **Manual cleanup**: `node ~/VERITAS/conversation-logger/cleanup-old-logs.js`
-- **Disable automatic cleanup**: Remove cron job with `crontab -e`
+- **Modify retention**: Edit `RETENTION_DAYS` in `cleanup-old-logs.js`
+- **Disable cleanup**: Remove cron job with `crontab -e`
 
-This ensures your research history is preserved for reference while preventing unlimited database growth.
+### Features
+- **Session Tracking**: Automatic session management with unique IDs
+- **Activity Logging**: Track research activities and milestones
+- **Tool Usage**: Record which MCP tools were used
+- **File Tracking**: Document which files were created or modified
+- **Automatic Retention**: 5-day rolling window prevents unlimited growth
+
+This architecture ensures your research context is preserved while maintaining manageable storage.
 
 ## Documentation
 
@@ -500,12 +524,13 @@ A: Yes! The setup script asks for your preferred ports. Default are 27124 (main)
 
 ### Usage Questions
 
-**Q: How do I trigger the conversation logger?**
-A: Logging is NOT automatic. You must either:
-- Type `/exit` to end a session and trigger logging
-- Explicitly call `mcp__conversation-logger__log_message` 
-- Ask Claude to "log this conversation"
-View logs with: `mcp__conversation-logger__generate_journal`
+**Q: How are journal entries created?**
+A: Journal entries are created in Obsidian following hla-research-director.md template:
+- Use command: "Create a journal entry for today"
+- Created via mcp__obsidian-rest-journal__obsidian_update_note
+- Location: Research Journal/Daily/YYYY-MM-DD.md
+- Includes session metrics, research insights, and PMID citations
+The conversation logger is a separate memory database, not the journal creator.
 
 **Q: Can I customize the citation format?**
 A: Yes, edit the validation rules in `.claude/hooks/post-command.sh`
