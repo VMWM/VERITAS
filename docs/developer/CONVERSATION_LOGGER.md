@@ -48,8 +48,7 @@ This tool was created to provide MemoriPilot-like functionality for Claude Code 
 ```
 conversation-logger/
 ├── index.js                    # Main MCP server implementation
-├── obsidian-journal-generator.js # Journal generation engine
-├── configure.sh                # Manual configuration script
+├── cleanup-old-logs.js          # Log retention management
 ├── package.json                # Dependencies and metadata
 └── README.md                   # Quick reference guide
 
@@ -122,7 +121,7 @@ cd conversation-logger
 npm install
 
 # Run configuration script
-./configure.sh
+# Configuration handled by main setup scripts
 
 # Verify installation
 claude mcp list | grep conversation-logger
@@ -406,7 +405,7 @@ The journal generator creates entries following this structure:
 
 ### Customizing Journal Format
 
-You can customize the journal format by modifying `obsidian-journal-generator.js`:
+Journal entries are generated through the MCP server's generate_journal tool:
 
 ```javascript
 // In generateEnhancedJournal() method
@@ -668,7 +667,7 @@ cd conversation-logger
 npm install
 
 # Reconfigure MCP
-./configure.sh
+# Configuration handled by main setup scripts
 
 # Restart Claude Code
 ```
@@ -748,7 +747,7 @@ source ~/.zshrc
 
 # Or run configuration script
 cd conversation-logger
-./configure.sh
+# Configuration handled by main setup scripts
 ```
 
 ### Debug Mode
