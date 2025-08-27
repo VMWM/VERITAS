@@ -37,10 +37,10 @@ VERITAS embodies the core principle of truth in research. Every claim must be ve
 
 Unlike other research tools, VERITAS provides:
 
-1. **Real-time Citation Validation** - Claims without PMIDs are automatically flagged and reported
+1. **Real-time Citation Enforcement** - Claims without PMIDs are flagged and violations reported for correction
 2. **Multi-layer Validation** - Pre-command, during execution, and post-command checks ensure compliance
 3. **Domain Expert System** - Customizable templates for any research field
-4. **Integrated Knowledge Graph** - Support for entity storage and relationship mapping via Memory MCP
+4. **Integrated Knowledge Graph** - Automatic knowledge organization via Memory MCP and structured templates
 5. **Professional Templates** - Grant-ready research questions and concept notes out of the box
 
 ## System Architecture
@@ -90,7 +90,7 @@ Claude should respond with awareness of the VERITAS system and its research capa
 - **Concept Notes** - Wiki-linked knowledge base with validation
 - **Daily Journals** - Automatic progress tracking and summarization
 
-### Quality Assurance
+### Quality Enforcement
 - **Citation Validation** - Every claim should include (Author et al., Year, PMID: XXXXXXXX)
 - **Format Guidelines** - Tables, headers, and links follow strict standards
 - **Output Verification** - Post-execution checks report compliance status
@@ -112,11 +112,11 @@ Claude should respond with awareness of the VERITAS system and its research capa
 6. **Obsidian REST (Journal)** - Journal vault operations
 7. **Conversation Logger** - Session tracking (custom-built, included)
 
-### Validation System
+### Enforcement System
 
 - **Pre-command hooks** - Display requirements and guidelines before execution
 - **Task router** - Intelligent task detection and routing recommendations
-- **Compliance reminders** - Warns about best practices and tool usage
+- **Compliance validator** - Attempts to block incorrect tool usage patterns
 - **Post-command validator** - Reports compliance status and violations
 
 ### Templates & Configuration
@@ -158,15 +158,15 @@ VERITAS/
 ```
 You: "Create a research question about machine learning in medical diagnosis"
 
-VERITAS guides Claude to:
-1. Start with sequential thinking for planning
-2. Search PubMed for relevant literature
-3. Create formatted note in Research Questions/
-4. Generate linked concept pages
-5. Validate all citations have PMIDs
-6. Report compliance status
+VERITAS enforces a workflow that:
+1. Starts with sequential thinking for planning
+2. Searches PubMed for relevant literature  
+3. Creates formatted note in Research Questions/
+4. Generates linked concept pages
+5. Validates all citations have PMIDs
+6. Reports compliance status
 
-Note: Entity extraction to knowledge graph requires explicit memory tool usage
+The structured templates and Memory MCP work together to organize knowledge automatically
 ```
 
 ### Result Structure
