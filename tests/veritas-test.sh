@@ -175,36 +175,42 @@ echo "-------------------------------"
 
 # Check if Obsidian REST API is responding
 if command -v curl &> /dev/null; then
-    # Test main vault (port 27124)
-    RESPONSE=$(curl -s -k -H "Authorization: Bearer $OBSIDIAN_API_TOKEN" https://localhost:27124/ 2>/dev/null)
+    # Test main vault (port 27124) - uses HLA token
+    TOKEN_HLA="${OBSIDIAN_API_TOKEN_HLA:-$OBSIDIAN_API_TOKEN}"
+    RESPONSE=$(curl -s -k -H "Authorization: Bearer $TOKEN_HLA" https://localhost:27124/ 2>/dev/null)
     if echo "$RESPONSE" | grep -q '"status":"OK"'; then
         if echo "$RESPONSE" | grep -q '"authenticated":true'; then
-            pass "Obsidian REST API (main vault) responding and authenticated"
+            pass "Obsidian REST API (HLA vault, port 27124) responding and authenticated"
         else
-            if [ -z "$OBSIDIAN_API_TOKEN" ]; then
-                warn "Obsidian API (main vault) responding but no token set - run: source setup-env.sh"
+            if [ -z "$TOKEN_HLA" ]; then
+                warn "Obsidian API (HLA vault) responding but no token set"
+                echo "   Run: echo 'YOUR_HLA_TOKEN' > ~/.obsidian_api_token_hla"
+                echo "   Then: source /Users/vmwm/VERITAS/setup-env.sh"
             else
-                warn "Obsidian API (main vault) responding but authentication failed - check token"
+                warn "Obsidian API (HLA vault) responding but authentication failed - check token"
             fi
         fi
     else
-        warn "Obsidian REST API (main vault) not responding - is Obsidian running?"
+        warn "Obsidian REST API (HLA vault) not responding - is Obsidian HLA vault open?"
     fi
     
-    # Test journal vault (port 27125)
-    RESPONSE=$(curl -s -k -H "Authorization: Bearer $OBSIDIAN_API_TOKEN" https://localhost:27125/ 2>/dev/null)
+    # Test journal vault (port 27125) - uses Journal token
+    TOKEN_JOURNAL="${OBSIDIAN_API_TOKEN_JOURNAL}"
+    RESPONSE=$(curl -s -k -H "Authorization: Bearer $TOKEN_JOURNAL" https://localhost:27125/ 2>/dev/null)
     if echo "$RESPONSE" | grep -q '"status":"OK"'; then
         if echo "$RESPONSE" | grep -q '"authenticated":true'; then
-            pass "Obsidian REST API (journal vault) responding and authenticated"
+            pass "Obsidian REST API (Journal vault, port 27125) responding and authenticated"
         else
-            if [ -z "$OBSIDIAN_API_TOKEN" ]; then
-                warn "Obsidian API (journal vault) responding but no token set - run: source setup-env.sh"
+            if [ -z "$TOKEN_JOURNAL" ]; then
+                warn "Obsidian API (Journal vault) responding but no token set"
+                echo "   Run: echo 'YOUR_JOURNAL_TOKEN' > ~/.obsidian_api_token_journal"
+                echo "   Then: source /Users/vmwm/VERITAS/setup-env.sh"
             else
-                warn "Obsidian API (journal vault) responding but authentication failed - check token"
+                warn "Obsidian API (Journal vault) responding but authentication failed - check token"
             fi
         fi
     else
-        warn "Obsidian REST API (journal vault) not responding - is Obsidian running?"
+        warn "Obsidian REST API (Journal vault) not responding - is Research Journal vault open?"
     fi
 else
     warn "curl not installed - cannot test Obsidian REST API"
@@ -281,14 +287,24 @@ else
     echo "   Note: This variable is automatically set in Claude Desktop"
 fi
 
-if [ -n "$OBSIDIAN_API_TOKEN" ]; then
-    pass "OBSIDIAN_API_TOKEN is set"
+if [ -n "$OBSIDIAN_API_TOKEN_HLA" ] || [ -n "$OBSIDIAN_API_TOKEN" ]; then
+    pass "OBSIDIAN_API_TOKEN_HLA is set for main vault"
 else
-    warn "OBSIDIAN_API_TOKEN not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
-    echo "   To get your token:"
-    echo "   1. Open Obsidian > Settings > Community Plugins > Local REST API"
-    echo "   2. Copy the API token"
-    echo "   3. Run: echo 'YOUR_TOKEN' > ~/.obsidian_api_token"
+    warn "OBSIDIAN_API_TOKEN_HLA not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
+    echo "   To get your HLA vault token:"
+    echo "   1. Open Obsidian HLA Antibodies vault"
+    echo "   2. Settings > Community Plugins > Local REST API > Copy token"
+    echo "   3. Run: echo 'YOUR_HLA_TOKEN' > ~/.obsidian_api_token_hla"
+fi
+
+if [ -n "$OBSIDIAN_API_TOKEN_JOURNAL" ]; then
+    pass "OBSIDIAN_API_TOKEN_JOURNAL is set for journal vault"
+else
+    warn "OBSIDIAN_API_TOKEN_JOURNAL not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
+    echo "   To get your Journal vault token:"
+    echo "   1. Open Obsidian Research Journal vault"
+    echo "   2. Settings > Community Plugins > Local REST API > Copy token"
+    echo "   3. Run: echo 'YOUR_JOURNAL_TOKEN' > ~/.obsidian_api_token_journal"
 fi
 
 # Check if setup-env.sh exists

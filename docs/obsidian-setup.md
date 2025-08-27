@@ -1,37 +1,55 @@
 # Obsidian REST API Setup Guide
 
-## Getting Your API Token
+## Two-Vault Configuration
 
-1. **Open Obsidian**
-   - Launch Obsidian with your HLA Antibodies vault
+VERITAS uses two separate Obsidian vaults, each with its own REST API token:
+- **HLA Antibodies vault** (port 27124) - Main research vault
+- **Research Journal vault** (port 27125) - Daily journal entries
 
-2. **Navigate to Settings**
-   - Click the gear icon or press `Cmd + ,`
-   - Go to "Community plugins"
-   - Find "Local REST API" in your installed plugins
+## Getting Your API Tokens
 
-3. **Copy the API Token**
-   - Click on the options icon next to "Local REST API"
-   - You'll see your API Key displayed
-   - Click the copy button to copy it
+### For HLA Antibodies Vault (Port 27124)
 
-4. **Save the Token**
+1. **Open Obsidian HLA Antibodies Vault**
+   - Launch Obsidian and open your HLA Antibodies vault
+
+2. **Get the Token**
+   - Settings → Community Plugins → Local REST API
+   - Click the options icon next to "Local REST API"
+   - Copy the API Key displayed
+
+3. **Save the HLA Token**
    ```bash
-   # Create the token file
-   echo 'YOUR_TOKEN_HERE' > ~/.obsidian_api_token
-   
-   # Verify it was saved
-   cat ~/.obsidian_api_token
+   echo 'YOUR_HLA_TOKEN_HERE' > ~/.obsidian_api_token_hla
    ```
 
-5. **Set Up Environment**
+### For Research Journal Vault (Port 27125)
+
+1. **Open Obsidian Research Journal Vault**
+   - Open your Research Journal vault in Obsidian
+
+2. **Get the Token**
+   - Settings → Community Plugins → Local REST API
+   - Click the options icon next to "Local REST API"
+   - Copy the API Key displayed
+
+3. **Save the Journal Token**
    ```bash
-   # Source the setup script
-   source /Users/vmwm/VERITAS/setup-env.sh
-   
-   # Verify the token is set
-   echo $OBSIDIAN_API_TOKEN
+   echo 'YOUR_JOURNAL_TOKEN_HERE' > ~/.obsidian_api_token_journal
    ```
+
+## Set Up Environment
+
+After saving both tokens:
+
+```bash
+# Source the setup script to load both tokens
+source /Users/vmwm/VERITAS/setup-env.sh
+
+# Verify the tokens are set
+echo "HLA Token: $OBSIDIAN_API_TOKEN_HLA"
+echo "Journal Token: $OBSIDIAN_API_TOKEN_JOURNAL"
+```
 
 ## Testing the Connection
 
@@ -59,9 +77,9 @@ The Obsidian tests should now pass showing:
 - Ensure no extra spaces or newlines in token file
 
 ### Different Vaults on Different Ports
-- Port 27124: HLA Antibodies vault
-- Port 27125: Research Journal vault
-- Both should use the same API token
+- Port 27124: HLA Antibodies vault (uses OBSIDIAN_API_TOKEN_HLA)
+- Port 27125: Research Journal vault (uses OBSIDIAN_API_TOKEN_JOURNAL)
+- Each vault has its own unique token for security
 
 ## Making Environment Variables Permanent
 
@@ -70,7 +88,9 @@ Add to your shell profile (`~/.zshrc` or `~/.bash_profile`):
 ```bash
 # VERITAS Environment
 export CLAUDE_PROJECT_DIR="/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025"
-[ -f ~/.obsidian_api_token ] && export OBSIDIAN_API_TOKEN=$(cat ~/.obsidian_api_token)
+[ -f ~/.obsidian_api_token_hla ] && export OBSIDIAN_API_TOKEN_HLA=$(cat ~/.obsidian_api_token_hla)
+[ -f ~/.obsidian_api_token_journal ] && export OBSIDIAN_API_TOKEN_JOURNAL=$(cat ~/.obsidian_api_token_journal)
+[ -n "$OBSIDIAN_API_TOKEN_HLA" ] && export OBSIDIAN_API_TOKEN="$OBSIDIAN_API_TOKEN_HLA"
 ```
 
 Then reload your shell:
