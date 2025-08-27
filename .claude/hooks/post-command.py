@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Post-command hook for HLA Research Assistant
+Post-command hook for VERITAS Research Assistant
 Verifies that all outputs comply with CLAUDE.md requirements
 """
 
@@ -12,7 +12,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-class HLAOutputVerifier:
+class ResearchOutputVerifier:
     def __init__(self):
         self.violations = []
         self.warnings = []
@@ -160,7 +160,7 @@ class HLAOutputVerifier:
     
     def verify_output(self, output_content, output_type='text'):
         """Main verification function"""
-        print("\n🔍 HLA Output Verification Running...")
+        print("\nResearch Output Verification Running...")
         print("=" * 50)
         
         # Determine if markdown
@@ -184,22 +184,22 @@ class HLAOutputVerifier:
     def generate_report(self):
         """Generate verification report"""
         if not self.violations and not self.warnings:
-            print("✅ All checks passed! Output complies with CLAUDE.md requirements.")
+            print("All checks passed! Output complies with CLAUDE.md requirements.")
             return
         
         if self.violations:
-            print(f"\n❌ Found {len(self.violations)} violation(s):")
+            print(f"\nFound {len(self.violations)} violation(s):")
             for v in self.violations[:5]:  # Show first 5
                 print(f"  - Line {v.get('line', 'N/A')}: {v['type']} - {v['content']}")
             if len(self.violations) > 5:
                 print(f"  ... and {len(self.violations) - 5} more")
         
         if self.warnings:
-            print(f"\n⚠️  Found {len(self.warnings)} warning(s):")
+            print(f"\nFound {len(self.warnings)} warning(s):")
             for w in self.warnings[:3]:
                 print(f"  - {w['type']}: {w['message']}")
         
-        print("\n📋 Required Actions:")
+        print("\nRequired Actions:")
         if any(v['type'] == 'missing_pmid' for v in self.violations):
             print("  1. Add PMID citations for all medical claims")
             print("     Use: mcp__pubmed__search_pubmed")
@@ -228,7 +228,7 @@ class HLAOutputVerifier:
 
 def main():
     """Main hook execution"""
-    verifier = HLAOutputVerifier()
+    verifier = ResearchOutputVerifier()
     
     # Get output from environment or stdin
     output_content = os.environ.get('CLAUDE_OUTPUT', '')
@@ -240,7 +240,7 @@ def main():
         
         # Exit with appropriate code
         if not success and verifier.config['verification_rules']['pmid_citations']['enforcement']['action_on_violation'] == 'block':
-            print("\n🚫 Output blocked due to violations. Please fix and retry.")
+            print("\nOutput blocked due to violations. Please fix and retry.")
             sys.exit(1)
     
     sys.exit(0)

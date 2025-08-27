@@ -28,7 +28,7 @@ def enforce_instruction_check():
     """Force Claude to check instructions"""
     print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║                    🚨 MANDATORY FIRST CHECK 🚨                    ║
+║                    MANDATORY FIRST CHECK                         ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║                                                                  ║
 ║  BEFORE RESPONDING, YOU MUST:                                   ║

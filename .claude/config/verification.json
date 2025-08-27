@@ -1,7 +1,7 @@
 {
-  "name": "HLA Research Assistant Verification",
+  "name": "VERITAS Research Verification",
   "version": "1.0.0",
-  "description": "Strict enforcement of PMID citations and HLA research standards",
+  "description": "Strict enforcement of PMID citations and research standards",
   "enabled": true,
   
   "verification_rules": {

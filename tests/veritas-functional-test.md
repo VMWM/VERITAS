@@ -159,9 +159,9 @@ If any test fails:
 
 ## Success Criteria
 
-✅ **Basic Success:** Tests 1-7 pass (core functionality)
-✅ **Full Success:** Tests 1-13 pass (includes Obsidian)
-✅ **Advanced Success:** All tests pass including error handling
+**Basic Success:** Tests 1-7 pass (core functionality)
+**Full Success:** Tests 1-13 pass (includes Obsidian)
+**Advanced Success:** All tests pass including error handling
 
 ## Common Issues and Solutions
 

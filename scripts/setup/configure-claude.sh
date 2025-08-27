@@ -56,7 +56,7 @@ EXISTING_DESKTOP=false
 EXISTING_CLI=false
 
 if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
-    echo -e "${YELLOW}⚠ Found existing Claude Desktop configuration${NC}"
+    echo -e "${YELLOW}Warning: Found existing Claude Desktop configuration${NC}"
     EXISTING_DESKTOP=true
     # Count existing MCP servers
     DESKTOP_COUNT=$(jq '.mcpServers | length' "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "0")
@@ -64,7 +64,7 @@ if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
 fi
 
 if [ -f "$CLAUDE_CLI_CONFIG" ]; then
-    echo -e "${YELLOW}⚠ Found existing Claude CLI configuration${NC}"
+    echo -e "${YELLOW}Warning: Found existing Claude CLI configuration${NC}"
     EXISTING_CLI=true
     # Count existing MCP servers
     CLI_COUNT=$(jq '.mcpServers | length' "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "0")
@@ -110,8 +110,6 @@ if [ "$MODE" != "preview" ]; then
     echo "   - Changes to one affect both"
     echo "   - Best for: Keeping Desktop and CLI in perfect sync"
     echo ""
-    echo -e "${YELLOW}Note: For multi-machine sync, you'd need to place configs in a${NC}"
-    echo -e "${YELLOW}      cloud-synced directory (iCloud/Dropbox/etc) and symlink from there.${NC}"
     echo ""
     read -p "Choose an option (1-2, default: 1): " SYMLINK_CHOICE
     SYMLINK_CHOICE=${SYMLINK_CHOICE:-1}
@@ -392,7 +390,7 @@ fi
 echo ""
 echo "Setting up project configuration..."
 if [ -f "$PROJECT_DIR/.mcp.json" ] || [ -L "$PROJECT_DIR/.mcp.json" ]; then
-    echo -e "${YELLOW}⚠ Existing .mcp.json found${NC}"
+    echo -e "${YELLOW}Warning: Existing .mcp.json found${NC}"
     read -p "Replace with symlink to CLI config? (y/n): " REPLACE_MCP
     if [ "$REPLACE_MCP" = "y" ]; then
         mv "$PROJECT_DIR/.mcp.json" "$PROJECT_DIR/.mcp.json.backup.$(date +%Y%m%d-%H%M%S)"

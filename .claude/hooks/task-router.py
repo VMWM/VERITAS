@@ -13,7 +13,7 @@ class TaskRouter:
     def __init__(self):
         self.config = self.load_config()
         self.obsidian_paths = [
-            "/Obsidian/HLA Antibodies/",
+            "/Obsidian/Research Vault/",
             "/Obsidian/Research Journal/",
             "/Notes/"  # This should trigger Obsidian MCP
         ]
@@ -80,13 +80,13 @@ class TaskRouter:
         if "filesystem" in planned_action or "Write" in planned_action:
             for path in self.obsidian_paths:
                 if path in planned_action:
-                    violations.append(f"❌ VIOLATION: Using filesystem tools for Obsidian content at {path}")
-                    violations.append(f"✅ REQUIRED: Use mcp__obsidian__* tools instead")
+                    violations.append(f"VIOLATION: Using filesystem tools for Obsidian content at {path}")
+                    violations.append(f"REQUIRED: Use mcp__obsidian__* tools instead")
         
         # Check for missing sequential thinking
         if "obsidian" in planned_action.lower() and "sequential-thinking" not in planned_action:
-            violations.append(f"❌ VIOLATION: Not using sequential thinking for Obsidian task")
-            violations.append(f"✅ REQUIRED: Start with mcp__sequential-thinking__sequentialthinking")
+            violations.append(f"VIOLATION: Not using sequential thinking for Obsidian task")
+            violations.append(f"REQUIRED: Start with mcp__sequential-thinking__sequentialthinking")
         
         return violations
     
@@ -96,15 +96,15 @@ class TaskRouter:
         
         if task_type == "obsidian_task":
             return f"""
-🚫 TASK ROUTING ENFORCEMENT 🚫
+TASK ROUTING ENFORCEMENT
 ================================
 DETECTED: Obsidian-related task
 
 MANDATORY WORKFLOW:
-1. ✅ START with mcp__sequential-thinking__sequentialthinking
-2. ✅ USE mcp__obsidian__* tools ONLY for vault operations
-3. ✅ VERIFY citations with mcp__pubmed__*
-4. ❌ DO NOT use filesystem-local, Write, or Edit tools
+1. START with mcp__sequential-thinking__sequentialthinking
+2. USE mcp__obsidian__* tools ONLY for vault operations
+3. VERIFY citations with mcp__pubmed__*
+4. DO NOT use filesystem-local, Write, or Edit tools
 
 FILE LOCATIONS:
 • Research Questions: {tools['paths']['research_questions']}

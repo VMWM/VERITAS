@@ -14,8 +14,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check if running from correct directory
-if [ ! -f "templates/CLAUDE.md" ]; then
-    echo -e "${RED}Error: CLAUDE.md not found. Please run from the repository root.${NC}"
+if [ ! -f "templates/claude.md" ]; then
+    echo -e "${RED}Error: claude.md not found. Please run from the repository root.${NC}"
     exit 1
 fi
 
@@ -40,7 +40,7 @@ echo -e "${GREEN}Prerequisites check passed!${NC}"
 echo ""
 
 # Get project directory
-echo "Enter your project directory path (where CLAUDE.md should be placed):"
+echo "Enter your project directory path (where claude.md should be placed):"
 read -r PROJECT_DIR
 
 # Expand tilde if present
@@ -110,7 +110,7 @@ if [ $? -eq 0 ]; then
     mkdir -p ~/.conversation-logger
     echo -e "${GREEN}✓ Conversation Logger database directory created${NC}"
 else
-    echo -e "${YELLOW}⚠ Conversation Logger installation may have failed${NC}"
+    echo -e "${YELLOW}Warning: Conversation Logger installation may have failed${NC}"
 fi
 cd "$SCRIPT_DIR"
 
@@ -150,7 +150,7 @@ if [ -f "$CLEANUP_SCRIPT" ]; then
                 ENABLE_CLEANUP=true
                 echo -e "${GREEN}✓ Will auto-cleanup logs older than $RETENTION_DAYS days${NC}"
             else
-                echo -e "${YELLOW}⚠ Invalid input. Using default 5 days${NC}"
+                echo -e "${YELLOW}Warning: Invalid input. Using default 5 days${NC}"
                 RETENTION_DAYS=5
                 ENABLE_CLEANUP=true
             fi
@@ -159,7 +159,7 @@ if [ -f "$CLEANUP_SCRIPT" ]; then
             # Default to 5 days for invalid input
             RETENTION_DAYS=5
             ENABLE_CLEANUP=true
-            echo -e "${YELLOW}⚠ Invalid choice. Using default 5-day cleanup${NC}"
+            echo -e "${YELLOW}Warning: Invalid choice. Using default 5-day cleanup${NC}"
             ;;
     esac
     
@@ -187,7 +187,7 @@ if [ -f "$CLEANUP_SCRIPT" ]; then
         echo "  node '$SCRIPT_DIR/conversation-logger/cleanup-old-logs.js'"
     fi
 else
-    echo -e "${YELLOW}⚠ Cleanup script not found${NC}"
+    echo -e "${YELLOW}Warning: Cleanup script not found${NC}"
 fi
 echo ""
 
@@ -197,7 +197,7 @@ npm install -g obsidian-mcp-server --loglevel=error
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ Obsidian MCP Server installed${NC}"
 else
-    echo -e "${YELLOW}⚠ Obsidian MCP Server installation may have failed${NC}"
+    echo -e "${YELLOW}Warning: Obsidian MCP Server installation may have failed${NC}"
     echo "  You can install it later with: npm install -g obsidian-mcp-server"
 fi
 echo ""
@@ -208,9 +208,9 @@ echo "Copying Project Files"
 echo "================================"
 echo ""
 
-echo "Copying CLAUDE.md constitution..."
-cp templates/CLAUDE.md "$PROJECT_DIR/CLAUDE.md"
-echo -e "${GREEN}✓ CLAUDE.md constitution copied${NC}"
+echo "Copying claude.md constitution..."
+cp templates/claude.md "$PROJECT_DIR/claude.md"
+echo -e "${GREEN}✓ claude.md constitution copied${NC}"
 
 echo "Copying .claude directory..."
 cp -r .claude "$PROJECT_DIR/"
@@ -229,15 +229,15 @@ if [ -f "$PROJECT_DIR/.claude/settings.local.json.template" ]; then
     sed "s|PROJECT_DIR_PLACEHOLDER|$PROJECT_DIR|g" "$PROJECT_DIR/.claude/settings.local.json.template" > "$PROJECT_DIR/.claude/settings.local.json"
     echo -e "${GREEN}✓ Hook paths configured${NC}"
 else
-    echo -e "${YELLOW}⚠ settings.local.json.template not found, hooks may not work${NC}"
+    echo -e "${YELLOW}Warning: settings.local.json.template not found, hooks may not work${NC}"
 fi
 
 # Environment file will be created after Obsidian configuration
 ENV_FILE="$PROJECT_DIR/.claude/env.sh"
 
-# Note about CLAUDE.md customization
+# Note about claude.md customization
 echo ""
-echo -e "${YELLOW}Note: CLAUDE.md is a template - please customize it for your project${NC}"
+echo -e "${YELLOW}Note: claude.md is a template - please customize it for your project${NC}"
 
 # Create logs directory
 echo "Creating logs directory..."
@@ -429,7 +429,7 @@ echo "Testing hook execution..."
 if bash "$PROJECT_DIR/.claude/hooks/pre-command.sh" > /dev/null 2>&1; then
     echo -e "${GREEN}✓ Hooks are working correctly${NC}"
 else
-    echo -e "${YELLOW}⚠ Hooks may not be configured correctly${NC}"
+    echo -e "${YELLOW}Warning: Hooks may not be configured correctly${NC}"
     echo "Please check file permissions and paths."
 fi
 
@@ -516,7 +516,7 @@ echo "1. Configure Claude to use the installed MCP servers:"
 echo -e "   ${GREEN}cd $SCRIPT_DIR && ./scripts/setup/configure-claude.sh${NC}"
 echo "   This will add the MCP servers to your Claude configuration"
 echo "   Choose option 1 (merge) if you have existing servers configured"
-echo "2. Customize $PROJECT_DIR/CLAUDE.md for your specific project"
+echo "2. Customize $PROJECT_DIR/claude.md for your specific project"
 echo "3. Restart Claude Desktop and/or Claude CLI"
 echo "5. Configure your Obsidian vault structure"
 echo "   (See your domain expert file for recommended folder structure)"
@@ -526,8 +526,8 @@ echo "To test, start a new Claude Code conversation and try:"
 echo "  Prompts from: tests/veritas-functional-test.md"
 echo ""
 echo "For detailed documentation, see:"
-echo "  - docs/MCP_INSTALLATION.md"
-echo "  - docs/SETUP.md"
-echo "  - docs/TROUBLESHOOTING.md"
+echo "  - docs/getting-started.md"
+echo "  - docs/obsidian-integration.md"
+echo "  - docs/troubleshooting.md"
 echo ""
 echo "Templates are available in: templates/obsidian/"

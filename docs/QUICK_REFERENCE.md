@@ -112,5 +112,5 @@ npm update -g  # Update global packages if needed
 ## Getting Help
 
 1. Try functional tests: `tests/veritas-functional-test.md`
-2. Check troubleshooting: `docs/TROUBLESHOOTING.md`
+2. Check troubleshooting: `docs/troubleshooting.md`
 3. Open GitHub issue: https://github.com/VMWM/VERITAS/issues

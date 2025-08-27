@@ -11,7 +11,7 @@ elif [ -f ".claude/env.sh" ]; then
 fi
 
 # Configuration with fallback defaults
-OBSIDIAN_HLA="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/HLA Antibodies}"
+OBSIDIAN_RESEARCH="${OBSIDIAN_VAULT_PATH:-$HOME/Obsidian/Research Vault}"
 OBSIDIAN_JOURNAL="${OBSIDIAN_JOURNAL_PATH:-$HOME/Obsidian/Research Journal}"
 LOG_FILE="${CLAUDE_PROJECT_DIR:-$PWD}/.claude/logs/validation-$(date +%Y%m%d).log"
 VIOLATIONS_FILE="${CLAUDE_PROJECT_DIR:-$PWD}/.claude/logs/violations.json"
@@ -22,7 +22,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "🔍 POST-EXECUTION VALIDATOR"
+echo "POST-EXECUTION VALIDATOR"
 echo "============================"
 
 # Create log directory if it doesn't exist
@@ -35,7 +35,7 @@ log_violation() {
     local issue="$3"
     
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] VIOLATION: $type - $file - $issue" >> "$LOG_FILE"
-    echo -e "${RED}❌ VIOLATION: $issue${NC}"
+    echo -e "${RED}VIOLATION: $issue${NC}"
 }
 
 # Function to check recently modified Obsidian files
@@ -135,13 +135,13 @@ check_missing_extensions() {
 # Main validation
 total_violations=0
 
-# Check HLA vault
-if [ -d "$OBSIDIAN_HLA" ]; then
-    check_recent_files "$OBSIDIAN_HLA" "HLA Antibodies"
-    hla_violations=$?
-    total_violations=$((total_violations + hla_violations))
+# Check Research vault
+if [ -d "$OBSIDIAN_RESEARCH" ]; then
+    check_recent_files "$OBSIDIAN_RESEARCH" "Research Vault"
+    research_violations=$?
+    total_violations=$((total_violations + research_violations))
     
-    check_missing_extensions "$OBSIDIAN_HLA"
+    check_missing_extensions "$OBSIDIAN_RESEARCH"
     ext_violations=$?
     total_violations=$((total_violations + ext_violations))
 fi
@@ -160,10 +160,10 @@ fi
 # Report results
 echo "============================"
 if [ $total_violations -eq 0 ]; then
-    echo -e "${GREEN}✅ Output Validation: PASSED${NC}"
+    echo -e "${GREEN}Output Validation: PASSED${NC}"
     echo "All recently created files meet formatting requirements"
 else
-    echo -e "${RED}⚠️  Output Validation: FAILED${NC}"
+    echo -e "${RED}Output Validation: FAILED${NC}"
     echo -e "${RED}Found $total_violations violation(s)${NC}"
     echo ""
     echo "TO FIX VIOLATIONS:"

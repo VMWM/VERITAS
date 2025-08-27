@@ -3,25 +3,25 @@
 # Compliance Validator - Enforces tool usage rules
 # This script runs BEFORE any command execution
 
-echo "🔍 COMPLIANCE VALIDATOR ACTIVE"
+echo "COMPLIANCE VALIDATOR ACTIVE"
 echo "=============================="
 
 # Check if this is an Obsidian-related task
 if [[ "$*" == *"obsidian"* ]] || [[ "$*" == *"vault"* ]] || [[ "$*" == *"research question"* ]]; then
-    echo "⚠️  OBSIDIAN TASK DETECTED"
+    echo "OBSIDIAN TASK DETECTED"
     echo ""
-    echo "📋 MANDATORY REQUIREMENTS:"
+    echo "MANDATORY REQUIREMENTS:"
     echo "1. USE: mcp__sequential-thinking__sequentialthinking FIRST"
     echo "2. USE: mcp__obsidian__* for ALL vault operations"
     echo "3. USE: mcp__pubmed__* for ALL citations"
     echo "4. NEVER: filesystem-local, Write, or Edit tools"
     echo ""
-    echo "📁 CORRECT PATHS:"
-    echo "• Research Questions: /Obsidian/HLA Antibodies/Research Questions/"
-    echo "• Concepts: /Obsidian/HLA Antibodies/Concepts/"
+    echo "CORRECT PATHS:"
+    echo "• Research Questions: /Obsidian/Research Vault/Research Questions/"
+    echo "• Concepts: /Obsidian/Research Vault/Concepts/"
     echo "• Journal: /Obsidian/Research Journal/Daily/"
     echo ""
-    echo "🚫 VIOLATIONS WILL CAUSE TASK FAILURE"
+    echo "VIOLATIONS WILL CAUSE TASK FAILURE"
     echo "=============================="
     
     # Set flag for enforcement
@@ -33,10 +33,10 @@ fi
 if [[ "$*" == *"filesystem"* ]] || [[ "$*" == *"Write"* ]] || [[ "$*" == *"Edit"* ]]; then
     if [[ "$*" == *"/Obsidian/"* ]] || [[ "$*" == *"/Notes/"* ]]; then
         echo ""
-        echo "🚨 CRITICAL VIOLATION DETECTED 🚨"
+        echo "CRITICAL VIOLATION DETECTED"
         echo "================================"
-        echo "❌ Attempting to use filesystem tools on Obsidian content"
-        echo "✅ MUST use mcp__obsidian__* tools instead"
+        echo "ERROR: Attempting to use filesystem tools on Obsidian content"
+        echo "REQUIRED: MUST use mcp__obsidian__* tools instead"
         echo ""
         echo "This is a blocking error. Task cannot proceed."
         echo "================================"
@@ -46,5 +46,5 @@ if [[ "$*" == *"filesystem"* ]] || [[ "$*" == *"Write"* ]] || [[ "$*" == *"Edit"
     fi
 fi
 
-echo "✅ Pre-execution validation complete"
+echo "Pre-execution validation complete"
 echo "=============================="
