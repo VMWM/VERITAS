@@ -126,7 +126,7 @@ Use these prompts in a new Claude Code conversation to verify your VERITAS insta
 - **Conversation Logger**: Session database for conversation history and statistics
 - **Test**: Memory stores knowledge entities; Logger tracks conversation metadata
 
-### Obsidian Templates vs Other Systems
+### Obsidian Templates
 - **Templates come from**: Your domain expert file in .claude/agents/
 - **Folder structure**: Defined in your domain expert
 - **Content format**: Specified by domain expert templates
