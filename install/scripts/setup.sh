@@ -659,16 +659,17 @@ else
     echo -e "${RED}[WARNING] $PERMISSION_ISSUES hooks lack execute permissions${NC}"
 fi
 
-# Step 13: Configure Claude Desktop automatically
+# Step 13: Configure Claude Desktop and CLI automatically
 echo ""
 echo "=================================="
-echo "Configuring Claude Desktop"
+echo "Configuring Claude Desktop & CLI"
 echo "=================================="
 echo ""
 
-# Claude Desktop config path
-CLAUDE_CONFIG_DIR="$HOME/Library/Application Support/Claude"
-CLAUDE_CONFIG_FILE="$CLAUDE_CONFIG_DIR/claude_desktop_config.json"
+# Configuration paths
+CLAUDE_DESKTOP_CONFIG_DIR="$HOME/Library/Application Support/Claude"
+CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG_DIR/claude_desktop_config.json"
+CLAUDE_CLI_CONFIG="$HOME/.claude.json"
 
 # Build the MCP servers configuration
 MCP_CONFIG='{"mcpServers":{'
@@ -698,43 +699,66 @@ MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@cloudflare/m
 MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"
 MCP_CONFIG+="}}"
 
-# Check if Claude config directory exists
-if [ ! -d "$CLAUDE_CONFIG_DIR" ]; then
-    echo -e "${YELLOW}Claude Desktop config directory not found${NC}"
-    echo "Creating directory: $CLAUDE_CONFIG_DIR"
-    mkdir -p "$CLAUDE_CONFIG_DIR"
+# Configure Claude Desktop
+echo "Configuring Claude Desktop..."
+if [ ! -d "$CLAUDE_DESKTOP_CONFIG_DIR" ]; then
+    echo "  Creating config directory..."
+    mkdir -p "$CLAUDE_DESKTOP_CONFIG_DIR"
 fi
 
-# Check if config file exists
-if [ -f "$CLAUDE_CONFIG_FILE" ]; then
-    echo "Found existing Claude Desktop configuration"
-    
+if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
+    echo "  Found existing configuration"
     # Backup existing config
-    BACKUP_FILE="${CLAUDE_CONFIG_FILE}.backup.$(date +%Y%m%d-%H%M%S)"
-    cp "$CLAUDE_CONFIG_FILE" "$BACKUP_FILE"
-    echo -e "${GREEN}[OK] Backup created: $BACKUP_FILE${NC}"
+    BACKUP_FILE="${CLAUDE_DESKTOP_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
+    cp "$CLAUDE_DESKTOP_CONFIG" "$BACKUP_FILE"
+    echo "  Backup created: $(basename $BACKUP_FILE)"
     
     # Merge configurations using jq if available
     if command -v jq >/dev/null 2>&1; then
-        echo "Merging VERITAS servers with existing configuration..."
-        
-        # Merge the configurations
-        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_CONFIG_FILE" '
+        # Merge the configurations (using + to avoid multiplication errors)
+        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_DESKTOP_CONFIG" '
             . as $new |
             $existing[0] | 
-            .mcpServers = ((.mcpServers // {}) * ($new.mcpServers // {}))
-        ' > "$CLAUDE_CONFIG_FILE"
-        
-        echo -e "${GREEN}[OK] Claude Desktop configuration updated successfully${NC}"
+            .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
+        ' > "$CLAUDE_DESKTOP_CONFIG.tmp"
+        mv "$CLAUDE_DESKTOP_CONFIG.tmp" "$CLAUDE_DESKTOP_CONFIG"
+        echo -e "${GREEN}[OK] Claude Desktop configuration updated${NC}"
     else
-        echo -e "${YELLOW}Warning: jq not installed, cannot merge configurations${NC}"
-        echo "Please install jq or manually add the following to your Claude config:"
-        echo "$MCP_CONFIG" | jq . 2>/dev/null || echo "$MCP_CONFIG"
+        echo -e "${YELLOW}Warning: jq not installed, cannot merge Desktop config${NC}"
     fi
 else
-    echo "Creating new Claude Desktop configuration..."
-    echo "$MCP_CONFIG" | jq . > "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CONFIG_FILE"
+    echo "  Creating new configuration..."
+    echo "$MCP_CONFIG" | jq . > "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_DESKTOP_CONFIG"
     echo -e "${GREEN}[OK] Claude Desktop configuration created${NC}"
+fi
+
+# Configure Claude CLI
+echo ""
+echo "Configuring Claude CLI..."
+if [ -f "$CLAUDE_CLI_CONFIG" ]; then
+    echo "  Found existing configuration"
+    # Backup existing config
+    BACKUP_FILE="${CLAUDE_CLI_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
+    cp "$CLAUDE_CLI_CONFIG" "$BACKUP_FILE"
+    echo "  Backup created: $(basename $BACKUP_FILE)"
+    
+    # Merge configurations using jq if available
+    if command -v jq >/dev/null 2>&1; then
+        # Merge the configurations
+        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_CLI_CONFIG" '
+            . as $new |
+            $existing[0] | 
+            .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
+        ' > "$CLAUDE_CLI_CONFIG.tmp"
+        mv "$CLAUDE_CLI_CONFIG.tmp" "$CLAUDE_CLI_CONFIG"
+        echo -e "${GREEN}[OK] Claude CLI configuration updated${NC}"
+    else
+        echo -e "${YELLOW}Warning: jq not installed, cannot merge CLI config${NC}"
+    fi
+else
+    echo "  Creating new configuration..."
+    echo "$MCP_CONFIG" | jq . > "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CLI_CONFIG"
+    echo -e "${GREEN}[OK] Claude CLI configuration created${NC}"
 fi
 
 # Final instructions
@@ -746,14 +770,14 @@ echo ""
 echo "VERITAS installed at: $PROJECT_DIR"
 echo "Configuration: Medical research with PMID enforcement"
 echo ""
-echo "Claude Desktop configuration has been automatically updated."
+echo "Claude Desktop and CLI have been automatically configured."
 echo ""
 echo "Next steps:"
 echo ""
 echo "1. Restart Claude Desktop completely (Quit and reopen)"
 echo ""
-echo "2. Configure Claude CLI:"
-echo "   claude mcp add-from-claude-desktop"
+echo "2. Restart Claude CLI:"
+echo "   claude restart"
 echo ""
 echo "3. Test your installation:"
 echo "   claude 'test VERITAS system'"
