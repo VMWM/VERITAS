@@ -83,6 +83,61 @@ echo ""
 echo "Installing VERITAS Constitution..."
 echo "  CLAUDE.md is the immutable constitutional foundation"
 echo "  This document should never be modified"
+
+# Check if CLAUDE.md already exists
+if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
+    echo ""
+    echo -e "${YELLOW}[WARNING] CLAUDE.md already exists in this directory${NC}"
+    echo "This may be from a previous VERITAS installation."
+    echo ""
+    echo "What would you like to do?"
+    echo "1) Use a different project directory"
+    echo "2) Overwrite the existing installation (will backup current CLAUDE.md)"
+    echo "3) Cancel installation"
+    read -r CLAUDE_CHOICE
+    
+    case $CLAUDE_CHOICE in
+        1)
+            echo ""
+            echo "Enter a different project directory path:"
+            read -r NEW_PROJECT_DIR
+            NEW_PROJECT_DIR="${NEW_PROJECT_DIR/#\~/$HOME}"
+            
+            if [ ! -d "$NEW_PROJECT_DIR" ]; then
+                echo "Directory doesn't exist. Create it? (y/n)"
+                read -r CREATE_NEW_DIR
+                if [[ $CREATE_NEW_DIR =~ ^[Yy]$ ]]; then
+                    mkdir -p "$NEW_PROJECT_DIR"
+                    echo -e "${GREEN}[OK] Created directory: $NEW_PROJECT_DIR${NC}"
+                else
+                    echo "Exiting..."
+                    exit 1
+                fi
+            fi
+            
+            PROJECT_DIR="$NEW_PROJECT_DIR"
+            echo ""
+            echo "Continuing installation in: $PROJECT_DIR"
+            echo ""
+            ;;
+        2)
+            # Backup existing CLAUDE.md
+            BACKUP_NAME="CLAUDE.md.backup.$(date +%Y%m%d-%H%M%S)"
+            chmod 644 "$PROJECT_DIR/CLAUDE.md" 2>/dev/null
+            mv "$PROJECT_DIR/CLAUDE.md" "$PROJECT_DIR/$BACKUP_NAME"
+            echo -e "${GREEN}[OK] Existing CLAUDE.md backed up to: $BACKUP_NAME${NC}"
+            ;;
+        3)
+            echo "Installation cancelled."
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting...${NC}"
+            exit 1
+            ;;
+    esac
+fi
+
 cp "$VERITAS_DIR/install/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
 chmod 444 "$PROJECT_DIR/CLAUDE.md"  # Make read-only to prevent accidental edits
 echo -e "${GREEN}[OK] Constitution installed (read-only)${NC}"
@@ -392,7 +447,7 @@ echo ""
 echo "Next steps:"
 echo ""
 echo "1. Configure Claude Desktop with MCP servers:"
-echo "   Run: $VERITAS_DIR/scripts/configure-claude.sh"
+echo "   Run: $VERITAS_DIR/install/scripts/configure-claude.sh"
 echo ""
 echo "2. Edit project configuration:"
 echo "   $PROJECT_DIR/.claude/project.json"
@@ -405,7 +460,8 @@ echo "4. Test your setup:"
 echo "   claude 'test VERITAS system'"
 echo ""
 echo "5. For medical research projects:"
-echo "   Add domain expert: $PROJECT_DIR/.claude/agents/domain-expert.md"
+echo "   Domain expert installed: $PROJECT_DIR/.claude/agents/hla-research-director.md"
+echo "   Customize this file for your specific research area"
 echo ""
 echo "6. Constitutional Foundation:"
 echo "   CLAUDE.md is the immutable VERITAS Constitution"
@@ -413,8 +469,9 @@ echo "   DO NOT modify this document - it governs all enforcement"
 echo ""
 echo "MCP Server Paths for manual configuration:"
 echo "- conversation-logger: $VERITAS_DIR/conversation-logger"
-echo "- pubmed: npx @gwel/pubmed-mcp"
-echo "- memory: npx @claudeai/memory-mcp"
+echo "- pubmed: @cyanheads/pubmed-mcp-server (installed globally)"
+echo "- obsidian: obsidian-mcp-server (installed globally)"
+echo "- memory: npx @modelcontextprotocol/server-memory"
 echo "- sequential-thinking: npx @sequentialthinking/sequential-thinking-mcp"
 echo "- filesystem: npx @cloudflare/mcp-server-filesystem"
 echo ""
