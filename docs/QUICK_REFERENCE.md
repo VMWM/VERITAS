@@ -12,8 +12,8 @@ cd VERITAS
 
 ### Testing
 ```bash
-./tests/veritas-test.sh              # System verification
-# Then use prompts from tests/veritas-functional-test.md
+# Use prompts from tests/veritas-functional-test.md
+# Start a Claude conversation and try each test prompt
 ```
 
 ### Daily Operations
@@ -111,7 +111,6 @@ npm update -g  # Update global packages if needed
 
 ## Getting Help
 
-1. Run system test: `./tests/veritas-test.sh`
-2. Try functional tests: `tests/veritas-functional-test.md`
-3. Check troubleshooting: `docs/TROUBLESHOOTING.md`
-4. Open GitHub issue: https://github.com/VMWM/VERITAS/issues
+1. Try functional tests: `tests/veritas-functional-test.md`
+2. Check troubleshooting: `docs/TROUBLESHOOTING.md`
+3. Open GitHub issue: https://github.com/VMWM/VERITAS/issues
