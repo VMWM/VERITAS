@@ -24,7 +24,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 VERITAS_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 # Check if running from correct directory
-if [ ! -f "$VERITAS_DIR/CLAUDE.md" ]; then
+if [ ! -f "$VERITAS_DIR/install/CLAUDE.md" ]; then
     echo -e "${RED}Error: CLAUDE.md not found. Please run from the VERITAS repository root.${NC}"
     exit 1
 fi
@@ -83,7 +83,7 @@ echo ""
 echo "Installing VERITAS Constitution..."
 echo "  CLAUDE.md is the immutable constitutional foundation"
 echo "  This document should never be modified"
-cp "$VERITAS_DIR/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
+cp "$VERITAS_DIR/install/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
 chmod 444 "$PROJECT_DIR/CLAUDE.md"  # Make read-only to prevent accidental edits
 echo -e "${GREEN}[OK] Constitution installed (read-only)${NC}"
 
