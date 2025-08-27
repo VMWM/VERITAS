@@ -513,9 +513,10 @@ else
 fi
 echo ""
 echo "Next steps:"
-echo "1. Run the configuration script to set up Claude:"
-echo -e "   ${GREEN}./scripts/setup/configure-claude.sh${NC}"
-echo "   This will create configs for both Claude Desktop and CLI"
+echo "1. Configure Claude to use the installed MCP servers:"
+echo -e "   ${GREEN}cd $SCRIPT_DIR && ./scripts/setup/configure-claude.sh${NC}"
+echo "   This will add the MCP servers to your Claude configuration"
+echo "   Choose option 1 (merge) if you have existing servers configured"
 echo "2. Customize $PROJECT_DIR/CLAUDE.md for your specific project"
 echo "3. Restart Claude Desktop and/or Claude CLI"
 echo "5. Configure your Obsidian vault structure:"

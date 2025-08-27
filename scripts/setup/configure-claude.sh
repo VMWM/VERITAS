@@ -286,13 +286,21 @@ create_full_config() {
 
 # Preview mode
 if [ "$MODE" = "preview" ]; then
-    echo -e "${BLUE}The following MCP servers will be added:${NC}"
+    echo -e "${BLUE}The following MCP servers will be added to your Claude configuration:${NC}"
     echo ""
     create_veritas_servers | jq 'keys[]' | while read -r server; do
         echo "  • ${server//\"/}"
     done
     echo ""
-    echo "Run the script again and choose option 1 or 2 to apply changes."
+    echo "Note: The MCP server packages are already installed by setup.sh."
+    echo "This script configures Claude to use them."
+    echo ""
+    echo "To apply these changes, run:"
+    echo -e "${GREEN}  ./scripts/setup/configure-claude.sh${NC}"
+    echo ""
+    echo "Then choose:"
+    echo "  Option 1 - Merge with your existing configuration (recommended)"
+    echo "  Option 2 - Replace your entire configuration"
     exit 0
 fi
 
