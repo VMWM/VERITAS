@@ -659,7 +659,7 @@ else
     echo -e "${RED}[WARNING] $PERMISSION_ISSUES hooks lack execute permissions${NC}"
 fi
 
-# Step 13: Configure Claude Desktop and CLI automatically
+# Step 13: Configure Claude Desktop and CLI
 echo ""
 echo "=================================="
 echo "Configuring Claude Desktop & CLI"
@@ -699,66 +699,116 @@ MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@cloudflare/m
 MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"
 MCP_CONFIG+="}}"
 
-# Configure Claude Desktop
-echo "Configuring Claude Desktop..."
-if [ ! -d "$CLAUDE_DESKTOP_CONFIG_DIR" ]; then
-    echo "  Creating config directory..."
-    mkdir -p "$CLAUDE_DESKTOP_CONFIG_DIR"
+# Check for existing configurations and ask user preference
+EXISTING_CONFIGS=false
+if [ -f "$CLAUDE_DESKTOP_CONFIG" ] || [ -f "$CLAUDE_CLI_CONFIG" ]; then
+    EXISTING_CONFIGS=true
+    echo -e "${YELLOW}Found existing Claude configurations${NC}"
+    
+    if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
+        DESKTOP_COUNT=$(jq '.mcpServers | length' "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "0")
+        echo "  Desktop: $DESKTOP_COUNT MCP servers configured"
+    fi
+    
+    if [ -f "$CLAUDE_CLI_CONFIG" ]; then
+        CLI_COUNT=$(jq '.mcpServers | length' "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "0")
+        echo "  CLI: $CLI_COUNT MCP servers configured"
+    fi
+    
+    echo ""
+    echo "How would you like to proceed?"
+    echo "1) Merge VERITAS servers with existing (recommended)"
+    echo "2) Replace entire configuration (will backup existing)"
+    echo "3) Skip Claude configuration"
+    echo ""
+    read -p "Choose an option (1-3): " CONFIG_CHOICE
+    
+    case $CONFIG_CHOICE in
+        1) CONFIG_MODE="merge" ;;
+        2) CONFIG_MODE="replace" ;;
+        3) CONFIG_MODE="skip" ;;
+        *) 
+            echo -e "${RED}Invalid choice. Skipping configuration.${NC}"
+            CONFIG_MODE="skip"
+            ;;
+    esac
+else
+    CONFIG_MODE="create"
 fi
 
-if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
-    echo "  Found existing configuration"
-    # Backup existing config
-    BACKUP_FILE="${CLAUDE_DESKTOP_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
-    cp "$CLAUDE_DESKTOP_CONFIG" "$BACKUP_FILE"
-    echo "  Backup created: $(basename $BACKUP_FILE)"
-    
-    # Merge configurations using jq if available
-    if command -v jq >/dev/null 2>&1; then
-        # Merge the configurations (using + to avoid multiplication errors)
-        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_DESKTOP_CONFIG" '
-            . as $new |
-            $existing[0] | 
-            .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
-        ' > "$CLAUDE_DESKTOP_CONFIG.tmp"
-        mv "$CLAUDE_DESKTOP_CONFIG.tmp" "$CLAUDE_DESKTOP_CONFIG"
-        echo -e "${GREEN}[OK] Claude Desktop configuration updated${NC}"
-    else
-        echo -e "${YELLOW}Warning: jq not installed, cannot merge Desktop config${NC}"
+if [ "$CONFIG_MODE" != "skip" ]; then
+    # Configure Claude Desktop
+    echo ""
+    echo "Configuring Claude Desktop..."
+    if [ ! -d "$CLAUDE_DESKTOP_CONFIG_DIR" ]; then
+        echo "  Creating config directory..."
+        mkdir -p "$CLAUDE_DESKTOP_CONFIG_DIR"
     fi
-else
-    echo "  Creating new configuration..."
-    echo "$MCP_CONFIG" | jq . > "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_DESKTOP_CONFIG"
-    echo -e "${GREEN}[OK] Claude Desktop configuration created${NC}"
-fi
 
-# Configure Claude CLI
-echo ""
-echo "Configuring Claude CLI..."
-if [ -f "$CLAUDE_CLI_CONFIG" ]; then
-    echo "  Found existing configuration"
-    # Backup existing config
-    BACKUP_FILE="${CLAUDE_CLI_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
-    cp "$CLAUDE_CLI_CONFIG" "$BACKUP_FILE"
-    echo "  Backup created: $(basename $BACKUP_FILE)"
-    
-    # Merge configurations using jq if available
-    if command -v jq >/dev/null 2>&1; then
-        # Merge the configurations
-        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_CLI_CONFIG" '
-            . as $new |
-            $existing[0] | 
-            .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
-        ' > "$CLAUDE_CLI_CONFIG.tmp"
-        mv "$CLAUDE_CLI_CONFIG.tmp" "$CLAUDE_CLI_CONFIG"
-        echo -e "${GREEN}[OK] Claude CLI configuration updated${NC}"
+    if [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
+        # Backup existing config
+        BACKUP_FILE="${CLAUDE_DESKTOP_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
+        cp "$CLAUDE_DESKTOP_CONFIG" "$BACKUP_FILE"
+        echo "  Backup created: $(basename $BACKUP_FILE)"
+        
+        if [ "$CONFIG_MODE" = "merge" ]; then
+            # Merge configurations using jq if available
+            if command -v jq >/dev/null 2>&1; then
+                echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_DESKTOP_CONFIG" '
+                    . as $new |
+                    $existing[0] | 
+                    .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
+                ' > "$CLAUDE_DESKTOP_CONFIG.tmp"
+                mv "$CLAUDE_DESKTOP_CONFIG.tmp" "$CLAUDE_DESKTOP_CONFIG"
+                echo -e "${GREEN}[OK] Claude Desktop configuration merged${NC}"
+            else
+                echo -e "${YELLOW}Warning: jq not installed, cannot merge Desktop config${NC}"
+                echo "Please install jq or manually add the configuration"
+            fi
+        else
+            # Replace configuration
+            echo "$MCP_CONFIG" | jq . > "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_DESKTOP_CONFIG"
+            echo -e "${GREEN}[OK] Claude Desktop configuration replaced${NC}"
+        fi
     else
-        echo -e "${YELLOW}Warning: jq not installed, cannot merge CLI config${NC}"
+        # Create new configuration
+        echo "$MCP_CONFIG" | jq . > "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_DESKTOP_CONFIG"
+        echo -e "${GREEN}[OK] Claude Desktop configuration created${NC}"
     fi
-else
-    echo "  Creating new configuration..."
-    echo "$MCP_CONFIG" | jq . > "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CLI_CONFIG"
-    echo -e "${GREEN}[OK] Claude CLI configuration created${NC}"
+
+    # Configure Claude CLI
+    echo ""
+    echo "Configuring Claude CLI..."
+    if [ -f "$CLAUDE_CLI_CONFIG" ]; then
+        # Backup existing config
+        BACKUP_FILE="${CLAUDE_CLI_CONFIG}.backup.$(date +%Y%m%d-%H%M%S)"
+        cp "$CLAUDE_CLI_CONFIG" "$BACKUP_FILE"
+        echo "  Backup created: $(basename $BACKUP_FILE)"
+        
+        if [ "$CONFIG_MODE" = "merge" ]; then
+            # Merge configurations using jq if available
+            if command -v jq >/dev/null 2>&1; then
+                echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_CLI_CONFIG" '
+                    . as $new |
+                    $existing[0] | 
+                    .mcpServers = ((.mcpServers // {}) + ($new.mcpServers // {}))
+                ' > "$CLAUDE_CLI_CONFIG.tmp"
+                mv "$CLAUDE_CLI_CONFIG.tmp" "$CLAUDE_CLI_CONFIG"
+                echo -e "${GREEN}[OK] Claude CLI configuration merged${NC}"
+            else
+                echo -e "${YELLOW}Warning: jq not installed, cannot merge CLI config${NC}"
+                echo "Please install jq or manually add the configuration"
+            fi
+        else
+            # Replace configuration
+            echo "$MCP_CONFIG" | jq . > "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CLI_CONFIG"
+            echo -e "${GREEN}[OK] Claude CLI configuration replaced${NC}"
+        fi
+    else
+        # Create new configuration
+        echo "$MCP_CONFIG" | jq . > "$CLAUDE_CLI_CONFIG" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CLI_CONFIG"
+        echo -e "${GREEN}[OK] Claude CLI configuration created${NC}"
+    fi
 fi
 
 # Final instructions
@@ -770,8 +820,24 @@ echo ""
 echo "VERITAS installed at: $PROJECT_DIR"
 echo "Configuration: Medical research with PMID enforcement"
 echo ""
-echo "Claude Desktop and CLI have been automatically configured."
-echo ""
+
+if [ "$CONFIG_MODE" = "skip" ]; then
+    echo -e "${YELLOW}Claude configuration was skipped.${NC}"
+    echo ""
+    echo "To configure Claude manually, add the MCP servers from:"
+    echo "  $VERITAS_DIR/install/scripts/configure-claude.sh"
+    echo ""
+elif [ "$CONFIG_MODE" = "merge" ]; then
+    echo "Claude configurations have been merged with existing settings."
+    echo ""
+elif [ "$CONFIG_MODE" = "replace" ]; then
+    echo "Claude configurations have been replaced (backups created)."
+    echo ""
+else
+    echo "Claude Desktop and CLI have been configured."
+    echo ""
+fi
+
 echo "Next steps:"
 echo ""
 echo "1. Restart Claude Desktop completely (Quit and reopen)"
