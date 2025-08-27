@@ -57,21 +57,23 @@ This multi-checkpoint architecture ensures research integrity at every step.
 
 ## Quick Start
 
-### 30-Second Installation
+### Installation Steps
 
 ```bash
-# Clone and install
+# 1. Clone the repository
 git clone https://github.com/VMWM/VERITAS.git
 cd VERITAS
+
+# 2. Run setup (you'll be prompted for your project directory)
 ./setup.sh
 
-# Configure Claude
+# 3. Configure Claude (interactive menu)
 ./scripts/setup/configure-claude.sh
 
-# Restart Claude and test
+# 4. Restart Claude Desktop completely
 ```
 
-### First Use
+### Verify Your Installation
 
 Start a new Claude Code conversation and try:
 ```
@@ -238,17 +240,14 @@ command -v git && echo "Git: OK" || echo "Git: MISSING"
    - Start new Claude conversation
    - Try prompts from `tests/veritas-functional-test.md`
 
-### Automated Installation
+### Installation Notes
 
-Copy this prompt into Claude Code for automatic setup:
+**Important**: Both `setup.sh` and `configure-claude.sh` have interactive prompts that require your input:
+- You'll need to specify your project directory
+- Choose merge options for MCP configuration
+- Decide on conversation cleanup preferences
 
-```
-Install VERITAS from https://github.com/VMWM/VERITAS.git:
-1. Clone to ~/VERITAS
-2. Run ./setup.sh with my current directory as project
-3. Run ./scripts/setup/configure-claude.sh (merge → separate)
-4. Remind me to restart Claude Desktop
-```
+For detailed walkthrough, see the [Installation Guide](docs/getting-started.md).
 
 ## Troubleshooting
 
@@ -256,10 +255,11 @@ Install VERITAS from https://github.com/VMWM/VERITAS.git:
 
 | Issue | Solution |
 | --- | --- |
-| "MCP server not found" | Restart Claude Desktop completely |
-| "Cannot connect to vault" | Check Obsidian Local REST API plugin is running |
-| "No citations found" | Verify PubMed MCP is configured correctly |
-| "Hooks not running" | Source environment: `source .claude/env.sh` |
+| Claude doesn't recognize CLAUDE.md | Restart Claude Desktop after setup |
+| "Command not found: claude" | Claude CLI is optional, use Desktop app |
+| Validation hooks not running | Check you're in project directory or source `.claude/env.sh` |
+| Templates not found | Verify `.claude/agents/domain-expert.md` exists |
+| Obsidian connection fails | Enable HTTPS (not HTTP) in Local REST API plugin |
 
 ### Getting Help
 
