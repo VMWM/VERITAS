@@ -429,16 +429,13 @@ echo "=================================="
 echo "Obsidian Vault Configuration"
 echo "=================================="
 echo ""
+echo "VERITAS integrates with Obsidian for research documentation."
+echo ""
 
-echo "Do you use Obsidian for research documentation? (y/n)"
-read -r USE_OBSIDIAN
+echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
+read -r OBSIDIAN_INSTALLED
 
-if [[ $USE_OBSIDIAN =~ ^[Yy]$ ]]; then
-    echo ""
-    echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
-    read -r OBSIDIAN_INSTALLED
-    
-    if [[ $OBSIDIAN_INSTALLED =~ ^[Yy]$ ]]; then
+if [[ $OBSIDIAN_INSTALLED =~ ^[Yy]$ ]]; then
         # Arrays to store vault configurations
         VAULT_NAMES=()
         VAULT_PATHS=()
@@ -512,20 +509,17 @@ if [[ $USE_OBSIDIAN =~ ^[Yy]$ ]]; then
         for i in "${!VAULT_NAMES[@]}"; do
             echo "  - ${VAULT_NAMES[$i]}: ${VAULT_PATHS[$i]} (port ${VAULT_PORTS[$i]})"
         done
-    else
-        echo ""
-        echo -e "${YELLOW}Please install the Obsidian Local REST API plugin:${NC}"
-        echo "1. Open Obsidian"
-        echo "2. Go to Settings > Community Plugins"
-        echo "3. Search for 'Local REST API'"
-        echo "4. Install and enable the plugin"
-        echo "5. Configure authentication in the plugin settings"
-        echo ""
-        echo "You can configure Obsidian integration later by running configure-claude.sh"
-    fi
 else
-    echo -e "${YELLOW}[INFO] Obsidian integration skipped${NC}"
-    echo "You can configure it later by running configure-claude.sh"
+    echo ""
+    echo -e "${YELLOW}Please install the Obsidian Local REST API plugin:${NC}"
+    echo "1. Open Obsidian"
+    echo "2. Go to Settings > Community Plugins"
+    echo "3. Search for 'Local REST API'"
+    echo "4. Install and enable the plugin"
+    echo "5. Configure authentication in the plugin settings"
+    echo ""
+    echo "After installing the plugin, run this setup again or use:"
+    echo "  $VERITAS_DIR/install/scripts/configure-claude.sh"
 fi
 
 # Step 10: Create environment configuration file
