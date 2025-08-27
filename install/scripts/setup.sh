@@ -316,7 +316,7 @@ fi
 
 echo -e "${GREEN}[OK] Configured for medical research with PMID enforcement${NC}"
 
-# Step 7: Install conversation-logger MCP
+# Step 7: Install and configure conversation-logger MCP
 echo ""
 echo "Installing conversation-logger MCP server..."
 
@@ -324,6 +324,71 @@ if [ -d "$VERITAS_DIR/conversation-logger" ]; then
     cd "$VERITAS_DIR/conversation-logger"
     npm install --silent
     echo -e "${GREEN}[OK] Conversation logger installed${NC}"
+    
+    # Configure retention period
+    echo ""
+    echo "Configuring conversation logger cleanup..."
+    echo ""
+    echo "How would you like to manage conversation logs?"
+    echo "1) Auto-cleanup after 5 days (recommended)"
+    echo "2) Keep indefinitely (no automatic cleanup)" 
+    echo "3) Custom retention period"
+    echo ""
+    read -p "Choose an option (1-3): " CLEANUP_CHOICE
+    
+    RETENTION_DAYS=5
+    ENABLE_CLEANUP=true
+    
+    case $CLEANUP_CHOICE in
+        1)
+            RETENTION_DAYS=5
+            ENABLE_CLEANUP=true
+            echo -e "${GREEN}[OK] Will auto-cleanup logs older than 5 days${NC}"
+            ;;
+        2)
+            ENABLE_CLEANUP=false
+            echo -e "${GREEN}[OK] Logs will be kept indefinitely${NC}"
+            ;;
+        3)
+            echo ""
+            read -p "Enter retention period in days (1-365): " CUSTOM_DAYS
+            if [[ "$CUSTOM_DAYS" =~ ^[0-9]+$ ]] && [ "$CUSTOM_DAYS" -ge 1 ] && [ "$CUSTOM_DAYS" -le 365 ]; then
+                RETENTION_DAYS=$CUSTOM_DAYS
+                ENABLE_CLEANUP=true
+                echo -e "${GREEN}[OK] Will auto-cleanup logs older than $RETENTION_DAYS days${NC}"
+            else
+                echo -e "${YELLOW}Warning: Invalid input. Using default 5 days${NC}"
+                RETENTION_DAYS=5
+                ENABLE_CLEANUP=true
+            fi
+            ;;
+        *)
+            RETENTION_DAYS=5
+            ENABLE_CLEANUP=true
+            echo -e "${YELLOW}Warning: Invalid choice. Using default 5-day cleanup${NC}"
+            ;;
+    esac
+    
+    # Configure cleanup script if enabled
+    CLEANUP_SCRIPT="$VERITAS_DIR/conversation-logger/cleanup-old-logs.js"
+    if [ "$ENABLE_CLEANUP" = true ] && [ -f "$CLEANUP_SCRIPT" ]; then
+        # Update retention period in cleanup script
+        if [ "$RETENTION_DAYS" != "5" ]; then
+            sed -i.bak "s/RETENTION_DAYS = 5/RETENTION_DAYS = $RETENTION_DAYS/" "$CLEANUP_SCRIPT"
+            echo "  Updated retention period to $RETENTION_DAYS days"
+        fi
+        
+        # Schedule cron job
+        CRON_CMD="0 2 * * * cd '$VERITAS_DIR/conversation-logger' && node cleanup-old-logs.js > /tmp/conversation-cleanup.log 2>&1"
+        
+        if crontab -l 2>/dev/null | grep -q "cleanup-old-logs.js"; then
+            echo -e "${GREEN}[OK] Cleanup job already scheduled${NC}"
+        else
+            (crontab -l 2>/dev/null; echo "$CRON_CMD") | crontab -
+            echo -e "${GREEN}[OK] Automatic cleanup scheduled for 2 AM daily${NC}"
+        fi
+    fi
+    
     cd "$VERITAS_DIR"
 else
     echo -e "${YELLOW}Warning: conversation-logger directory not found${NC}"
@@ -358,12 +423,152 @@ echo -e "${GREEN}[OK] Sequential-thinking MCP will run with npx${NC}"
 echo -e "${GREEN}[OK] Memory MCP will run with npx${NC}"
 echo -e "${GREEN}[OK] Filesystem MCP will run with npx${NC}"
 
-# Step 9: Note about Obsidian configuration
+# Step 9: Configure Obsidian vaults
 echo ""
-echo -e "${YELLOW}Note: Configure Obsidian manually after installation${NC}"
-echo "      See docs/configuration-guide.md for Obsidian setup instructions"
+echo "=================================="
+echo "Obsidian Vault Configuration"
+echo "=================================="
+echo ""
 
-# Step 10: Create README for .claude directory
+echo "Do you use Obsidian for research documentation? (y/n)"
+read -r USE_OBSIDIAN
+
+if [[ $USE_OBSIDIAN =~ ^[Yy]$ ]]; then
+    echo ""
+    echo "Have you installed the Obsidian Local REST API plugin? (y/n)"
+    read -r OBSIDIAN_INSTALLED
+    
+    if [[ $OBSIDIAN_INSTALLED =~ ^[Yy]$ ]]; then
+        # Arrays to store vault configurations
+        VAULT_NAMES=()
+        VAULT_PATHS=()
+        VAULT_PORTS=()
+        VAULT_TOKENS=()
+        
+        VAULT_COUNT=0
+        DEFAULT_PORT=27124
+        
+        # Loop to add vaults
+        while true; do
+            VAULT_COUNT=$((VAULT_COUNT + 1))
+            echo ""
+            echo "Vault #$VAULT_COUNT Configuration"
+            echo "------------------------"
+            
+            if [ $VAULT_COUNT -eq 1 ]; then
+                echo "Enter a name for your first vault (e.g., 'hla', 'research', 'main'):"
+            else
+                echo "Enter a name for vault #$VAULT_COUNT (or press Enter to finish):"
+            fi
+            read -r VAULT_NAME
+            
+            # If no name entered and not the first vault, we're done
+            if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -gt 1 ]; then
+                VAULT_COUNT=$((VAULT_COUNT - 1))
+                break
+            fi
+            
+            # First vault is required
+            if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -eq 1 ]; then
+                echo -e "${RED}At least one vault is required${NC}"
+                VAULT_NAME="primary"
+                echo "Using default name: $VAULT_NAME"
+            fi
+            
+            VAULT_NAMES+=("$VAULT_NAME")
+            
+            echo "Enter the path to your '$VAULT_NAME' vault:"
+            echo "(e.g., /Users/$USER/Obsidian/$VAULT_NAME)"
+            read -r VAULT_PATH
+            # Expand tilde if present
+            VAULT_PATH="${VAULT_PATH/#\~/$HOME}"
+            VAULT_PATHS+=("$VAULT_PATH")
+            
+            SUGGESTED_PORT=$((DEFAULT_PORT + VAULT_COUNT - 1))
+            echo "Enter the port for '$VAULT_NAME' vault (default: $SUGGESTED_PORT):"
+            read -r VAULT_PORT
+            VAULT_PORT=${VAULT_PORT:-$SUGGESTED_PORT}
+            VAULT_PORTS+=("$VAULT_PORT")
+            
+            echo "Enter the API key for '$VAULT_NAME' vault:"
+            echo "(Set this in Obsidian's Local REST API settings)"
+            read -r VAULT_TOKEN
+            VAULT_TOKENS+=("$VAULT_TOKEN")
+            
+            echo -e "${GREEN}[OK] Vault '$VAULT_NAME' configured${NC}"
+            
+            # Ask if they want to add another vault
+            if [ $VAULT_COUNT -ge 1 ]; then
+                echo ""
+                read -p "Add another vault? (y/n): " ADD_MORE
+                if [[ ! $ADD_MORE =~ ^[Yy]$ ]]; then
+                    break
+                fi
+            fi
+        done
+        
+        echo ""
+        echo -e "${GREEN}[OK] Configured $VAULT_COUNT vault(s)${NC}"
+        for i in "${!VAULT_NAMES[@]}"; do
+            echo "  - ${VAULT_NAMES[$i]}: ${VAULT_PATHS[$i]} (port ${VAULT_PORTS[$i]})"
+        done
+    else
+        echo ""
+        echo -e "${YELLOW}Please install the Obsidian Local REST API plugin:${NC}"
+        echo "1. Open Obsidian"
+        echo "2. Go to Settings > Community Plugins"
+        echo "3. Search for 'Local REST API'"
+        echo "4. Install and enable the plugin"
+        echo "5. Configure authentication in the plugin settings"
+        echo ""
+        echo "You can configure Obsidian integration later by running configure-claude.sh"
+    fi
+else
+    echo -e "${YELLOW}[INFO] Obsidian integration skipped${NC}"
+    echo "You can configure it later by running configure-claude.sh"
+fi
+
+# Step 10: Create environment configuration file
+echo ""
+echo "Creating environment configuration..."
+
+ENV_FILE="$PROJECT_DIR/.claude/env.sh"
+cat > "$ENV_FILE" << EOF
+#!/bin/bash
+# VERITAS Environment Configuration
+# Source this file or add to your shell profile
+
+export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
+export ENFORCE_OBSIDIAN_MCP=1
+EOF
+
+# Add vault configurations if any were provided
+if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+    echo "# Configured vaults: ${VAULT_NAMES[*]}" >> "$ENV_FILE"
+    for i in "${!VAULT_NAMES[@]}"; do
+        VAULT_NAME_UPPER=$(echo "${VAULT_NAMES[$i]}" | tr '[:lower:]' '[:upper:]')
+        cat >> "$ENV_FILE" << EOF
+export OBSIDIAN_${VAULT_NAME_UPPER}_PATH="${VAULT_PATHS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_PORT="${VAULT_PORTS[$i]}"
+export OBSIDIAN_${VAULT_NAME_UPPER}_TOKEN="${VAULT_TOKENS[$i]}"
+EOF
+    done
+    
+    # For backward compatibility, set the first vault as primary
+    if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+        cat >> "$ENV_FILE" << EOF
+
+# Primary vault (first configured)
+export OBSIDIAN_API_TOKEN="${VAULT_TOKENS[0]}"
+export OBSIDIAN_BASE_URL="https://127.0.0.1:${VAULT_PORTS[0]}"
+EOF
+    fi
+fi
+
+echo -e "${GREEN}[OK] Environment configuration created${NC}"
+echo "  Add to your shell profile: source $ENV_FILE"
+
+# Step 11: Create README for .claude directory
 cat > "$PROJECT_DIR/.claude/README.md" << 'EOF'
 # VERITAS Implementation
 
@@ -400,7 +605,7 @@ EOF
 
 echo -e "${GREEN}[OK] Created project README${NC}"
 
-# Step 11: Validate installation
+# Step 12: Validate installation
 echo ""
 echo "Validating installation..."
 
@@ -446,31 +651,86 @@ echo "Configuration: Medical research with PMID enforcement"
 echo ""
 echo "Next steps:"
 echo ""
-echo "1. Configure MCP servers in Claude Desktop:"
-echo "   Run: $VERITAS_DIR/install/scripts/configure-claude.sh"
+
+# Show Claude Desktop configuration
+echo "1. Configure Claude Desktop:"
+echo "   Add the following to your Claude Desktop config file:"
+echo "   (Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
 echo ""
-echo "2. Configure Obsidian REST API:"
-echo "   - Install Local REST API plugin in Obsidian"
-echo "   - Enable the plugin and set your API key"
-echo "   - See: $VERITAS_DIR/docs/configuration-guide.md"
+echo "{"
+echo '  "mcpServers": {'
+
+# Add Obsidian vault configurations if any
+if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+    for i in "${!VAULT_NAMES[@]}"; do
+        cat << EOF
+    "obsidian-rest-${VAULT_NAMES[$i]}": {
+      "command": "npx",
+      "args": ["obsidian-mcp-server"],
+      "env": {
+        "OBSIDIAN_API_KEY": "${VAULT_TOKENS[$i]}",
+        "OBSIDIAN_BASE_URL": "https://127.0.0.1:${VAULT_PORTS[$i]}",
+        "OBSIDIAN_VERIFY_SSL": "false"
+      }
+    },
+EOF
+    done
+fi
+
+# Add other MCP servers
+cat << EOF
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["@sequentialthinking/sequential-thinking-mcp"]
+    },
+    "pubmed": {
+      "command": "pubmed-mcp-server"
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-memory"]
+    },
+    "filesystem-local": {
+      "command": "npx",
+      "args": ["@cloudflare/mcp-server-filesystem", "$PROJECT_DIR"]
+    },
+    "conversation-logger": {
+      "command": "node",
+      "args": ["$VERITAS_DIR/conversation-logger/index.js"]
+    }
+  }
+}
+EOF
+
 echo ""
-echo "3. Test your installation:"
+echo "2. Restart Claude Desktop completely"
+echo ""
+echo "3. Configure Claude CLI:"
+echo "   claude mcp add-from-claude-desktop"
+echo ""
+echo "4. Test your installation:"
 echo "   claude 'test VERITAS system'"
 echo ""
-echo "4. Start using VERITAS:"
+echo "5. Start using VERITAS:"
 echo "   claude 'help me with my research'"
 echo ""
 echo "Optional customization:"
 echo "- Customize domain expert: $PROJECT_DIR/.claude/agents/hla-research-director.md"
 echo "- Review project settings: $PROJECT_DIR/.claude/project.json"
 echo ""
-echo "MCP Server Paths for manual configuration:"
-echo "- conversation-logger: $VERITAS_DIR/conversation-logger"
-echo "- pubmed: @cyanheads/pubmed-mcp-server (installed globally)"
-echo "- obsidian: obsidian-mcp-server (installed globally)"
-echo "- memory: npx @modelcontextprotocol/server-memory"
-echo "- sequential-thinking: npx @sequentialthinking/sequential-thinking-mcp"
-echo "- filesystem: npx @cloudflare/mcp-server-filesystem"
+
+# Show conversation logger status
+if [ "$ENABLE_CLEANUP" = true ]; then
+    echo "Conversation Logger Status:"
+    echo "  - Database: ~/.conversation-logger/conversations.db"
+    echo "  - Retention: $RETENTION_DAYS days"
+    echo "  - Cleanup: Automatic at 2 AM daily"
+else
+    echo "Conversation Logger Status:"
+    echo "  - Database: ~/.conversation-logger/conversations.db"
+    echo "  - Retention: Indefinite (no automatic cleanup)"
+fi
+
 echo ""
 echo "For help, see: $VERITAS_DIR/docs/getting-started.md"
 echo ""
