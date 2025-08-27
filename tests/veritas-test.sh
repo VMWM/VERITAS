@@ -185,7 +185,7 @@ if command -v curl &> /dev/null; then
             if [ -z "$TOKEN_HLA" ]; then
                 warn "Obsidian API (HLA vault) responding but no token set"
                 echo "   Run: echo 'YOUR_HLA_TOKEN' > ~/.obsidian_api_token_hla"
-                echo "   Then: source /Users/vmwm/VERITAS/setup-env.sh"
+                echo "   MCP servers get tokens from Claude configuration automatically"
             else
                 warn "Obsidian API (HLA vault) responding but authentication failed - check token"
             fi
@@ -204,7 +204,7 @@ if command -v curl &> /dev/null; then
             if [ -z "$TOKEN_JOURNAL" ]; then
                 warn "Obsidian API (Journal vault) responding but no token set"
                 echo "   Run: echo 'YOUR_JOURNAL_TOKEN' > ~/.obsidian_api_token_journal"
-                echo "   Then: source /Users/vmwm/VERITAS/setup-env.sh"
+                echo "   MCP servers get tokens from Claude configuration automatically"
             else
                 warn "Obsidian API (Journal vault) responding but authentication failed - check token"
             fi
@@ -283,14 +283,14 @@ echo "----------------------"
 if [ -n "$CLAUDE_PROJECT_DIR" ]; then
     pass "CLAUDE_PROJECT_DIR is set: $CLAUDE_PROJECT_DIR"
 else
-    warn "CLAUDE_PROJECT_DIR not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
+    warn "CLAUDE_PROJECT_DIR not set - check your project's .claude directory"
     echo "   Note: This variable is automatically set in Claude Desktop"
 fi
 
 if [ -n "$OBSIDIAN_API_TOKEN_HLA" ] || [ -n "$OBSIDIAN_API_TOKEN" ]; then
     pass "OBSIDIAN_API_TOKEN_HLA is set for main vault"
 else
-    warn "OBSIDIAN_API_TOKEN_HLA not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
+    warn "OBSIDIAN_API_TOKEN_HLA not set - MCP gets tokens from Claude config"
     echo "   To get your HLA vault token:"
     echo "   1. Open Obsidian HLA Antibodies vault"
     echo "   2. Settings > Community Plugins > Local REST API > Copy token"
@@ -300,19 +300,15 @@ fi
 if [ -n "$OBSIDIAN_API_TOKEN_JOURNAL" ]; then
     pass "OBSIDIAN_API_TOKEN_JOURNAL is set for journal vault"
 else
-    warn "OBSIDIAN_API_TOKEN_JOURNAL not set - run: source /Users/vmwm/VERITAS/setup-env.sh"
+    warn "OBSIDIAN_API_TOKEN_JOURNAL not set - MCP gets tokens from Claude config"
     echo "   To get your Journal vault token:"
     echo "   1. Open Obsidian Research Journal vault"
     echo "   2. Settings > Community Plugins > Local REST API > Copy token"
     echo "   3. Run: echo 'YOUR_JOURNAL_TOKEN' > ~/.obsidian_api_token_journal"
 fi
 
-# Check if setup-env.sh exists
-if [ -f "/Users/vmwm/VERITAS/setup-env.sh" ]; then
-    info "Setup script available at /Users/vmwm/VERITAS/setup-env.sh"
-else
-    warn "Setup script not found - environment variables must be set manually"
-fi
+# Environment variables are managed via Claude configuration
+info "MCP servers configured via Claude's JSON configuration files"
 
 echo ""
 echo "========================================"

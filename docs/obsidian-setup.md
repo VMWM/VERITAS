@@ -43,8 +43,8 @@ VERITAS uses two separate Obsidian vaults, each with its own REST API token:
 After saving both tokens:
 
 ```bash
-# Source the setup script to load both tokens
-source /Users/vmwm/VERITAS/setup-env.sh
+# Tokens are automatically loaded from Claude's MCP server configuration
+# No manual environment setup needed
 
 # Verify the tokens are set
 echo "HLA Token: $OBSIDIAN_API_TOKEN_HLA"
