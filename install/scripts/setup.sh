@@ -274,35 +274,39 @@ else
     echo -e "${YELLOW}Warning: conversation-logger directory not found${NC}"
 fi
 
-# Step 8: Install global MCP servers
+# Step 8: Install MCP servers
 echo ""
-echo "Installing global MCP servers..."
+echo "Installing MCP servers..."
 
-# Install PubMed MCP
-echo "Installing PubMed MCP..."
-npm list -g @gwel/pubmed-mcp &>/dev/null || npm install -g @gwel/pubmed-mcp --silent
-echo -e "${GREEN}[OK] PubMed MCP installed${NC}"
+# Install PubMed MCP globally for reliability
+echo "Installing PubMed MCP (this may take a moment)..."
+npm install -g @cyanheads/pubmed-mcp-server --loglevel=error
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}[OK] PubMed MCP installed${NC}"
+else
+    echo -e "${YELLOW}Warning: PubMed MCP installation may require sudo${NC}"
+    echo "  You can install it later with: sudo npm install -g @cyanheads/pubmed-mcp-server"
+fi
 
-# Note about other MCP servers that run with npx
+# Install Obsidian MCP Server
+echo "Installing Obsidian MCP Server..."
+npm install -g obsidian-mcp-server --loglevel=error
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}[OK] Obsidian MCP Server installed${NC}"
+else
+    echo -e "${YELLOW}Warning: Obsidian MCP installation may require sudo${NC}"
+    echo "  You can install it later with: sudo npm install -g obsidian-mcp-server"
+fi
+
+# Other servers run with npx
 echo -e "${GREEN}[OK] Sequential-thinking MCP will run with npx${NC}"
 echo -e "${GREEN}[OK] Memory MCP will run with npx${NC}"
 echo -e "${GREEN}[OK] Filesystem MCP will run with npx${NC}"
 
-# Step 9: Configure Obsidian (optional)
+# Step 9: Note about Obsidian configuration
 echo ""
-read -p "Do you use Obsidian for note-taking? (y/n): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Enter path to your Obsidian vault:"
-    read -p "Vault path: " VAULT_PATH
-    VAULT_PATH="${VAULT_PATH/#\~/$HOME}"
-    
-    # Update project.json with vault path
-    sed -i '' "s|\"obsidian_vaults\": \[\]|\"obsidian_vaults\": [\"$VAULT_PATH\"]|" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
-    sed -i "s|\"obsidian_vaults\": \[\]|\"obsidian_vaults\": [\"$VAULT_PATH\"]|" "$PROJECT_DIR/.claude/project.json"
-    
-    echo -e "${GREEN}[OK] Configured Obsidian integration${NC}"
-fi
+echo -e "${YELLOW}Note: Configure Obsidian manually after installation${NC}"
+echo "      See docs/configuration-guide.md for Obsidian setup instructions"
 
 # Step 10: Create README for .claude directory
 cat > "$PROJECT_DIR/.claude/README.md" << 'EOF'
