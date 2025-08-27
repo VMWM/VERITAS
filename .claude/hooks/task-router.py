@@ -23,10 +23,10 @@ class TaskRouter:
         # Try local project path first, then fallback to generic
         import os
         project_dir = os.environ.get('PROJECT_DIR', os.getcwd())
-        agent_path = Path(project_dir) / ".claude/agents/research-director.md"
+        agent_path = Path(project_dir) / ".claude/agents/domain-expert.md"
         if not agent_path.exists():
             # Fallback to standard location
-            agent_path = Path(".claude/agents/research-director.md")
+            agent_path = Path(".claude/agents/domain-expert.md")
         if agent_path.exists():
             return agent_path.read_text()
         return ""

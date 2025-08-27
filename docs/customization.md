@@ -108,7 +108,7 @@ Edit `.claude/hooks/post-command.py`:
 
 ### 5. Agent Customization
 
-Edit `.claude/agents/research-director.md`:
+Edit `.claude/agents/domain-expert.md`:
 - Update terminology for your field
 - Modify template structures
 - Adjust quality criteria
