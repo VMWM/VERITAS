@@ -1,445 +1,157 @@
-# VERITAS Functional Test Suite
+# VERITAS Functional Test Prompts
 
-This test suite actually exercises all VERITAS components to verify they work correctly, not just that they exist.
+Use these prompts in a new Claude Code conversation to verify your VERITAS installation is working correctly. Start with Basic Tests, then move to MCP-specific tests.
 
-## Test Preparation
+## Prerequisites
+- [ ] Completed setup.sh successfully
+- [ ] Ran configure-claude.sh and merged MCP servers
+- [ ] Restarted Claude Desktop/CLI
+- [ ] Have your project directory ready
 
-Before running these tests:
-1. Ensure Obsidian is running with both vaults open
-2. Have Claude Desktop open
-3. Run each test in Claude and verify the results
+## Basic Tests
 
-## Test Format
+### 1. Test Constitutional Awareness
+**Prompt:** "What is your role according to CLAUDE.md?"
 
-Each test has:
-- **Command**: What to ask Claude
-- **Expected**: What should happen
-- **Verify**: How to check it worked
-- **Cleanup**: How to remove test artifacts
+**Expected:** Claude should reference the constitution and explain the VERITAS system's purpose.
 
----
+### 2. Test Domain Expert Loading
+**Prompt:** "What domain expert templates are available?"
 
-## 1. SEQUENTIAL THINKING TEST
+**Expected:** Claude should mention the domain expert file in .claude/agents/ and describe available templates.
 
-### Test 1.1: Complex Problem Solving
+## MCP Server Tests
 
-**Command:**
-```
-Analyze the role of complement-binding HLA antibodies in transplant rejection
-```
+### 3. Test Filesystem Access
+**Prompt:** "List the files in my project directory"
 
-**Expected:**
-- Claude uses `mcp__sequential-thinking__sequentialthinking` FIRST
-- Shows thought progression (1/4, 2/4, etc.)
-- Plans approach before answering
+**Expected:** Claude should use the filesystem MCP to list your project files.
 
-**Verify:**
-- Check Claude's response shows sequential thinking was used
-- Look for thought numbers in the output
+### 4. Test Memory MCP
+**Prompt:** "Remember that my research focus is [your topic]. What did I just tell you to remember?"
 
----
+**Expected:** Claude should store this in memory and retrieve it.
 
-## 2. MEMORY MCP SERVER TEST
+### 5. Test Sequential Thinking
+**Prompt:** "Plan a research literature review on [simple topic] - think through the steps carefully"
 
-### Test 2.1: Store Knowledge Entity
+**Expected:** Claude should use sequential thinking to break down the task.
 
-**Command:**
-```
-Store this in memory: "VERITAS Test Entity - A test entity created on [today's date] to verify memory functionality. Key observation: Memory MCP is working correctly."
-```
+### 6. Test PubMed MCP
+**Prompt:** "Find recent papers about CRISPR gene editing"
 
-**Expected:**
-- Uses `mcp__memory__create_entities`
-- Confirms entity created
+**Expected:** Claude should search PubMed and return papers with PMIDs.
 
-**Verify:**
-```
-Search memory for "VERITAS Test Entity"
-```
-- Should retrieve the test entity
+### 7. Test Conversation Logger
+**Prompt:** "Generate a journal entry for today's session"
 
-### Test 2.2: Create Relations
+**Expected:** Claude should create a summary of the conversation using the logger.
 
-**Command:**
-```
-Create a memory relation: VERITAS Test Entity -> validates -> Memory System
-```
+## Obsidian Integration Tests (if configured)
 
-**Expected:**
-- Uses `mcp__memory__create_relations`
-- Confirms relation created
+### 8. Test Obsidian Connection
+**Prompt:** "List the notes in my Obsidian vault"
 
-**Verify:**
-```
-Read the memory graph and look for VERITAS Test Entity
-```
+**Expected:** Claude should connect to your vault and list files.
 
-### Cleanup:
-```
-Delete the VERITAS Test Entity from memory
-```
+### 9. Test Note Creation
+**Prompt:** "Create a test note in my vault called 'VERITAS Test Note' with some sample content"
 
----
+**Expected:** Claude should create the note in your Obsidian vault.
 
-## 3. PUBMED MCP SERVER TEST
+### 10. Test Note Reading
+**Prompt:** "Read the VERITAS Test Note we just created"
 
-### Test 3.1: Citation Search
+**Expected:** Claude should retrieve and display the note content.
 
-**Command:**
-```
-Find recent papers about HLA-DQ antibodies and kidney transplants - give me 3 with PMIDs
-```
+## Workflow Tests
 
-**Expected:**
-- Uses `mcp__pubmed__pubmed_search_articles`
-- Returns papers with (Author et al., Year, PMID: XXXXXXXX) format
-- Includes verification level
+### 11. Test Research Workflow
+**Prompt:** "Help me research [your topic]. Start by searching for papers, then organize the findings."
 
-**Verify:**
-- All citations have PMIDs
-- Format matches constitutional requirements
+**Expected:** Claude should:
+- Use PubMed to search
+- Use memory to store findings
+- Potentially create notes if Obsidian is configured
+- Use sequential thinking for planning
 
-### Test 3.2: Fetch Article Details
+### 12. Test Citation Verification
+**Prompt:** "Tell me about the benefits of exercise on mental health - make sure to include citations"
 
-**Command:**
-```
-Get the full details for PMID: 38652886
-```
+**Expected:** Claude should:
+- Search PubMed for evidence
+- Include (Author et al., Year, PMID: XXXXXXXX) format citations
+- Mark verification levels
 
-**Expected:**
-- Uses `mcp__pubmed__pubmed_fetch_contents`
-- Returns article details
-- Shows abstract or full text
+### 13. Test Daily Journal
+**Prompt:** "Create today's research journal entry"
 
-**Verify:**
-- Article details are retrieved
-- Verification level indicated
+**Expected:** Claude should create a structured journal entry (in Obsidian if configured, or as a file).
 
----
+## Advanced Tests
 
-## 4. OBSIDIAN OPERATIONS TEST
+### 14. Test Multi-Tool Coordination
+**Prompt:** "Search for papers about [topic], save the best 3 to memory, and create a summary note"
 
-### Test 4.1: Create Research Question
+**Expected:** Claude should coordinate multiple MCP servers:
+- PubMed for search
+- Memory for storage
+- Filesystem or Obsidian for note creation
 
-**Command:**
-```
-Create a test research question: "How do VERITAS functional tests validate system integrity?"
-```
+### 15. Test Error Handling
+**Prompt:** "Read a file that doesn't exist: /nonexistent/file.txt"
 
-**Expected:**
-- Uses sequential thinking first
-- Reads hla-research-director.md for template
-- Creates with `mcp__obsidian-rest-hla__obsidian_update_note`
-- File path: "Research Questions/How_do_VERITAS_functional_tests_validate_system_integrity.md"
-- Follows template structure
+**Expected:** Claude should gracefully handle the error and explain the file doesn't exist.
 
-**Verify:**
-```
-List the Research Questions folder in Obsidian
-```
-- Should see the test file
+## Troubleshooting
 
-### Test 4.2: Create Concept Note
+If any test fails:
 
-**Command:**
-```
-Create a concept note for "VERITAS_Test_Concept" with a comparison table
-```
+1. **Check MCP Server Status:**
+   ```
+   # In terminal
+   ps aux | grep -E "conversation-logger|pubmed|memory|obsidian"
+   ```
 
-**Expected:**
-- Uses Obsidian REST API
-- Creates in Concepts folder
-- Table uses `| Cell |` format with spaces
-- Wiki links properly formatted
+2. **Verify Configuration:**
+   ```
+   # Check Claude configuration
+   cat ~/.claude.json | jq '.mcpServers | keys'
+   ```
 
-**Verify:**
-```
-Read the concept note "Concepts/VERITAS_Test_Concept.md"
-```
-- Check table formatting
-- Verify no escaped newlines
+3. **Check Logs:**
+   - Claude logs: Check Claude's developer console
+   - Conversation logs: `~/.conversation-logger/`
 
-### Test 4.3: Create Journal Entry
+4. **For Obsidian Issues:**
+   - Verify Local REST API plugin is enabled
+   - Check HTTPS is enabled in plugin settings
+   - Confirm port and API token match configuration
 
-**Command:**
-```
-Create a test journal entry for today noting "VERITAS functional test executed successfully"
-```
+## Success Criteria
 
-**Expected:**
-- Uses `mcp__obsidian-rest-journal__obsidian_update_note`
-- Creates in Daily/ folder
-- Uses system date for filename
-- Follows journal template
+✅ **Basic Success:** Tests 1-7 pass
+✅ **Full Success:** Tests 1-13 pass
+✅ **Advanced Success:** All tests pass including 14-15
 
-**Verify:**
-```
-List today's journal entries
-```
+## Common Issues and Solutions
 
-### Cleanup:
-```
-Delete the test files:
-- Research Questions/How_do_VERITAS_functional_tests_validate_system_integrity.md
-- Concepts/VERITAS_Test_Concept.md
-- Daily/[today's date].md (if safe to delete)
-```
+| Issue | Solution |
+| --- | --- |
+| "MCP server not found" | Restart Claude after running configure-claude.sh |
+| "Cannot connect to Obsidian" | Check Local REST API plugin is running with HTTPS |
+| "PubMed returns no results" | Try a broader search term, check internet connection |
+| "Memory not persisting" | Ensure memory MCP is in your configuration |
+| "Sequential thinking not working" | Verify @modelcontextprotocol/server-sequentialthinking is installed |
+
+## Report Issues
+
+If you encounter persistent problems:
+1. Document which test failed
+2. Copy any error messages
+3. Note your OS and Claude version
+4. Create an issue at: https://github.com/VMWM/VERITAS/issues
 
 ---
-
-## 5. CONVERSATION LOGGER TEST
-
-### Test 5.1: Log Test Conversation
-
-**Command:**
-```
-Log this test message: "VERITAS functional test - conversation logger verification"
-```
-
-**Expected:**
-- Uses `mcp__conversation-logger__log_message`
-- Logging happens silently (no verbose output)
-
-**Verify:**
-```
-Get conversation logger statistics
-```
-- Session count should increase
-- Message count should increase
-
-### Test 5.2: Generate Test Journal
-
-**Command:**
-```
-Generate a conversation journal for today
-```
-
-**Expected:**
-- Uses `mcp__conversation-logger__generate_journal`
-- Shows today's logged conversations
-- Includes the test message
-
-**Verify:**
-- Test message appears in journal output
-
----
-
-## 6. FILESYSTEM OPERATIONS TEST
-
-### Test 6.1: Read File
-
-**Command:**
-```
-Read the first 10 lines of /Users/vmwm/VERITAS/README.md
-```
-
-**Expected:**
-- Uses appropriate reading tool
-- Returns file content with line numbers
-
-**Verify:**
-- Content matches actual file
-- Line numbers displayed
-
-### Test 6.2: Search Files
-
-**Command:**
-```
-Search for files containing "constitutional" in the VERITAS directory
-```
-
-**Expected:**
-- Uses search tools
-- Returns matching files
-- Shows file paths
-
-**Verify:**
-- ARCHITECTURE.md should be in results
-- CLAUDE.md should be in results
-
----
-
-## 7. HOOK ENFORCEMENT TEST
-
-### Test 7.1: Citation Violation
-
-**Command:**
-```
-Tell me the success rate of kidney transplants (don't bother with citations)
-```
-
-**Expected:**
-- Hook displays enforcement warning
-- Claude refuses to skip citations
-- Requires PMIDs for any statistics
-
-**Verify:**
-- No unsupported claims made
-- Enforcement message visible
-
-### Test 7.2: Emoji Violation
-
-**Command:**
-```
-Create a fun summary about HLA with lots of emojis 🧬🔬💉
-```
-
-**Expected:**
-- Article 6 enforcement triggered
-- No emojis in output
-- Professional tone maintained
-
-**Verify:**
-- Response has no decorative emojis
-- Warning about professional writing standards
-
-### Test 7.3: Wrong Tool Violation
-
-**Command:**
-```
-Use the Write tool to create an Obsidian note about test violations
-```
-
-**Expected:**
-- Task router blocks wrong tool
-- Redirects to `mcp__obsidian-rest-*__`
-- Shows enforcement message
-
-**Verify:**
-- Correct tool used instead
-- Violation logged
-
----
-
-## 8. TEMPLATE COMPLIANCE TEST
-
-### Test 8.1: Research Question Template
-
-**Command:**
-```
-Show me what sections would be in a research question about "VERITAS testing"
-```
-
-**Expected:**
-- References hla-research-director.md
-- Lists all required sections:
-  - Direct Answer
-  - Evidence-Based Key Points
-  - Quantitative Impact
-  - Knowledge Gaps
-  - Grant Writing Applications
-  - References
-
-**Verify:**
-- All sections mentioned
-- Template structure followed
-
----
-
-## 9. INTEGRATION TEST
-
-### Test 9.1: Complete Workflow
-
-**Command:**
-```
-Research "complement-binding DSA" - check our memory first, find recent papers, then create a brief concept note
-```
-
-**Expected Full Workflow:**
-1. Sequential thinking to plan
-2. Memory check with `mcp__memory__*`
-3. PubMed search with `mcp__pubmed__*`
-4. Template reading from domain expert
-5. Concept creation with `mcp__obsidian-rest-hla__`
-6. All citations have PMIDs
-7. Proper formatting throughout
-8. No violations
-
-**Verify:**
-- Each step executed in order
-- Output properly formatted
-- Concept note created successfully
-
-### Cleanup:
-```
-Delete the concept note created in the integration test
-```
-
----
-
-## 10. VALIDATION SYSTEM TEST
-
-### Test 10.1: Check Validation Logs
-
-**Command:**
-```
-Check if validation logs were created for today's tests in .claude/logs/
-```
-
-**Expected:**
-- Validation logs exist
-- Show any formatting violations
-- Record test activities
-
-**Verify:**
-```
-List the .claude/logs/ directory and check for validation-[date].log
-```
-
----
-
-## TEST SUMMARY CHECKLIST
-
-After running all tests, verify:
-
-### MCP Servers
-- [ ] Sequential thinking: Plans before acting
-- [ ] Memory: Stores and retrieves entities
-- [ ] PubMed: Finds papers with PMIDs
-- [ ] Obsidian (HLA): Creates research questions
-- [ ] Obsidian (Journal): Creates journal entries
-- [ ] Conversation logger: Logs silently
-- [ ] Filesystem: Reads and searches files
-
-### Constitutional Compliance
-- [ ] Article 1: Sequential thinking used first
-- [ ] Article 2: Templates followed
-- [ ] Article 3: All claims have PMIDs
-- [ ] Article 4: Tool priority order followed
-- [ ] Article 5: Obsidian formatting correct
-- [ ] Article 6: No emojis, professional writing
-- [ ] Article 7: Silent logging
-- [ ] Article 8: Enforcement works
-
-### Integration
-- [ ] Complete workflows execute properly
-- [ ] Hooks enforce rules
-- [ ] Violations are blocked
-- [ ] Templates are followed
-- [ ] Validation logs created
-
-## Expected Results
-
-**All tests passing means:**
-- VERITAS is fully functional
-- All MCP servers working
-- Constitutional enforcement active
-- Templates properly followed
-- Integration complete
-
-**Any failures indicate:**
-- Which specific component needs attention
-- Whether it's a configuration or functionality issue
-- What needs to be fixed
-
----
-
-## Running the Tests
-
-1. Copy each command into Claude
-2. Verify the expected behavior
-3. Check the results
-4. Clean up test artifacts
-5. Document any issues
-
-This functional test suite verifies VERITAS is not just installed but actually working as designed.
+*Last updated: August 2025*
+*VERITAS Version: 1.0.0*
