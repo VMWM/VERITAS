@@ -139,14 +139,71 @@ PROJECT_DIR=${PROJECT_DIR:-$VERITAS_DIR}
 
 echo ""
 echo "Obsidian Configuration (press Enter to skip if not using Obsidian):"
-read -p "  HLA/Primary vault port (default: 27124): " HLA_PORT
-HLA_PORT=${HLA_PORT:-27124}
+echo ""
 
-if [ -n "$HLA_PORT" ]; then
-    read -p "  HLA/Primary vault API key: " HLA_KEY
-    read -p "  Journal vault port (default: 27125): " JOURNAL_PORT
-    JOURNAL_PORT=${JOURNAL_PORT:-27125}
-    read -p "  Journal vault API key: " JOURNAL_KEY
+# Arrays to store vault configurations
+VAULT_NAMES=()
+VAULT_PORTS=()
+VAULT_TOKENS=()
+
+# Ask about first vault
+read -p "Do you use Obsidian with MCP? (y/n): " USE_OBSIDIAN
+
+if [[ "$USE_OBSIDIAN" =~ ^[Yy]$ ]]; then
+    VAULT_COUNT=0
+    DEFAULT_PORT=27124
+    
+    while true; do
+        VAULT_COUNT=$((VAULT_COUNT + 1))
+        echo ""
+        echo "Vault #$VAULT_COUNT Configuration:"
+        echo "------------------------"
+        
+        if [ $VAULT_COUNT -eq 1 ]; then
+            read -p "  Vault name (e.g., 'main', 'research', 'hla'): " VAULT_NAME
+        else
+            read -p "  Vault name (or press Enter to finish): " VAULT_NAME
+        fi
+        
+        # If no name entered and not the first vault, we're done
+        if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -gt 1 ]; then
+            VAULT_COUNT=$((VAULT_COUNT - 1))
+            break
+        fi
+        
+        # First vault is required
+        if [ -z "$VAULT_NAME" ] && [ $VAULT_COUNT -eq 1 ]; then
+            echo "    Skipping Obsidian configuration"
+            VAULT_COUNT=0
+            break
+        fi
+        
+        VAULT_NAMES+=("$VAULT_NAME")
+        
+        SUGGESTED_PORT=$((DEFAULT_PORT + VAULT_COUNT - 1))
+        read -p "  Obsidian vault port (default: $SUGGESTED_PORT): " VAULT_PORT
+        VAULT_PORT=${VAULT_PORT:-$SUGGESTED_PORT}
+        VAULT_PORTS+=("$VAULT_PORT")
+        
+        read -p "  API token for '$VAULT_NAME' vault: " VAULT_TOKEN
+        VAULT_TOKENS+=("$VAULT_TOKEN")
+        
+        echo -e "${GREEN}✓ Vault '$VAULT_NAME' configured${NC}"
+        
+        # Ask if they want to add another vault
+        if [ $VAULT_COUNT -ge 1 ]; then
+            echo ""
+            read -p "Do you want to add another vault? (y/n): " ADD_MORE
+            if [[ ! $ADD_MORE =~ ^[Yy]$ ]]; then
+                break
+            fi
+        fi
+    done
+    
+    if [ $VAULT_COUNT -gt 0 ]; then
+        echo ""
+        echo -e "${GREEN}Configured $VAULT_COUNT vault(s)${NC}"
+    fi
 fi
 
 # Create the VERITAS servers configuration
@@ -180,38 +237,29 @@ create_veritas_servers() {
   "sequential-thinking": {
     "command": "npx",
     "args": ["@modelcontextprotocol/server-sequentialthinking"]
-  }$(if [ -n "$HLA_KEY" ]; then echo ","; fi)
+  }$(if [ ${#VAULT_NAMES[@]} -gt 0 ]; then echo ","; fi)
 EOF
 
-    if [ -n "$HLA_KEY" ]; then
+    # Add vault configurations dynamically
+    for i in "${!VAULT_NAMES[@]}"; do
+        # Add comma before all but the first vault
+        if [ $i -gt 0 ]; then
+            echo ","
+        fi
+        
         cat << EOF
-  "obsidian-rest-hla": {
+  "obsidian-rest-${VAULT_NAMES[$i]}": {
     "command": "npx",
     "args": ["obsidian-mcp-server"],
     "env": {
-      "OBSIDIAN_API_KEY": "$HLA_KEY",
-      "OBSIDIAN_BASE_URL": "https://127.0.0.1:$HLA_PORT",
-      "OBSIDIAN_VERIFY_SSL": "false",
-      "OBSIDIAN_ENABLE_CACHE": "true"
-    }
-  }$(if [ -n "$JOURNAL_KEY" ]; then echo ","; fi)
-EOF
-    fi
-
-    if [ -n "$JOURNAL_KEY" ]; then
-        cat << EOF
-  "obsidian-rest-journal": {
-    "command": "npx",
-    "args": ["obsidian-mcp-server"],
-    "env": {
-      "OBSIDIAN_API_KEY": "$JOURNAL_KEY",
-      "OBSIDIAN_BASE_URL": "https://127.0.0.1:$JOURNAL_PORT",
+      "OBSIDIAN_API_KEY": "${VAULT_TOKENS[$i]}",
+      "OBSIDIAN_BASE_URL": "https://127.0.0.1:${VAULT_PORTS[$i]}",
       "OBSIDIAN_VERIFY_SSL": "false",
       "OBSIDIAN_ENABLE_CACHE": "true"
     }
   }
 EOF
-    fi
+    done
 
     echo "}"
 }
