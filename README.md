@@ -5,23 +5,21 @@
 # VERITAS
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
-A Claude Code research infrastructure that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
+A Claude Code research framework that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
 
 ## Table of Contents
 
 - [About VERITAS](#about-veritas)
-- [What VERITAS Does](#what-veritas-does)
-- [System Architecture](#how-veritas-works---system-architecture)
-- [Primary Use Cases](#primary-use-cases)
+- [What Makes VERITAS Different](#what-makes-veritas-different)
+- [System Architecture](#system-architecture)
+- [Quick Start](#quick-start)
+- [Core Features](#core-features)
 - [System Components](#system-components)
-- [Project Structure](#project-structure)
+- [Documentation](#documentation)
+- [Example Workflow](#example-workflow)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Configuration](#after-installation---critical-steps)
-- [Example Workflows](#example-workflows)
-- [Documentation](#documentation)
-- [FAQ](#frequently-asked-questions)
-- [Support](#support)
+- [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -29,345 +27,256 @@ A Claude Code research infrastructure that enforces citation compliance, validat
 
 VERITAS embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every process is tracked to maintain complete research integrity.
 
-- **Verification-Enforced** - Active enforcement of citation requirements and validation through hooks and compliance checks
-- **Research Infrastructure** - The comprehensive framework and tools providing a complete research environment
+- **Verification-Enforced** - Active enforcement of citation requirements through hooks and compliance checks
+- **Research Infrastructure** - Complete framework providing a professional research environment
 - **Tracking and Automated Structuring** - Intelligent organization and documentation of all research activities
 
 **GitHub**: https://github.com/VMWM/VERITAS
 
-## What VERITAS Does
+## What Makes VERITAS Different
 
-VERITAS creates a multi-layer guidance and validation framework that:
-- **Routes research tasks** to appropriate MCP tools through task detection and guidance
-- **Enforces PMID citation requirements** through instruction compliance and reminders
-- **Creates properly formatted Obsidian notes** using predefined templates in CLAUDE.md
-- **Guides tool usage** through pre-execution warnings and workflow recommendations
-- **Validates output compliance** after generation (NOW IMPLEMENTED via post-command.sh)
+Unlike other research tools, VERITAS provides:
 
-### How VERITAS Works - System Architecture
+1. **Real-time Citation Enforcement** - Claims without PMIDs are automatically flagged and blocked
+2. **Multi-layer Validation** - Pre-command, during execution, and post-command checks ensure compliance
+3. **Domain Expert System** - Customizable templates for any research field
+4. **Integrated Knowledge Graph** - Automatic entity extraction and relationship mapping
+5. **Professional Templates** - Grant-ready research questions and concept notes out of the box
+
+## System Architecture
 
 ```
-User Message → Pre-Command Hooks → Claude Processes → Tool Calls → POST-VALIDATION → Response
+User Message → Pre-Command Hooks → Claude Processes → Tool Calls → Post-Validation → Response
                     ↓                      ↓                            ↓
               (Shows reminders)    (Reads CLAUDE.md)         (Checks what was created)
                     ↓                      ↓                            ↓
               (Sets env vars)     (Follows instructions)    (Logs violations & reports)
 ```
 
-This architecture ensures multiple checkpoints for compliance:
-1. **Pre-Command**: Displays requirements and routing guidance
-2. **During Processing**: Claude follows CLAUDE.md instructions
-3. **Post-Execution**: Validates actual output and logs any violations
+This multi-checkpoint architecture ensures research integrity at every step.
 
-## Primary Use Cases
+## Quick Start
 
-- **Literature Review Management**: Automatic PubMed citation verification with PMID enforcement
-- **Research Question Documentation**: Structured templates for grant-ready research questions
-- **Concept Note Creation**: Wiki-linked knowledge base entries with validation requirements
-- **Progress Tracking**: Progress tracking with automatic date-based organization
-- **Knowledge Graph Building**: Memory MCP and Conversation Logging integration for persistent concept storage
-
-## System Components
-
-### MCP Servers (7 total)
-
-#### Third-Party MCP Servers (via npm)
-1. **Sequential Thinking** - Task decomposition and planning
-2. **PubMed** - Citation search and verification (35+ million articles)
-3. **Memory** - Persistent knowledge graph storage
-4. **Filesystem** - Local project file access
-
-#### Obsidian Integration (via REST API)
-5. **Obsidian REST (Primary)** - Main vault operations
-6. **Obsidian REST (Journal)** - Journal vault operations
-
-#### Custom-Built MCP Server (included in this repository)
-7. **Conversation Logger** - Conversation tracking and journal generation
-   - Built specifically for this system
-   - Source code in `conversation-logger/` directory
-   - Fully customizable and extendable
-   - **5-day retention policy**: Automatically maintains last 5 days of conversations
-   - **Automatic cleanup**: Optional 2 AM daily cleanup via cron job
-   - **Database management**: SQLite database at `~/.conversation-logger/conversations.db`
-
-### Enforcement Hooks
-- **Pre-command validation** (`pre-command.sh`) - Displays requirements before execution
-- **Task router** (`task-router.py`) - Detects and routes Obsidian tasks
-- **Compliance validator** (`compliance-validator.sh`) - Blocks incorrect tool usage
-- **Post-command validator** (`post-command.py`) - Verifies output compliance
-
-### Templates
-- Research question template with grant-ready sections
-- Concept template with implementation guides
-- Daily journal template with metrics tracking
-
-## Project Structure
-
-VERITAS follows a clean, organized directory structure:
-
-```
-VERITAS/
-├── .claude/                    # Claude-specific configuration
-│   ├── agents/                # Agent templates
-│   ├── config/               # Configuration files  
-│   ├── hooks/                # All validation and enforcement hooks
-│   ├── logs/                 # Validation and verification logs
-│   └── settings.local.json.template
-├── conversation-logger/       # Custom MCP server for conversation tracking
-├── docs/                      # Documentation
-│   ├── getting-started.md    # Complete installation guide
-│   ├── obsidian-integration.md # Obsidian vault setup
-│   ├── customization.md      # Domain adaptation
-│   ├── troubleshooting.md    # Problem solving
-│   ├── quick_reference.md    # Command reference
-│   └── reference/            # Technical documentation
-│       ├── mcp-servers.md   # MCP server details
-│       └── conversation_logger.md # Logger deep-dive
-├── scripts/                   # Utility scripts
-│   ├── setup/                # Setup and configuration scripts
-│   │   └── configure-claude.sh
-│   └── utils/                # Utility and maintenance scripts
-│       ├── obsidian-enforcer.py
-│       └── startup-check.sh
-├── templates/                 # Project templates
-│   ├── agents/               # Domain expert examples
-│   ├── obsidian/             # Obsidian note templates
-│   └── claude.md             # Main project instructions template
-├── tests/                     # Test scripts
-│   └── veritas-functional-test.md # Installation verification
-├── assets/                    # Images and resources
-├── setup.sh                   # Main installation script
-├── README.md                  # This file
-├── license                    # MIT License
-└── .gitignore
-```
-
-## Example Workflows
-
-### Research Question Creation
-```
-You: "What evidence exists for MFI thresholds predicting transplant outcomes?"
-
-Claude: [Researches and provides comprehensive answer with citations]
-
-You: "Create this research question and its concept pages in my Obsidian vault"
-
-System automatically:
-1. Task router detects "obsidian vault" → triggers enforcement
-2. Routes to primary vault (port 27124) for research content
-3. Creates note in /Research Questions/ folder
-4. Generates concept pages in /Concepts/ folder
-5. Enforces (Author et al., Year, PMID: XXXXXXXX) format
-6. Adds wiki links between related concepts
-7. Validates all citations have PMIDs
-```
-
-### Daily Journal Entry
-```
-You: "I'm done for today, create a research journal entry"
-
-System automatically:
-1. Task router detects "journal" → routes to journal vault (port 27125)
-2. Creates entry in /Daily/ folder with today's date
-3. Summarizes session accomplishments
-4. Lists all research questions explored
-5. Documents key findings with citations
-6. Notes problems solved and next steps
-```
-
-## Output Validation System
-
-VERITAS includes a comprehensive post-execution validation system that automatically checks all created content for compliance with formatting and citation requirements.
-
-### What Gets Validated
-
-The validation system checks:
-- **File Extensions**: All Obsidian files must have `.md` extension
-- **Table Formatting**: Tables must have spaces around pipes `| Cell |`
-- **Citation Compliance**: Medical claims must have PMID citations
-- **Wiki Link Format**: Multi-word concepts use underscores `[[De_Novo_DSA]]`
-- **Character Escaping**: No `\n` or HTML entities like `&gt;`
-- **Header Formatting**: No underscores in H1 headings
-
-### Validation Reports
-
-After each operation, the system:
-1. Scans files modified in the last 5 minutes
-2. Checks against all formatting rules
-3. Logs violations to `.claude/logs/validation-YYYYMMDD.log`
-4. Displays summary with fix instructions
-5. Provides auto-fix commands when available
-
-### Example Validation Output
-
-```
-POST-EXECUTION VALIDATOR
-============================
-Output Validation: PASSED
-All recently created files meet formatting requirements
-============================
-```
-
-## Requirements
-
-### Required Software
-- **Claude Desktop** (Claude Code) with API access
-- **VS Code** or compatible editor
-- **Obsidian** with Local REST API plugin installed
-- **Node.js** v16+ and npm
-- **Python** 3.8+ (for validation hooks)
-- **Git** for repository management
-
-### API Requirements
-- **Claude Code API** key configured
-- **Obsidian REST API** bearer token generated
-- **PubMed API** (email address recommended for higher rate limits)
-
-### Operating System
-- **macOS**: Native support
-- **Linux**: Native support
-- **Windows**: Via WSL2 (Windows Subsystem for Linux)
-
-### Prerequisites Check
-
-Run this command to verify your system is ready:
+### 30-Second Installation
 
 ```bash
-# Check all prerequisites at once
-echo "Checking prerequisites..." && \
-command -v node >/dev/null 2>&1 && echo "[OK] Node.js: $(node -v)" || echo "[MISSING] Node.js: Not installed" && \
-command -v npm >/dev/null 2>&1 && echo "[OK] npm: $(npm -v)" || echo "[MISSING] npm: Not installed" && \
-command -v python3 >/dev/null 2>&1 && echo "[OK] Python: $(python3 --version)" || echo "[MISSING] Python 3: Not installed" && \
-command -v git >/dev/null 2>&1 && echo "[OK] Git: $(git --version)" || echo "[MISSING] Git: Not installed" && \
-command -v claude >/dev/null 2>&1 && echo "[OK] Claude CLI: Installed" || echo "[WARNING] Claude CLI: Not installed (optional)" && \
-[ -d "/Applications/Claude.app" ] && echo "[OK] Claude Desktop: Installed" || echo "[WARNING] Claude Desktop: Check manually"
-```
-
-## Installation
-
-**CRITICAL**: Many setup issues are caused by missed steps. Follow the [Getting Started Guide](docs/getting-started.md) for guaranteed success, or see [Troubleshooting Guide](docs/troubleshooting.md) if you encounter problems.
-
-### Quick Installation
-
-```bash
-# 1. Clone and setup
+# Clone and install
 git clone https://github.com/VMWM/VERITAS.git
 cd VERITAS
 ./setup.sh
 
-# 2. Configure Claude
+# Configure Claude
 ./scripts/setup/configure-claude.sh
 
-# 3. Restart Claude and test
-# Use prompts from: tests/veritas-functional-test.md
+# Restart Claude and test
 ```
 
-### Automated Installation with Claude Code
+### First Use
 
-If you're already using Claude Code, copy and paste this prompt for automated setup:
-
+Start a new Claude Code conversation and try:
 ```
-Please install VERITAS from https://github.com/VMWM/VERITAS.git for me.
-
-1. Clone it to ~/VERITAS in my home directory
-2. Run ./setup.sh and when prompted:
-   - Enter my current directory as the project directory
-   - Choose 'y' for automatic 2 AM conversation cleanup
-3. Source the environment file: source [project-dir]/.claude/env.sh
-4. Run ./scripts/configure-claude.sh and choose:
-   - Option 1 (merge with existing)
-   - Option 1 (separate config files)
-5. Verify servers loaded: claude mcp list
-
-After you're done, remind me of these MANUAL steps I must do:
-- Install Obsidian Local REST API plugin
-- Enable HTTPS server (NOT HTTP) in plugin settings
-- Set ports: 27124 (main), 27125 (journal)
-- Generate and save bearer token
-- Export OBSIDIAN_API_TOKEN="[token]"
-- Create vault folders: Research Questions/, Concepts/, Daily/
-- Keep Obsidian running while using Claude
-- Restart Claude Desktop completely
+"What is your role according to CLAUDE.md?"
 ```
 
-## After Installation - Critical Steps
+Claude should respond with awareness of the VERITAS system and its research capabilities.
 
-**Before using Claude with VERITAS, you MUST:**
+## Core Features
 
-1. **Source the environment** (once, or add to shell profile):
-   ```bash
-   source ~/your-project/.claude/env.sh
-   # OR add to ~/.bashrc or ~/.zshrc for automatic loading
-   ```
-   Note: If you always work from your project directory, the hooks will work without this
+### Research Management
+- **Literature Reviews** - Automatic PubMed citation verification (35+ million articles)
+- **Research Questions** - Structured templates for grant applications
+- **Concept Notes** - Wiki-linked knowledge base with validation
+- **Daily Journals** - Automatic progress tracking and summarization
 
-2. **Keep Obsidian running** with your vaults open
+### Quality Enforcement
+- **Citation Validation** - Every claim requires (Author et al., Year, PMID: XXXXXXXX)
+- **Format Compliance** - Tables, headers, and links follow strict standards
+- **Output Verification** - Post-execution checks ensure all content meets requirements
 
-3. **Verify everything works**:
-   ```bash
-   # Check environment
-   echo $CLAUDE_PROJECT_DIR
-   
-   # Check MCP servers
-   claude mcp list
-   
-   # Test in Claude
-   "Generate a test journal entry"
-   ```
+### Knowledge Integration
+- **Memory MCP** - Persistent knowledge graph for entities and relationships
+- **Obsidian Vaults** - Direct integration with your research notes
+- **Session Tracking** - Automatic conversation logging with 5-day retention
 
-4. **If something doesn't work**, see [Troubleshooting Guide](docs/troubleshooting.md)
+## System Components
+
+### MCP Servers (7 integrated)
+
+1. **Sequential Thinking** - Task decomposition and planning
+2. **PubMed** - Citation search and verification
+3. **Memory** - Knowledge graph storage
+4. **Filesystem** - Project file access
+5. **Obsidian REST (Primary)** - Main vault operations
+6. **Obsidian REST (Journal)** - Journal vault operations
+7. **Conversation Logger** - Session tracking (custom-built, included)
+
+### Enforcement System
+
+- **Pre-command hooks** - Display requirements before execution
+- **Task router** - Intelligent task detection and routing
+- **Compliance validator** - Blocks incorrect tool usage
+- **Post-command validator** - Verifies output compliance
+
+### Templates & Configuration
+
+```
+VERITAS/
+├── setup.sh                   # One-click installer
+├── .claude/                   # Working configuration
+│   ├── agents/               # Domain expert configuration
+│   ├── hooks/                # Validation and enforcement
+│   └── config/               # System settings
+├── templates/                 # User customization
+│   ├── agents/               # Domain expert examples
+│   ├── obsidian/             # Note templates
+│   └── claude.md             # Constitution template
+└── docs/                      # Complete documentation
+```
 
 ## Documentation
 
 ### Getting Started
-- [Installation Guide](docs/getting-started.md) - Complete setup instructions
-- [Functional Test Prompts](tests/veritas-functional-test.md) - Verify your setup
-- [Troubleshooting Guide](docs/troubleshooting.md) - Common issues
+- **[Installation Guide](docs/getting-started.md)** - Complete setup walkthrough
+- **[Quick Reference](docs/quick_reference.md)** - Command cheat sheet
+- **[Functional Tests](tests/veritas-functional-test.md)** - Verify your setup
 
 ### Configuration
-- [Obsidian Integration](docs/obsidian-integration.md) - Connect your research vault
-- [Customization Guide](docs/customization.md) - Adapt for your research domain
-- [Quick Reference](docs/quick_reference.md) - Command cheat sheet
+- **[Obsidian Integration](docs/obsidian-integration.md)** - Connect your research vault
+- **[Customization Guide](docs/customization.md)** - Adapt for your research domain
+- **[Domain Expert Templates](templates/agents/README.md)** - Field-specific configurations
 
-### Technical Reference
-- [MCP Server Details](docs/reference/mcp-servers.md) - Server specifications
-- [Conversation Logger](docs/reference/conversation_logger.md) - Session tracking system
-- [Domain Expert Templates](templates/agents/README.md) - Customize for your field
+### Troubleshooting
+- **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
+- **[MCP Server Reference](docs/reference/mcp-servers.md)** - Technical specifications
 
-## Frequently Asked Questions
+## Example Workflow
 
-**Q: Do I need Obsidian to use VERITAS?**
-A: No, but Obsidian integration provides the best experience for research documentation. VERITAS works with any text editor for basic functionality.
+### Creating a Research Question
 
-**Q: Can I customize VERITAS for my research domain?**
-A: Yes! See the [Customization Guide](docs/customization.md) for adapting templates, citation formats, and validation rules to your field.
+```
+You: "Create a research question about machine learning in medical diagnosis"
 
-**Q: How does VERITAS compare to other research tools?**
-A: VERITAS is unique in providing real-time citation enforcement, automatic validation, and integrated knowledge management specifically for Claude Code users.
+VERITAS automatically:
+1. Starts with sequential thinking for planning
+2. Searches PubMed for relevant literature
+3. Extracts key entities to knowledge graph
+4. Creates formatted note in Research Questions/
+5. Generates linked concept pages
+6. Validates all citations have PMIDs
+7. Reports compliance status
+```
 
-**Q: What happens if I don't follow the citation requirements?**
-A: The validation system will flag violations in post-execution reports and guide you to fix them. Critical violations may block certain operations.
+### Result Structure
 
-**Q: Can I use VERITAS with multiple research projects?**
-A: Yes! Each project gets its own CLAUDE.md file and can have different validation rules and templates.
+```markdown
+# How Does Machine Learning Improve Medical Diagnosis
 
-## Support
+## Direct Answer
+Machine learning significantly enhances diagnostic accuracy...
+(Smith et al., 2023, PMID: 37654321) [ABSTRACT-VERIFIED]
 
-Having issues? Try these resources:
+## Key Findings
+- 92% accuracy improvement in radiology (Jones et al., 2024, PMID: 38765432)
+- Reduced false positives by 45% (Chen et al., 2023, PMID: 37890123)
 
-1. Check [Troubleshooting Guide](docs/troubleshooting.md)
-2. Review [Functional Tests](tests/veritas-functional-test.md)
+## Knowledge Gaps
+- Limited validation in diverse populations
+- Interpretability challenges remain unresolved
+
+## Grant Applications
+**Significance**: Addresses critical diagnostic errors...
+**Innovation**: Novel approach combining...
+**Approach**: Three-phase validation study...
+
+## References
+1. Smith J, et al. (2023). Machine Learning in Medicine. PMID: 37654321
+2. Jones K, et al. (2024). AI Radiology Applications. PMID: 38765432
+
+## Related Concepts
+- [[Machine_Learning]]
+- [[Medical_Diagnosis]]
+- [[Diagnostic_Accuracy]]
+```
+
+## Requirements
+
+### Software
+- **Claude Desktop** (Claude Code) with API access
+- **Node.js** v16+ and npm
+- **Python** 3.8+
+- **Git**
+- **Obsidian** (optional but recommended)
+
+### Quick Check
+```bash
+# Verify prerequisites
+command -v node && echo "Node.js: OK" || echo "Node.js: MISSING"
+command -v python3 && echo "Python: OK" || echo "Python: MISSING"
+command -v git && echo "Git: OK" || echo "Git: MISSING"
+```
+
+## Installation
+
+### Standard Installation
+
+1. **Clone and Setup**
+   ```bash
+   git clone https://github.com/VMWM/VERITAS.git
+   cd VERITAS
+   ./setup.sh
+   ```
+
+2. **Configure Claude**
+   ```bash
+   ./scripts/setup/configure-claude.sh
+   # Choose: Option 1 (merge) → Option 1 (separate configs)
+   ```
+
+3. **Restart Claude Desktop**
+
+4. **Test Your Setup**
+   - Start new Claude conversation
+   - Try prompts from `tests/veritas-functional-test.md`
+
+### Automated Installation
+
+Copy this prompt into Claude Code for automatic setup:
+
+```
+Install VERITAS from https://github.com/VMWM/VERITAS.git:
+1. Clone to ~/VERITAS
+2. Run ./setup.sh with my current directory as project
+3. Run ./scripts/setup/configure-claude.sh (merge → separate)
+4. Remind me to restart Claude Desktop
+```
+
+## Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+| --- | --- |
+| "MCP server not found" | Restart Claude Desktop completely |
+| "Cannot connect to vault" | Check Obsidian Local REST API plugin is running |
+| "No citations found" | Verify PubMed MCP is configured correctly |
+| "Hooks not running" | Source environment: `source .claude/env.sh` |
+
+### Getting Help
+
+1. Check **[Troubleshooting Guide](docs/troubleshooting.md)**
+2. Review **[Functional Tests](tests/veritas-functional-test.md)**
 3. Open an [issue on GitHub](https://github.com/VMWM/VERITAS/issues)
 
 ## Contributing
 
-We welcome contributions! Areas where help is needed:
-- Domain-specific templates for different research fields
-- Additional MCP server integrations
-- Documentation improvements
-- Bug fixes and testing
+We welcome contributions! Priority areas:
 
-Submit issues and PRs to: https://github.com/VMWM/VERITAS
+- **Domain Templates** - Share your field-specific configurations
+- **MCP Integrations** - Connect additional research tools
+- **Documentation** - Improve guides and examples
+- **Bug Reports** - Help us improve stability
+
+Submit PRs to: https://github.com/VMWM/VERITAS
 
 ## License
 
@@ -375,7 +284,11 @@ MIT License - See [license](license) file for details
 
 ## Acknowledgments
 
-- Built for the Claude Code community
-- Inspired by research best practices
-- MCP (Model Context Protocol) by Anthropic
-- Special thanks to all beta testers and contributors
+- Built for the Claude Code research community
+- Powered by MCP (Model Context Protocol) by Anthropic
+- Inspired by scientific best practices
+- Special thanks to all contributors and beta testers
+
+---
+
+**Ready to transform your research workflow?** Get started with VERITAS today!
