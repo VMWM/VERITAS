@@ -76,11 +76,10 @@ echo -e "${GREEN}✓ Sequential Thinking MCP will run with npx${NC}"
 echo ""
 
 # PubMed MCP (using cyanheads version to avoid debug output issues)
-echo "Installing PubMed MCP (cyanheads version)..."
-echo "  (Note: Deprecation warnings are expected and safe to ignore)"
+echo "Installing PubMed MCP..."
 npm install -g @cyanheads/pubmed-mcp-server --loglevel=error
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ PubMed MCP (cyanheads) installed${NC}"
+    echo -e "${GREEN}✓ PubMed MCP installed${NC}"
 else
     echo -e "${RED}✗ PubMed MCP installation failed${NC}"
     echo "This is a critical component. Please fix and re-run setup."
