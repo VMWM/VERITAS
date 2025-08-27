@@ -717,9 +717,9 @@ if [ -f "$CLAUDE_DESKTOP_CONFIG" ] || [ -f "$CLAUDE_CLI_CONFIG" ]; then
     
     echo ""
     echo "How would you like to proceed?"
-    echo "1) Merge VERITAS servers with existing (recommended)"
-    echo "2) Replace entire configuration (will backup existing)"
-    echo "3) Skip Claude configuration"
+    echo "1) Backup and merge VERITAS servers with existing (recommended)"
+    echo "2) Backup and replace entire configuration"
+    echo "3) Cancel (do not modify configurations)"
     echo ""
     read -p "Choose an option (1-3): " CONFIG_CHOICE
     
@@ -728,7 +728,7 @@ if [ -f "$CLAUDE_DESKTOP_CONFIG" ] || [ -f "$CLAUDE_CLI_CONFIG" ]; then
         2) CONFIG_MODE="replace" ;;
         3) CONFIG_MODE="skip" ;;
         *) 
-            echo -e "${RED}Invalid choice. Skipping configuration.${NC}"
+            echo -e "${RED}Invalid choice. Cancelling configuration.${NC}"
             CONFIG_MODE="skip"
             ;;
     esac
@@ -822,9 +822,9 @@ echo "Configuration: Medical research with PMID enforcement"
 echo ""
 
 if [ "$CONFIG_MODE" = "skip" ]; then
-    echo -e "${YELLOW}Claude configuration was skipped.${NC}"
+    echo -e "${YELLOW}Claude configuration was cancelled.${NC}"
     echo ""
-    echo "To configure Claude manually, add the MCP servers from:"
+    echo "To configure Claude later, run:"
     echo "  $VERITAS_DIR/install/scripts/configure-claude.sh"
     echo ""
 elif [ "$CONFIG_MODE" = "merge" ]; then
