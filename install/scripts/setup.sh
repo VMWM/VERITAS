@@ -398,7 +398,24 @@ fi
 echo ""
 echo "Installing MCP servers..."
 
+# Get PubMed email for NCBI API compliance
+echo ""
+echo "PubMed Configuration"
+echo "--------------------"
+echo "NCBI requires an email address for API access (prevents rate limiting)."
+echo "Enter your email for PubMed API access:"
+read -r PUBMED_EMAIL
+
+# Validate email format (basic check)
+if [[ ! "$PUBMED_EMAIL" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+    echo -e "${YELLOW}Warning: Email format appears invalid. Using default.${NC}"
+    PUBMED_EMAIL="user@example.com"
+fi
+
+echo -e "${GREEN}[OK] PubMed email configured: $PUBMED_EMAIL${NC}"
+
 # Install PubMed MCP globally for reliability
+echo ""
 echo "Installing PubMed MCP (this may take a moment)..."
 npm install -g @cyanheads/pubmed-mcp-server --loglevel=error
 if [ $? -eq 0 ]; then
@@ -534,6 +551,9 @@ cat > "$ENV_FILE" << EOF
 
 export CLAUDE_PROJECT_DIR="$PROJECT_DIR"
 export ENFORCE_OBSIDIAN_MCP=1
+
+# PubMed Configuration
+export PUBMED_EMAIL="$PUBMED_EMAIL"
 EOF
 
 # Add vault configurations if any were provided
@@ -678,7 +698,10 @@ cat << EOF
       "args": ["@sequentialthinking/sequential-thinking-mcp"]
     },
     "pubmed": {
-      "command": "pubmed-mcp-server"
+      "command": "pubmed-mcp-server",
+      "env": {
+        "PUBMED_EMAIL": "$PUBMED_EMAIL"
+      }
     },
     "memory": {
       "command": "npx",
