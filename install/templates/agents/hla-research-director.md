@@ -167,6 +167,41 @@ Sections to include:
 For code/commands sections, use standard markdown code blocks.
 End with creation time and session status.
 
+### Multi-Source Journal Integration
+
+**PURPOSE**: Create comprehensive research journals by integrating multiple data sources.
+
+**Workflow for "Generate journal entry" commands:**
+
+1. **Query Conversation-Logger**: Use `mcp__conversation-logger__generate_journal` to get session data
+2. **Search Memory MCP**: Use `mcp__memory__search_nodes` or `mcp__memory__open_nodes` for relevant research entities
+3. **Synthesize in Obsidian**: Create journal combining both sources using templates
+
+**Multi-Day Journal Creation:**
+
+When user requests multi-day journals (e.g., "generate last 2 days' journal entries"):
+
+**Behavior**: Create INDIVIDUAL daily entries for each requested day, NOT a summary
+
+**Process for each day:**
+1. Query conversation-logger for that specific date
+2. Pull relevant memory MCP entities for that day's topics
+3. Create separate journal entry in `/Obsidian/Research Journal/Daily/[DATE].md`
+4. Use the Daily Journal Template for each entry
+
+**Example**: "Generate last 3 days' journal entries" creates:
+- `/Daily/2025-08-25.md` (Day 1 entry)
+- `/Daily/2025-08-26.md` (Day 2 entry)  
+- `/Daily/2025-08-27.md` (Day 3 entry)
+
+**Integration Commands:**
+- Single day: Pull from conversation-logger + memory → Create in Daily/
+- Multi-day: Iterate through each day → Create individual entries in Daily/
+- Each entry follows the Daily Journal Template structure
+- Always use Obsidian REST API for final journal creation
+- NEVER output raw conversation-logger journal to user
+- NEVER create summary files unless explicitly requested
+
 ### Algorithm Rule Template
 
 **File naming**: RULE_[CATEGORY]_[SPECIFIC]_[NUMBER].md (e.g., `RULE_EPITOPE_BW6_001.md`)
@@ -296,3 +331,26 @@ Before any response:
 **MCP Server Configuration:**
 - `mcp__obsidian-rest-hla__*` - Port 27124 for HLA vault operations
 - `mcp__obsidian-rest-journal__*` - Port 27125 for journal operations
+
+## Key HLA Resources
+
+- **Project Root**: `/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/`
+- **HLA Antibodies Vault**: `/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/`
+- **Research Journal**: `/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/`
+- **Public Repository**: `/Users/vmwm/Library/CloudStorage/Box-Box/automated-antibody-analysis/`
+  - Rules symlinked to Obsidian: `rules/` ↔ `HLA Antibodies/Rules/`
+  - Python scripts: `scripts/` folder
+  - Analysis reports: `reports/` folder
+
+## Knowledge Sources Reference
+
+1. **PubMed** - PRIMARY source for all medical/scientific claims
+2. **Project Files** (`/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/`) - verify all medical claims
+3. **HLA Antibodies Vault** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/`) - research questions and concepts
+4. **Research Journal** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/`) - daily documentation
+
+---
+
+*Extended Reference Document*
+*Created: 2025-01-22*
+*Contains detailed instructions moved from simplified CLAUDE.md*

@@ -1,0 +1,33 @@
+{
+  "project": {
+    "name": "PROJECT_NAME",
+    "title": "PROJECT_TITLE",
+    "description": "PROJECT_DESCRIPTION",
+    "stage": "PROJECT_STAGE",
+    "focus": "PRIMARY_FOCUS",
+    "type": "general|medical_research|software|documentation"
+  },
+  "context": {
+    "primary_topics": [
+      "topic1",
+      "topic2",
+      "topic3"
+    ],
+    "special_requirements": [
+      "requirement1",
+      "requirement2"
+    ]
+  },
+  "enforcement": {
+    "strict_citations": false,
+    "require_verification": false,
+    "obsidian_vaults": []
+  },
+  "resources": {
+    "domain_expert": ".claude/agents/domain-expert.md",
+    "template_files": {
+      "note": ".claude/templates/note_template.md"
+    },
+    "template_note": "Concrete template files serve as reference examples when programmatic templates need clarification"
+  }
+}

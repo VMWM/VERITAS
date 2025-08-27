@@ -1,6 +1,6 @@
 # MCP Installation Guide
 
-This guide documents all Model Context Protocol (MCP) servers required for the Research Agent system. All MCP servers are installed with the setup.sh run. This is for information purposes only.
+This guide documents all Model Context Protocol (MCP) servers required for the VERITAS system. All MCP servers are installed with the setup.sh run. This is for information purposes only.
 
 ## MCP Server Types
 
@@ -63,7 +63,7 @@ This is the only MCP server in this system that was developed from scratch rathe
 - Direct integration with Obsidian for journal posting
 
 **Why Custom-Built?**
-No existing MCP server provided the specific combination of conversation tracking, journal generation, and research-oriented features needed for this system. The Conversation Logger fills this gap with functionality tailored to research documentation workflows.
+No existing MCP server provided the specific combination of conversation tracking, journal generation, and research-oriented features needed for VERITAS. The Conversation Logger fills this gap with functionality tailored to research documentation workflows.
 
 ## Configuration in Claude Desktop
 
@@ -93,7 +93,7 @@ After installation, add to your Claude Desktop configuration:
       "command": "npx",
       "args": ["@modelcontextprotocol/server-filesystem", "/path/to/project"]
     },
-    "obsidian-rest-hla": {
+    "obsidian-rest-primary": {
       "command": "npx",
       "args": ["@modelcontextprotocol/server-rest", 
                "--base-url", "https://127.0.0.1:27124",

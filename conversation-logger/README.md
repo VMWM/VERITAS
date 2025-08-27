@@ -1,6 +1,30 @@
 # Conversation Logger MCP Server
 
-A Model Context Protocol (MCP) server that provides persistent conversation logging, session tracking, and journal generation capabilities for Claude Desktop and Claude CLI.
+A custom Model Context Protocol (MCP) server that provides persistent conversation logging, session tracking, and journal generation capabilities for Claude Desktop and Claude CLI.
+
+## Why This Server is Special
+
+Unlike other MCP servers used by VERITAS (pubmed, memory, sequential-thinking, etc. which run via `npx`), conversation-logger is:
+
+1. **Custom-built for VERITAS** - Not available on npm registry, developed specifically for research integrity
+2. **Runs as a shared service** - One instance serves all your VERITAS projects
+3. **Lives in VERITAS root** - Not copied to individual projects during setup
+4. **Requires manual configuration** - Must be added to Claude Desktop settings with absolute path
+5. **Stateful with database** - Maintains SQLite database of all conversations
+
+### Key Architecture Difference
+
+```
+VERITAS/
+├── conversation-logger/    # RUNS FROM HERE (shared service)
+│   ├── index.js           # Server stays here
+│   └── data/              # Database stays here
+└── install/               # COPIED TO PROJECTS
+    ├── hooks/             # Copied to each project
+    └── templates/         # Copied to each project
+```
+
+**Important**: This server is NOT in `/install/` because it's not meant to be copied. It runs as a centralized service from the VERITAS directory, similar to how a database server works.
 
 ## Overview
 

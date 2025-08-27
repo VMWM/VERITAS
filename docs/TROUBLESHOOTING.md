@@ -218,7 +218,7 @@ curl -k https://127.0.0.1:27124/vault/ \
 ### View Claude Logs
 
 **Desktop**:
-- View ’ Developer Tools ’ Console
+- View ï¿½ Developer Tools ï¿½ Console
 
 **CLI**:
 ```bash
@@ -265,7 +265,7 @@ cp ~/Library/Application\ Support/Claude/claude_desktop_config.json ~/claude.bac
 
 # Re-run configuration
 cd ~/VERITAS
-./scripts/configure-claude.sh
+./install/scripts/configure-claude.sh
 ```
 
 ### Complete Reset
@@ -273,12 +273,13 @@ cd ~/VERITAS
 ```bash
 # Full reset (preserves backups)
 cd ~/VERITAS
-./scripts/reset-veritas.sh  # If available
+# Reset script not included - manually clean up
 
 # Or manually:
 rm -rf ~/.claude/logs/*
 rm -rf ~/.conversation-logger/active
-# Re-run setup.sh
+# Re-run setup from VERITAS directory
+./install/scripts/setup.sh
 ```
 
 ## Getting Additional Help
@@ -290,7 +291,7 @@ rm -rf ~/.conversation-logger/active
 
 2. **Run Diagnostics**:
    ```bash
-   ./scripts/diagnose.sh  # If available
+   ./tests/verify-installation.sh  # Run verification
    ```
 
 3. **Report Issue** with:

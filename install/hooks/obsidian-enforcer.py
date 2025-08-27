@@ -14,15 +14,10 @@ class ObsidianEnforcer:
     """Enforces Obsidian MCP usage for vault operations"""
     
     def __init__(self):
-        # Get vault paths from environment or use defaults
-        import os
-        base_vault = os.environ.get('OBSIDIAN_VAULT_PATH', 'Obsidian/Vault')
-        journal_vault = os.environ.get('OBSIDIAN_JOURNAL_PATH', 'Obsidian/Journal')
-        
         self.vault_paths = {
-            "research_questions": f"{base_vault}/Research Questions/",
-            "concepts": f"{base_vault}/Concepts/",
-            "journal": f"{journal_vault}/Daily/"
+            "research_questions": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/",
+            "concepts": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/",
+            "journal": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/"
         }
         
         self.file_naming_rules = {

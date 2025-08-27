@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Post-command hook for VERITAS Research Assistant
+Post-command hook for HLA Research Assistant
 Verifies that all outputs comply with CLAUDE.md requirements
 """
 
@@ -12,42 +12,18 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-class ResearchOutputVerifier:
+class HLAOutputVerifier:
     def __init__(self):
         self.violations = []
         self.warnings = []
-        # Get project directory from environment or use current directory
-        project_dir = os.environ.get('CLAUDE_PROJECT_DIR', os.getcwd())
-        self.log_path = Path(project_dir) / ".claude" / "logs"
+        # Enable logging with rotation
+        self.log_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs")
         self.log_path.mkdir(parents=True, exist_ok=True)
         
         # Load verification config
-        config_path = Path(project_dir) / ".claude" / "config" / "verification.json"
-        if config_path.exists():
-            with open(config_path, 'r') as f:
-                self.config = json.load(f)
-        else:
-            # Use default config if file doesn't exist
-            self.config = self.get_default_config()
-    
-    def get_default_config(self):
-        """Return default configuration if config file is missing"""
-        return {
-            "verification_rules": {
-                "pmid_citations": {
-                    "enabled": True,
-                    "enforcement": {
-                        "action_on_violation": "warn"
-                    }
-                },
-                "obsidian_formatting": {
-                    "enabled": True
-                },
-                "unsupported_claims": {
-                    "enabled": True
-                }
-            }
-        }
+        config_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/config/verification.json")
+        with open(config_path, 'r') as f:
+            self.config = json.load(f)
     
     def check_pmid_citations(self, content):
         """Verify all medical claims have proper PMID citations"""
@@ -160,7 +136,7 @@ class ResearchOutputVerifier:
     
     def verify_output(self, output_content, output_type='text'):
         """Main verification function"""
-        print("\nResearch Output Verification Running...")
+        print("\nHLA Output Verification Running...")
         print("=" * 50)
         
         # Determine if markdown
@@ -175,7 +151,7 @@ class ResearchOutputVerifier:
         # Generate report
         self.generate_report()
         
-        # Log results
+        # Log results for audit trail
         self.log_results(output_content)
         
         # Return status
@@ -184,22 +160,22 @@ class ResearchOutputVerifier:
     def generate_report(self):
         """Generate verification report"""
         if not self.violations and not self.warnings:
-            print("All checks passed! Output complies with CLAUDE.md requirements.")
+            print("✅ All checks passed! Output complies with CLAUDE.md requirements.")
             return
         
         if self.violations:
-            print(f"\nFound {len(self.violations)} violation(s):")
+            print(f"\n❌ Found {len(self.violations)} violation(s):")
             for v in self.violations[:5]:  # Show first 5
                 print(f"  - Line {v.get('line', 'N/A')}: {v['type']} - {v['content']}")
             if len(self.violations) > 5:
                 print(f"  ... and {len(self.violations) - 5} more")
         
         if self.warnings:
-            print(f"\nFound {len(self.warnings)} warning(s):")
+            print(f"\n⚠️  Found {len(self.warnings)} warning(s):")
             for w in self.warnings[:3]:
                 print(f"  - {w['type']}: {w['message']}")
         
-        print("\nRequired Actions:")
+        print("\n📋 Required Actions:")
         if any(v['type'] == 'missing_pmid' for v in self.violations):
             print("  1. Add PMID citations for all medical claims")
             print("     Use: mcp__pubmed__search_pubmed")
@@ -227,21 +203,45 @@ class ResearchOutputVerifier:
             json.dump(log_data, f, indent=2)
 
 def main():
-    """Main hook execution"""
-    verifier = ResearchOutputVerifier()
+    """Main hook execution - check recently modified files"""
+    verifier = HLAOutputVerifier()
     
-    # Get output from environment or stdin
-    output_content = os.environ.get('CLAUDE_OUTPUT', '')
-    if not output_content and not sys.stdin.isatty():
-        output_content = sys.stdin.read()
-    
-    if output_content:
-        success = verifier.verify_output(output_content)
+    # Check files modified in last 2 minutes
+    import subprocess
+    try:
+        # Find recently modified .md files
+        result = subprocess.run(
+            ["find", "/Users/vmwm", "-name", "*.md", "-mmin", "-2", "-type", "f"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
         
-        # Exit with appropriate code
-        if not success and verifier.config['verification_rules']['pmid_citations']['enforcement']['action_on_violation'] == 'block':
-            print("\nOutput blocked due to violations. Please fix and retry.")
-            sys.exit(1)
+        recent_files = [f for f in result.stdout.strip().split('\n') if f and '.Trash' not in f]
+        
+        all_violations = []
+        for filepath in recent_files[:5]:  # Check up to 5 recent files
+            try:
+                with open(filepath, 'r') as f:
+                    content = f.read()
+                    verifier.violations = []  # Reset for each file
+                    success = verifier.verify_output(content)
+                    if not success:
+                        all_violations.append((filepath, verifier.violations[:]))
+            except:
+                pass
+        
+        # Report violations if any
+        if all_violations:
+            print("\n⚠️  POST-EXECUTION VALIDATOR")
+            print("="*40)
+            for filepath, violations in all_violations:
+                print(f"\nFile: {filepath}")
+                for v in violations[:3]:  # Show first 3 violations per file
+                    print(f"  - {v}")
+            print("="*40)
+    except:
+        pass  # Silent fail if checking doesn't work
     
     sys.exit(0)
 

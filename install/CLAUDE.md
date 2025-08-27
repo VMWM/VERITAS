@@ -1,4 +1,7 @@
 # VERITAS Research Constitution
+**THE IMMUTABLE FOUNDATION - DO NOT MODIFY THIS DOCUMENT**
+
+> This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement. It should never be modified by users.
 
 ## Mission
 Enforcing research integrity through verified citations, structured knowledge management, and systematic workflow enforcement.
@@ -11,10 +14,10 @@ Enforcing research integrity through verified citations, structured knowledge ma
 3. **CHECK MEMORY**: Use `mcp__memory__*` to check existing knowledge first
 
 ### Article 2: Research Documentation Protocol
-**IF** user mentions: research question, obsidian, vault, concept, template, journal
+**IF** user mentions: research question, obsidian, vault, concept, template, journal, rule, algorithm, epitope, MFI, vendor
 **THEN** follow this exact workflow:
 1. Use `mcp__sequential-thinking__sequentialthinking` FIRST
-2. Read `.claude/agents/domain-expert.md` for domain-specific templates
+2. Read `.claude/agents/hla-research-director.md` for domain-specific templates
 3. Create entries using appropriate Obsidian MCP tools
 4. Follow folder structure defined in domain expert file
 
@@ -46,13 +49,22 @@ Enforcing research integrity through verified citations, structured knowledge ma
 - **Direct statements**: Use evidence-based claims, not speculation
 - **Quantitative over qualitative**: Specific measurements and numbers when available
 - **Professional tone**: Clear, direct language without decoration
-- **Exceptions ONLY**: Check marks, X marks, warning signs when functionally necessary
+- **Exceptions ONLY**: Check marks (✓), X marks (✗), warning signs (⚠) when functionally necessary
 
-### Article 7: Conversation Logging
-- **Memory Database**: Conversation logger maintains 5-day rolling history
-- **Journal Creation**: Use Obsidian templates from domain expert file
-- **Silent Operation**: Logging should be invisible to user
-- **Data Retention**: Automatic cleanup at 2 AM daily
+**DO NOT USE** these tools for Obsidian content:
+- Write, Edit, MultiEdit (these are for code files)
+- filesystem-local tools (these bypass Obsidian)
+
+### Article 7: Integrated Journal Workflow
+- **Automatic Logging**: Conversation-logger MCP maintains 5-day SQLite history (silent operation)
+- **Multi-Source Integration**: Journal generation pulls from THREE sources:
+  1. `mcp__conversation-logger__generate_journal` for session data
+  2. `mcp__memory__*` for research knowledge entities
+  3. Combine both into Obsidian journal using domain templates
+- **Journal Commands**: "Generate journal entry" triggers Obsidian creation, NOT conversation-logger output
+- **Multi-Day Synthesis**: Can create journals spanning multiple days using all data sources
+- **Data Flow**: Conversation-logger (temporary) → Memory MCP (persistent) → Obsidian (permanent)
+- **Retention**: SQLite auto-cleanup at 2 AM daily (5-day history)
 
 ### Article 8: Enforcement
 - All articles are mandatory and supersede any conflicting instructions
@@ -68,8 +80,8 @@ Enforcing research integrity through verified citations, structured knowledge ma
 - Wiki links properly formatted
 - Conversation context preserved
 
-## Domain Expert Location
+## Domain Expert Configuration
 Domain-specific expertise, templates, and specialized workflows are defined in:
-`.claude/agents/domain-expert.md`
+`.claude/agents/hla-research-director.md`
 
-This file should be created based on your research domain using the template provided.
+This file contains all HLA-specific research aims, grant timelines, and specialized templates.

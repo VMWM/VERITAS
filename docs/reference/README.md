@@ -19,7 +19,6 @@ These documents are for users who need:
 
 Most users should start with the main documentation:
 - [Getting Started](../getting-started.md) - Installation and basic setup
-- [Customization Guide](../customization.md) - Adapting VERITAS for your domain
-- [Obsidian Integration](../obsidian-integration.md) - Connecting your research vault
+- [Configuration Guide](../configuration-guide.md) - Adapting VERITAS for your domain and connecting Obsidian
 
 Only dive into these technical references when you need deeper understanding of the underlying systems.

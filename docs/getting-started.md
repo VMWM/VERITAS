@@ -8,7 +8,7 @@ VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automat
    ```bash
    git clone https://github.com/VMWM/VERITAS.git
    cd VERITAS
-   ./setup.sh
+   ./install/scripts/setup.sh
    ```
 
 2. **Test Installation**
@@ -33,7 +33,7 @@ VERITAS installs these essential MCP servers:
 
 ### Optional Components
 
-- **Obsidian Integration** - If you use Obsidian for research notes (see [Obsidian Integration](obsidian-integration.md))
+- **Obsidian Integration** - If you use Obsidian for research notes (see [Configuration Guide](configuration-guide.md))
 
 ## Verification
 
@@ -58,11 +58,122 @@ After installation, verify everything works:
    - "Search PubMed for a recent paper on [your topic]" (tests PubMed)
    - "Generate a journal for today" (tests Conversation Logger)
 
+## Quick Reference
+
+### Essential Commands
+
+#### Installation
+```bash
+git clone https://github.com/VMWM/VERITAS.git
+cd VERITAS
+./install/scripts/setup.sh
+./install/scripts/configure-claude.sh
+```
+
+#### Testing
+```bash
+# Use prompts from tests/veritas-functional-test.md
+# Start a Claude conversation and try each test prompt
+```
+
+#### Daily Operations
+```bash
+# Hooks auto-load when Claude runs in project directory
+# Conversation-logger auto-cleans logs older than 5 days
+```
+
+### File Locations
+
+#### Your Project
+- `CLAUDE.md` - Constitutional rules (project root)
+- `.claude/agents/` - Domain expert files
+- `.claude/hooks/` - Validation hooks
+- `.claude/logs/` - Validation logs
+
+#### System Files
+- `~/.claude.json` - Claude CLI configuration
+- `~/Library/Application Support/Claude/claude_desktop_config.json` - Desktop config
+- `~/.conversation-logger/` - Conversation database
+
+#### Obsidian (if configured)
+- Vault structure defined in your domain expert
+- Local REST API plugin required
+- HTTPS must be enabled
+
+### MCP Servers
+
+| Server | Purpose | Test Command |
+|--------|---------|--------------|
+| conversation-logger | Session tracking | "Generate today's journal" |
+| filesystem-local | File access | "List my project files" |
+| memory | Knowledge graph | "Remember that..." |
+| pubmed | Citation search | "Find papers about..." |
+| sequential-thinking | Problem solving | "Plan a research review..." |
+| obsidian-rest-* | Vault access | "List my vault notes" |
+
+### Environment Variables
+
+#### Required for Obsidian
+```bash
+OBSIDIAN_API_TOKEN_[VAULT]  # API token for each vault
+OBSIDIAN_BASE_URL           # https://127.0.0.1:[port]
+OBSIDIAN_VERIFY_SSL         # false (for self-signed)
+```
+
+#### Optional
+```bash
+MCP_LOG_LEVEL              # error, warn, info, debug
+NODE_ENV                   # production, development
+```
+
+### Common Tasks
+
+#### Add New Obsidian Vault
+1. Configure Local REST API plugin
+2. Run `./scripts/setup/configure-claude.sh`
+3. Choose merge option
+4. Add vault configuration
+5. Restart Claude
+
+#### Switch Domain Expert
+1. Edit `.claude/agents/[your-expert].md`
+2. Update CLAUDE.md Article 2 reference
+3. Restart Claude conversation
+
+#### Debug MCP Server
+```bash
+# Check if running
+ps aux | grep [server-name]
+
+# View configuration
+jq '.mcpServers."[server-name]"' ~/.claude.json
+
+# Test directly
+npx @modelcontextprotocol/[server-name]
+```
+
+#### Update VERITAS
+```bash
+cd VERITAS
+git pull origin main
+npm update -g  # Update global packages if needed
+```
+
+### Troubleshooting Quick Fixes
+
+| Issue | Fix |
+|-------|-----|
+| "MCP server not found" | Restart Claude |
+| "Cannot connect to vault" | Check Obsidian plugin is running |
+| "No PMIDs found" | Use broader search terms |
+| "Memory not saving" | Check memory MCP in config |
+| "Hooks not running" | Make hooks executable: `chmod +x` |
+
 ## Next Steps
 
-- **For Research Use**: Start with [Customization Guide](customization.md) to adapt VERITAS for your domain
-- **For Obsidian Users**: Set up [Obsidian Integration](obsidian-integration.md)
+- **For Research Use**: Continue with [Configuration Guide](configuration-guide.md) to adapt VERITAS for your domain
 - **Having Issues**: Check the [Troubleshooting Guide](troubleshooting.md)
+- **Technical Details**: See [reference documentation](reference/)
 
 ## Manual Installation (If Needed)
 
@@ -139,5 +250,11 @@ The setup script automatically configures Claude Desktop, but if you need to do 
 **npm/node issues**: Update to Node.js 16+ and npm 8+
 
 **Missing dependencies**: Run `npm install` in the conversation-logger directory
+
+## Getting Help
+
+1. Try functional tests: `tests/veritas-functional-test.md`
+2. Check troubleshooting: `docs/troubleshooting.md`
+3. Open GitHub issue: https://github.com/VMWM/VERITAS/issues
 
 For detailed troubleshooting, see [Troubleshooting Guide](troubleshooting.md).

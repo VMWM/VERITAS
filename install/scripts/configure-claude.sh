@@ -8,9 +8,9 @@ echo "Claude Configuration Setup"
 echo "════════════════════════════════════════════════"
 echo ""
 
-# Get script directory
+# Get script directory and VERITAS root (two levels up)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VERITAS_DIR="$(dirname "$SCRIPT_DIR")"
+VERITAS_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 # Color codes
 GREEN='\033[0;32m'
@@ -209,6 +209,7 @@ create_veritas_servers() {
     cat << EOF
 {
   "conversation-logger": {
+    "_comment": "Custom VERITAS server - runs from VERITAS directory as shared service",
     "command": "node",
     "args": ["$VERITAS_DIR/conversation-logger/index.js"],
     "env": {
@@ -285,6 +286,9 @@ create_full_config() {
 # Preview mode
 if [ "$MODE" = "preview" ]; then
     echo -e "${BLUE}The following MCP servers will be added to your Claude configuration:${NC}"
+    echo ""
+    echo -e "${YELLOW}Note: conversation-logger is custom - it runs from $VERITAS_DIR${NC}"
+    echo "      Other servers run via npx (automatically downloaded)"
     echo ""
     create_veritas_servers | jq 'keys[]' | while read -r server; do
         echo "  • ${server//\"/}"

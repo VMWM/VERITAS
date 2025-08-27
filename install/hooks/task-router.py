@@ -13,20 +13,14 @@ class TaskRouter:
     def __init__(self):
         self.config = self.load_config()
         self.obsidian_paths = [
-            "/Obsidian/Research Vault/",
+            "/Obsidian/HLA Antibodies/",
             "/Obsidian/Research Journal/",
             "/Notes/"  # This should trigger Obsidian MCP
         ]
         
     def load_config(self):
         """Load agent configuration"""
-        # Try local project path first, then fallback to generic
-        import os
-        project_dir = os.environ.get('PROJECT_DIR', os.getcwd())
-        agent_path = Path(project_dir) / ".claude/agents/domain-expert.md"
-        if not agent_path.exists():
-            # Fallback to standard location
-            agent_path = Path(".claude/agents/domain-expert.md")
+        agent_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/agents/hla-research-director.md")
         if agent_path.exists():
             return agent_path.read_text()
         return ""
@@ -35,10 +29,12 @@ class TaskRouter:
         """Determine what type of task is being requested"""
         input_lower = user_input.lower()
         
-        # Research question indicators
+        # Research question and Rules indicators
         if any(phrase in input_lower for phrase in [
             "research question", "add to obsidian", "create concept",
-            "vault", "obsidian", "template", "wiki link"
+            "vault", "obsidian", "template", "wiki link",
+            "rule", "algorithm rule", "epitope", "mfi threshold",
+            "vendor specific", "serologic", "rule_epitope", "rule_mfi"
         ]):
             return "obsidian_task"
         
@@ -65,9 +61,10 @@ class TaskRouter:
                     "Edit"
                 ],
                 "paths": {
-                    "research_questions": "Research Questions/",
-                    "concepts": "Concepts/",
-                    "journal": "Daily/"
+                    "research_questions": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/",
+                    "concepts": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/",
+                    "rules": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Rules/",
+                    "journal": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/"
                 }
             }
         return {"required": [], "forbidden": []}
