@@ -150,10 +150,10 @@ If not doing medical research:
    - Remove PMID fields
    - Add field-specific sections
 
-3. **Modify CLAUDE.md**:
-   - Remove PMID requirements
-   - Update citation format
-   - Adjust verification levels
+3. **Update domain expert**:
+   - Adjust citation requirements in `.claude/agents/domain-expert.md`
+   - Modify verification levels for your field
+   - Note: Keep CLAUDE.md unchanged - it's the VERITAS constitution
 
 ## Adding Custom Tools
 

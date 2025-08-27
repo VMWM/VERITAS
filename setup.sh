@@ -235,9 +235,10 @@ fi
 # Environment file will be created after Obsidian configuration
 ENV_FILE="$PROJECT_DIR/.claude/env.sh"
 
-# Note about claude.md customization
+# Note about customization
 echo ""
-echo -e "${YELLOW}Note: claude.md is a template - please customize it for your project${NC}"
+echo -e "${YELLOW}Note: DO NOT modify claude.md - it's the VERITAS constitution${NC}"
+echo -e "${YELLOW}To customize for your domain, edit .claude/agents/domain-expert.md${NC}"
 
 # Create logs directory
 echo "Creating logs directory..."
@@ -516,7 +517,7 @@ echo "1. Configure Claude to use the installed MCP servers:"
 echo -e "   ${GREEN}cd $SCRIPT_DIR && ./scripts/setup/configure-claude.sh${NC}"
 echo "   This will add the MCP servers to your Claude configuration"
 echo "   Choose option 1 (merge) if you have existing servers configured"
-echo "2. Customize $PROJECT_DIR/claude.md for your specific project"
+echo "2. Customize $PROJECT_DIR/.claude/agents/domain-expert.md for your research domain"
 echo "3. Restart Claude Desktop and/or Claude CLI"
 echo "5. Configure your Obsidian vault structure"
 echo "   (See your domain expert file for recommended folder structure)"
