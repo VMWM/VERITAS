@@ -287,7 +287,6 @@ MIT License - See [license](license) file for details
 - Built for the Claude Code research community
 - Powered by MCP (Model Context Protocol) by Anthropic
 - Inspired by scientific best practices
-- Special thanks to all contributors and beta testers
 
 ---
 
