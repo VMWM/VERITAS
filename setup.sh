@@ -14,8 +14,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check if running from correct directory
-if [ ! -f "templates/CLAUDE.md.template" ]; then
-    echo -e "${RED}Error: CLAUDE.md.template not found. Please run from the repository root.${NC}"
+if [ ! -f "templates/CLAUDE.md" ]; then
+    echo -e "${RED}Error: CLAUDE.md not found. Please run from the repository root.${NC}"
     exit 1
 fi
 
@@ -208,9 +208,9 @@ echo "Copying Project Files"
 echo "================================"
 echo ""
 
-echo "Copying CLAUDE.md template..."
-cp templates/CLAUDE.md.template "$PROJECT_DIR/CLAUDE.md"
-echo -e "${GREEN}✓ CLAUDE.md template copied - please customize it for your project${NC}"
+echo "Copying CLAUDE.md constitution..."
+cp templates/CLAUDE.md "$PROJECT_DIR/CLAUDE.md"
+echo -e "${GREEN}✓ CLAUDE.md constitution copied${NC}"
 
 echo "Copying .claude directory..."
 cp -r .claude "$PROJECT_DIR/"
