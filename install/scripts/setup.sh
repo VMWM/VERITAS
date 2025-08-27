@@ -659,6 +659,84 @@ else
     echo -e "${RED}[WARNING] $PERMISSION_ISSUES hooks lack execute permissions${NC}"
 fi
 
+# Step 13: Configure Claude Desktop automatically
+echo ""
+echo "=================================="
+echo "Configuring Claude Desktop"
+echo "=================================="
+echo ""
+
+# Claude Desktop config path
+CLAUDE_CONFIG_DIR="$HOME/Library/Application Support/Claude"
+CLAUDE_CONFIG_FILE="$CLAUDE_CONFIG_DIR/claude_desktop_config.json"
+
+# Build the MCP servers configuration
+MCP_CONFIG='{"mcpServers":{'
+
+# Add Obsidian vault configurations if any
+if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
+    for i in "${!VAULT_NAMES[@]}"; do
+        [ $i -gt 0 ] && MCP_CONFIG+=","
+        MCP_CONFIG+="\"obsidian-rest-${VAULT_NAMES[$i]}\":{"
+        MCP_CONFIG+="\"command\":\"npx\","
+        MCP_CONFIG+="\"args\":[\"obsidian-mcp-server\"],"
+        MCP_CONFIG+="\"env\":{"
+        MCP_CONFIG+="\"OBSIDIAN_API_KEY\":\"${VAULT_TOKENS[$i]}\","
+        MCP_CONFIG+="\"OBSIDIAN_BASE_URL\":\"https://127.0.0.1:${VAULT_PORTS[$i]}\","
+        MCP_CONFIG+="\"OBSIDIAN_VERIFY_SSL\":\"false\","
+        MCP_CONFIG+="\"OBSIDIAN_ENABLE_CACHE\":\"true\""
+        MCP_CONFIG+="}}"
+        [ ${#VAULT_NAMES[@]} -gt 0 ] && MCP_CONFIG+=","
+    done
+fi
+
+# Add other MCP servers
+MCP_CONFIG+="\"sequential-thinking\":{\"command\":\"npx\",\"args\":[\"@sequentialthinking/sequential-thinking-mcp\"]},"
+MCP_CONFIG+="\"pubmed\":{\"command\":\"pubmed-mcp-server\",\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\"}},"
+MCP_CONFIG+="\"memory\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-memory\"]},"
+MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@cloudflare/mcp-server-filesystem\",\"$PROJECT_DIR\"]},"
+MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"
+MCP_CONFIG+="}}"
+
+# Check if Claude config directory exists
+if [ ! -d "$CLAUDE_CONFIG_DIR" ]; then
+    echo -e "${YELLOW}Claude Desktop config directory not found${NC}"
+    echo "Creating directory: $CLAUDE_CONFIG_DIR"
+    mkdir -p "$CLAUDE_CONFIG_DIR"
+fi
+
+# Check if config file exists
+if [ -f "$CLAUDE_CONFIG_FILE" ]; then
+    echo "Found existing Claude Desktop configuration"
+    
+    # Backup existing config
+    BACKUP_FILE="${CLAUDE_CONFIG_FILE}.backup.$(date +%Y%m%d-%H%M%S)"
+    cp "$CLAUDE_CONFIG_FILE" "$BACKUP_FILE"
+    echo -e "${GREEN}[OK] Backup created: $BACKUP_FILE${NC}"
+    
+    # Merge configurations using jq if available
+    if command -v jq >/dev/null 2>&1; then
+        echo "Merging VERITAS servers with existing configuration..."
+        
+        # Merge the configurations
+        echo "$MCP_CONFIG" | jq --slurpfile existing "$CLAUDE_CONFIG_FILE" '
+            . as $new |
+            $existing[0] | 
+            .mcpServers = ((.mcpServers // {}) * ($new.mcpServers // {}))
+        ' > "$CLAUDE_CONFIG_FILE"
+        
+        echo -e "${GREEN}[OK] Claude Desktop configuration updated successfully${NC}"
+    else
+        echo -e "${YELLOW}Warning: jq not installed, cannot merge configurations${NC}"
+        echo "Please install jq or manually add the following to your Claude config:"
+        echo "$MCP_CONFIG" | jq . 2>/dev/null || echo "$MCP_CONFIG"
+    fi
+else
+    echo "Creating new Claude Desktop configuration..."
+    echo "$MCP_CONFIG" | jq . > "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo "$MCP_CONFIG" > "$CLAUDE_CONFIG_FILE"
+    echo -e "${GREEN}[OK] Claude Desktop configuration created${NC}"
+fi
+
 # Final instructions
 echo ""
 echo "=================================="
@@ -668,76 +746,19 @@ echo ""
 echo "VERITAS installed at: $PROJECT_DIR"
 echo "Configuration: Medical research with PMID enforcement"
 echo ""
+echo "Claude Desktop configuration has been automatically updated."
+echo ""
 echo "Next steps:"
 echo ""
-
-# Show Claude Desktop configuration
-echo "1. Configure Claude Desktop:"
-echo "   Copy the configuration below to your Claude Desktop config file:"
-echo "   (Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
+echo "1. Restart Claude Desktop completely (Quit and reopen)"
 echo ""
-echo "   Alternative: Run $VERITAS_DIR/install/scripts/configure-claude.sh"
-echo "   to automatically merge with existing configuration"
-echo ""
-echo "{"
-echo '  "mcpServers": {'
-
-# Add Obsidian vault configurations if any
-if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
-    for i in "${!VAULT_NAMES[@]}"; do
-        cat << EOF
-    "obsidian-rest-${VAULT_NAMES[$i]}": {
-      "command": "npx",
-      "args": ["obsidian-mcp-server"],
-      "env": {
-        "OBSIDIAN_API_KEY": "${VAULT_TOKENS[$i]}",
-        "OBSIDIAN_BASE_URL": "https://127.0.0.1:${VAULT_PORTS[$i]}",
-        "OBSIDIAN_VERIFY_SSL": "false",
-        "OBSIDIAN_ENABLE_CACHE": "true"
-      }
-    },
-EOF
-    done
-fi
-
-# Add other MCP servers
-cat << EOF
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["@sequentialthinking/sequential-thinking-mcp"]
-    },
-    "pubmed": {
-      "command": "pubmed-mcp-server",
-      "env": {
-        "PUBMED_EMAIL": "$PUBMED_EMAIL"
-      }
-    },
-    "memory": {
-      "command": "npx",
-      "args": ["@modelcontextprotocol/server-memory"]
-    },
-    "filesystem-local": {
-      "command": "npx",
-      "args": ["@cloudflare/mcp-server-filesystem", "$PROJECT_DIR"]
-    },
-    "conversation-logger": {
-      "command": "node",
-      "args": ["$VERITAS_DIR/conversation-logger/index.js"]
-    }
-  }
-}
-EOF
-
-echo ""
-echo "2. Restart Claude Desktop completely"
-echo ""
-echo "3. Configure Claude CLI:"
+echo "2. Configure Claude CLI:"
 echo "   claude mcp add-from-claude-desktop"
 echo ""
-echo "4. Test your installation:"
+echo "3. Test your installation:"
 echo "   claude 'test VERITAS system'"
 echo ""
-echo "5. Start using VERITAS:"
+echo "4. Start using VERITAS:"
 echo "   claude 'help me with my research'"
 echo ""
 echo "Optional customization:"
