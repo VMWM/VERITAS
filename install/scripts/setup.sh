@@ -673,8 +673,11 @@ echo ""
 
 # Show Claude Desktop configuration
 echo "1. Configure Claude Desktop:"
-echo "   Add the following to your Claude Desktop config file:"
+echo "   Copy the configuration below to your Claude Desktop config file:"
 echo "   (Usually at ~/Library/Application Support/Claude/claude_desktop_config.json)"
+echo ""
+echo "   Alternative: Run $VERITAS_DIR/install/scripts/configure-claude.sh"
+echo "   to automatically merge with existing configuration"
 echo ""
 echo "{"
 echo '  "mcpServers": {'
