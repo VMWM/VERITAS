@@ -372,6 +372,8 @@ if [ -d "$VERITAS_DIR/conversation-logger" ]; then
     # Configure cleanup script if enabled
     CLEANUP_SCRIPT="$VERITAS_DIR/conversation-logger/cleanup-old-logs.js"
     if [ "$ENABLE_CLEANUP" = true ] && [ -f "$CLEANUP_SCRIPT" ]; then
+        chmod +x "$CLEANUP_SCRIPT"
+        
         # Update retention period in cleanup script
         if [ "$RETENTION_DAYS" != "5" ]; then
             sed -i.bak "s/RETENTION_DAYS = 5/RETENTION_DAYS = $RETENTION_DAYS/" "$CLEANUP_SCRIPT"
@@ -572,13 +574,16 @@ EOF
     if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
         cat >> "$ENV_FILE" << EOF
 
-# Primary vault (first configured)
+# Backward compatibility - first vault as primary
+export OBSIDIAN_VAULT_PATH="${VAULT_PATHS[0]}"
 export OBSIDIAN_API_TOKEN="${VAULT_TOKENS[0]}"
 export OBSIDIAN_BASE_URL="https://127.0.0.1:${VAULT_PORTS[0]}"
+export OBSIDIAN_PRIMARY_PORT="${VAULT_PORTS[0]}"
 EOF
     fi
 fi
 
+chmod +x "$ENV_FILE"
 echo -e "${GREEN}[OK] Environment configuration created${NC}"
 echo "  Add to your shell profile: source $ENV_FILE"
 
@@ -684,7 +689,8 @@ if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
       "env": {
         "OBSIDIAN_API_KEY": "${VAULT_TOKENS[$i]}",
         "OBSIDIAN_BASE_URL": "https://127.0.0.1:${VAULT_PORTS[$i]}",
-        "OBSIDIAN_VERIFY_SSL": "false"
+        "OBSIDIAN_VERIFY_SSL": "false",
+        "OBSIDIAN_ENABLE_CACHE": "true"
       }
     },
 EOF
