@@ -241,50 +241,25 @@ fi
 
 # Step 6: Configure project type
 echo ""
-echo "Select your project type:"
-echo "1. Medical/Scientific Research (strict PMID enforcement)"
-echo "2. Software Development"
-echo "3. General Documentation"
-echo ""
-read -p "Enter choice (1-3): " PROJECT_TYPE
+echo "Configuring VERITAS for medical research..."
+PROJECT_TYPE_STR="medical_research"
 
-case $PROJECT_TYPE in
-    1)
-        PROJECT_TYPE_STR="medical_research"
-        echo -e "${GREEN}[OK] Configured for medical research${NC}"
-        
-        # Update project.json for medical research
-        sed -i '' "s/\"type\": \".*\"/\"type\": \"medical_research\"/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
-        sed -i "s/\"type\": \".*\"/\"type\": \"medical_research\"/" "$PROJECT_DIR/.claude/project.json"
-        
-        sed -i '' "s/\"strict_citations\": false/\"strict_citations\": true/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
-        sed -i "s/\"strict_citations\": false/\"strict_citations\": true/" "$PROJECT_DIR/.claude/project.json"
-        
-        # Copy example domain expert for medical research
-        if [ -f "$VERITAS_DIR/install/templates/agents/hla-research-director.md" ]; then
-            cp "$VERITAS_DIR/install/templates/agents/hla-research-director.md" "$PROJECT_DIR/.claude/agents/example-domain-expert.md"
-            echo -e "${GREEN}[OK] Added example domain expert template${NC}"
-            echo -e "${YELLOW}Note: Customize .claude/agents/example-domain-expert.md for your research area${NC}"
-        fi
-        ;;
-    2)
-        PROJECT_TYPE_STR="software"
-        echo -e "${GREEN}[OK] Configured for software development${NC}"
-        
-        sed -i '' "s/\"type\": \".*\"/\"type\": \"software\"/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
-        sed -i "s/\"type\": \".*\"/\"type\": \"software\"/" "$PROJECT_DIR/.claude/project.json"
-        ;;
-    3)
-        PROJECT_TYPE_STR="documentation"
-        echo -e "${GREEN}[OK] Configured for documentation${NC}"
-        
-        sed -i '' "s/\"type\": \".*\"/\"type\": \"documentation\"/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
-        sed -i "s/\"type\": \".*\"/\"type\": \"documentation\"/" "$PROJECT_DIR/.claude/project.json"
-        ;;
-    *)
-        PROJECT_TYPE_STR="general"
-        ;;
-esac
+# Update project.json for medical research
+sed -i '' "s/\"type\": \".*\"/\"type\": \"medical_research\"/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
+sed -i "s/\"type\": \".*\"/\"type\": \"medical_research\"/" "$PROJECT_DIR/.claude/project.json"
+
+sed -i '' "s/\"strict_citations\": false/\"strict_citations\": true/" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || \
+sed -i "s/\"strict_citations\": false/\"strict_citations\": true/" "$PROJECT_DIR/.claude/project.json"
+
+# Copy HLA domain expert template
+if [ -f "$VERITAS_DIR/install/templates/agents/hla-research-director.md" ]; then
+    cp "$VERITAS_DIR/install/templates/agents/hla-research-director.md" "$PROJECT_DIR/.claude/agents/hla-research-director.md"
+    echo -e "${GREEN}[OK] Installed HLA research domain expert template${NC}"
+    echo -e "${YELLOW}Note: Customize .claude/agents/hla-research-director.md for your specific research area${NC}"
+    echo -e "${YELLOW}      Or ask Claude to create a domain expert for your field${NC}"
+fi
+
+echo -e "${GREEN}[OK] Configured for medical research with PMID enforcement${NC}"
 
 # Step 7: Install conversation-logger MCP
 echo ""
@@ -407,8 +382,8 @@ echo "=================================="
 echo -e "${GREEN}VERITAS Installation Complete!${NC}"
 echo "=================================="
 echo ""
-echo "Project configured at: $PROJECT_DIR"
-echo "Type: $PROJECT_TYPE_STR"
+echo "VERITAS installed at: $PROJECT_DIR"
+echo "Configuration: Medical research with PMID enforcement"
 echo ""
 echo "Next steps:"
 echo ""
