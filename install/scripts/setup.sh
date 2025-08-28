@@ -569,6 +569,7 @@ export ENFORCE_OBSIDIAN_MCP=1
 
 # PubMed Configuration
 export PUBMED_EMAIL="$PUBMED_EMAIL"
+export PUBMED_API_KEY="$PUBMED_API_KEY"
 EOF
 
 # Add vault configurations if any were provided
