@@ -1,0 +1,53 @@
+{
+  "mcpServers": {
+    "conversation-logger": {
+      "command": "node",
+      "args": [
+        "/path/to/conversation-logger/index.js"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/YOUR_USERNAME"
+      ]
+    },
+    "pubmed-ncukondo": {
+      "command": "npx",
+      "args": [
+        "@ncukondo/pubmed-mcp"
+      ],
+      "env": {
+        "PUBMED_EMAIL": "YOUR_EMAIL@example.com",
+        "PUBMED_API_KEY": "YOUR_NCBI_API_KEY_HERE",
+        "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+        "PUBMED_CACHE_TTL": "86400"
+      }
+    },
+    "obsidian-rest-hla": {
+      "command": "npx",
+      "args": [
+        "obsidian-mcp-server"
+      ],
+      "env": {
+        "OBSIDIAN_API_KEY": "YOUR_OBSIDIAN_API_KEY",
+        "OBSIDIAN_BASE_URL": "https://127.0.0.1:27124",
+        "OBSIDIAN_VERIFY_SSL": "false",
+        "OBSIDIAN_ENABLE_CACHE": "true"
+      }
+    }
+  }
+}
