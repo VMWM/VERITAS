@@ -224,7 +224,7 @@ create_veritas_servers() {
     "command": "npx",
     "args": ["@modelcontextprotocol/server-memory"]
   },
-  "pubmed-ncukondo": {
+  "pubmed": {
     "command": "npx",
     "args": ["@ncukondo/pubmed-mcp"],
     "env": {

@@ -25,7 +25,7 @@
         "/Users/YOUR_USERNAME"
       ]
     },
-    "pubmed-ncukondo": {
+    "pubmed": {
       "command": "npx",
       "args": [
         "@ncukondo/pubmed-mcp"

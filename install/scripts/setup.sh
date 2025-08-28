@@ -721,7 +721,7 @@ fi
 
 # Add other MCP servers
 MCP_CONFIG+="\"sequential-thinking\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-sequential-thinking\"]},"
-MCP_CONFIG+="\"pubmed-ncukondo\":{\"command\":\"npx\",\"args\":[\"@ncukondo/pubmed-mcp\"],\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\",\"PUBMED_API_KEY\":\"$PUBMED_API_KEY\",\"PUBMED_CACHE_DIR\":\"/tmp/pubmed-cache\",\"PUBMED_CACHE_TTL\":\"86400\"}},"
+MCP_CONFIG+="\"pubmed\":{\"command\":\"npx\",\"args\":[\"@ncukondo/pubmed-mcp\"],\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\",\"PUBMED_API_KEY\":\"$PUBMED_API_KEY\",\"PUBMED_CACHE_DIR\":\"/tmp/pubmed-cache\",\"PUBMED_CACHE_TTL\":\"86400\"}},"
 MCP_CONFIG+="\"memory\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-memory\"]},"
 MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-filesystem\",\"$PROJECT_DIR\"]},"
 MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"
