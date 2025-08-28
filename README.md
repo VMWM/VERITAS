@@ -133,10 +133,23 @@ YourProject/
 └── [Your existing files]      # Your research content
 ```
 
-The VERITAS repository remains at `~/VERITAS/` to provide:
+The VERITAS repository remains at `~/VERITAS/` with this structure:
 
-- Conversation logger MCP server
-- Test scripts for verification
+```
+~/VERITAS/
+├── assets/                    # Images and logos
+├── conversation-logger/       # MCP conversation logger
+├── docs/                      # Documentation
+├── install/
+│   ├── CLAUDE.md             # Constitutional document
+│   ├── hooks/                # All enforcement hooks
+│   ├── scripts/              # Setup and configuration scripts
+│   └── templates/
+│       ├── agents/           # Domain expert templates
+│       ├── config/           # Configuration templates
+│       └── obsidian/         # Note templates
+└── tests/                     # Verification scripts
+```
 - Documentation and updates
 
 ## Documentation
@@ -404,7 +417,7 @@ Install VERITAS for me by executing these steps:
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for [REPLACE: macOS or Linux]
-   - Include conversation-logger with absolute path to ~/VERITAS
+   - Include conversation-logger with absolute path to ~/VERITAS/conversation-logger
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)
@@ -432,7 +445,7 @@ Install VERITAS for me by executing these steps:
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for macOS
-   - Include conversation-logger with absolute path to ~/VERITAS
+   - Include conversation-logger with absolute path to ~/VERITAS/conversation-logger
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)
