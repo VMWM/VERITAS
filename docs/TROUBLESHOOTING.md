@@ -114,7 +114,30 @@ curl -k https://127.0.0.1:27124/vault/ \
 
 ### Issue: Conversation Logger Not Working
 
-**Symptom**: No conversations being logged
+**Symptom**: No conversations being logged or "conversation-logger disconnected" in Claude
+
+**Common Causes**:
+
+1. **Moved VERITAS Directory After Installation**
+   - The conversation-logger uses an absolute path in Claude's config
+   - If you move ~/VERITAS to a different location, the path becomes invalid
+   
+   **Solution**: Update the path in your Claude Desktop config:
+   ```json
+   "conversation-logger": {
+     "command": "node",
+     "args": ["/new/path/to/VERITAS/conversation-logger/index.js"]
+   }
+   ```
+   Location: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+
+2. **Dependencies Not Installed**
+   - Check: `ls ~/VERITAS/conversation-logger/node_modules`
+   - Fix: `cd ~/VERITAS/conversation-logger && npm install`
+
+3. **Database Permission Issues**
+   - Check: `ls -la ~/.conversation-logger/conversations.db`
+   - Fix: `chmod 644 ~/.conversation-logger/conversations.db`
 
 **Checks**:
 1. Database exists:

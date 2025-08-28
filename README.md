@@ -99,7 +99,8 @@ This multi-checkpoint architecture ensures research integrity at every step.
 7. **Conversation Logger** - Session tracking and journal generation
    - **Special**: Custom-built server that runs from VERITAS directory
    - **Not copied**: Stays in `/conversation-logger/`, acts as shared service
-   - **Manual setup**: Requires absolute path in Claude Desktop config
+   - **Uses absolute path**: Points to `~/VERITAS/conversation-logger/index.js`
+   - **Important**: If you move VERITAS after installation, update the path in Claude Desktop config
    - **Stateful**: Maintains SQLite database of all conversations
 
 ### Enforcement System
