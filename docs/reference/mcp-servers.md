@@ -9,16 +9,50 @@ This system uses three categories of MCP servers:
 2. **Obsidian REST API** - Integration via Obsidian's Local REST API plugin
 3. **Custom-Built MCP Server** - The Conversation Logger, developed specifically for this system
 
+## Installation Methods: Global vs npx
+
+VERITAS uses two different installation approaches for MCP servers:
+
+### Quick Reference Table
+
+| Server | Installation Method | Package/Command |
+| ------ | ------------------ | --------------- |
+| PubMed | Global (`npm install -g`) | @ncukondo/pubmed-mcp |
+| Obsidian REST | Global (`npm install -g`) | @modelcontextprotocol/server-obsidian-rest |
+| Sequential Thinking | npx (no install) | @modelcontextprotocol/server-sequential-thinking |
+| Memory | npx (no install) | @modelcontextprotocol/server-memory |
+| Filesystem | npx (no install) | @modelcontextprotocol/server-filesystem |
+| Conversation Logger | Custom (local) | ~/VERITAS/conversation-logger/index.js |
+
+### Globally Installed Servers (npm install -g)
+These servers are installed once on your system and persist:
+- **PubMed MCP** (@ncukondo/pubmed-mcp) - Installed globally for performance
+- **Obsidian REST MCP** (@modelcontextprotocol/server-obsidian-rest) - Installed globally
+
+### npx Execution (no installation required)
+These servers run directly via npx without installation:
+- **Sequential Thinking** - Runs via npx @modelcontextprotocol/server-sequential-thinking
+- **Memory** - Runs via npx @modelcontextprotocol/server-memory
+- **Filesystem** - Runs via npx @modelcontextprotocol/server-filesystem
+
+**Why the difference?**
+- Global installation is used for servers that benefit from persistent installation (faster startup, stable versions)
+- npx is used for servers that update frequently or don't require installation
+- npx always runs the latest version unless a specific version is specified
+
 ## Third-Party MCP Servers (External npm packages)
 
 ### 1. Sequential Thinking MCP
+**Installation Method**: npx (no installation required)
 **Purpose**: Provides structured problem-solving and planning capabilities
 **Repository**: https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking
+**Configuration**: Runs directly via npx in Claude Desktop config
 ```bash
-npx @modelcontextprotocol/install sequentialthinking
+# No installation needed - runs via npx
 ```
 
 ### 2. PubMed MCP
+**Installation Method**: Global npm package
 **Purpose**: Enables citation verification and literature search
 **Package**: @ncukondo/pubmed-mcp (NCBI-compliant with proper credential handling)
 **Repository**: https://github.com/ncukondo/pubmed-mcp
@@ -29,24 +63,34 @@ npm install -g @ncukondo/pubmed-mcp
 See [SETUP_PUBMED.md](../SETUP_PUBMED.md) for configuration details.
 
 ### 3. Memory MCP
+**Installation Method**: npx (no installation required)
 **Purpose**: Knowledge graph storage and retrieval
 **Repository**: https://github.com/modelcontextprotocol/servers/tree/main/src/memory
+**Configuration**: Runs directly via npx in Claude Desktop config
 ```bash
-npx @modelcontextprotocol/install memory
+# No installation needed - runs via npx
 ```
 
 ### 4. Filesystem MCP
+**Installation Method**: npx (no installation required)
 **Purpose**: Local file system access for project files
 **Repository**: https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
+**Configuration**: Runs directly via npx in Claude Desktop config
 ```bash
-npx @modelcontextprotocol/install filesystem
+# No installation needed - runs via npx
 ```
 
 ## Obsidian Integration
 
-### Obsidian REST API
+### Obsidian REST API MCP
+**Installation Method**: Global npm package
 **Purpose**: Direct integration with Obsidian vaults
-**Installation**: 
+**Package**: @modelcontextprotocol/server-obsidian-rest
+```bash
+npm install -g @modelcontextprotocol/server-obsidian-rest
+```
+
+**Prerequisites**: 
 1. Install Obsidian Local REST API plugin from Community Plugins
 2. Configure authentication (Bearer token recommended)
 3. Set unique ports for each vault (e.g., 27124, 27125)
@@ -124,6 +168,8 @@ Test each MCP installation:
 **MCP not responding**:
 - Check Claude Desktop is restarted after configuration
 - Verify npm/npx is installed
+- For global packages: Check they're installed with `npm list -g | grep mcp`
+- For npx servers: Verify internet connection (npx downloads packages on demand)
 - Check server logs in Claude Desktop
 
 **Obsidian connection failed**:
