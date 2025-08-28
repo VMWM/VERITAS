@@ -10,7 +10,7 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 ### Article 1: Complex Task Protocol
 1. **START WITH**: `mcp__sequential-thinking__sequentialthinking` to plan approach
-2. **VERIFY CLAIMS**: Use `mcp__pubmed__*` for all scientific statements
+2. **VERIFY CLAIMS**: Use `mcp__pubmed-ncukondo__*` for all scientific statements
 3. **CHECK MEMORY**: Use `mcp__memory__*` to check existing knowledge first
 
 ### Article 2: Research Documentation Protocol
@@ -25,12 +25,12 @@ Enforcing research integrity through verified citations, structured knowledge ma
 - **Format**: (Author et al., Year, PMID: XXXXXXXX)
 - **No PMID = Remove the claim entirely**
 - **Verification levels**: [FT-VERIFIED], [ABSTRACT-VERIFIED], or [NEEDS-FT-REVIEW]
-- **Use**: `mcp__pubmed__*` tools for all medical/scientific citations
+- **Use**: `mcp__pubmed-ncukondo__*` tools for all medical/scientific citations
 
 ### Article 4: Tool Priority Order
 1. `mcp__sequential-thinking__*` - Problem breakdown and planning
 2. `mcp__memory__*` - Check existing knowledge
-3. `mcp__pubmed__*` - All citation verification
+3. `mcp__pubmed-ncukondo__*` - All citation verification
 4. `mcp__obsidian-rest-*__*` - Vault operations
 5. Domain-specific tools per agent file
 

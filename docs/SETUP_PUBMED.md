@@ -1,16 +1,20 @@
 # PubMed MCP Setup Instructions
 
 ## Overview
+
 VERITAS now uses the `@ncukondo/pubmed-mcp` server for PubMed integration instead of the problematic `pubmed-cyanheads` server. This change resolves the PMID string/number conversion issue.
 
 ## Requirements
 
 ### 1. NCBI Credentials (REQUIRED)
+
 You must have:
+
 - An email address to register with NCBI
 - An NCBI API key (recommended for better performance)
 
 ### 2. Getting Your NCBI API Key
+
 1. Go to https://www.ncbi.nlm.nih.gov/account/settings/
 2. Sign in or create an NCBI account
 3. Navigate to "API Key Management" section
@@ -23,11 +27,13 @@ You must have:
 ## Installation Steps
 
 ### Step 1: Install the PubMed MCP Server
+
 ```bash
 npm install -g @ncukondo/pubmed-mcp
 ```
 
 ### Step 2: Configure Claude Desktop
+
 Add the following to your `claude_desktop_config.json` file:
 
 ```json
@@ -48,6 +54,7 @@ Add the following to your `claude_desktop_config.json` file:
 **IMPORTANT**: Replace `YOUR_EMAIL@example.com` and `YOUR_NCBI_API_KEY` with your actual credentials.
 
 ### Step 3: Remove Old PubMed Server (if present)
+
 If you have the old `pubmed-cyanheads` server configured, remove or comment it out:
 
 ```json
@@ -60,11 +67,13 @@ If you have the old `pubmed-cyanheads` server configured, remove or comment it o
 ```
 
 ### Step 4: Restart Claude
+
 After making configuration changes, restart Claude Desktop to load the new MCP server.
 
 ## Verification
 
 After restarting Claude, verify the setup:
+
 1. Check that `pubmed-ncukondo` shows as "connected" in the MCP server list
 2. Test with a simple query like searching for a PMID
 
@@ -78,6 +87,7 @@ After restarting Claude, verify the setup:
 ## Troubleshooting
 
 If the server fails to connect:
+
 1. Verify your email is correctly formatted
 2. Check that your API key is valid (test at https://www.ncbi.nlm.nih.gov/account/)
 3. Ensure npm packages are properly installed

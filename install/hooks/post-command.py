@@ -178,7 +178,7 @@ class HLAOutputVerifier:
         print("\n📋 Required Actions:")
         if any(v['type'] == 'missing_pmid' for v in self.violations):
             print("  1. Add PMID citations for all medical claims")
-            print("     Use: mcp__pubmed__search_pubmed")
+            print("     Use: mcp__pubmed-ncukondo__search")
         if any(v['type'] == 'obsidian_formatting' for v in self.violations):
             print("  2. Fix Obsidian formatting issues")
         if self.warnings:
