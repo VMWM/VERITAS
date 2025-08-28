@@ -330,8 +330,12 @@ echo "Installing conversation-logger MCP server..."
 
 if [ -d "$VERITAS_DIR/conversation-logger" ]; then
     cd "$VERITAS_DIR/conversation-logger"
-    npm install --silent
-    echo -e "${GREEN}[OK] Conversation logger installed${NC}"
+    if [ "$DRY_RUN" = "true" ]; then
+        echo -e "${YELLOW}[DRY RUN] Would install conversation logger dependencies${NC}"
+    else
+        npm install --silent
+        echo -e "${GREEN}[OK] Conversation logger installed${NC}"
+    fi
     
     # Configure retention period
     echo ""
@@ -427,17 +431,21 @@ echo -e "${GREEN}[OK] PubMed email configured: $PUBMED_EMAIL${NC}"
 # Install PubMed MCP globally for reliability
 echo ""
 echo "Installing PubMed MCP (this may take a moment)..."
-npm install -g @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}[OK] PubMed MCP installed globally${NC}"
+if [ "$DRY_RUN" = "true" ]; then
+    echo -e "${YELLOW}[DRY RUN] Would install @ncukondo/pubmed-mcp globally${NC}"
 else
-    echo -e "${YELLOW}Warning: Global installation failed (may need sudo)${NC}"
-    echo "  Attempting local installation..."
-    npm install @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
+    npm install -g @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[OK] PubMed MCP installed locally (will use npx)${NC}"
+        echo -e "${GREEN}[OK] PubMed MCP installed globally${NC}"
     else
-        echo -e "${YELLOW}  Manual installation required: sudo npm install -g @ncukondo/pubmed-mcp${NC}"
+        echo -e "${YELLOW}Warning: Global installation failed (may need sudo)${NC}"
+        echo "  Attempting local installation..."
+        npm install @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}[OK] PubMed MCP installed locally (will use npx)${NC}"
+        else
+            echo -e "${YELLOW}  Manual installation required: sudo npm install -g @ncukondo/pubmed-mcp${NC}"
+        fi
     fi
 fi
 
@@ -456,12 +464,16 @@ fi
 
 # Install Obsidian MCP Server
 echo "Installing Obsidian MCP Server..."
-npm install -g obsidian-mcp-server --loglevel=error
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}[OK] Obsidian MCP Server installed${NC}"
+if [ "$DRY_RUN" = "true" ]; then
+    echo -e "${YELLOW}[DRY RUN] Would install obsidian-mcp-server globally${NC}"
 else
-    echo -e "${YELLOW}Warning: Obsidian MCP installation may require sudo${NC}"
-    echo "  You can install it later with: sudo npm install -g obsidian-mcp-server"
+    npm install -g obsidian-mcp-server --loglevel=error
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK] Obsidian MCP Server installed${NC}"
+    else
+        echo -e "${YELLOW}Warning: Obsidian MCP installation may require sudo${NC}"
+        echo "  You can install it later with: sudo npm install -g obsidian-mcp-server"
+    fi
 fi
 
 # Other servers run with npx

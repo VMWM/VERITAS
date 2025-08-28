@@ -412,29 +412,9 @@ else
     fi
 fi
 
-# Create project .mcp.json (symlink to CLI config)
-# Skip in dry run mode to avoid creating real symlinks
-if [ "$DRY_RUN" != "true" ]; then
-    echo ""
-    echo "Setting up project configuration..."
-    if [ -f "$PROJECT_DIR/.mcp.json" ] || [ -L "$PROJECT_DIR/.mcp.json" ]; then
-        echo -e "${YELLOW}Warning: Existing .mcp.json found${NC}"
-        read -p "Replace with symlink to CLI config? (y/n): " REPLACE_MCP
-        if [ "$REPLACE_MCP" = "y" ]; then
-            mv "$PROJECT_DIR/.mcp.json" "$PROJECT_DIR/.mcp.json.backup.$(date +%Y%m%d-%H%M%S)"
-            ln -s "$CLAUDE_CLI_CONFIG" "$PROJECT_DIR/.mcp.json"
-            echo -e "${GREEN}✓ Project .mcp.json symlinked to CLI config${NC}"
-        else
-            echo "  Keeping existing .mcp.json"
-        fi
-    else
-        ln -s "$CLAUDE_CLI_CONFIG" "$PROJECT_DIR/.mcp.json"
-        echo -e "${GREEN}✓ Project .mcp.json symlinked to CLI config${NC}"
-    fi
-else
-    echo ""
-    echo "DRY RUN: Would create project .mcp.json symlink"
-fi
+# Note: Project-specific .mcp.json configuration is optional
+# Users can create their own .mcp.json in the project directory if needed
+# This allows for project-specific MCP server configurations
 
 # Show summary
 echo ""
@@ -458,9 +438,6 @@ echo ""
 echo "Configuration files:"
 echo "  • $CLAUDE_DESKTOP_CONFIG"
 echo "  • $CLAUDE_CLI_CONFIG"
-if [ -L "$PROJECT_DIR/.mcp.json" ]; then
-    echo "  • $PROJECT_DIR/.mcp.json (symlink)"
-fi
 
 echo ""
 echo "Backups created with timestamp suffix if files existed"

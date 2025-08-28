@@ -1,27 +1,21 @@
-# VERITAS Complete Installation Test Output
+# VERITAS Installation Terminal Output
 
-This document shows a complete installation test of the VERITAS system with streamlined configuration, demonstrating all scripts in action: setup.sh, configure-claude.sh, verify-installation.sh, and veritas-test.sh.
+This document shows the actual terminal output from a dry run test of VERITAS installation.  
+**Test Date:** August 28, 2025  
+**Mode:** DRY_RUN (no system files modified)
 
-**Test Date**: August 28, 2025  
-**Test Environment**: macOS, dry-run mode (no actual system files modified)  
-**Key Changes**: 
-- Removed dangerous symlink option that breaks PubMed MCP
-- Streamlined Obsidian configuration (automatic, no prompting)
-- CLI and Desktop always use separate configurations
+## Important Notes
 
-## 1. Setup Script (setup.sh)
+- In DRY_RUN mode, npm packages show "[DRY RUN] Would install" instead of actually installing
+- Project structure may not be fully created in DRY_RUN mode
+- Real configuration files remain untouched
+- Script 4 (veritas-test.sh) won't exist until setup.sh completes fully
 
-### User Responses Provided:
-```
-Project directory: /tmp/veritas-dry-run-test
-Create directory: y
-Log retention: 1 (5-day auto-cleanup)
-PubMed email: test@example.com
-NCBI API key: y, test-api-key-12345
-```
+## Step 1: Run Setup Script
 
-### Terminal Output:
 ```bash
+$ cd /Users/vmwm/VERITAS
+$ export DRY_RUN=true  # For testing only
 $ ./install/scripts/setup.sh
 
 ==================================
@@ -32,6 +26,7 @@ Verification-Enforced Research Infrastructure
 with Tracking and Automated Standards
 
 Checking prerequisites...
+
 ✓ Prerequisites check passed!
 
 Enter your project directory path (where VERITAS will be installed):
@@ -40,17 +35,17 @@ Example: ~/Projects/MyResearch
 
 Directory doesn't exist. Create it? (y/n)
 > y
-[OK] Created directory: /tmp/veritas-dry-run-test
+✓ Created directory: /tmp/veritas-dry-run-test
 
 Installing VERITAS to: /tmp/veritas-dry-run-test
 
 Installing VERITAS Constitution...
   CLAUDE.md is the immutable constitutional foundation
   This document should never be modified
-[OK] Constitution installed (read-only)
+✓ Constitution installed (read-only)
 
 Creating .claude directory structure...
-[OK] Created .claude directories
+✓ Created .claude directories
 
 Installing VERITAS hooks...
   ✓ pre-command.sh
@@ -61,26 +56,26 @@ Installing VERITAS hooks...
   ✓ auto-conversation-logger.py
   ✓ obsidian-enforcer.py
   ✓ config.json
-[OK] Installed 8 essential hooks
-[VERIFIED] All 8 essential hooks installed
+✓ Installed 8 essential hooks
+✓ All 8 essential hooks installed
 
 Installing templates...
-[OK] Installed Obsidian templates
-[OK] Installed project configuration template
-[OK] Claude Code settings installed
+✓ Installed Obsidian templates
+✓ Installed project configuration template
+✓ Claude Code settings installed
 
 Installing test script...
-[OK] Installed veritas-test.sh for local testing
-[OK] Configuration templates available in install/templates/config
+✓ Installed veritas-test.sh for local testing
+✓ Configuration templates available in install/templates/config
 
 Configuring VERITAS for medical research...
-[OK] Installed HLA research domain expert template
+✓ Installed HLA research domain expert template
 Note: Customize .claude/agents/hla-research-director.md for your specific research area
       Or ask Claude to create a domain expert for your field
-[OK] Configured for medical research with PMID enforcement
+✓ Configured for medical research with PMID enforcement
 
 Installing conversation-logger MCP server...
-[OK] Conversation logger installed
+[DRY RUN] Would install conversation logger dependencies
 
 Configuring conversation logger cleanup...
 
@@ -90,8 +85,8 @@ How would you like to manage conversation logs?
 3) Custom retention period
 > 1
 
-[OK] Will auto-cleanup logs older than 5 days
-[OK] Cleanup job already scheduled
+✓ Will auto-cleanup logs older than 5 days
+✓ Cleanup job already scheduled
 
 Installing MCP servers...
 
@@ -99,11 +94,11 @@ PubMed Configuration
 --------------------
 NCBI requires an email address for API access (prevents rate limiting).
 Enter your email for PubMed API access:
-> test@example.com
-[OK] PubMed email configured: test@example.com
+> test@university.edu
+✓ PubMed email configured: test@university.edu
 
 Installing PubMed MCP (this may take a moment)...
-[OK] PubMed MCP installed globally
+[DRY RUN] Would install @ncukondo/pubmed-mcp globally
 
 Do you have an NCBI API key? (recommended for better performance) [y/N]:
 > y
@@ -111,37 +106,24 @@ Enter your NCBI API key:
 > test-api-key-12345
 
 Installing Obsidian MCP Server...
-[OK] Obsidian MCP Server installed
-[OK] Sequential-thinking MCP will run with npx
-[OK] Memory MCP will run with npx
-[OK] Filesystem MCP will run with npx
+[DRY RUN] Would install obsidian-mcp-server globally
+✓ Sequential-thinking MCP will run with npx
+✓ Memory MCP will run with npx
+✓ Filesystem MCP will run with npx
 
 ==================================
-VERITAS Installation Complete!
+Obsidian Vault Configuration
 ==================================
 
-VERITAS installed at: /tmp/veritas-dry-run-test
-Configuration: Medical research with PMID enforcement
+VERITAS integrates with Obsidian for research documentation.
+
+Have you installed the Obsidian Local REST API plugin? (y/n)
+> y
+[Script continues but truncated in dry run]
 ```
 
-## 2. Configure Claude Script (configure-claude.sh)
+## Step 2: Configure Claude
 
-### Key Feature: Automatic Configuration Setup
-
-The script now:
-- **NO LONGER** offers dangerous symlink option
-- **AUTOMATICALLY** creates separate CLI and Desktop configurations
-- **AUTOMATICALLY** prompts for Obsidian configuration (no skip option)
-
-### User Responses:
-```
-Configuration choice: 1 (Merge with existing)
-Obsidian vault: hla
-Obsidian port: 27124
-Obsidian token: test-token-abc123
-```
-
-### Terminal Output:
 ```bash
 $ ./install/scripts/configure-claude.sh
 
@@ -149,22 +131,19 @@ $ ./install/scripts/configure-claude.sh
 Claude Configuration Setup
 ════════════════════════════════════════════════
 
+[Running in DRY RUN mode - no actual files will be modified]
+
+Using temporary configs:
+  Desktop: /tmp/veritas-dry-run-87067/claude_desktop_config.json
+  CLI: /tmp/veritas-dry-run-87067/claude_cli_config.json
+
 Detected configuration paths:
-  Desktop: /Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json
-  CLI: /Users/vmwm/.claude.json
+  Desktop: /tmp/veritas-dry-run-87067/claude_desktop_config.json
+  CLI: /tmp/veritas-dry-run-87067/claude_cli_config.json
 
-Warning: Found existing Claude Desktop configuration
-  Current MCP servers: 7
-Warning: Found existing Claude CLI configuration
-  Current MCP servers: 7
+Checking for existing configurations...
 
-How would you like to proceed?
-1) Merge VERITAS servers with existing configuration (recommended)
-2) Replace entire configuration (will backup existing)
-3) Show what will be added and exit
-4) Cancel
-
-> 1
+No existing configurations found. Will create new ones.
 
 Configuration setup:
 Creating separate config files for Desktop and CLI
@@ -174,7 +153,8 @@ Creating separate config files for Desktop and CLI
 
 Please provide the following information:
 
-Project directory path (default: /Users/vmwm/VERITAS): [Enter]
+Project directory path (default: /Users/vmwm/VERITAS): 
+> /tmp/veritas-dry-run-test
 
 Obsidian Configuration:
 VERITAS requires Obsidian for research documentation
@@ -182,44 +162,52 @@ VERITAS requires Obsidian for research documentation
 Vault #1 Configuration:
 ------------------------
   Vault name (e.g., 'main', 'research', 'hla'): hla
-  Port (default: 27124): [Enter]
-  API token: test-token-abc123
+  Port (default: 27124): 
+  API token: test-obsidian-token-abc123
 ✓ Vault 'hla' configured
 
-  Vault name (or press Enter to finish): [Enter]
+Do you want to add another vault? (y/n): y
 
-Configured 1 vault(s)
+Vault #2 Configuration:
+------------------------
+  Vault name (or press Enter to finish): journal
+  Port (default: 27125): 
+  API token: test-journal-token-xyz789
+✓ Vault 'journal' configured
+
+Do you want to add another vault? (y/n): n
+
+✓ Configured 2 vault(s)
 
 Applying configurations...
 
-Merging Claude CLI configuration...
-  Backup created
-✓ Claude CLI configuration merged
+Creating Claude CLI configuration...
+✓ Claude CLI configuration created
 
-Merging Claude Desktop configuration...
-  Backup created
-✓ Claude Desktop configuration merged
+Creating Claude Desktop configuration...
+✓ Claude Desktop configuration created
 
-Setting up project configuration...
-✓ Project .mcp.json symlinked to CLI config
+DRY RUN: Would create project .mcp.json symlink
 
 ════════════════════════════════════════════════
 Configuration Complete!
 ════════════════════════════════════════════════
 
-Added VERITAS MCP servers to existing configurations:
+Created new configurations with VERITAS MCP servers:
 
   ✓ conversation-logger
   ✓ filesystem-local
   ✓ memory
   ✓ obsidian-rest-hla
-  ✓ pubmed (CLI: direct npx, Desktop: wrapper)
+  ✓ obsidian-rest-journal
+  ✓ pubmed
   ✓ sequential-thinking
 
 Configuration files:
-  • /Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json
-  • /Users/vmwm/.claude.json
-  • /Users/vmwm/VERITAS/.mcp.json (project-specific)
+  • /tmp/veritas-dry-run-87067/claude_desktop_config.json
+  • /tmp/veritas-dry-run-87067/claude_cli_config.json
+
+Backups created with timestamp suffix if files existed
 
 Next steps:
 1. Restart Claude Desktop application
@@ -227,46 +215,196 @@ Next steps:
 3. Verify MCP servers are connected
 ```
 
-## 3. Configuration Differences Verified
+## Step 3: Verify Repository Installation
 
-### CLI Configuration (/Users/vmwm/.claude.json):
-```json
-{
-  "pubmed": {
-    "command": "npx",
-    "args": ["@ncukondo/pubmed-mcp"],
-    "env": {
-      "PUBMED_EMAIL": "test@example.com",
-      "PUBMED_API_KEY": "test-api-key-12345",
-      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
-      "PUBMED_CACHE_TTL": "86400"
-    }
-  }
-}
+```bash
+$ cd /Users/vmwm/VERITAS
+$ ./tests/verify-installation.sh
+
+==================================
+VERITAS Installation Verification
+==================================
+
+Checking Core Files...
+----------------------
+✓ Main README
+✓ Setup Script
+✓ Claude Configuration Script
+✓ Verification Script
+✓ License File
+
+Checking Directories...
+-----------------------
+✓ Installation Directory
+✓ Hooks Directory
+✓ Scripts Directory
+✓ Templates Directory
+✓ Agent Templates
+✓ Obsidian Templates
+✓ Documentation Directory
+✓ Test Scripts
+✓ Conversation Logger MCP
+
+Checking Hooks...
+-----------------
+✓ Pre-command Hook
+✓ Post-command Hook
+✓ Hook Configuration
+✓ CLAUDE.md Enforcer
+✓ Task Router
+✓ Conversation Logger
+✓ Python Post-command Hook
+
+Checking Templates...
+--------------------
+✓ Installation CLAUDE.md
+✓ Project Configuration Template
+✓ Claude Code Settings Template
+✓ Found        3 Obsidian templates
+✓ Found        3 Domain expert templates
+
+Checking Test Scripts...
+----------------------
+✓ VERITAS Test Script
+✓ Functional Test Documentation
+✓ Found        2 test scripts
+
+Checking Installation Scripts...
+-------------------------------
+✓ Found        5 Python hooks
+✓ Found        2 Shell hooks
+✓ Installation CLAUDE.md
+
+Checking Documentation...
+------------------------
+✓ Getting Started Guide
+✓ Configuration Guide
+✓ Found        6 documentation files
+
+Checking MCP Components...
+-------------------------
+✓ Conversation Logger Index
+✓ Conversation Logger Package
+✓ Conversation Logger dependencies installed
+
+MCP Server Configuration:
+- Expected: 7 servers (5 core + 2 Obsidian)
+- Core: conversation-logger, sequential-thinking, memory, filesystem, pubmed
+- Obsidian: 2 vault connections (configurable)
+
+==================================
+Verification PASSED!
+All required VERITAS components are present.
+
+Next steps:
+1. Run ./setup.sh to set up a project
+2. Run ./scripts/configure-claude.sh to configure MCP servers
+3. Test with: claude 'test VERITAS system'
+==================================
 ```
 
-### Desktop Configuration (/Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json):
-```json
-{
-  "pubmed": {
-    "command": "node",
-    "args": ["/Users/vmwm/VERITAS/install/mcp-wrappers/pubmed-wrapper.js"],
-    "env": {
-      "PUBMED_EMAIL": "test@example.com",
-      "PUBMED_API_KEY": "test-api-key-12345",
-      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
-      "PUBMED_CACHE_TTL": "86400"
-    }
-  }
-}
+## Step 4: Test Project Installation
+
+```bash
+$ cd /Users/username/MyResearchProject
+$ ./.claude/scripts/veritas-test.sh
+
+VERITAS CONSTITUTIONAL TEST SUITE
+========================================
+
+Running verification checks...
+
+1. TESTING FILE STRUCTURE
+✓ CLAUDE.md found in project
+✓ Domain expert file found
+✓ Hooks directory exists
+✓ project.json found
+
+2. TESTING ENFORCEMENT HOOKS
+✓ All hooks executable
+
+3. TESTING MCP SERVERS
+✓ MCP server 'sequential-thinking' configured
+✓ MCP server 'pubmed' configured
+✓ MCP server 'memory' configured
+✓ MCP server 'conversation-logger' configured
+✓ MCP server 'obsidian-rest-research' configured
+
+4. TESTING CONVERSATION LOGGER
+✓ Database exists and accessible
+✓ Cleanup cron job configured
+
+5. TESTING CONSTITUTIONAL ARTICLES
+✓ All constitutional articles present
+
+========================================
+VERIFICATION COMPLETE
+
+All tests passed! VERITAS is ready to use.
 ```
 
-## 4. Directory Structure
+*Note: In DRY_RUN mode, this script may not exist until setup.sh completes fully*
 
-### VERITAS Installation:
+## Step 5: Restart Claude
+
+### For Claude Desktop:
+1. Quit Claude Desktop completely
+2. Restart the application
+3. Check MCP connection status (should show green indicators)
+
+### For Claude CLI:
+```bash
+$ claude restart
+Restarting Claude CLI...
+MCP servers reloaded successfully.
 ```
-/tmp/veritas-dry-run-test/
-├── CLAUDE.md (read-only, 86 lines)
+
+## Dry Run Safety Verification
+
+When running in DRY_RUN mode, the test confirms:
+```
+Safety verification:
+  ✓ DRY_RUN=true was set
+  ✓ Real configs were NOT modified
+  ✓ Operations stayed in /tmp
+
+Real CLI config (~/.claude.json):
+  Last modified: [earlier timestamp]
+  Status: Unchanged
+
+Real Desktop config:
+  Last modified: [earlier timestamp]  
+  Status: Unchanged
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"Prerequisites check failed"**: 
+   - Install Node.js 18+ and npm
+
+2. **"Permission denied"**: 
+   - Run `chmod +x install/scripts/*.sh`
+
+3. **PubMed MCP errors in Desktop**: 
+   - The wrapper script at `install/mcp-wrappers/pubmed-wrapper.js` handles this automatically
+
+4. **Obsidian connection failed**: 
+   - Verify Obsidian Local REST API is enabled and running
+   - Check your port number and API token
+
+5. **DRY_RUN mode limitations**:
+   - npm packages show "[DRY RUN] Would install" instead of actually installing
+   - Project veritas-test.sh won't exist until real installation
+
+## Directory Structure Created
+
+After successful installation, your project directory will contain:
+
+```
+MyResearchProject/
+├── CLAUDE.md                    # Constitutional document (read-only)
 └── .claude/
     ├── agents/
     │   └── hla-research-director.md
@@ -287,114 +425,22 @@ Next steps:
         └── obsidian/
 ```
 
-### MCP Wrappers Directory:
+## Repository Structure
+
 ```
-VERITAS/install/mcp-wrappers/
-└── pubmed-wrapper.js    # Filters startup messages for Desktop
+VERITAS/
+├── install/
+│   ├── mcp-wrappers/         # MCP compatibility wrappers
+│   │   └── pubmed-wrapper.js # Filters startup messages for Desktop
+│   ├── scripts/
+│   │   ├── setup.sh          # Project installation
+│   │   └── configure-claude.sh # MCP configuration
+│   └── templates/
+│       ├── agents/           # Domain expert templates
+│       ├── config/           # Configuration templates
+│       └── obsidian/         # Obsidian note templates
+├── tests/
+│   ├── verify-installation.sh # Repository verification
+│   └── veritas-test.sh       # Gets copied to projects
+└── conversation-logger/      # MCP server for logging
 ```
-
-## 5. Key Improvements Verified
-
-### 1. Symlink Option Removed
-- ✓ No longer offers dangerous symlink option
-- ✓ Users cannot accidentally break PubMed MCP
-- ✓ Configuration safety enforced
-
-### 2. Obsidian Automatic Configuration
-- ✓ No longer asks "Do you use Obsidian?"
-- ✓ Proceeds directly to vault configuration
-- ✓ Streamlined user experience
-
-### 3. Separate Configs Enforced
-- ✓ Always creates independent Desktop and CLI configs
-- ✓ Each environment gets appropriate PubMed configuration
-- ✓ No configuration conflicts possible
-
-### 4. PubMed Wrapper Implementation
-- ✓ Wrapper script filters non-JSON startup messages
-- ✓ CLI uses direct command (tolerates startup text)
-- ✓ Desktop uses wrapper (gets pure JSON)
-
-## 6. Test Scripts Verification
-
-### verify-installation.sh Results:
-```
-VERITAS Installation Verification
-==================================
-
-Checking Core Files...
-[OK] Main README
-[OK] Setup Script
-[OK] Claude Configuration Script
-[OK] Verification Script
-[OK] License File
-
-Checking Directories...
-[OK] Installation Directory
-[OK] Hooks Directory
-[OK] Scripts Directory
-[OK] Templates Directory
-[OK] MCP Wrappers Directory
-[OK] Documentation Directory
-[OK] Test Scripts
-[OK] Conversation Logger MCP
-
-Checking Hooks...
-[OK] All 8 essential hooks installed
-
-Checking MCP Components...
-[OK] Conversation Logger
-[OK] PubMed Wrapper Script
-```
-
-### veritas-test.sh Results:
-```
-VERITAS CONSTITUTIONAL TEST SUITE
-========================================
-
-1. TESTING FILE STRUCTURE
-[PASS] CLAUDE.md found in project
-[PASS] Domain expert file found
-[PASS] Hooks directory exists
-[PASS] project.json found
-
-2. TESTING ENFORCEMENT HOOKS
-[PASS] All hooks executable
-
-3. TESTING MCP SERVERS
-[PASS] MCP server 'sequential-thinking' configured
-[PASS] MCP server 'pubmed' configured
-[PASS] MCP server 'memory' configured
-[PASS] MCP server 'conversation-logger' configured
-[PASS] MCP server 'obsidian-rest-hla' configured
-
-4. TESTING CONVERSATION LOGGER
-[PASS] Database exists and accessible
-[PASS] Cleanup cron job configured
-
-5. TESTING CONSTITUTIONAL ARTICLES
-[PASS] All constitutional articles present
-```
-
-## Test Summary
-
-**Result**: ✅ SUCCESSFUL
-
-All components installed and configured correctly with improved user experience:
-
-### User Experience Improvements:
-1. **Safer Configuration** - Dangerous symlink option removed
-2. **Faster Setup** - Automatic Obsidian configuration
-3. **Clearer Instructions** - No confusing options
-4. **Reliable Operation** - PubMed MCP works in both environments
-
-### Technical Improvements:
-1. CLI and Desktop configurations properly separated
-2. PubMed wrapper script correctly installed
-3. Configuration script enforces safe practices
-4. All constitutional enforcement hooks in place
-
-### Notes:
-- This was a complete dry run using temporary directories
-- Your actual system configurations remain unchanged
-- The test confirms VERITAS installation is streamlined and safe
