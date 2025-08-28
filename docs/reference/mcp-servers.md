@@ -78,7 +78,7 @@ After installation, add to your Claude Desktop configuration:
       "command": "npx",
       "args": ["@modelcontextprotocol/server-sequentialthinking"]
     },
-    "pubmed-ncukondo": {
+    "pubmed": {
       "command": "npx",
       "args": ["@ncukondo/pubmed-mcp"],
       "env": {

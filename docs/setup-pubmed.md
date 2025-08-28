@@ -37,7 +37,7 @@ npm install -g @ncukondo/pubmed-mcp
 Add the following to your `claude_desktop_config.json` file:
 
 ```json
-"pubmed-ncukondo": {
+"pubmed": {
   "command": "npx",
   "args": [
     "@ncukondo/pubmed-mcp"
@@ -74,7 +74,7 @@ After making configuration changes, restart Claude Desktop to load the new MCP s
 
 After restarting Claude, verify the setup:
 
-1. Check that `pubmed-ncukondo` shows as "connected" in the MCP server list
+1. Check that `pubmed` shows as "connected" in the MCP server list
 2. Test with a simple query like searching for a PMID
 
 ## Benefits of This Configuration

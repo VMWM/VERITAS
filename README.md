@@ -413,7 +413,7 @@ Install VERITAS for me by executing these steps:
    - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
-   - External: sequential-thinking, pubmed-ncukondo, memory, filesystem (via npx)
+   - External: sequential-thinking, pubmed, memory, filesystem (via npx)
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for [REPLACE: macOS or Linux]
@@ -441,7 +441,7 @@ Install VERITAS for me by executing these steps:
    - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
-   - External: sequential-thinking, pubmed-ncukondo, memory, filesystem (via npx)
+   - External: sequential-thinking, pubmed, memory, filesystem (via npx)
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for macOS

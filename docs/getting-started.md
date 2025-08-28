@@ -107,7 +107,7 @@ cd VERITAS
 | conversation-logger | Session tracking | "Generate today's journal" |
 | filesystem-local | File access | "List my project files" |
 | memory | Knowledge graph | "Remember that..." |
-| pubmed-ncukondo | Citation search | "Find papers about..." |
+| pubmed | Citation search | "Find papers about..." |
 | sequential-thinking | Problem solving | "Plan a research review..." |
 | obsidian-rest-* | Vault access | "List my vault notes" |
 
@@ -217,7 +217,7 @@ The setup script automatically configures Claude Desktop, but if you need to do 
       "command": "npx",
       "args": ["@modelcontextprotocol/server-sequentialthinking"]
     },
-    "pubmed-ncukondo": {
+    "pubmed": {
       "command": "npx",
       "args": ["@ncukondo/pubmed-mcp"],
       "env": {
