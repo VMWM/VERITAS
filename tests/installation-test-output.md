@@ -414,37 +414,16 @@ This installation test demonstrates:
    - memory
    - pubmed (with API key support)
    - sequential-thinking
-   - obsidian-rest-research
-   - obsidian-rest-journal
+   - obsidian-rest-research (manual configuration)
+   - obsidian-rest-journal (manual configuration)
 5. **Verification Success**: All components verified present and functional
 6. **Local Testing**: veritas-test.sh confirms proper installation
 7. **File Placement Verification**: All files correctly installed in user's project directory
 8. **Hook Path Detection**: Hooks properly detect CLAUDE.md location from .claude/hooks/
-9. **Tool Name Validation**: All hooks use correct mcp__pubmed__* pattern (not the incorrect mcp__pubmed-ncukondo__*)
-
-## Important Notes on Test Results
-
-### MCP Server Configuration
-In this test output, the MCP servers show as configured because the user properly completed the Claude configuration step. The veritas-test.sh script checks for MCP servers in your Claude Desktop/CLI configuration files.
-
-### Expected Test Results
-
-**For a complete installation (shown above):**
-- ✅ 30+ tests passed (file structure, hooks, validation, MCP servers)
-- ⚠️ 2-3 warnings (Obsidian may not be running during test)
-- ❌ 0 failures
-
-**For installations where Claude config is skipped:**
-- ✅ 25 tests passed (file structure, hooks, validation system)
-- ⚠️ 5 warnings (Obsidian not running, env vars not set)
-- ❌ 7-8 failures (MCP servers not in Claude config - expected if configuration was skipped)
-
-The MCP server "failures" don't indicate a problem with VERITAS installation - they simply mean the Claude Desktop/CLI configuration step needs to be completed.
 
 ## Key Updates Demonstrated
 
 - Node.js version checking (v16+ required)
-- Proper PubMed MCP package (@ncukondo/pubmed-mcp)
 - API key prompting for enhanced rate limits
 - Dual Obsidian vault configuration
 - Conversation logger dependency installation
@@ -453,11 +432,11 @@ The MCP server "failures" don't indicate a problem with VERITAS installation - t
 ## File Placement Verification
 
 The additional tests above confirm:
+
 1. **CLAUDE.md** is correctly installed as read-only (-r--r--r--) in the project root
 2. **.claude/** directory structure is properly created with all subdirectories
 3. **Hook path detection** works - hooks can find CLAUDE.md from their location in .claude/hooks/
-4. **Tool references** are correct - all use mcp__pubmed__* (not the erroneous mcp__pubmed-ncukondo__*)
-5. **Directory structure** matches the expected layout for proper VERITAS operation
+4. **Directory structure** matches the expected layout for proper VERITAS operation
 
 This verifies that our dynamic path detection fixes work correctly after installation.
 
