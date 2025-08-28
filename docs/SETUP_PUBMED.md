@@ -13,9 +13,12 @@ You must have:
 ### 2. Getting Your NCBI API Key
 1. Go to https://www.ncbi.nlm.nih.gov/account/settings/
 2. Sign in or create an NCBI account
-3. Navigate to "API Key Management"
-4. Generate a new API key
+3. Navigate to "API Key Management" section
+4. Click "Create an API Key" or copy your existing key
 5. Save this key securely - you'll need it for configuration
+
+![NCBI Account Settings - API Key Management](assets/ncbi-api-key-settings.png)
+*Screenshot showing the NCBI account settings page with API Key Management section and linked accounts*
 
 ## Installation Steps
 
