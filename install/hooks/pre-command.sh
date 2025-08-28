@@ -81,7 +81,7 @@ Article 8: All articles are mandatory
 UNIVERSAL TOOL PRIORITY:
 1. mcp__sequential-thinking__* - Problem breakdown
 2. mcp__memory__* - Check existing knowledge
-3. mcp__pubmed-ncukondo__* - Citation verification
+3. mcp__pubmed__* - Citation verification
 4. mcp__obsidian-rest-*__* - Vault operations
 5. Domain-specific tools per project
 

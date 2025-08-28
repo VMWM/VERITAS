@@ -80,7 +80,7 @@ class TaskRouter:
                 "required": [
                     "mcp__sequential-thinking__sequentialthinking",
                     "mcp__obsidian__*",
-                    "mcp__pubmed-ncukondo__*"
+                    "mcp__pubmed__*"
                 ],
                 "forbidden": [
                     "filesystem-local",
@@ -127,7 +127,7 @@ DETECTED: Obsidian-related task
 MANDATORY WORKFLOW:
 1. START with mcp__sequential-thinking__sequentialthinking
 2. USE mcp__obsidian__* tools ONLY for vault operations
-3. VERIFY citations with mcp__pubmed-ncukondo__*
+3. VERIFY citations with mcp__pubmed__*
 4. DO NOT use filesystem-local, Write, or Edit tools
 
 FILE LOCATIONS:
