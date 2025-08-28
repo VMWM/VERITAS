@@ -5,7 +5,7 @@
 # VERITAS
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
-A Claude Code research framework that enforces citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base.
+A Claude Code research framework optimized for biomedical and medical research that enforces PubMed citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base for grant applications and publications.
 
 ## Table of Contents
 
@@ -27,13 +27,15 @@ A Claude Code research framework that enforces citation compliance, validates sc
 
 ## About VERITAS
 
-VERITAS embodies the core principle of truth in research. Every claim must be verified, every source must be cited, and every process is tracked to maintain complete research integrity.
+VERITAS embodies the core principle of truth in biomedical research. Designed specifically for medical and life science researchers, it ensures every scientific claim is backed by PubMed citations, maintains research integrity, and streamlines grant application workflows.
 
-- **Verification-Enforced** - Active enforcement of citation requirements through hooks and compliance checks
-- **Research Infrastructure** - Complete framework providing a professional research environment
-- **Tracking and Automated Structuring** - Intelligent organization and documentation of all research activities
+- **Verification-Enforced** - Automatic PubMed citation verification (35+ million articles)
+- **Research Infrastructure** - Complete framework for NIH grant applications and clinical research
+- **Tracking and Automated Structuring** - Intelligent organization of biomedical literature and findings
 
 **GitHub**: https://github.com/VMWM/VERITAS
+
+**Primary Focus**: Biomedical, medical, and clinical research with PMID-based citation enforcement
 
 ## What Makes VERITAS Different
 
@@ -230,46 +232,37 @@ The setup script (`install/scripts/setup.sh`) provides:
 - Conversation logger setup (special: runs from VERITAS as shared service)
 - MCP server configuration for Claude Desktop
 
-## Creating Your Domain Configuration
+## Domain Configuration
 
-### Option 1: If You Used Claude Code Installation
-Claude automatically created a custom domain expert file based on the field, citation style, and grant type you specified.
+VERITAS is optimized for **biomedical and medical research**, with built-in support for:
+- PubMed citation verification (35+ million articles)
+- PMID enforcement for all scientific claims
+- NIH grant application formatting
+- Clinical research documentation standards
+- HLA/immunology research templates
 
-### Option 2: If You Installed Manually
+### Customizing for Your Research Area
 
-After running the setup scripts, create your domain expert configuration:
+The setup script installs a medical research template (HLA antibody research). To adapt it for your specific biomedical field:
 
-**For Medical Research:**
-The HLA template is already copied to your project. You can use it as-is or modify it.
+1. **Edit the domain expert file** at `.claude/agents/hla-research-director.md`
+2. **Update research focus areas** to match your field (e.g., oncology, neuroscience, genetics)
+3. **Modify grant sections** for your funding agency (NIH, NSF, DoD)
+4. **Adjust templates** for your documentation needs
 
-**For Other Fields:**
-Ask Claude to create a domain expert for you:
+### Example Customization
 ```
-Create a domain expert configuration for my project:
-- Field: [your field, e.g., software engineering]
-- Research focus: [e.g., security vulnerability analysis]
-- Citation style: [e.g., GitHub/DOI]
-- Grant type: [e.g., NSF/none]
-
-Adapt the template from .claude/agents/hla-research-director.md
-Save as .claude/agents/domain-expert.md
+Ask Claude: "Adapt the HLA domain expert for [your biomedical field]:
+- Research focus: [e.g., cancer immunotherapy, neurodegeneration]
+- Grant type: [e.g., R01, K99/R00, F32]
+- Specific requirements: [e.g., clinical trial protocols, biomarker analysis]"
 ```
 
-### Customizing Your Domain Expert
-To modify your domain expert after creation:
-1. Edit `.claude/agents/[your-domain]-expert.md` in your project
-2. Update research aims, templates, and citation formats
-3. Restart Claude to apply changes
+### For Non-Biomedical Research
 
-See [Domain Expert Templates](install/templates/agents/README.md) for instructions on creating domain-specific templates.
+VERITAS's core features assume biomedical research workflows. Adapting for other domains (software engineering, social sciences) requires manual configuration:
 
-**Currently Included:**
-- Medical/Clinical Research (HLA antibody research template)
-
-**User-Created Templates Needed For:**
-- Computer Science/Engineering
-- Social Sciences
-- Other research domains
+See the section **"Adapting VERITAS for Other Domains"** below for instructions.
 
 ## Troubleshooting
 
@@ -288,6 +281,53 @@ See [Domain Expert Templates](install/templates/agents/README.md) for instructio
 1. Check **[Troubleshooting Guide](docs/troubleshooting.md)**
 2. Review **[Functional Tests](tests/veritas-functional-test.md)**
 3. Open an [issue on GitHub](https://github.com/VMWM/VERITAS/issues)
+
+## Adapting VERITAS for Other Domains
+
+While VERITAS is optimized for biomedical research, it can be manually adapted for other fields. Here's what you'll need to modify:
+
+### For Software Engineering
+
+1. **Disable PubMed enforcement** in `.claude/project.json`:
+   ```json
+   "strict_citations": false,
+   "type": "software"
+   ```
+
+2. **Create a new domain expert**:
+   - Remove biomedical-specific sections from the HLA template
+   - Replace PMID requirements with GitHub/DOI citations
+   - Add software-specific templates (code reviews, documentation, testing)
+
+3. **Adjust MCP servers** (optional):
+   - You may not need the PubMed server
+   - Consider adding GitHub or GitLab integration tools
+
+4. **Modify hooks** in `.claude/hooks/`:
+   - Edit `post-command.py` to check for different citation formats
+   - Adjust validation rules for your documentation standards
+
+### For Social Sciences/Humanities
+
+1. **Update citation style** in the domain expert:
+   - Replace PMID with DOI/ISBN/URL citations
+   - Use APA/MLA/Chicago formatting
+
+2. **Modify templates** for qualitative research:
+   - Interview protocols
+   - Literature review structures
+   - Theoretical frameworks
+
+3. **Adjust enforcement levels** to match your field's standards
+
+### General Adaptation Steps
+
+1. **Run the standard installation** first
+2. **Edit `.claude/project.json`** to change project type
+3. **Create a custom domain expert** file
+4. **Test and iterate** on the configuration
+
+**Note**: Core VERITAS features (sequential thinking, memory management, conversation logging) work across all domains. The main adaptations involve citation styles and domain-specific templates.
 
 ## Contributing
 
@@ -328,22 +368,20 @@ MIT License - See [license](license) file for details
 
 ### Option 1: Let Claude Code Install VERITAS (Recommended)
 
-**Step 1: Customize this template by replacing the bracketed text:**
+**For Biomedical Research Projects: modify the bracketed sections**
 
 ```
 Install VERITAS for me by executing these steps:
 1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
-2. Create my project directory at [REPLACE: ~/Projects/YourProjectName]
+2. Create my project directory at [REPLACE: ~/Projects/YourResearchProject]
 3. Copy VERITAS files to my project:
    - CLAUDE.md as read-only constitution
    - .claude/ directory with hooks, templates, scripts
-4. Create domain expert by adapting ~/VERITAS/install/templates/agents/hla-research-director.md:
-   - Read the template file
-   - Adapt it for my field: [REPLACE: Choose one: medical/software/social-science/engineering/other]
-   - Update research focus: [REPLACE: e.g., "machine learning security" or "cancer immunotherapy"]
-   - Change citation style: [REPLACE: Choose one: PMID/DOI/arXiv/GitHub/APA/IEEE]
-   - Set grant type: [REPLACE: Choose one: NIH/NSF/DoD/none]
-   - Save as .claude/agents/domain-expert.md in my project
+4. Install the HLA research template:
+   - Copy ~/VERITAS/install/templates/agents/hla-research-director.md
+   - Customize for my specific field: [REPLACE: e.g., "cancer immunotherapy" or "neurodegeneration"]
+   - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
+   - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
    - External: sequential-thinking, pubmed, memory, filesystem (via npx)
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
@@ -354,50 +392,21 @@ Install VERITAS for me by executing these steps:
 After installation: Configure Obsidian manually (see Configuration Guide)
 ```
 
-**Step 2: Copy your customized version to Claude Code**
+### Ready-to-Use Example
 
-Claude will execute the installation commands directly, showing you each step.
-
-### Ready-to-Use Examples
-
-**Example 1: Software Engineering (copy this exactly):**
+**Biomedical Research Installation (copy and customize):**
 ```
 Install VERITAS for me by executing these steps:
 1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
-2. Create my project directory at ~/Projects/SecurityAudit
+2. Create my project directory at ~/Projects/MyBiomedicalResearch
 3. Copy VERITAS files to my project:
    - CLAUDE.md as read-only constitution
    - .claude/ directory with hooks, templates, scripts
-4. Create domain expert by adapting ~/VERITAS/install/templates/agents/hla-research-director.md:
-   - Read the template file
-   - Adapt it for software engineering
-   - Update research focus to: open source security vulnerability analysis
-   - Change citation style from PMID to: GitHub URLs and CVE IDs
-   - Remove grant-specific sections (no grant funding)
-   - Save as .claude/agents/domain-expert.md in my project
-5. Install MCP servers:
-   - External: sequential-thinking, pubmed, memory, filesystem (via npx)
-   - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
-6. Configure Claude Desktop for macOS
-   - Include conversation-logger with absolute path to ~/VERITAS
-7. Test that everything works
-
-After installation: Configure Obsidian manually (see Configuration Guide)
-```
-
-**Example 2: Medical Research (copy this exactly):**
-```
-Install VERITAS for me by executing these steps:
-1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
-2. Create my project directory at ~/Projects/TransplantResearch
-3. Copy VERITAS files to my project:
-   - CLAUDE.md as read-only constitution
-   - .claude/ directory with hooks, templates, scripts
-4. Create domain expert by copying ~/VERITAS/install/templates/agents/hla-research-director.md:
-   - Copy the template file (already configured for medical research)
-   - Keep PMID citation style
-   - Update research focus if needed (current: transplant immunology and HLA antibodies)
-   - Keep NIH grant sections
+4. Install the medical research template:
+   - Copy ~/VERITAS/install/templates/agents/hla-research-director.md
+   - This template is pre-configured for biomedical research with PMID citations
+   - Update research focus for your specific area (e.g., cancer, neuroscience, immunology)
+   - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
    - External: sequential-thinking, pubmed, memory, filesystem (via npx)
