@@ -125,6 +125,22 @@ echo "Checking MCP Components..."
 echo "-------------------------"
 check_file "conversation-logger/index.js" "Conversation Logger Index"
 check_file "conversation-logger/package.json" "Conversation Logger Package"
+
+# Check for conversation-logger dependencies
+if [ -d "conversation-logger/node_modules" ]; then
+    echo -e "${GREEN}[OK]${NC} Conversation Logger dependencies installed"
+else
+    echo -e "${YELLOW}[WARNING]${NC} Conversation Logger dependencies not installed"
+    echo "             Run: cd conversation-logger && npm install"
+    ISSUES=$((ISSUES + 1))
+fi
+
+# Verify MCP servers configuration
+echo ""
+echo "MCP Server Configuration:"
+echo "- Expected: 7 servers (5 core + 2 Obsidian)"
+echo "- Core: conversation-logger, sequential-thinking, memory, filesystem, pubmed"
+echo "- Obsidian: 2 vault connections (configurable)"
 echo ""
 
 echo "=================================="

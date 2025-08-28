@@ -236,7 +236,7 @@ create_veritas_servers() {
   },
   "sequential-thinking": {
     "command": "npx",
-    "args": ["@modelcontextprotocol/server-sequentialthinking"]
+    "args": ["@modelcontextprotocol/server-sequential-thinking"]
   }$(if [ ${#VAULT_NAMES[@]} -gt 0 ]; then echo ","; fi)
 EOF
 

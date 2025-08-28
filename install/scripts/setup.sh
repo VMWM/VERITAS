@@ -40,6 +40,14 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
+# Check Node.js version
+NODE_VERSION=$(node -v 2>/dev/null | sed 's/v//' | cut -d. -f1)
+if [ -n "$NODE_VERSION" ] && [ "$NODE_VERSION" -lt 16 ]; then
+    echo -e "${YELLOW}Warning: Node.js version is less than 16. Some features may not work.${NC}"
+    echo "Current version: $(node -v)"
+    echo "Recommended: v16.0.0 or higher"
+fi
+
 # Check for npx
 if ! command -v npx &> /dev/null; then
     echo -e "${RED}npx is not installed. Please update npm: npm install -g npx${NC}"
@@ -419,12 +427,18 @@ echo -e "${GREEN}[OK] PubMed email configured: $PUBMED_EMAIL${NC}"
 # Install PubMed MCP globally for reliability
 echo ""
 echo "Installing PubMed MCP (this may take a moment)..."
-npm install -g @ncukondo/pubmed-mcp --loglevel=error
+npm install -g @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}[OK] PubMed MCP installed${NC}"
+    echo -e "${GREEN}[OK] PubMed MCP installed globally${NC}"
 else
-    echo -e "${YELLOW}Warning: PubMed MCP installation may require sudo${NC}"
-    echo "  You can install it later with: sudo npm install -g @ncukondo/pubmed-mcp"
+    echo -e "${YELLOW}Warning: Global installation failed (may need sudo)${NC}"
+    echo "  Attempting local installation..."
+    npm install @ncukondo/pubmed-mcp --loglevel=error 2>/dev/null
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK] PubMed MCP installed locally (will use npx)${NC}"
+    else
+        echo -e "${YELLOW}  Manual installation required: sudo npm install -g @ncukondo/pubmed-mcp${NC}"
+    fi
 fi
 
 # Optional: Get NCBI API key
@@ -706,10 +720,10 @@ if [ ${#VAULT_NAMES[@]} -gt 0 ]; then
 fi
 
 # Add other MCP servers
-MCP_CONFIG+="\"sequential-thinking\":{\"command\":\"npx\",\"args\":[\"@sequentialthinking/sequential-thinking-mcp\"]},"
+MCP_CONFIG+="\"sequential-thinking\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-sequential-thinking\"]},"
 MCP_CONFIG+="\"pubmed-ncukondo\":{\"command\":\"npx\",\"args\":[\"@ncukondo/pubmed-mcp\"],\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\",\"PUBMED_API_KEY\":\"$PUBMED_API_KEY\",\"PUBMED_CACHE_DIR\":\"/tmp/pubmed-cache\",\"PUBMED_CACHE_TTL\":\"86400\"}},"
 MCP_CONFIG+="\"memory\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-memory\"]},"
-MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@cloudflare/mcp-server-filesystem\",\"$PROJECT_DIR\"]},"
+MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-filesystem\",\"$PROJECT_DIR\"]},"
 MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"
 MCP_CONFIG+="}}"
 
