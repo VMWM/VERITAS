@@ -107,7 +107,7 @@ cd VERITAS
 | conversation-logger | Session tracking | "Generate today's journal" |
 | filesystem-local | File access | "List my project files" |
 | memory | Knowledge graph | "Remember that..." |
-| pubmed | Citation search | "Find papers about..." |
+| pubmed-ncukondo | Citation search | "Find papers about..." |
 | sequential-thinking | Problem solving | "Plan a research review..." |
 | obsidian-rest-* | Vault access | "List my vault notes" |
 
@@ -186,8 +186,9 @@ npx @modelcontextprotocol/install sequentialthinking
 
 ### PubMed MCP
 ```bash
-npm install -g @cyanheads/pubmed-mcp-server
+npm install -g @ncukondo/pubmed-mcp
 ```
+Note: Requires NCBI email and API key. See [SETUP_PUBMED.md](SETUP_PUBMED.md) for details.
 
 ### Memory MCP
 ```bash
@@ -216,13 +217,14 @@ The setup script automatically configures Claude Desktop, but if you need to do 
       "command": "npx",
       "args": ["@modelcontextprotocol/server-sequentialthinking"]
     },
-    "pubmed": {
+    "pubmed-ncukondo": {
       "command": "npx",
-      "args": ["@cyanheads/pubmed-mcp-server"],
+      "args": ["@ncukondo/pubmed-mcp"],
       "env": {
-        "MCP_TRANSPORT_TYPE": "stdio",
-        "MCP_LOG_LEVEL": "error",
-        "NODE_ENV": "production"
+        "PUBMED_EMAIL": "your-email@example.com",
+        "PUBMED_API_KEY": "your-ncbi-api-key",
+        "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+        "PUBMED_CACHE_TTL": "86400"
       }
     },
     "memory": {

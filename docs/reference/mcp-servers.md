@@ -20,11 +20,13 @@ npx @modelcontextprotocol/install sequentialthinking
 
 ### 2. PubMed MCP
 **Purpose**: Enables citation verification and literature search
-**Package**: @cyanheads/pubmed-mcp-server (production-ready version without debug output)
-**Repository**: https://github.com/cyanheads/pubmed-mcp-server
+**Package**: @ncukondo/pubmed-mcp (NCBI-compliant with proper credential handling)
+**Repository**: https://github.com/ncukondo/pubmed-mcp
+**Requirements**: NCBI email and API key (for rate limiting compliance)
 ```bash
-npm install -g @cyanheads/pubmed-mcp-server
+npm install -g @ncukondo/pubmed-mcp
 ```
+See [SETUP_PUBMED.md](../SETUP_PUBMED.md) for configuration details.
 
 ### 3. Memory MCP
 **Purpose**: Knowledge graph storage and retrieval
@@ -76,13 +78,14 @@ After installation, add to your Claude Desktop configuration:
       "command": "npx",
       "args": ["@modelcontextprotocol/server-sequentialthinking"]
     },
-    "pubmed": {
+    "pubmed-ncukondo": {
       "command": "npx",
-      "args": ["@cyanheads/pubmed-mcp-server"],
+      "args": ["@ncukondo/pubmed-mcp"],
       "env": {
-        "MCP_TRANSPORT_TYPE": "stdio",
-        "MCP_LOG_LEVEL": "error",
-        "NODE_ENV": "production"
+        "PUBMED_EMAIL": "your-email@example.com",
+        "PUBMED_API_KEY": "your-ncbi-api-key",
+        "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+        "PUBMED_CACHE_TTL": "86400"
       }
     },
     "memory": {
@@ -137,7 +140,7 @@ Test each MCP installation:
 The system enforces this tool priority:
 1. `mcp__sequential-thinking__*` - Always first for planning
 2. `mcp__memory__*` - Check existing knowledge
-3. `mcp__pubmed__*` - Citation verification
+3. `mcp__pubmed-ncukondo__*` - Citation verification
 4. `mcp__obsidian-rest__*` - Vault operations
 5. `mcp__filesystem-local__*` - Project file access
 
