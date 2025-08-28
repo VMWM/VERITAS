@@ -19,18 +19,32 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Detect OS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS
-    CLAUDE_DESKTOP_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
-    CLAUDE_CLI_CONFIG="$HOME/.claude.json"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux
-    CLAUDE_DESKTOP_CONFIG="$HOME/.config/Claude/claude_desktop_config.json"
-    CLAUDE_CLI_CONFIG="$HOME/.claude.json"
+# Check for DRY_RUN mode
+if [ "$DRY_RUN" = "true" ]; then
+    echo -e "${YELLOW}Running in DRY RUN mode - no actual files will be modified${NC}"
+    echo ""
+    # Use temporary paths for dry run
+    TEST_DIR="/tmp/veritas-dry-run-$$"
+    mkdir -p "$TEST_DIR"
+    CLAUDE_DESKTOP_CONFIG="$TEST_DIR/claude_desktop_config.json"
+    CLAUDE_CLI_CONFIG="$TEST_DIR/claude_cli_config.json"
+    echo "Using temporary configs:"
+    echo "  Desktop: $CLAUDE_DESKTOP_CONFIG"
+    echo "  CLI: $CLAUDE_CLI_CONFIG"
 else
-    echo -e "${RED}Unsupported OS. Please configure manually.${NC}"
-    exit 1
+    # Detect OS and use real paths
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        CLAUDE_DESKTOP_CONFIG="${CLAUDE_DESKTOP_CONFIG:-$HOME/Library/Application Support/Claude/claude_desktop_config.json}"
+        CLAUDE_CLI_CONFIG="${CLAUDE_CLI_CONFIG:-$HOME/.claude.json}"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        CLAUDE_DESKTOP_CONFIG="${CLAUDE_DESKTOP_CONFIG:-$HOME/.config/Claude/claude_desktop_config.json}"
+        CLAUDE_CLI_CONFIG="${CLAUDE_CLI_CONFIG:-$HOME/.claude.json}"
+    else
+        echo -e "${RED}Unsupported OS. Please configure manually.${NC}"
+        exit 1
+    fi
 fi
 
 echo "Detected configuration paths:"
@@ -399,21 +413,27 @@ else
 fi
 
 # Create project .mcp.json (symlink to CLI config)
-echo ""
-echo "Setting up project configuration..."
-if [ -f "$PROJECT_DIR/.mcp.json" ] || [ -L "$PROJECT_DIR/.mcp.json" ]; then
-    echo -e "${YELLOW}Warning: Existing .mcp.json found${NC}"
-    read -p "Replace with symlink to CLI config? (y/n): " REPLACE_MCP
-    if [ "$REPLACE_MCP" = "y" ]; then
-        mv "$PROJECT_DIR/.mcp.json" "$PROJECT_DIR/.mcp.json.backup.$(date +%Y%m%d-%H%M%S)"
+# Skip in dry run mode to avoid creating real symlinks
+if [ "$DRY_RUN" != "true" ]; then
+    echo ""
+    echo "Setting up project configuration..."
+    if [ -f "$PROJECT_DIR/.mcp.json" ] || [ -L "$PROJECT_DIR/.mcp.json" ]; then
+        echo -e "${YELLOW}Warning: Existing .mcp.json found${NC}"
+        read -p "Replace with symlink to CLI config? (y/n): " REPLACE_MCP
+        if [ "$REPLACE_MCP" = "y" ]; then
+            mv "$PROJECT_DIR/.mcp.json" "$PROJECT_DIR/.mcp.json.backup.$(date +%Y%m%d-%H%M%S)"
+            ln -s "$CLAUDE_CLI_CONFIG" "$PROJECT_DIR/.mcp.json"
+            echo -e "${GREEN}✓ Project .mcp.json symlinked to CLI config${NC}"
+        else
+            echo "  Keeping existing .mcp.json"
+        fi
+    else
         ln -s "$CLAUDE_CLI_CONFIG" "$PROJECT_DIR/.mcp.json"
         echo -e "${GREEN}✓ Project .mcp.json symlinked to CLI config${NC}"
-    else
-        echo "  Keeping existing .mcp.json"
     fi
 else
-    ln -s "$CLAUDE_CLI_CONFIG" "$PROJECT_DIR/.mcp.json"
-    echo -e "${GREEN}✓ Project .mcp.json symlinked to CLI config${NC}"
+    echo ""
+    echo "DRY RUN: Would create project .mcp.json symlink"
 fi
 
 # Show summary
