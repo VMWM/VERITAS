@@ -105,10 +105,11 @@ if [ "$MODE" != "preview" ]; then
     echo "   - Changes must be made to each separately"
     echo "   - Best for: Single machine setups"
     echo ""
-    echo "2) Symlink Desktop and CLI configs (unified management)"
+    echo "2) Symlink Desktop and CLI configs (NOT RECOMMENDED)"
     echo "   - Both use the same configuration file"
     echo "   - Changes to one affect both"
-    echo "   - Best for: Keeping Desktop and CLI in perfect sync"
+    echo "   - WARNING: This will break PubMed MCP in Desktop"
+    echo "   - Desktop needs wrapper, CLI doesn't"
     echo ""
     echo ""
     read -p "Choose an option (1-2, default: 1): " SYMLINK_CHOICE
@@ -205,7 +206,38 @@ if [[ "$USE_OBSIDIAN" =~ ^[Yy]$ ]]; then
 fi
 
 # Create the VERITAS servers configuration
+# $1 = "cli" or "desktop" to specify target
 create_veritas_servers() {
+    local TARGET="${1:-desktop}"  # Default to desktop if not specified
+    
+    # Determine PubMed configuration based on target
+    local PUBMED_CONFIG
+    if [ "$TARGET" = "cli" ]; then
+        # CLI can handle the startup messages, use direct npx
+        PUBMED_CONFIG='"pubmed": {
+    "command": "npx",
+    "args": ["@ncukondo/pubmed-mcp"],
+    "env": {
+      "PUBMED_EMAIL": "'"${PUBMED_EMAIL}"'",
+      "PUBMED_API_KEY": "'"${PUBMED_API_KEY}"'",
+      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+      "PUBMED_CACHE_TTL": "86400"
+    }
+  }'
+    else
+        # Desktop needs the wrapper to filter startup messages
+        PUBMED_CONFIG='"pubmed": {
+    "command": "node",
+    "args": ["'"$VERITAS_DIR"'/install/mcp-wrappers/pubmed-wrapper.js"],
+    "env": {
+      "PUBMED_EMAIL": "'"${PUBMED_EMAIL}"'",
+      "PUBMED_API_KEY": "'"${PUBMED_API_KEY}"'",
+      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+      "PUBMED_CACHE_TTL": "86400"
+    }
+  }'
+    fi
+    
     cat << EOF
 {
   "conversation-logger": {
@@ -224,16 +256,7 @@ create_veritas_servers() {
     "command": "npx",
     "args": ["@modelcontextprotocol/server-memory"]
   },
-  "pubmed": {
-    "command": "npx",
-    "args": ["@ncukondo/pubmed-mcp"],
-    "env": {
-      "PUBMED_EMAIL": "${PUBMED_EMAIL}",
-      "PUBMED_API_KEY": "${PUBMED_API_KEY}",
-      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
-      "PUBMED_CACHE_TTL": "86400"
-    }
-  },
+  $PUBMED_CONFIG,
   "sequential-thinking": {
     "command": "npx",
     "args": ["@modelcontextprotocol/server-sequential-thinking"]
@@ -267,7 +290,8 @@ EOF
 # Function to merge configurations
 merge_configs() {
     local existing_file="$1"
-    local new_servers=$(create_veritas_servers)
+    local target="${2:-desktop}"  # Default to desktop if not specified
+    local new_servers=$(create_veritas_servers "$target")
     
     if [ -f "$existing_file" ]; then
         # Merge with existing
@@ -280,7 +304,8 @@ merge_configs() {
 
 # Function to create full config
 create_full_config() {
-    local new_servers=$(create_veritas_servers)
+    local target="${1:-desktop}"  # Default to desktop if not specified
+    local new_servers=$(create_veritas_servers "$target")
     echo "{\"mcpServers\": $new_servers}"
 }
 
@@ -323,7 +348,7 @@ if [ "$MODE" = "merge" ]; then
     fi
     
     # Merge and save
-    merge_configs "$CLAUDE_CLI_CONFIG" > "${CLAUDE_CLI_CONFIG}.tmp"
+    merge_configs "$CLAUDE_CLI_CONFIG" "cli" > "${CLAUDE_CLI_CONFIG}.tmp"
     mv "${CLAUDE_CLI_CONFIG}.tmp" "$CLAUDE_CLI_CONFIG"
     echo -e "${GREEN}✓ Claude CLI configuration merged${NC}"
     
@@ -337,7 +362,7 @@ elif [ "$MODE" = "replace" ] || [ "$MODE" = "create" ]; then
     fi
     
     # Create new config
-    create_full_config > "$CLAUDE_CLI_CONFIG"
+    create_full_config "cli" > "$CLAUDE_CLI_CONFIG"
     echo -e "${GREEN}✓ Claude CLI configuration created${NC}"
 fi
 
@@ -371,7 +396,7 @@ else
         fi
         
         # Merge and save
-        merge_configs "$CLAUDE_DESKTOP_CONFIG" > "${CLAUDE_DESKTOP_CONFIG}.tmp"
+        merge_configs "$CLAUDE_DESKTOP_CONFIG" "desktop" > "${CLAUDE_DESKTOP_CONFIG}.tmp"
         mv "${CLAUDE_DESKTOP_CONFIG}.tmp" "$CLAUDE_DESKTOP_CONFIG"
         echo -e "${GREEN}✓ Claude Desktop configuration merged${NC}"
         
@@ -386,7 +411,7 @@ else
         fi
         
         # Create new config
-        create_full_config > "$CLAUDE_DESKTOP_CONFIG"
+        create_full_config "desktop" > "$CLAUDE_DESKTOP_CONFIG"
         echo -e "${GREEN}✓ Claude Desktop configuration created${NC}"
     fi
 fi

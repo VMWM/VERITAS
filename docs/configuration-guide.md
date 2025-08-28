@@ -372,6 +372,32 @@ After customizing:
 - Large vaults may use more system memory
 - Monitor system resources if you have thousands of notes
 
+## CLI vs Desktop Configuration Differences
+
+### Important: PubMed MCP Compatibility
+
+VERITAS automatically handles a critical difference between Claude CLI and Claude Desktop:
+
+**The Issue**: The `@ncukondo/pubmed-mcp` server outputs diagnostic text before JSON, which breaks Claude Desktop's JSON-RPC parser but works fine in CLI.
+
+**The Solution**: VERITAS uses different configurations:
+- **Claude CLI**: Direct command `npx @ncukondo/pubmed-mcp`
+- **Claude Desktop**: Wrapper script at `install/mcp-wrappers/pubmed-wrapper.js`
+
+### Configuration Management
+
+When running `configure-claude.sh`, you'll be asked about configuration management:
+
+1. **Separate configs (RECOMMENDED)**: Maintains independent configurations for CLI and Desktop
+   - Allows different PubMed configurations
+   - Each can be optimized for its environment
+   
+2. **Symlinked configs (NOT RECOMMENDED)**: Makes Desktop use CLI's configuration
+   - Will break PubMed MCP in Desktop
+   - Only use if you don't need PubMed functionality
+
+The setup script automatically applies the correct configuration for each environment.
+
 ## Advanced Configuration
 
 ### Custom Folder Structure

@@ -26,9 +26,9 @@
       ]
     },
     "pubmed": {
-      "command": "npx",
+      "command": "node",
       "args": [
-        "@ncukondo/pubmed-mcp"
+        "/path/to/VERITAS/install/mcp-wrappers/pubmed-wrapper.js"
       ],
       "env": {
         "PUBMED_EMAIL": "YOUR_EMAIL@example.com",

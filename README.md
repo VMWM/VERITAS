@@ -146,6 +146,8 @@ The VERITAS repository remains at `~/VERITAS/` with this structure:
 ├── install/
 │   ├── CLAUDE.md             # Constitutional document
 │   ├── hooks/                # All enforcement hooks
+│   ├── mcp-wrappers/         # MCP compatibility wrappers
+│   │   └── pubmed-wrapper.js # PubMed MCP wrapper for Desktop
 │   ├── scripts/              # Setup and configuration scripts
 │   └── templates/
 │       ├── agents/           # Domain expert templates

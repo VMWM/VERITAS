@@ -69,6 +69,28 @@ INCORRECT: |Cell 1|Cell 2|
 
 3. Ensure hooks are in correct location
 
+### Issue: PubMed MCP "Unexpected token 'M'" Error
+
+**Symptom**: PubMed MCP fails with "Unexpected token 'M', 'MCP PubMed'... is not valid JSON"
+
+**Cause**: The @ncukondo/pubmed-mcp server outputs diagnostic text before JSON, breaking Claude Desktop's parser.
+
+**Solution**: 
+VERITAS now includes a wrapper script that filters out non-JSON startup messages. The fix is automatically applied when you run the configuration script. If you encounter this issue:
+
+1. Update VERITAS to get the fix:
+   ```bash
+   cd ~/VERITAS && git pull
+   ```
+2. Re-run the configuration:
+   ```bash
+   ./install/scripts/configure-claude.sh
+   ```
+3. Restart Claude Desktop
+
+**Manual Fix** (if needed):
+The wrapper is located at `install/mcp-wrappers/pubmed-wrapper.js` and is automatically configured by the setup script.
+
 ### Issue: MCP Servers Disconnected
 
 **Symptom**: "MCP server [name] is disconnected" in Claude
