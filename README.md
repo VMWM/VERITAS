@@ -3,6 +3,7 @@
 </p>
 
 # VERITAS
+
 Verification-Enforced Research Infrastructure with Tracking and Automated Structuring
 
 A Claude Code research framework optimized for biomedical and medical research that enforces PubMed citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base for grant applications and publications.
@@ -62,17 +63,20 @@ This multi-checkpoint architecture ensures research integrity at every step.
 ## Core Features
 
 ### Research Management
+
 - **Literature Reviews** - Automatic PubMed citation verification (35+ million articles)
 - **Research Questions** - Structured templates for grant applications
 - **Concept Notes** - Wiki-linked knowledge base with validation
 - **Daily Journals** - Automatic progress tracking and summarization
 
 ### Quality Enforcement
+
 - **Citation Validation** - Every claim should include (Author et al., Year, PMID: XXXXXXXX)
 - **Format Guidelines** - Tables, headers, and links follow strict standards
 - **Output Verification** - Post-execution checks report compliance status
 
 ### Knowledge Integration
+
 - **Memory MCP** - Persistent knowledge graph for entities and relationships
 - **Obsidian Vaults** - Direct integration with your research notes
 - **Session Tracking** - Automatic conversation logging with 5-day retention
@@ -82,14 +86,16 @@ This multi-checkpoint architecture ensures research integrity at every step.
 ### MCP Servers
 
 #### External Servers (via npx)
+
 1. **Sequential Thinking** - Task decomposition and planning
-2. **PubMed** - Citation search and verification  
+2. **PubMed** - Citation search and verification
 3. **Memory** - Knowledge graph storage
 4. **Filesystem** - Project file access
 5. **Obsidian REST (Primary)** - Main vault operations
 6. **Obsidian REST (Journal)** - Journal vault operations
 
 #### Custom VERITAS Server
+
 7. **Conversation Logger** - Session tracking and journal generation
    - **Special**: Custom-built server that runs from VERITAS directory
    - **Not copied**: Stays in `/conversation-logger/`, acts as shared service
@@ -128,6 +134,7 @@ YourProject/
 ```
 
 The VERITAS repository remains at `~/VERITAS/` to provide:
+
 - Conversation logger MCP server
 - Test scripts for verification
 - Documentation and updates
@@ -135,14 +142,17 @@ The VERITAS repository remains at `~/VERITAS/` to provide:
 ## Documentation
 
 ### Getting Started
+
 - **[Installation Guide](docs/getting-started.md)** - Complete setup walkthrough with commands and troubleshooting
 - **[Functional Tests](tests/veritas-functional-test.md)** - Verify your setup
 
 ### Configuration
+
 - **[Configuration Guide](docs/configuration-guide.md)** - Adapt for your research domain and connect Obsidian
 - **[Domain Expert Templates](install/templates/agents/README.md)** - Field-specific configurations
 
 ### Troubleshooting
+
 - **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
 - **[MCP Server Reference](docs/reference/mcp-servers.md)** - Technical specifications
 
@@ -199,10 +209,12 @@ Machine learning significantly enhances diagnostic accuracy...
 ## Requirements
 
 ### Platform
+
 - **macOS** or **Linux** (Unix-based system required)
 - **Windows**: Not currently supported (would require WSL)
 
 ### Software
+
 - **Claude Desktop** (Claude Code) with API access
 - **Node.js** v16+ and npm
 - **Python** 3.8+
@@ -211,6 +223,7 @@ Machine learning significantly enhances diagnostic accuracy...
 - **Obsidian** with Local REST API plugin
 
 ### Quick Check
+
 ```bash
 # Verify prerequisites
 command -v node && echo "Node.js: OK" || echo "Node.js: MISSING"
@@ -225,7 +238,8 @@ Full installation guide: [docs/getting-started.md](docs/getting-started.md)
 ### What the Setup Script Does
 
 The setup script (`install/scripts/setup.sh`) provides:
-- Installation of VERITAS hooks and constitution  
+
+- Installation of VERITAS hooks and constitution
 - Project type selection (medical research, software, documentation)
 - Creation of `.claude/` directory structure in your project
 - Template installation for your domain
@@ -235,6 +249,7 @@ The setup script (`install/scripts/setup.sh`) provides:
 ## Domain Configuration
 
 VERITAS is optimized for **biomedical and medical research**, with built-in support for:
+
 - PubMed citation verification (35+ million articles)
 - PMID enforcement for all scientific claims
 - NIH grant application formatting
@@ -251,6 +266,7 @@ The setup script installs a medical research template (HLA antibody research). T
 4. **Adjust templates** for your documentation needs
 
 ### Example Customization
+
 ```
 Ask Claude: "Adapt the HLA domain expert for [your biomedical field]:
 - Research focus: [e.g., cancer immunotherapy, neurodegeneration]
@@ -268,13 +284,13 @@ See the section **"Adapting VERITAS for Other Domains"** below for instructions.
 
 ### Common Issues
 
-| Issue | Solution |
-| --- | --- |
-| Claude doesn't recognize CLAUDE.md | Restart Claude Desktop after setup |
-| "Command not found: claude" | Claude CLI is optional, use Desktop app |
-| Validation hooks not running | Check you're in project directory with CLAUDE.md |
-| Templates not found | Verify `.claude/agents/domain-expert.md` exists in your project |
-| Obsidian connection fails | Enable HTTPS (not HTTP) in Local REST API plugin |
+| Issue                              | Solution                                                          |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| Claude doesn't recognize CLAUDE.md | Restart Claude Desktop after setup                                |
+| "Command not found: claude"        | Claude CLI is optional, use Desktop app                           |
+| Validation hooks not running       | Check you're in project directory with CLAUDE.md                  |
+| Templates not found                | Verify `.claude/agents/domain-expert.md` exists in your project |
+| Obsidian connection fails          | Enable HTTPS (not HTTP) in Local REST API plugin                  |
 
 ### Getting Help
 
@@ -289,35 +305,36 @@ While VERITAS is optimized for biomedical research, it can be manually adapted f
 ### For Software Engineering
 
 1. **Disable PubMed enforcement** in `.claude/project.json`:
+
    ```json
    "strict_citations": false,
    "type": "software"
    ```
-
 2. **Create a new domain expert**:
+
    - Remove biomedical-specific sections from the HLA template
    - Replace PMID requirements with GitHub/DOI citations
    - Add software-specific templates (code reviews, documentation, testing)
-
 3. **Adjust MCP servers** (optional):
+
    - You may not need the PubMed server
    - Consider adding GitHub or GitLab integration tools
-
 4. **Modify hooks** in `.claude/hooks/`:
+
    - Edit `post-command.py` to check for different citation formats
    - Adjust validation rules for your documentation standards
 
 ### For Social Sciences/Humanities
 
 1. **Update citation style** in the domain expert:
+
    - Replace PMID with DOI/ISBN/URL citations
    - Use APA/MLA/Chicago formatting
-
 2. **Modify templates** for qualitative research:
+
    - Interview protocols
    - Literature review structures
    - Theoretical frameworks
-
 3. **Adjust enforcement levels** to match your field's standards
 
 ### General Adaptation Steps
@@ -331,7 +348,7 @@ While VERITAS is optimized for biomedical research, it can be manually adapted f
 
 ## Contributing
 
-We welcome contributions! 
+We welcome contributions!
 
 ### Current Priorities
 
@@ -368,7 +385,7 @@ MIT License - See [license](license) file for details
 
 ### Option 1: Let Claude Code Install VERITAS (Recommended)
 
-**For Biomedical Research Projects: modify the bracketed sections**
+**For Biomedical Research Projects: modify the bracketed sections and paste into your Claude Code chat.**
 
 ```
 Install VERITAS for me by executing these steps:
@@ -395,6 +412,7 @@ After installation: Configure Obsidian manually (see Configuration Guide)
 ### Ready-to-Use Example
 
 **Biomedical Research Installation (copy and customize):**
+
 ```
 Install VERITAS for me by executing these steps:
 1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
@@ -442,13 +460,16 @@ cd VERITAS
 
 **Quick Check:**
 Start a new Claude Code conversation and say:
+
 ```
 "What is your role according to CLAUDE.md?"
 ```
+
 Claude should respond with awareness of the VERITAS system and its research integrity requirements.
 
 **Comprehensive Testing:**
 Run the verification scripts in the `/tests` folder:
+
 ```bash
 # Run automated verification
 cd ~/VERITAS/tests
@@ -460,6 +481,7 @@ cat veritas-functional-test.md
 ```
 
 The functional tests verify:
+
 - MCP server connections
 - Citation enforcement
 - Template creation
@@ -467,6 +489,7 @@ The functional tests verify:
 - Conversation logging
 
 For medical research users, also test:
+
 ```bash
 cat veritas-functional-test-HLA-specific.md
 # Test HLA-specific workflows
