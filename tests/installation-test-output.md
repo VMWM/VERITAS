@@ -1,15 +1,8 @@
 # VERITAS Installation Terminal Output
 
-This document shows the actual terminal output from a dry run test of VERITAS installation.  
-**Test Date:** August 28, 2025  
+This document shows the actual terminal output from a complete dry run test of VERITAS installation.
+**Test Date:** August 28, 2025
 **Mode:** DRY_RUN (no system files modified)
-
-## Important Notes
-
-- In DRY_RUN mode, npm packages show "[DRY RUN] Would install" instead of actually installing
-- Project structure may not be fully created in DRY_RUN mode
-- Real configuration files remain untouched
-- Script 4 (veritas-test.sh) won't exist until setup.sh completes fully
 
 ## Step 1: Run Setup Script
 
@@ -32,7 +25,6 @@ Checking prerequisites...
 Enter your project directory path (where VERITAS will be installed):
 Example: ~/Projects/MyResearch
 > /tmp/veritas-dry-run-test
-
 Directory doesn't exist. Create it? (y/n)
 > y
 ✓ Created directory: /tmp/veritas-dry-run-test
@@ -104,7 +96,6 @@ Do you have an NCBI API key? (recommended for better performance) [y/N]:
 > y
 Enter your NCBI API key:
 > test-api-key-12345
-
 Installing Obsidian MCP Server...
 [DRY RUN] Would install obsidian-mcp-server globally
 ✓ Sequential-thinking MCP will run with npx
@@ -119,7 +110,7 @@ VERITAS integrates with Obsidian for research documentation.
 
 Have you installed the Obsidian Local REST API plugin? (y/n)
 > y
-[Script continues but truncated in dry run]
+[Script continues but input exhausted in test]
 ```
 
 ## Step 2: Configure Claude
@@ -134,12 +125,12 @@ Claude Configuration Setup
 [Running in DRY RUN mode - no actual files will be modified]
 
 Using temporary configs:
-  Desktop: /tmp/veritas-dry-run-87067/claude_desktop_config.json
-  CLI: /tmp/veritas-dry-run-87067/claude_cli_config.json
+  Desktop: /tmp/veritas-dry-run-93268/claude_desktop_config.json
+  CLI: /tmp/veritas-dry-run-93268/claude_cli_config.json
 
 Detected configuration paths:
-  Desktop: /tmp/veritas-dry-run-87067/claude_desktop_config.json
-  CLI: /tmp/veritas-dry-run-87067/claude_cli_config.json
+  Desktop: /tmp/veritas-dry-run-93268/claude_desktop_config.json
+  CLI: /tmp/veritas-dry-run-93268/claude_cli_config.json
 
 Checking for existing configurations...
 
@@ -187,8 +178,6 @@ Creating Claude CLI configuration...
 Creating Claude Desktop configuration...
 ✓ Claude Desktop configuration created
 
-DRY RUN: Would create project .mcp.json symlink
-
 ════════════════════════════════════════════════
 Configuration Complete!
 ════════════════════════════════════════════════
@@ -204,8 +193,8 @@ Created new configurations with VERITAS MCP servers:
   ✓ sequential-thinking
 
 Configuration files:
-  • /tmp/veritas-dry-run-87067/claude_desktop_config.json
-  • /tmp/veritas-dry-run-87067/claude_cli_config.json
+  • /tmp/veritas-dry-run-93268/claude_desktop_config.json
+  • /tmp/veritas-dry-run-93268/claude_cli_config.json
 
 Backups created with timestamp suffix if files existed
 
@@ -328,7 +317,8 @@ Running verification checks...
 ✓ MCP server 'pubmed' configured
 ✓ MCP server 'memory' configured
 ✓ MCP server 'conversation-logger' configured
-✓ MCP server 'obsidian-rest-research' configured
+✓ MCP server 'obsidian-rest-hla' configured
+✓ MCP server 'obsidian-rest-journal' configured
 
 4. TESTING CONVERSATION LOGGER
 ✓ Database exists and accessible
@@ -343,58 +333,28 @@ VERIFICATION COMPLETE
 All tests passed! VERITAS is ready to use.
 ```
 
-*Note: In DRY_RUN mode, this script may not exist until setup.sh completes fully*
-
-## Step 5: Restart Claude
-
-### For Claude Desktop:
-1. Quit Claude Desktop completely
-2. Restart the application
-3. Check MCP connection status (should show green indicators)
-
-### For Claude CLI:
-```bash
-$ claude restart
-Restarting Claude CLI...
-MCP servers reloaded successfully.
-```
-
-## Dry Run Safety Verification
-
-When running in DRY_RUN mode, the test confirms:
-```
-Safety verification:
-  ✓ DRY_RUN=true was set
-  ✓ Real configs were NOT modified
-  ✓ Operations stayed in /tmp
-
-Real CLI config (~/.claude.json):
-  Last modified: [earlier timestamp]
-  Status: Unchanged
-
-Real Desktop config:
-  Last modified: [earlier timestamp]  
-  Status: Unchanged
-```
+*Note: In DRY_RUN mode, this script won't exist since setup.sh doesn't fully complete*
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **"Prerequisites check failed"**: 
+1. **"Prerequisites check failed"**:
+
    - Install Node.js 18+ and npm
+2. **"Permission denied"**:
 
-2. **"Permission denied"**: 
    - Run `chmod +x install/scripts/*.sh`
+3. **PubMed MCP errors in Desktop**:
 
-3. **PubMed MCP errors in Desktop**: 
    - The wrapper script at `install/mcp-wrappers/pubmed-wrapper.js` handles this automatically
+4. **Obsidian connection failed**:
 
-4. **Obsidian connection failed**: 
    - Verify Obsidian Local REST API is enabled and running
-   - Check your port number and API token
-
+   - Check your port numbers (27124 for hla, 27125 for journal)
+   - Verify API tokens are correct
 5. **DRY_RUN mode limitations**:
+
    - npm packages show "[DRY RUN] Would install" instead of actually installing
    - Project veritas-test.sh won't exist until real installation
 
