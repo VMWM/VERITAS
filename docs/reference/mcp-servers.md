@@ -140,7 +140,7 @@ Test each MCP installation:
 The system enforces this tool priority:
 1. `mcp__sequential-thinking__*` - Always first for planning
 2. `mcp__memory__*` - Check existing knowledge
-3. `mcp__pubmed-ncukondo__*` - Citation verification
+3. `mcp__pubmed__*` - Citation verification
 4. `mcp__obsidian-rest__*` - Vault operations
 5. `mcp__filesystem-local__*` - Project file access
 
