@@ -9,14 +9,28 @@ import os
 import sys
 from pathlib import Path
 
+def find_project_root():
+    """Find the project root directory by looking for CLAUDE.md"""
+    current = Path.cwd()
+    while current != current.parent:
+        if (current / "CLAUDE.md").exists():
+            return current
+        current = current.parent
+    # Default to known project location if not found
+    default_project = Path.home() / "Library" / "CloudStorage" / "Box-Box" / "VM_F31_2025"
+    if default_project.exists():
+        return default_project
+    return Path.cwd()
+
 def enforce_claude_md():
     """Display critical CLAUDE.md requirements that must be followed"""
     
     # Check if CLAUDE.md exists
-    claude_md_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/CLAUDE.md")
+    project_root = find_project_root()
+    claude_md_path = project_root / "CLAUDE.md"
     
     if not claude_md_path.exists():
-        print("⚠️ WARNING: CLAUDE.md not found! Critical instructions missing!", file=sys.stderr)
+        print("WARNING: CLAUDE.md not found! Critical instructions missing!", file=sys.stderr)
         return
     
     # Output enforcement reminder (will be injected into context)

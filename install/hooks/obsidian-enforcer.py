@@ -14,10 +14,12 @@ class ObsidianEnforcer:
     """Enforces Obsidian MCP usage for vault operations"""
     
     def __init__(self):
+        # Use Path.home() for dynamic user directory
+        home = Path.home()
         self.vault_paths = {
-            "research_questions": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/",
-            "concepts": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/",
-            "journal": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/"
+            "research_questions": str(home / "Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/"),
+            "concepts": str(home / "Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/"),
+            "journal": str(home / "Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/")
         }
         
         self.file_naming_rules = {

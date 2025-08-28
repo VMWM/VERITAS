@@ -207,15 +207,15 @@ if [ -d "$VERITAS_DIR/install/templates/obsidian" ]; then
 fi
 
 # Install project configuration template
-cp "$VERITAS_DIR/install/project.json.template" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || true
+cp "$VERITAS_DIR/install/templates/config/project.json.template" "$PROJECT_DIR/.claude/project.json" 2>/dev/null || true
 echo -e "${GREEN}[OK] Installed project configuration template${NC}"
 
 # Install Claude Code settings (merge with existing)
-if [ -f "$VERITAS_DIR/install/settings.local.json.template" ]; then
+if [ -f "$VERITAS_DIR/install/templates/config/settings.local.json.template" ]; then
     SETTINGS_FILE="$PROJECT_DIR/.claude/settings.local.json"
     
     # Process template with project directory
-    PROCESSED_SETTINGS=$(sed "s|PROJECT_DIR_PLACEHOLDER|$PROJECT_DIR|g" "$VERITAS_DIR/install/settings.local.json.template")
+    PROCESSED_SETTINGS=$(sed "s|PROJECT_DIR_PLACEHOLDER|$PROJECT_DIR|g" "$VERITAS_DIR/install/templates/config/settings.local.json.template")
     
     if [ -f "$SETTINGS_FILE" ]; then
         echo -e "${YELLOW}[INFO] Existing Claude Code settings found${NC}"
@@ -288,10 +288,10 @@ else
     echo -e "${YELLOW}[WARNING] Test script not found${NC}"
 fi
 
-# Copy config files if they exist
-if [ -d "$VERITAS_DIR/install/config" ] && [ "$(ls -A "$VERITAS_DIR/install/config")" ]; then
-    cp "$VERITAS_DIR/install/config/"* "$PROJECT_DIR/.claude/config/" 2>/dev/null || true
-    echo -e "${GREEN}[OK] Installed configuration files${NC}"
+# Copy config files if they exist in templates/config
+if [ -d "$VERITAS_DIR/install/templates/config" ] && [ "$(ls -A "$VERITAS_DIR/install/templates/config")" ]; then
+    # Note: Template files are for reference, not direct copying
+    echo -e "${GREEN}[OK] Configuration templates available in install/templates/config${NC}"
 fi
 
 # Step 6: Configure project type

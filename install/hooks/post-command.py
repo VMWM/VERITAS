@@ -16,12 +16,15 @@ class HLAOutputVerifier:
     def __init__(self):
         self.violations = []
         self.warnings = []
+        self.project_root = None
         # Enable logging with rotation
-        self.log_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/logs")
+        # Find project root dynamically
+        self.project_root = self._find_project_root()
+        self.log_path = self.project_root / ".claude" / "logs"
         self.log_path.mkdir(parents=True, exist_ok=True)
         
         # Load verification config
-        config_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/config/verification.json")
+        config_path = self.project_root / ".claude" / "config" / "verification.json"
         with open(config_path, 'r') as f:
             self.config = json.load(f)
     
@@ -201,6 +204,19 @@ class HLAOutputVerifier:
         
         with open(log_file, 'w') as f:
             json.dump(log_data, f, indent=2)
+    
+    def _find_project_root(self):
+        """Find the project root directory by looking for CLAUDE.md"""
+        current = Path.cwd()
+        while current != current.parent:
+            if (current / "CLAUDE.md").exists():
+                return current
+            current = current.parent
+        # Default to home directory project if not found
+        default_project = Path.home() / "Library" / "CloudStorage" / "Box-Box" / "VM_F31_2025"
+        if default_project.exists():
+            return default_project
+        return Path.cwd()
 
 def main():
     """Main hook execution - check recently modified files"""

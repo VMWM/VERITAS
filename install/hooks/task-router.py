@@ -20,10 +20,25 @@ class TaskRouter:
         
     def load_config(self):
         """Load agent configuration"""
-        agent_path = Path("/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/.claude/agents/hla-research-director.md")
+        # Find project root dynamically
+        project_root = self._find_project_root()
+        agent_path = project_root / ".claude" / "agents" / "hla-research-director.md"
         if agent_path.exists():
             return agent_path.read_text()
         return ""
+    
+    def _find_project_root(self):
+        """Find the project root directory by looking for CLAUDE.md"""
+        current = Path.cwd()
+        while current != current.parent:
+            if (current / "CLAUDE.md").exists():
+                return current
+            current = current.parent
+        # Default to known project location if not found
+        default_project = Path.home() / "Library" / "CloudStorage" / "Box-Box" / "VM_F31_2025"
+        if default_project.exists():
+            return default_project
+        return Path.cwd()
     
     def detect_task_type(self, user_input):
         """Determine what type of task is being requested"""
@@ -61,10 +76,10 @@ class TaskRouter:
                     "Edit"
                 ],
                 "paths": {
-                    "research_questions": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/",
-                    "concepts": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/",
-                    "rules": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Rules/",
-                    "journal": "/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/"
+                    "research_questions": str(Path.home() / "Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Research Questions/"),
+                    "concepts": str(Path.home() / "Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Concepts/"),
+                    "rules": str(Path.home() / "Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/Rules/"),
+                    "journal": str(Path.home() / "Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/")
                 }
             }
         return {"required": [], "forbidden": []}
