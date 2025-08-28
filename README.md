@@ -8,8 +8,18 @@ Verification-Enforced Research Infrastructure with Tracking and Automated Struct
 
 A Claude Code research framework optimized for biomedical and medical research that enforces PubMed citation compliance, validates scientific claims in real-time, and automatically structures your knowledge base for grant applications and publications.
 
+## Demo
+
+[![VERITAS Demo Video](https://img.youtube.com/vi/y-mCZ2RODqw/maxresdefault.jpg)](https://www.youtube.com/watch?v=y-mCZ2RODqw)
+*Click the image above to watch the VERITAS demo on YouTube*
+
+<!-- For embedding in documentation sites, use this iframe:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y-mCZ2RODqw?si=NkycriEI9UMhMRu8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+-->
+
 ## Table of Contents
 
+- [Demo](#demo)
 - [About VERITAS](#about-veritas)
 - [What Makes VERITAS Different](#what-makes-veritas-different)
 - [System Architecture](#system-architecture)
