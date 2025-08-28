@@ -419,12 +419,25 @@ echo -e "${GREEN}[OK] PubMed email configured: $PUBMED_EMAIL${NC}"
 # Install PubMed MCP globally for reliability
 echo ""
 echo "Installing PubMed MCP (this may take a moment)..."
-npm install -g @cyanheads/pubmed-mcp-server --loglevel=error
+npm install -g @ncukondo/pubmed-mcp --loglevel=error
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}[OK] PubMed MCP installed${NC}"
 else
     echo -e "${YELLOW}Warning: PubMed MCP installation may require sudo${NC}"
-    echo "  You can install it later with: sudo npm install -g @cyanheads/pubmed-mcp-server"
+    echo "  You can install it later with: sudo npm install -g @ncukondo/pubmed-mcp"
+fi
+
+# Optional: Get NCBI API key
+echo ""
+echo "Do you have an NCBI API key? (recommended for better performance) [y/N]:"
+read -r HAS_API_KEY
+if [[ "$HAS_API_KEY" =~ ^[Yy]$ ]]; then
+    echo "Enter your NCBI API key:"
+    read -r PUBMED_API_KEY
+    export PUBMED_API_KEY="$PUBMED_API_KEY"
+else
+    echo "Note: You can get a free API key at https://www.ncbi.nlm.nih.gov/account/settings/"
+    PUBMED_API_KEY=""
 fi
 
 # Install Obsidian MCP Server
@@ -693,7 +706,7 @@ fi
 
 # Add other MCP servers
 MCP_CONFIG+="\"sequential-thinking\":{\"command\":\"npx\",\"args\":[\"@sequentialthinking/sequential-thinking-mcp\"]},"
-MCP_CONFIG+="\"pubmed\":{\"command\":\"pubmed-mcp-server\",\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\"}},"
+MCP_CONFIG+="\"pubmed-ncukondo\":{\"command\":\"npx\",\"args\":[\"@ncukondo/pubmed-mcp\"],\"env\":{\"PUBMED_EMAIL\":\"$PUBMED_EMAIL\",\"PUBMED_API_KEY\":\"$PUBMED_API_KEY\",\"PUBMED_CACHE_DIR\":\"/tmp/pubmed-cache\",\"PUBMED_CACHE_TTL\":\"86400\"}},"
 MCP_CONFIG+="\"memory\":{\"command\":\"npx\",\"args\":[\"@modelcontextprotocol/server-memory\"]},"
 MCP_CONFIG+="\"filesystem-local\":{\"command\":\"npx\",\"args\":[\"@cloudflare/mcp-server-filesystem\",\"$PROJECT_DIR\"]},"
 MCP_CONFIG+="\"conversation-logger\":{\"command\":\"node\",\"args\":[\"$VERITAS_DIR/conversation-logger/index.js\"]}"

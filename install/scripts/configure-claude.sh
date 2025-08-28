@@ -224,13 +224,14 @@ create_veritas_servers() {
     "command": "npx",
     "args": ["@modelcontextprotocol/server-memory"]
   },
-  "pubmed": {
+  "pubmed-ncukondo": {
     "command": "npx",
-    "args": ["@cyanheads/pubmed-mcp-server"],
+    "args": ["@ncukondo/pubmed-mcp"],
     "env": {
-      "MCP_TRANSPORT_TYPE": "stdio",
-      "MCP_LOG_LEVEL": "error",
-      "NODE_ENV": "production"
+      "PUBMED_EMAIL": "${PUBMED_EMAIL}",
+      "PUBMED_API_KEY": "${PUBMED_API_KEY}",
+      "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+      "PUBMED_CACHE_TTL": "86400"
     }
   },
   "sequential-thinking": {
