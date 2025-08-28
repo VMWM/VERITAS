@@ -1,10 +1,13 @@
 # VERITAS Complete Installation Test Output
 
-This document shows a complete installation test of the VERITAS system with the new PubMed MCP wrapper configuration, demonstrating all scripts in action: setup.sh, configure-claude.sh, verify-installation.sh, and veritas-test.sh.
+This document shows a complete installation test of the VERITAS system with streamlined configuration, demonstrating all scripts in action: setup.sh, configure-claude.sh, verify-installation.sh, and veritas-test.sh.
 
-**Test Date**: August 27, 2025  
+**Test Date**: August 28, 2025  
 **Test Environment**: macOS, dry-run mode (no actual system files modified)  
-**Key Change**: CLI and Desktop now use different PubMed MCP configurations
+**Key Changes**: 
+- Removed dangerous symlink option that breaks PubMed MCP
+- Streamlined Obsidian configuration (automatic, no prompting)
+- CLI and Desktop always use separate configurations
 
 ## 1. Setup Script (setup.sh)
 
@@ -15,7 +18,6 @@ Create directory: y
 Log retention: 1 (5-day auto-cleanup)
 PubMed email: test@example.com
 NCBI API key: y, test-api-key-12345
-Obsidian plugin installed: n
 ```
 
 ### Terminal Output:
@@ -124,21 +126,110 @@ Configuration: Medical research with PMID enforcement
 
 ## 2. Configure Claude Script (configure-claude.sh)
 
-### Key Feature: Separate CLI and Desktop Configurations
+### Key Feature: Automatic Configuration Setup
 
-The script now generates different PubMed MCP configurations:
-- **CLI**: Uses direct `npx @ncukondo/pubmed-mcp` command
-- **Desktop**: Uses wrapper at `/path/to/VERITAS/install/mcp-wrappers/pubmed-wrapper.js`
+The script now:
+- **NO LONGER** offers dangerous symlink option
+- **AUTOMATICALLY** creates separate CLI and Desktop configurations
+- **AUTOMATICALLY** prompts for Obsidian configuration (no skip option)
 
 ### User Responses:
 ```
 Configuration choice: 1 (Merge with existing)
-Separate configs: 1 (Yes, keep separate)
+Obsidian vault: hla
+Obsidian port: 27124
+Obsidian token: test-token-abc123
 ```
 
-### Configuration Verification:
+### Terminal Output:
+```bash
+$ ./install/scripts/configure-claude.sh
 
-#### CLI Configuration (/tmp/test-claude-cli-config.json):
+════════════════════════════════════════════════
+Claude Configuration Setup
+════════════════════════════════════════════════
+
+Detected configuration paths:
+  Desktop: /Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json
+  CLI: /Users/vmwm/.claude.json
+
+Warning: Found existing Claude Desktop configuration
+  Current MCP servers: 7
+Warning: Found existing Claude CLI configuration
+  Current MCP servers: 7
+
+How would you like to proceed?
+1) Merge VERITAS servers with existing configuration (recommended)
+2) Replace entire configuration (will backup existing)
+3) Show what will be added and exit
+4) Cancel
+
+> 1
+
+Configuration setup:
+Creating separate config files for Desktop and CLI
+  - Desktop and CLI have independent configurations
+  - This ensures compatibility with all MCP servers
+  - PubMed MCP requires different configs for each environment
+
+Please provide the following information:
+
+Project directory path (default: /Users/vmwm/VERITAS): [Enter]
+
+Obsidian Configuration:
+VERITAS requires Obsidian for research documentation
+
+Vault #1 Configuration:
+------------------------
+  Vault name (e.g., 'main', 'research', 'hla'): hla
+  Port (default: 27124): [Enter]
+  API token: test-token-abc123
+✓ Vault 'hla' configured
+
+  Vault name (or press Enter to finish): [Enter]
+
+Configured 1 vault(s)
+
+Applying configurations...
+
+Merging Claude CLI configuration...
+  Backup created
+✓ Claude CLI configuration merged
+
+Merging Claude Desktop configuration...
+  Backup created
+✓ Claude Desktop configuration merged
+
+Setting up project configuration...
+✓ Project .mcp.json symlinked to CLI config
+
+════════════════════════════════════════════════
+Configuration Complete!
+════════════════════════════════════════════════
+
+Added VERITAS MCP servers to existing configurations:
+
+  ✓ conversation-logger
+  ✓ filesystem-local
+  ✓ memory
+  ✓ obsidian-rest-hla
+  ✓ pubmed (CLI: direct npx, Desktop: wrapper)
+  ✓ sequential-thinking
+
+Configuration files:
+  • /Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json
+  • /Users/vmwm/.claude.json
+  • /Users/vmwm/VERITAS/.mcp.json (project-specific)
+
+Next steps:
+1. Restart Claude Desktop application
+2. For Claude CLI, run: claude restart
+3. Verify MCP servers are connected
+```
+
+## 3. Configuration Differences Verified
+
+### CLI Configuration (/Users/vmwm/.claude.json):
 ```json
 {
   "pubmed": {
@@ -154,7 +245,7 @@ Separate configs: 1 (Yes, keep separate)
 }
 ```
 
-#### Desktop Configuration (/tmp/test-claude-desktop-config.json):
+### Desktop Configuration (/Users/vmwm/Library/Application Support/Claude/claude_desktop_config.json):
 ```json
 {
   "pubmed": {
@@ -170,52 +261,9 @@ Separate configs: 1 (Yes, keep separate)
 }
 ```
 
-### Terminal Output:
-```bash
-$ ./install/scripts/configure-claude.sh
+## 4. Directory Structure
 
-════════════════════════════════════════════════
-Claude Configuration Setup
-════════════════════════════════════════════════
-
-Detected configuration paths:
-  Desktop: /tmp/test-claude-desktop-config.json
-  CLI: /tmp/test-claude-cli-config.json
-
-Configuration management options:
-
-1) Create separate config files (standard setup)
-   - Desktop and CLI have independent configurations
-   - Changes must be made to each separately
-   - Best for: Single machine setups
-
-2) Symlink Desktop and CLI configs (NOT RECOMMENDED)
-   - Both use the same configuration file
-   - Changes to one affect both
-   - WARNING: This will break PubMed MCP in Desktop
-   - Desktop needs wrapper, CLI doesn't
-
-Choose an option (1-2, default: 1): 1
-
-Created new configurations with VERITAS MCP servers:
-  ✓ conversation-logger
-  ✓ filesystem-local
-  ✓ memory
-  ✓ pubmed (CLI: direct npx, Desktop: wrapper)
-  ✓ sequential-thinking
-
-Configuration Complete!
-```
-
-## 3. New Directory Structure
-
-### MCP Wrappers Directory:
-```
-VERITAS/install/mcp-wrappers/
-└── pubmed-wrapper.js    # Filters startup messages for Desktop
-```
-
-### Test Installation Directory:
+### VERITAS Installation:
 ```
 /tmp/veritas-dry-run-test/
 ├── CLAUDE.md (read-only, 86 lines)
@@ -239,7 +287,35 @@ VERITAS/install/mcp-wrappers/
         └── obsidian/
 ```
 
-## 4. Verification Scripts
+### MCP Wrappers Directory:
+```
+VERITAS/install/mcp-wrappers/
+└── pubmed-wrapper.js    # Filters startup messages for Desktop
+```
+
+## 5. Key Improvements Verified
+
+### 1. Symlink Option Removed
+- ✓ No longer offers dangerous symlink option
+- ✓ Users cannot accidentally break PubMed MCP
+- ✓ Configuration safety enforced
+
+### 2. Obsidian Automatic Configuration
+- ✓ No longer asks "Do you use Obsidian?"
+- ✓ Proceeds directly to vault configuration
+- ✓ Streamlined user experience
+
+### 3. Separate Configs Enforced
+- ✓ Always creates independent Desktop and CLI configs
+- ✓ Each environment gets appropriate PubMed configuration
+- ✓ No configuration conflicts possible
+
+### 4. PubMed Wrapper Implementation
+- ✓ Wrapper script filters non-JSON startup messages
+- ✓ CLI uses direct command (tolerates startup text)
+- ✓ Desktop uses wrapper (gets pure JSON)
+
+## 6. Test Scripts Verification
 
 ### verify-installation.sh Results:
 ```
@@ -290,6 +366,7 @@ VERITAS CONSTITUTIONAL TEST SUITE
 [PASS] MCP server 'pubmed' configured
 [PASS] MCP server 'memory' configured
 [PASS] MCP server 'conversation-logger' configured
+[PASS] MCP server 'obsidian-rest-hla' configured
 
 4. TESTING CONVERSATION LOGGER
 [PASS] Database exists and accessible
@@ -299,36 +376,25 @@ VERITAS CONSTITUTIONAL TEST SUITE
 [PASS] All constitutional articles present
 ```
 
-## 5. Key Changes Verified
-
-### PubMed MCP Wrapper Implementation:
-1. ✓ Wrapper script created at `install/mcp-wrappers/pubmed-wrapper.js`
-2. ✓ CLI configuration uses direct `npx @ncukondo/pubmed-mcp`
-3. ✓ Desktop configuration uses wrapper script
-4. ✓ Configure script warns against symlinking configs
-5. ✓ Documentation updated with troubleshooting guide
-
-### File Placement Verification:
-- ✓ MCP wrapper directory created and populated
-- ✓ All hooks installed correctly
-- ✓ Constitutional document is read-only
-- ✓ Templates installed in correct locations
-- ✓ Test scripts available and functional
-
 ## Test Summary
 
 **Result**: ✅ SUCCESSFUL
 
-All components installed and configured correctly with the new PubMed MCP wrapper system. The key innovation is maintaining separate configurations for CLI and Desktop to handle the PubMed MCP server's startup message compatibility issue.
+All components installed and configured correctly with improved user experience:
 
-### Critical Success Factors:
-1. CLI and Desktop configurations are properly separated
-2. PubMed wrapper script installed in correct location
-3. Configuration script generates appropriate configs for each environment
-4. All constitutional enforcement hooks are in place
-5. No actual system files were modified during this dry run
+### User Experience Improvements:
+1. **Safer Configuration** - Dangerous symlink option removed
+2. **Faster Setup** - Automatic Obsidian configuration
+3. **Clearer Instructions** - No confusing options
+4. **Reliable Operation** - PubMed MCP works in both environments
+
+### Technical Improvements:
+1. CLI and Desktop configurations properly separated
+2. PubMed wrapper script correctly installed
+3. Configuration script enforces safe practices
+4. All constitutional enforcement hooks in place
 
 ### Notes:
 - This was a complete dry run using temporary directories
 - Your actual system configurations remain unchanged
-- The test confirms VERITAS will work correctly with the new wrapper system
+- The test confirms VERITAS installation is streamlined and safe

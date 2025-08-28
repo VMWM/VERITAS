@@ -95,36 +95,17 @@ else
     echo "No existing configurations found. Will create new ones."
 fi
 
-# Ask about symlinking
+# Set configuration mode - always use separate files
 if [ "$MODE" != "preview" ]; then
     echo ""
-    echo "Configuration management options:"
+    echo "Configuration setup:"
+    echo "Creating separate config files for Desktop and CLI"
+    echo "  - Desktop and CLI have independent configurations"
+    echo "  - This ensures compatibility with all MCP servers"
+    echo "  - PubMed MCP requires different configs for each environment"
     echo ""
-    echo "1) Create separate config files (standard setup)"
-    echo "   - Desktop and CLI have independent configurations"
-    echo "   - Changes must be made to each separately"
-    echo "   - Best for: Single machine setups"
-    echo ""
-    echo "2) Symlink Desktop and CLI configs (NOT RECOMMENDED)"
-    echo "   - Both use the same configuration file"
-    echo "   - Changes to one affect both"
-    echo "   - WARNING: This will break PubMed MCP in Desktop"
-    echo "   - Desktop needs wrapper, CLI doesn't"
-    echo ""
-    echo ""
-    read -p "Choose an option (1-2, default: 1): " SYMLINK_CHOICE
-    SYMLINK_CHOICE=${SYMLINK_CHOICE:-1}
     
-    if [ "$SYMLINK_CHOICE" = "2" ]; then
-        USE_SYMLINKS=true
-        echo ""
-        echo -e "${BLUE}Will create symlinks for unified configuration${NC}"
-        echo "Desktop will use the same config file as CLI (~/.claude.json)"
-    else
-        USE_SYMLINKS=false
-        echo ""
-        echo "Will create separate configuration files"
-    fi
+    USE_SYMLINKS=false
 fi
 
 echo ""
@@ -137,7 +118,8 @@ read -p "Project directory path (default: $VERITAS_DIR): " PROJECT_DIR
 PROJECT_DIR=${PROJECT_DIR:-$VERITAS_DIR}
 
 echo ""
-echo "Obsidian Configuration (press Enter to skip if not using Obsidian):"
+echo "Obsidian Configuration:"
+echo "VERITAS requires Obsidian for research documentation"
 echo ""
 
 # Arrays to store vault configurations
@@ -145,8 +127,8 @@ VAULT_NAMES=()
 VAULT_PORTS=()
 VAULT_TOKENS=()
 
-# Ask about first vault
-read -p "Do you use Obsidian with MCP? (y/n): " USE_OBSIDIAN
+# Automatically proceed with Obsidian configuration
+USE_OBSIDIAN="y"
 
 if [[ "$USE_OBSIDIAN" =~ ^[Yy]$ ]]; then
     VAULT_COUNT=0

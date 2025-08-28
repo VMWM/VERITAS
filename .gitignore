@@ -19,6 +19,9 @@ settings.local.json
 !settings.local.json.template
 !*.template.json
 
+# Project-specific MCP configuration (user-specific)
+.mcp.json
+
 # Environment variables and credentials
 .env
 .env.local
