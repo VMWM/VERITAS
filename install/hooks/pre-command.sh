@@ -9,23 +9,34 @@ echo "=================================="
 
 # Function to find project root (where CLAUDE.md exists)
 find_project_root() {
-    local current_dir="$(cd "$(dirname "$0")" && pwd)"
+    # Get the directory where this script is located
+    local script_dir="$(cd "$(dirname "$0")" && pwd)"
+    
+    # If we're in .claude/hooks/, go up two levels to project root
+    if [[ "$script_dir" == *"/.claude/hooks" ]]; then
+        local project_root="$(cd "$script_dir/../.." && pwd)"
+        if [ -f "$project_root/CLAUDE.md" ]; then
+            echo "$project_root"
+            return 0
+        fi
+    fi
+    
+    # Fallback: search upward from current directory
+    local current_dir="$script_dir"
     while [ "$current_dir" != "/" ]; do
         if [ -f "$current_dir/CLAUDE.md" ]; then
             echo "$current_dir"
             return 0
         fi
-        # Go up two levels from hooks directory to find project root
-        if [ -f "$current_dir/../CLAUDE.md" ]; then
-            echo "$(cd "$current_dir/.." && pwd)"
-            return 0
-        fi
-        if [ -f "$current_dir/../../CLAUDE.md" ]; then
-            echo "$(cd "$current_dir/../.." && pwd)"
-            return 0
-        fi
         current_dir="$(dirname "$current_dir")"
     done
+    
+    # Last resort: check current working directory
+    if [ -f "$(pwd)/CLAUDE.md" ]; then
+        echo "$(pwd)"
+        return 0
+    fi
+    
     return 1
 }
 
