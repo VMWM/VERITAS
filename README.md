@@ -85,18 +85,20 @@ This multi-checkpoint architecture ensures research integrity at every step.
 
 ### MCP Servers
 
-#### External Servers (via npx)
+#### Globally Installed Servers (npm install -g)
 
-1. **Sequential Thinking** - Task decomposition and planning
-2. **PubMed (ncukondo)** - Citation search and verification (requires NCBI credentials)
-3. **Memory** - Knowledge graph storage
-4. **Filesystem** - Project file access
-5. **Obsidian REST (Primary)** - Main vault operations
-6. **Obsidian REST (Journal)** - Journal vault operations
+1. **PubMed (@ncukondo/pubmed-mcp)** - Citation search and verification (requires NCBI credentials)
+2. **Obsidian REST** - Vault operations (supports multiple vault configurations)
+
+#### npx Executed Servers (no installation required)
+
+3. **Sequential Thinking** - Task decomposition and planning
+4. **Memory** - Knowledge graph storage
+5. **Filesystem** - Project file access
 
 #### Custom VERITAS Server
 
-7. **Conversation Logger** - Session tracking and journal generation
+6. **Conversation Logger** - Session tracking and journal generation
    - **Special**: Custom-built server that runs from VERITAS directory
    - **Not copied**: Stays in `/conversation-logger/`, acts as shared service
    - **Uses absolute path**: Points to `~/VERITAS/conversation-logger/index.js`
@@ -414,7 +416,8 @@ Install VERITAS for me by executing these steps:
    - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
-   - External: sequential-thinking, pubmed, memory, filesystem (via npx)
+   - Global installs: pubmed (@ncukondo/pubmed-mcp), obsidian-rest (@modelcontextprotocol/server-obsidian-rest)
+   - npx execution (no install): sequential-thinking, memory, filesystem
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for [REPLACE: macOS or Linux]
@@ -442,7 +445,8 @@ Install VERITAS for me by executing these steps:
    - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers:
-   - External: sequential-thinking, pubmed, memory, filesystem (via npx)
+   - Global installs: pubmed (@ncukondo/pubmed-mcp), obsidian-rest (@modelcontextprotocol/server-obsidian-rest)
+   - npx execution (no install): sequential-thinking, memory, filesystem
    - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
    - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
 6. Configure Claude Desktop for macOS
