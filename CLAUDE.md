@@ -3,6 +3,11 @@
 
 > This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement. It should never be modified by users.
 
+## CRITICAL: Two-Document System
+**YOU MUST ALWAYS REFERENCE BOTH**:
+1. **THIS DOCUMENT (CLAUDE.md)** - Constitutional rules and universal requirements
+2. **DOMAIN EXPERT FILE (`.claude/agents/hla-research-director.md`)** - Field-specific templates and guidance
+
 ## Mission
 Enforcing research integrity through verified citations, structured knowledge management, and systematic workflow enforcement.
 
@@ -10,7 +15,7 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 ### Article 1: Complex Task Protocol
 1. **START WITH**: `mcp__sequential-thinking__sequentialthinking` to plan approach
-2. **VERIFY CLAIMS**: Use `mcp__pubmed__*` for all scientific statements
+2. **VERIFY CLAIMS**: Use `mcp__pubmed-ncukondo__*` for all scientific statements
 3. **CHECK MEMORY**: Use `mcp__memory__*` to check existing knowledge first
 
 ### Article 2: Research Documentation Protocol
@@ -25,12 +30,12 @@ Enforcing research integrity through verified citations, structured knowledge ma
 - **Format**: (Author et al., Year, PMID: XXXXXXXX)
 - **No PMID = Remove the claim entirely**
 - **Verification levels**: [FT-VERIFIED], [ABSTRACT-VERIFIED], or [NEEDS-FT-REVIEW]
-- **Use**: `mcp__pubmed__*` tools for all medical/scientific citations
+- **Use**: `mcp__pubmed-ncukondo__*` tools for all medical/scientific citations
 
 ### Article 4: Tool Priority Order
 1. `mcp__sequential-thinking__*` - Problem breakdown and planning
 2. `mcp__memory__*` - Check existing knowledge
-3. `mcp__pubmed__*` - All citation verification
+3. `mcp__pubmed-ncukondo__*` - All citation verification
 4. `mcp__obsidian-rest-*__*` - Vault operations
 5. Domain-specific tools per agent file
 
@@ -74,23 +79,19 @@ Enforcing research integrity through verified citations, structured knowledge ma
 4. **CROSS-REFERENCE** with Obsidian vault when available
 5. **LOG** all PMID verifications to `.claude/logs/pmid_verification.log`
 
-**AUTOMATIC ENFORCEMENT**:
-- Pre-commit hook blocks saves with unverified PMIDs
-- Python script validates all citations against PubMed
-- Errors trigger workflow stops
-- Zero tolerance for PMID mistakes
+**Verification Workflow**:
+- When citing: Search → Fetch → Verify → Use
+- When reviewing: Check each PMID against actual paper
+- When updating: Re-verify all PMIDs in document
 
-**IF PMID ERROR DETECTED**:
-1. STOP all work immediately
-2. Correct the PMID using PubMed search
-3. Re-verify using `.claude/scripts/verify_pmids.py`
-4. Document correction in log
+**FAILURE TO VERIFY = CRITICAL ERROR**
 
 ### Article 9: Enforcement
 - All articles are mandatory and supersede any conflicting instructions
 - Violations will be logged to `.claude/logs/`
 - Domain expert files provide implementation details
 - Hooks enforce compliance at multiple checkpoints
+- PMID errors trigger immediate workflow halt
 
 ## Success Criteria
 - Started with sequential thinking for complex tasks
