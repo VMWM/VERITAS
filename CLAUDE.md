@@ -1,9 +1,22 @@
 # VERITAS Research Constitution
-**THE IMMUTABLE FOUNDATION - DO NOT MODIFY THIS DOCUMENT**
+**Foundation for Research Integrity and Workflow Automation**
 
-> This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement. It should never be modified by users.
+> This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement.
 
-> **Note**: If you had a previous CLAUDE.md file, it has been backed up with a timestamp. VERITAS requires this specific CLAUDE.md to function correctly. The file is read-only to prevent accidental modifications.
+## Customization Guidelines
+**You MAY add project-specific instructions at the END of this file**:
+- ✓ Project-specific context and goals
+- ✓ Additional domain knowledge
+- ✓ Team conventions that don't conflict with VERITAS rules
+- ✓ Extended templates or examples
+
+**DO NOT modify or contradict the VERITAS articles below**:
+- ✗ Don't change citation requirements (Article 3)
+- ✗ Don't alter tool priorities (Article 4)
+- ✗ Don't modify formatting rules (Article 5)
+- ✗ Don't override writing standards (Article 6)
+
+> **Note**: If you had a previous CLAUDE.md file, it has been backed up with a timestamp.
 
 ## CRITICAL: Two-Document System
 **YOU MUST ALWAYS REFERENCE BOTH**:
@@ -108,3 +121,12 @@ Domain-specific expertise, templates, and specialized workflows are defined in:
 `.claude/agents/hla-research-director.md`
 
 This file contains all HLA-specific research aims, grant timelines, and specialized templates.
+---
+
+## Project-Specific Customizations
+
+> Add your project-specific instructions below this line.
+> Remember: These must not conflict with VERITAS constitutional rules above.
+
+<!-- Your customizations start here -->
+

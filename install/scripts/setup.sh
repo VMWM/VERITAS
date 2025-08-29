@@ -98,17 +98,29 @@ if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
     echo -e "${YELLOW}[WARNING] CLAUDE.md already exists in this directory${NC}"
     echo "This may be from a previous installation or your own project instructions."
     echo ""
-    echo "Note: Claude Code specifically looks for CLAUDE.md for project context."
-    echo "VERITAS requires its own CLAUDE.md to function correctly."
+    echo -e "${YELLOW}IMPORTANT: VERITAS requires its specific CLAUDE.md to function correctly.${NC}"
+    echo "Claude Code automatically looks for CLAUDE.md files for project instructions."
+    echo ""
+    echo "Your existing CLAUDE.md will be replaced, but a backup will be created."
+    echo "After installation, you can add project-specific customizations to CLAUDE.md,"
+    echo "but ensure they don't conflict with VERITAS constitutional rules."
     echo ""
     echo "What would you like to do?"
-    echo "1) Use a different project directory"
-    echo "2) Overwrite the existing installation (will backup current CLAUDE.md)"
+    echo "1) Replace with VERITAS CLAUDE.md (backup will be created)"
+    echo "2) Use a different project directory"
     echo "3) Cancel installation"
     read -r CLAUDE_CHOICE
     
     case $CLAUDE_CHOICE in
         1)
+            # Replace with VERITAS CLAUDE.md
+            BACKUP_NAME="CLAUDE.md.backup.$(date +%Y%m%d-%H%M%S)"
+            mv "$PROJECT_DIR/CLAUDE.md" "$PROJECT_DIR/$BACKUP_NAME"
+            echo -e "${GREEN}[OK] Existing CLAUDE.md backed up to: $BACKUP_NAME${NC}"
+            echo "  You can reference it later if you need to restore any custom instructions"
+            ;;
+        2)
+            # Use different directory
             echo ""
             echo "Enter a different project directory path:"
             read -r NEW_PROJECT_DIR
@@ -131,14 +143,8 @@ if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
             echo "Continuing installation in: $PROJECT_DIR"
             echo ""
             ;;
-        2)
-            # Backup existing CLAUDE.md
-            BACKUP_NAME="CLAUDE.md.backup.$(date +%Y%m%d-%H%M%S)"
-            chmod 644 "$PROJECT_DIR/CLAUDE.md" 2>/dev/null
-            mv "$PROJECT_DIR/CLAUDE.md" "$PROJECT_DIR/$BACKUP_NAME"
-            echo -e "${GREEN}[OK] Existing CLAUDE.md backed up to: $BACKUP_NAME${NC}"
-            ;;
         3)
+            # Cancel
             echo "Installation cancelled."
             exit 0
             ;;
@@ -147,11 +153,21 @@ if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
             exit 1
             ;;
     esac
+    
+    # Copy VERITAS CLAUDE.md if we chose to replace (option 1) or changed directory (option 2)
+    if [ "$CLAUDE_CHOICE" = "1" ] || [ "$CLAUDE_CHOICE" = "2" ]; then
+        cp "$VERITAS_DIR/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
+        echo -e "${GREEN}[OK] VERITAS Constitution installed${NC}"
+        echo -e "${YELLOW}Note: You can add project-specific customizations at the end of CLAUDE.md${NC}"
+        echo "      Just ensure they don't conflict with VERITAS rules above"
+    fi
+else
+    # No existing CLAUDE.md, install fresh
+    cp "$VERITAS_DIR/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
+    echo -e "${GREEN}[OK] VERITAS Constitution installed${NC}"
+    echo -e "${YELLOW}Note: You can add project-specific customizations at the end of CLAUDE.md${NC}"
+    echo "      Just ensure they don't conflict with VERITAS rules above"
 fi
-
-cp "$VERITAS_DIR/install/CLAUDE.md" "$PROJECT_DIR/CLAUDE.md"
-chmod 444 "$PROJECT_DIR/CLAUDE.md"  # Make read-only to prevent accidental edits
-echo -e "${GREEN}[OK] Constitution installed (read-only)${NC}"
 
 # Step 2: Create .claude directory structure
 echo ""
