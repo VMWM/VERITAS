@@ -348,11 +348,8 @@ else
     echo -e "${YELLOW}[WARNING] Pre-citation hook not found${NC}"
 fi
 
-# Copy PMID verification workflow documentation
-if [ -f "$VERITAS_DIR/.claude/PMID_VERIFICATION_WORKFLOW.md" ]; then
-    cp "$VERITAS_DIR/.claude/PMID_VERIFICATION_WORKFLOW.md" "$PROJECT_DIR/.claude/"
-    echo -e "${GREEN}[OK] Installed PMID verification documentation${NC}"
-fi
+# PMID verification is documented in CLAUDE.md Article 8
+# No separate workflow document needed to avoid confusion
 
 # Install Python requests library if needed
 python3 -c "import requests" 2>/dev/null || {
