@@ -3,6 +3,8 @@
 
 > This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement. It should never be modified by users.
 
+> **Note**: If you had a previous CLAUDE.md file, it has been backed up with a timestamp. VERITAS requires this specific CLAUDE.md to function correctly. The file is read-only to prevent accidental modifications.
+
 ## CRITICAL: Two-Document System
 **YOU MUST ALWAYS REFERENCE BOTH**:
 1. **THIS DOCUMENT (CLAUDE.md)** - Constitutional rules and universal requirements
