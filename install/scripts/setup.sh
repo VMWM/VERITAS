@@ -169,6 +169,7 @@ ESSENTIAL_HOOKS=(
     "task-router.py"
     "auto-conversation-logger.py"
     "obsidian-enforcer.py"
+    "pre-citation-hook.sh"
     "config.json"
 )
 
@@ -198,10 +199,10 @@ done
 echo -e "${GREEN}[OK] Installed $INSTALLED_COUNT essential hooks${NC}"
 
 # Verify all essential hooks are present
-if [ $INSTALLED_COUNT -eq 8 ]; then
-    echo -e "${GREEN}[VERIFIED] All 8 essential hooks installed${NC}"
+if [ $INSTALLED_COUNT -eq 9 ]; then
+    echo -e "${GREEN}[VERIFIED] All 9 essential hooks installed${NC}"
 else
-    echo -e "${RED}[WARNING] Only $INSTALLED_COUNT of 8 essential hooks installed${NC}"
+    echo -e "${RED}[WARNING] Only $INSTALLED_COUNT of 9 essential hooks installed${NC}"
 fi
 
 # Step 4: Install templates
@@ -324,7 +325,94 @@ fi
 
 echo -e "${GREEN}[OK] Configured for medical research with PMID enforcement${NC}"
 
-# Step 7: Install and configure conversation-logger MCP
+# Step 7: Install PMID Verification System
+echo ""
+echo "Installing PMID Verification System..."
+echo "  This ensures 100% accuracy of PubMed IDs in all documents"
+
+# Copy PMID verification scripts
+if [ -f "$VERITAS_DIR/.claude/scripts/verify_pmids.py" ]; then
+    cp "$VERITAS_DIR/.claude/scripts/verify_pmids.py" "$PROJECT_DIR/.claude/scripts/"
+    chmod +x "$PROJECT_DIR/.claude/scripts/verify_pmids.py"
+    echo -e "${GREEN}[OK] Installed PMID verification script${NC}"
+else
+    echo -e "${YELLOW}[WARNING] PMID verification script not found${NC}"
+fi
+
+# Copy pre-citation hook
+if [ -f "$VERITAS_DIR/.claude/hooks/pre-citation-hook.sh" ]; then
+    cp "$VERITAS_DIR/.claude/hooks/pre-citation-hook.sh" "$PROJECT_DIR/.claude/hooks/"
+    chmod +x "$PROJECT_DIR/.claude/hooks/pre-citation-hook.sh"
+    echo -e "${GREEN}[OK] Installed pre-citation hook${NC}"
+else
+    echo -e "${YELLOW}[WARNING] Pre-citation hook not found${NC}"
+fi
+
+# Copy PMID verification workflow documentation
+if [ -f "$VERITAS_DIR/.claude/PMID_VERIFICATION_WORKFLOW.md" ]; then
+    cp "$VERITAS_DIR/.claude/PMID_VERIFICATION_WORKFLOW.md" "$PROJECT_DIR/.claude/"
+    echo -e "${GREEN}[OK] Installed PMID verification documentation${NC}"
+fi
+
+# Install Python requests library if needed
+python3 -c "import requests" 2>/dev/null || {
+    echo "Installing requests library for PMID verification..."
+    pip3 install requests --quiet || echo "  Note: Please install manually: pip3 install requests"
+}
+
+# Set up git pre-commit hook for PMID verification
+if [ -d "$PROJECT_DIR/.git" ]; then
+    PRECOMMIT_FILE="$PROJECT_DIR/.git/hooks/pre-commit"
+    
+    # Check if pre-commit hook exists
+    if [ -f "$PRECOMMIT_FILE" ]; then
+        # Append PMID verification to existing hook
+        if ! grep -q "verify_pmids.py" "$PRECOMMIT_FILE"; then
+            cat >> "$PRECOMMIT_FILE" << 'EOF'
+
+# VERITAS PMID Verification
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.md$'); do
+    if grep -q "PMID:" "$file"; then
+        echo "Verifying PMIDs in $file..."
+        if ! python3 .claude/scripts/verify_pmids.py "$file"; then
+            echo "PMID verification failed. Commit aborted."
+            echo "Please fix the PMIDs and try again."
+            exit 1
+        fi
+    fi
+done
+EOF
+            echo -e "${GREEN}[OK] Added PMID verification to git pre-commit hook${NC}"
+        else
+            echo -e "${GREEN}[OK] Git pre-commit hook already has PMID verification${NC}"
+        fi
+    else
+        # Create new pre-commit hook
+        cat > "$PRECOMMIT_FILE" << 'EOF'
+#!/bin/bash
+# VERITAS PMID Verification Pre-Commit Hook
+
+# Find all markdown files being committed
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.md$'); do
+    if grep -q "PMID:" "$file"; then
+        echo "Verifying PMIDs in $file..."
+        if ! python3 .claude/scripts/verify_pmids.py "$file"; then
+            echo "PMID verification failed. Commit aborted."
+            echo "Please fix the PMIDs and try again."
+            exit 1
+        fi
+    fi
+done
+EOF
+        chmod +x "$PRECOMMIT_FILE"
+        echo -e "${GREEN}[OK] Created git pre-commit hook for PMID verification${NC}"
+    fi
+fi
+
+echo -e "${GREEN}[OK] PMID Verification System installed${NC}"
+echo "  Zero-tolerance policy for PMID errors is now active"
+
+# Step 8: Install and configure conversation-logger MCP
 echo ""
 echo "Installing conversation-logger MCP server..."
 

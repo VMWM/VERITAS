@@ -81,7 +81,12 @@ This multi-checkpoint architecture ensures research integrity at every step.
 
 ### Quality Enforcement
 
-- **Citation Validation** - Every claim should include (Author et al., Year, PMID: XXXXXXXX)
+- **PMID Verification System** - Zero-tolerance policy for citation errors
+  - Automatic verification against PubMed database
+  - Pre-commit hooks block documents with invalid PMIDs
+  - Python script validates author names and publication years
+  - All verifications logged for audit trail
+- **Citation Validation** - Every claim must include (Author et al., Year, PMID: XXXXXXXX)
 - **Format Guidelines** - Tables, headers, and links follow strict standards
 - **Output Verification** - Post-execution checks report compliance status
 
@@ -133,6 +138,7 @@ YourProject/
 │   ├── hooks/                # Enforcement scripts
 │   │   ├── pre-command.sh   # Pre-execution validation
 │   │   ├── post-command.py  # Citation verification
+│   │   ├── pre-citation-hook.sh # PMID verification
 │   │   └── ...              # Other validation hooks
 │   ├── agents/              # Domain expertise
 │   │   └── domain-expert.md # Your field-specific configuration
@@ -141,6 +147,7 @@ YourProject/
 │   │   ├── concept_template.md
 │   │   └── daily_journal_template.md
 │   ├── scripts/             # Utility scripts
+│   │   └── verify_pmids.py  # PMID validation script
 │   ├── logs/                # Validation logs
 │   └── project.json         # Project configuration
 └── [Your existing files]      # Your research content
