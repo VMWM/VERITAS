@@ -1,7 +1,7 @@
 # VERITAS Research Constitution
 **Foundation for Research Integrity and Workflow Automation**
 
-> This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Standards). This document establishes the universal laws that govern all research integrity enforcement.
+> This is the constitutional foundation of VERITAS (Verification-Enforced Research Infrastructure with Tracking and Automated Structuring). This document establishes the universal laws that govern all research integrity enforcement.
 
 ## Customization Guidelines
 **You MAY add project-specific instructions at the END of this file**:

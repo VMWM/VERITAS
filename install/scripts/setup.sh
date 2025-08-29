@@ -10,7 +10,7 @@ echo "VERITAS System Setup"
 echo "=================================="
 echo ""
 echo "Verification-Enforced Research Infrastructure"
-echo "with Tracking and Automated Standards"
+echo "with Tracking and Automated Structuring"
 echo ""
 
 # Color codes for output
