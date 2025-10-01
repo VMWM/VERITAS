@@ -328,6 +328,7 @@ See the section **"Adapting VERITAS for Other Domains"** below for instructions.
 | "Command not found: claude"        | Claude CLI is optional, use Desktop app                           |
 | `/mcp` shows no servers in VS Code | MCP servers configured per-project in `~/.claude.json`, not globally |
 | MCP servers in Desktop but not VS Code | Edit `~/.claude.json` and add servers to your project's `mcpServers` object |
+| Permission prompts for every MCP tool | Add `autoApprove` array to `~/.claude.json` - see [getting-started.md](docs/getting-started.md#optional-auto-approve-mcp-tools) |
 | Validation hooks not running       | Check you're in project directory with CLAUDE.md                  |
 | Templates not found                | Verify `.claude/agents/domain-expert.md` exists in your project |
 | Obsidian connection fails          | Enable HTTPS (not HTTP) in Local REST API plugin                  |

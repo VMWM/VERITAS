@@ -323,6 +323,34 @@ Claude Code in VS Code uses a **per-project** configuration system. MCP servers 
 
 **Important**: After editing `~/.claude.json`, reload VS Code window (Cmd+Shift+P → "Developer: Reload Window")
 
+### Optional: Auto-Approve MCP Tools
+
+By default, Claude Code asks for permission each time it wants to use an MCP tool. To skip these prompts and auto-approve VERITAS tools, add an `autoApprove` array to your project configuration in `~/.claude.json`:
+
+```json
+{
+  "projects": {
+    "/path/to/your/project": {
+      "autoApprove": [
+        "mcp__sequential-thinking__*",
+        "mcp__memory__*",
+        "mcp__conversation-logger__*",
+        "mcp__pubmed-ncukondo__*",
+        "mcp__obsidian-rest-hla__*",
+        "mcp__obsidian-rest-research-journal__*"
+      ],
+      "mcpServers": {
+        // ... your MCP server configuration
+      }
+    }
+  }
+}
+```
+
+The wildcard `*` approves all tools from each MCP server. For more granular control, specify individual tools like `mcp__memory__read_graph` instead.
+
+**After adding**: Reload VS Code window for changes to take effect.
+
 ## Common Installation Issues
 
 **MCP not connecting in Desktop**: Restart Claude Desktop after configuration changes
