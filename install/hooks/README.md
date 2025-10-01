@@ -2,13 +2,21 @@
 
 These hooks enforce the VERITAS constitution across all projects.
 
-## Active Hooks (7 hooks + 1 config)
+## Active Hooks (8 hooks + 1 config)
+
+### pre-compact.py
+
+- **Purpose**: Auto-logs conversation before compaction
+- **When**: Triggered when Claude Code is about to compact the conversation
+- **Function**: Captures full conversation context before summarization
+- **Note**: Creates systemMessage hint for Claude to log via conversation-logger MCP
 
 ### auto-conversation-logger.py
 
-- **Purpose**: Silently logs conversations to conversation-logger MCP
-- **When**: After each message exchange
-- **Function**: Maintains 5-day conversation history in SQLite database
+- **Purpose**: Logs conversations to conversation-logger MCP (requires explicit invocation)
+- **When**: After each message exchange (if manually triggered)
+- **Function**: Maintains conversation history in SQLite database
+- **Note**: Hook exists but cannot auto-invoke MCP tools; use pre-compact.py for automatic logging
 
 ### pre-command.sh
 

@@ -5,16 +5,20 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "watcher": "node conversation-watcher.js",
+    "watcher:bg": "nohup node conversation-watcher.js > ~/.conversation-logger/watcher.log 2>&1 &"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
-    "sqlite3": "^5.1.6",
-    "uuid": "^9.0.1",
+    "chokidar": "^3.6.0",
     "marked": "^11.1.1",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
   },
   "bin": {
-    "conversation-logger": "./index.js"
+    "conversation-logger": "./index.js",
+    "conversation-watcher": "./conversation-watcher.js"
   }
 }

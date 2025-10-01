@@ -42,6 +42,14 @@
       "description": "Forces PubMed verification for medical claims",
       "trigger_on": ["medical_term_detected", "percentage_detected", "statistic_detected"],
       "action": "require_pubmed_search"
+    },
+    "pre-compact": {
+      "enabled": true,
+      "script": "pre-compact.py",
+      "type": "python",
+      "description": "Auto-logs conversation before compaction",
+      "events": ["before_compact", "pre_compact"],
+      "priority": 1
     }
   },
   

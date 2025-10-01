@@ -70,14 +70,41 @@ The Conversation Logger is automatically installed and configured when you run t
 
 ## Usage
 
-### Manual Logging
-The conversation logger provides MCP tools that you must explicitly invoke to log conversations. While the MCP server runs automatically in the background, logging requires manual tool calls:
+### Automatic Logging (Daemon)
+The conversation watcher daemon provides **truly automatic** logging by monitoring `~/.claude.json` directly:
+
+```bash
+# Install the daemon (one-time setup)
+cd ~/VERITAS/conversation-logger
+./install-watcher.sh
+```
+
+Once installed, the daemon runs in the background and automatically logs all Claude Code conversations. No manual intervention required.
+
+**Daemon Commands:**
+```bash
+# Check status
+launchctl list | grep veritas
+
+# Stop daemon
+launchctl unload ~/Library/LaunchAgents/com.veritas.conversation-watcher.plist
+
+# Restart daemon
+launchctl unload ~/Library/LaunchAgents/com.veritas.conversation-watcher.plist
+launchctl load ~/Library/LaunchAgents/com.veritas.conversation-watcher.plist
+
+# View logs
+tail -f ~/.conversation-logger/watcher.log
+```
+
+### Manual Logging (MCP Tools)
+The MCP server also provides manual logging tools:
 
 - Ask Claude to "log this conversation"
 - Request "log this message to the conversation database"
 - Use specific tool calls like `log_message` or `log_activity`
 
-**Note**: The `auto-conversation-logger.py` hook exists but cannot automatically call MCP tools due to Claude Code hook limitations. Logging must be explicitly requested.
+**Note**: The daemon approach (above) is recommended for automatic logging. The MCP tools are useful for explicit logging of specific messages.
 
 ### Generate Journal Entries
 ```
