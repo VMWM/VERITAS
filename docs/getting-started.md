@@ -206,9 +206,15 @@ cd conversation-logger
 npm install
 ```
 
-## Claude Desktop Configuration
+## MCP Server Configuration
 
-The setup script automatically configures Claude Desktop, but if you need to do it manually, add this to your Claude Desktop config:
+VERITAS MCP servers need to be configured in two places depending on where you use Claude Code:
+
+### Claude Desktop Configuration
+
+Location: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+
+The setup script automatically configures Claude Desktop, but if you need to do it manually, add this:
 
 ```json
 {
@@ -243,9 +249,68 @@ The setup script automatically configures Claude Desktop, but if you need to do 
 }
 ```
 
+### Claude Code (VS Code Extension) Configuration
+
+Location: `~/.claude.json` (per-project configuration)
+
+Claude Code in VS Code uses a **per-project** configuration system. MCP servers are configured inside the project object:
+
+```json
+{
+  "projects": {
+    "/path/to/your/project": {
+      "mcpServers": {
+        "conversation-logger": {
+          "command": "node",
+          "args": ["/Users/YOU/VERITAS/conversation-logger/index.js"]
+        },
+        "sequential-thinking": {
+          "command": "npx",
+          "args": ["@modelcontextprotocol/server-sequential-thinking"]
+        },
+        "memory": {
+          "command": "npx",
+          "args": ["@modelcontextprotocol/server-memory"]
+        },
+        "filesystem-local": {
+          "command": "npx",
+          "args": ["@modelcontextprotocol/server-filesystem", "/path/to/your/project"]
+        },
+        "pubmed-ncukondo": {
+          "command": "node",
+          "args": ["/Users/YOU/VERITAS/install/mcp-wrappers/pubmed-wrapper.js"],
+          "env": {
+            "PUBMED_EMAIL": "your-email@example.com",
+            "PUBMED_API_KEY": "your-ncbi-api-key",
+            "PUBMED_CACHE_DIR": "/tmp/pubmed-cache",
+            "PUBMED_CACHE_TTL": "86400"
+          }
+        },
+        "obsidian-rest-vault": {
+          "command": "npx",
+          "args": ["obsidian-mcp-server"],
+          "env": {
+            "OBSIDIAN_API_KEY": "your-api-key",
+            "OBSIDIAN_BASE_URL": "https://127.0.0.1:27124",
+            "OBSIDIAN_VERIFY_SSL": "false",
+            "OBSIDIAN_ENABLE_CACHE": "true"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Important**: After editing `~/.claude.json`, reload VS Code window (Cmd+Shift+P → "Developer: Reload Window")
+
 ## Common Installation Issues
 
-**MCP not connecting**: Restart Claude Desktop after configuration changes
+**MCP not connecting in Desktop**: Restart Claude Desktop after configuration changes
+
+**`/mcp` shows no servers in VS Code**: MCP servers must be configured per-project in `~/.claude.json`. Check that your project path matches exactly and reload VS Code window.
+
+**MCP servers work in Desktop but not VS Code**: These are separate configurations. Desktop uses `claude_desktop_config.json`, VS Code uses `~/.claude.json` with per-project settings.
 
 **Permission errors**: Ensure you have write permissions to home directory
 

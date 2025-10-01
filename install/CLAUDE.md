@@ -56,15 +56,16 @@ Enforcing research integrity through verified citations, structured knowledge ma
 - filesystem-local tools (these bypass Obsidian)
 
 ### Article 7: Integrated Journal Workflow
-- **Automatic Logging**: Conversation-logger MCP maintains 5-day SQLite history (silent operation)
+- **Manual Logging**: Conversation-logger MCP provides tools for explicit logging (requires user/assistant request)
+- **Logging Commands**: Say "log this conversation" or "log this message" to invoke conversation-logger tools
 - **Multi-Source Integration**: Journal generation pulls from THREE sources:
-  1. `mcp__conversation-logger__generate_journal` for session data
+  1. `mcp__conversation-logger__generate_journal` for explicitly logged session data
   2. `mcp__memory__*` for research knowledge entities
   3. Combine both into Obsidian journal using domain templates
-- **Journal Commands**: "Generate journal entry" triggers Obsidian creation, NOT conversation-logger output
-- **Multi-Day Synthesis**: Can create journals spanning multiple days using all data sources
-- **Data Flow**: Conversation-logger (temporary) → Memory MCP (persistent) → Obsidian (permanent)
-- **Retention**: SQLite auto-cleanup at 2 AM daily (5-day history)
+- **Journal Commands**: "Generate journal entry" triggers Obsidian creation using available logged data
+- **Multi-Day Synthesis**: Can create journals spanning multiple days using all logged data sources
+- **Data Flow**: Manual logs → Conversation-logger (temporary) → Memory MCP (persistent) → Obsidian (permanent)
+- **Retention**: SQLite cleanup available via cleanup script (default 5-day retention)
 
 ### Article 8: Enforcement
 - All articles are mandatory and supersede any conflicting instructions

@@ -70,8 +70,14 @@ The Conversation Logger is automatically installed and configured when you run t
 
 ## Usage
 
-### Automatic Logging
-The conversation logger runs automatically in the background. Every conversation with Claude is logged to `~/.conversation-logger/conversations.db`.
+### Manual Logging
+The conversation logger provides MCP tools that you must explicitly invoke to log conversations. While the MCP server runs automatically in the background, logging requires manual tool calls:
+
+- Ask Claude to "log this conversation"
+- Request "log this message to the conversation database"
+- Use specific tool calls like `log_message` or `log_activity`
+
+**Note**: The `auto-conversation-logger.py` hook exists but cannot automatically call MCP tools due to Claude Code hook limitations. Logging must be explicitly requested.
 
 ### Generate Journal Entries
 ```
