@@ -325,19 +325,29 @@ Claude Code in VS Code uses a **per-project** configuration system. MCP servers 
 
 ### Optional: Auto-Approve MCP Tools
 
-By default, Claude Code asks for permission each time it wants to use an MCP tool. To skip these prompts and auto-approve VERITAS tools, add an `autoApprove` array to your project configuration in `~/.claude.json`:
+By default, Claude Code asks for permission each time it wants to use an MCP tool. To skip these prompts and auto-approve VERITAS tools, add both `allowedTools` and `autoApprove` arrays to your project configuration in `~/.claude.json`:
 
 ```json
 {
   "projects": {
     "/path/to/your/project": {
+      "allowedTools": [
+        "mcp__sequential-thinking__*",
+        "mcp__memory__*",
+        "mcp__conversation-logger__*",
+        "mcp__pubmed-ncukondo__*",
+        "mcp__obsidian-rest-hla__*",
+        "mcp__obsidian-rest-research-journal__*",
+        "mcp__filesystem-local__*"
+      ],
       "autoApprove": [
         "mcp__sequential-thinking__*",
         "mcp__memory__*",
         "mcp__conversation-logger__*",
         "mcp__pubmed-ncukondo__*",
         "mcp__obsidian-rest-hla__*",
-        "mcp__obsidian-rest-research-journal__*"
+        "mcp__obsidian-rest-research-journal__*",
+        "mcp__filesystem-local__*"
       ],
       "mcpServers": {
         // ... your MCP server configuration
@@ -349,7 +359,9 @@ By default, Claude Code asks for permission each time it wants to use an MCP too
 
 The wildcard `*` approves all tools from each MCP server. For more granular control, specify individual tools like `mcp__memory__read_graph` instead.
 
-**After adding**: Reload VS Code window for changes to take effect.
+**Note**: Some versions of Claude Code require both `allowedTools` (granted permissions) and `autoApprove` (skip prompts) to work properly.
+
+**After adding**: Reload VS Code window for changes to take effect (Cmd+Shift+P → "Developer: Reload Window").
 
 ## Common Installation Issues
 
