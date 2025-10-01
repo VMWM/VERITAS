@@ -1,24 +1,18 @@
 # Domain Expert: HLA Research Director
 
 ## Role Definition
+
 - **Type**: Domain Expert Module
 - **Activated By**: CLAUDE.md Constitution when research tasks detected
 - **Purpose**: Provides HLA-specific templates, F31 grant expertise, and transplant immunology knowledge
 - **Authority**: Implements constitutional requirements for HLA antibody research domain
 
 ## Domain Configuration
+
 - **Research Focus**: HLA antibody testing standardization for transplant access
 - **Grant Target**: NIH F31 NRSA Application
 - **Timeline**: Preliminary Exam (Sept 2025) → F31 submission (Dec 2025)
 - **Primary Database**: PubMed (35+ million biomedical articles)
-
-## Research Aims
-
-**Aim 1:** Develop rule-based algorithm for standardized unacceptable antigen reporting codifying expert patterns (epitope analysis, CREG, self-antigen exclusion). Validate against experts and flow crossmatching. Create benchmark dataset.
-
-**Aim 2:** Establish evidence-based risk classification for transplanting across weak anti-HLA (MFI 500-5000) using multivariable models. Identify which weak DSA can be safely crossed in specific clinical contexts.
-
-**Aim 3:** Develop decision support tool predicting AMR risk at organ offer by integrating pre-transplant antibody risk with predicted dnDSA risk (FIBERS). Adapt EuroTransplant Acceptable Antigens approach to include safe weak antibodies.
 
 ## Extended Mission Statement
 
@@ -184,17 +178,20 @@ When user requests multi-day journals (e.g., "generate last 2 days' journal entr
 **Behavior**: Create INDIVIDUAL daily entries for each requested day, NOT a summary
 
 **Process for each day:**
+
 1. Query conversation-logger for that specific date
 2. Pull relevant memory MCP entities for that day's topics
 3. Create separate journal entry in `/Obsidian/Research Journal/Daily/[DATE].md`
 4. Use the Daily Journal Template for each entry
 
 **Example**: "Generate last 3 days' journal entries" creates:
+
 - `/Daily/2025-08-25.md` (Day 1 entry)
-- `/Daily/2025-08-26.md` (Day 2 entry)  
+- `/Daily/2025-08-26.md` (Day 2 entry)
 - `/Daily/2025-08-27.md` (Day 3 entry)
 
 **Integration Commands:**
+
 - Single day: Pull from conversation-logger + memory → Create in Daily/
 - Multi-day: Iterate through each day → Create individual entries in Daily/
 - Each entry follows the Daily Journal Template structure
@@ -323,34 +320,23 @@ Before any response:
 ## HLA-Specific Folder Structure
 
 **Obsidian Vault Organization:**
+
 - Research Questions: `Research Questions/[Title_Without_Question_Mark].md`
 - Concepts: `Concepts/[Noun_Phrase].md`
 - Rules: `Rules/[Category]/RULE_[CATEGORY]_[SPECIFIC]_[NUMBER].md`
 - Journal: `Daily/YYYY-MM-DD.md`
 
 **MCP Server Configuration:**
+
 - `mcp__obsidian-rest-hla__*` - Port 27124 for HLA vault operations
 - `mcp__obsidian-rest-journal__*` - Port 27125 for journal operations
-
-## Key HLA Resources
-
-- **Project Root**: `/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/`
-- **HLA Antibodies Vault**: `/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/`
-- **Research Journal**: `/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/`
-- **Public Repository**: `/Users/vmwm/Library/CloudStorage/Box-Box/automated-antibody-analysis/`
-  - Rules symlinked to Obsidian: `rules/` ↔ `HLA Antibodies/Rules/`
-  - Python scripts: `scripts/` folder
-  - Analysis reports: `reports/` folder
 
 ## Knowledge Sources Reference
 
 1. **PubMed** - PRIMARY source for all medical/scientific claims
-2. **Project Files** (`/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/`) - verify all medical claims
-3. **HLA Antibodies Vault** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/`) - research questions and concepts
-4. **Research Journal** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/`) - daily documentation
-
----
-
-*Extended Reference Document*
-*Created: 2025-01-22*
-*Contains detailed instructions moved from simplified CLAUDE.md*
+2. How to write a strong NRSA grant (/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/How-to-write-a-strong-NRSA-b.pdf) for guidelines on appication documents
+3. **Project Files** (`/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/`) - verify all medical claims
+4. Knowledge Bank (/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/KnowledgeBank) - has cloned github repositories for the HAML, FIBERS, HEROS, and automated-antibody-anlaysis tools used throughout the project. also has training handouts from the 2025 educational workshop.
+5. Datasets & Scripts (/Users/vmwm/Library/CloudStorage/Box-Box/VM_F31_2025/Notes/Sample Data) has datasets that will be used in the study along with preliminary analysis scripts and outputs.
+6. **HLA Antibodies Vault** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/HLA Antibodies/`) - research questions and concepts
+7. **Research Journal** (`/Users/vmwm/Library/CloudStorage/Box-Box/Obsidian/Research Journal/Daily/`) - daily documentation
