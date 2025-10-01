@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/node</string>
-        <string>/Users/USER_HOME/VERITAS/conversation-logger/conversation-watcher.js</string>
+        <string>USER_HOME/VERITAS/conversation-logger/conversation-watcher.js</string>
     </array>
 
     <key>RunAtLoad</key>
@@ -21,10 +21,10 @@
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/Users/USER_HOME/.conversation-logger/watcher.log</string>
+    <string>USER_HOME/.conversation-logger/watcher.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/USER_HOME/.conversation-logger/watcher-error.log</string>
+    <string>USER_HOME/.conversation-logger/watcher-error.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>
@@ -33,7 +33,7 @@
     </dict>
 
     <key>WorkingDirectory</key>
-    <string>/Users/USER_HOME/VERITAS/conversation-logger</string>
+    <string>USER_HOME/VERITAS/conversation-logger</string>
 
     <key>ThrottleInterval</key>
     <integer>10</integer>
