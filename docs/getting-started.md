@@ -31,6 +31,25 @@ VERITAS installs these essential MCP servers:
 4. **Filesystem** - Local file access for your project
 5. **Conversation Logger** - Session tracking and journal generation
 
+### Automatic Conversation Logging
+
+The conversation-logger includes a **daemon** that automatically logs all conversations:
+
+```bash
+# Install the daemon (one-time setup)
+cd ~/VERITAS/conversation-logger
+./install-watcher.sh
+```
+
+This installs a macOS LaunchAgent that:
+- Runs in background continuously
+- Monitors `~/.claude.json` for conversation updates
+- Automatically logs to SQLite database
+- Auto-starts on login
+- Cleans logs older than 5 days at 2 AM daily
+
+**No manual logging required!** The daemon handles everything automatically.
+
 ### Optional Components
 
 - **Obsidian Integration** - If you use Obsidian for research notes (see [Configuration Guide](configuration-guide.md))

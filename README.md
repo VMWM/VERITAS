@@ -439,13 +439,18 @@ Install VERITAS for me by executing these steps:
    - Customize for my specific field: [REPLACE: e.g., "cancer immunotherapy" or "neurodegeneration"]
    - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
    - Save as .claude/agents/hla-research-director.md in my project
-5. Install MCP servers:
-   - Global installs: pubmed (@ncukondo/pubmed-mcp), obsidian-rest (@modelcontextprotocol/server-obsidian-rest)
-   - npx execution (no install): sequential-thinking, memory, filesystem
-   - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
-   - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
-6. Configure Claude Desktop for [REPLACE: macOS or Linux]
-   - Include conversation-logger with absolute path to ~/VERITAS/conversation-logger
+5. Install MCP servers for BOTH Claude Desktop AND VS Code:
+   - Install chokidar dependency: cd ~/VERITAS/conversation-logger && npm install
+   - Configure Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
+   - Configure VS Code per-project: ~/.claude.json (add servers to project's mcpServers object)
+   - Required servers: conversation-logger, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
+   - Optional: obsidian-rest servers for vault integration
+   - Note: PubMed requires NCBI email and API key
+6. Install conversation-logger daemon for automatic logging:
+   - cd ~/VERITAS/conversation-logger
+   - Run: ./install-watcher.sh
+   - This installs a background daemon that automatically logs all conversations
+   - Daemon auto-starts on login and cleans logs older than 5 days at 2 AM
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)
@@ -468,13 +473,20 @@ Install VERITAS for me by executing these steps:
    - Update research focus for your specific area (e.g., cancer, neuroscience, immunology)
    - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
    - Save as .claude/agents/hla-research-director.md in my project
-5. Install MCP servers:
-   - Global installs: pubmed (@ncukondo/pubmed-mcp), obsidian-rest (@modelcontextprotocol/server-obsidian-rest)
-   - npx execution (no install): sequential-thinking, memory, filesystem
-   - Custom: conversation-logger (from ~/VERITAS/conversation-logger)
-   - Note: PubMed server requires NCBI email and API key (see docs/SETUP_PUBMED.md)
-6. Configure Claude Desktop for macOS
-   - Include conversation-logger with absolute path to ~/VERITAS/conversation-logger
+5. Install dependencies and MCP servers:
+   - Run: cd ~/VERITAS/conversation-logger && npm install
+   - Configure MCP servers in BOTH locations:
+     a) Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
+     b) VS Code (per-project): ~/.claude.json under my project's mcpServers object
+   - Required servers: conversation-logger, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
+   - For pubmed-ncukondo, use wrapper: ~/VERITAS/install/mcp-wrappers/pubmed-wrapper.js
+   - Optional: obsidian-rest servers if using Obsidian vaults
+   - Note: I'll need to provide my NCBI email and API key for PubMed
+6. Install conversation-logger daemon for automatic logging:
+   - Run: cd ~/VERITAS/conversation-logger && ./install-watcher.sh
+   - This installs a macOS LaunchAgent that runs in background
+   - Automatically logs all conversations to SQLite database
+   - Auto-cleanup of logs older than 5 days at 2 AM daily
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)
