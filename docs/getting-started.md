@@ -111,7 +111,7 @@ cd VERITAS
 #### System Files
 - `~/.claude.json` - Claude CLI configuration
 - `~/Library/Application Support/Claude/claude_desktop_config.json` - Desktop config
-- `~/.conversation-logger/` - Conversation database
+- `~/.claude/projects/` - JSONL transcript files (automatic)
 
 #### Obsidian (if configured)
 - Vault structure defined in your domain expert
@@ -376,7 +376,7 @@ The wildcard `*` approves all tools from each MCP server. For more granular cont
 
 **npm/node issues**: Update to Node.js 16+ and npm 8+
 
-**Missing dependencies**: Run `npm install` in the conversation-logger directory
+**Transcript reader not working**: Update VERITAS repo with `cd ~/VERITAS && git pull`
 
 ## Getting Help
 

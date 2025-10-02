@@ -21,8 +21,8 @@ echo ""
 echo "3. MCP Servers:"
 claude mcp list 2>/dev/null || echo "   Claude CLI not installed"
 echo ""
-echo "4. Conversation Logger:"
-ls -la ~/.conversation-logger/ 2>/dev/null || echo "   Database not found"
+echo "4. Transcript Files:"
+ls -la ~/.claude/projects/*/ 2>/dev/null || echo "   No transcript files found"
 echo ""
 echo "5. Obsidian Connection:"
 curl -k -s https://127.0.0.1:27124/vault/ \
@@ -292,7 +292,7 @@ npx @modelcontextprotocol/server-sequentialthinking --test
 ps aux | grep -E "claude|node" | awk '{sum+=$6} END {print "Total MB: " sum/1024}'
 
 # Disk usage
-du -sh ~/.conversation-logger/
+du -sh ~/.claude/projects/
 du -sh ~/.claude/
 ```
 
