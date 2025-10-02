@@ -1,0 +1,13 @@
+{
+  "name": "claude-transcript-reader",
+  "version": "1.0.0",
+  "description": "MCP server to read Claude Code conversation transcripts from JSONL files",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["mcp", "claude", "conversation", "logging"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}
