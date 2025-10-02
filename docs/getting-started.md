@@ -29,26 +29,25 @@ VERITAS installs these essential MCP servers:
 2. **PubMed** - Literature search and citation verification
 3. **Memory** - Knowledge graph and entity management
 4. **Filesystem** - Local file access for your project
-5. **Conversation Logger** - Session tracking and journal generation
+5. **Claude Transcript Reader** - Session tracking and journal generation
 
 ### Automatic Conversation Logging
 
-The conversation-logger includes a **daemon** that automatically logs all conversations:
+Claude Code automatically logs all conversations to JSONL files in `~/.claude/projects/`. The transcript reader provides tools to access this data:
 
 ```bash
-# Install the daemon (one-time setup)
-cd ~/VERITAS/conversation-logger
-./install-watcher.sh
+# Install the cleanup script (one-time setup)
+cd ~/VERITAS/claude-transcript-reader
+./install-cleanup.sh
 ```
 
 This installs a macOS LaunchAgent that:
-- Runs in background continuously
-- Monitors `~/.claude.json` for conversation updates
-- Automatically logs to SQLite database
-- Auto-starts on login
-- Cleans logs older than 5 days at 2 AM daily
+- Runs daily at 2 AM
+- Deletes JSONL files older than 5 days
+- Maintains 5-day retention window
+- Auto-starts on schedule
 
-**No manual logging required!** The daemon handles everything automatically.
+**No daemon needed!** Claude Code handles logging automatically, the cleanup script just manages retention.
 
 ### Optional Components
 
@@ -123,7 +122,7 @@ cd VERITAS
 
 | Server | Purpose | Test Command |
 |--------|---------|--------------|
-| conversation-logger | Session tracking | "Generate today's journal" |
+| claude-transcript-reader | Session tracking | "Generate today's journal" |
 | filesystem-local | File access | "List my project files" |
 | memory | Knowledge graph | "Remember that..." |
 | pubmed | Citation search | "Find papers about..." |
@@ -219,10 +218,12 @@ npx @modelcontextprotocol/install memory
 npx @modelcontextprotocol/install filesystem
 ```
 
-### Conversation Logger (Custom)
+### Claude Transcript Reader (Custom)
 ```bash
-cd conversation-logger
-npm install
+# No installation needed - MCP server has no dependencies
+# Just install the cleanup script:
+cd claude-transcript-reader
+./install-cleanup.sh
 ```
 
 ## MCP Server Configuration
@@ -260,9 +261,9 @@ The setup script automatically configures Claude Desktop, but if you need to do 
       "command": "npx",
       "args": ["@modelcontextprotocol/server-filesystem", "/path/to/your/project"]
     },
-    "conversation-logger": {
+    "claude-transcript-reader": {
       "command": "node",
-      "args": ["/path/to/VERITAS/conversation-logger/index.js"]
+      "args": ["/path/to/VERITAS/claude-transcript-reader/index.js"]
     }
   }
 }
@@ -279,9 +280,9 @@ Claude Code in VS Code uses a **per-project** configuration system. MCP servers 
   "projects": {
     "/path/to/your/project": {
       "mcpServers": {
-        "conversation-logger": {
+        "claude-transcript-reader": {
           "command": "node",
-          "args": ["/Users/YOU/VERITAS/conversation-logger/index.js"]
+          "args": ["/Users/YOU/VERITAS/claude-transcript-reader/index.js"]
         },
         "sequential-thinking": {
           "command": "npx",
@@ -334,7 +335,7 @@ By default, Claude Code asks for permission each time it wants to use an MCP too
       "allowedTools": [
         "mcp__sequential-thinking__*",
         "mcp__memory__*",
-        "mcp__conversation-logger__*",
+        "mcp__claude-transcript-reader__*",
         "mcp__pubmed-ncukondo__*",
         "mcp__obsidian-rest-hla__*",
         "mcp__obsidian-rest-research-journal__*",
@@ -343,7 +344,7 @@ By default, Claude Code asks for permission each time it wants to use an MCP too
       "autoApprove": [
         "mcp__sequential-thinking__*",
         "mcp__memory__*",
-        "mcp__conversation-logger__*",
+        "mcp__claude-transcript-reader__*",
         "mcp__pubmed-ncukondo__*",
         "mcp__obsidian-rest-hla__*",
         "mcp__obsidian-rest-research-journal__*",

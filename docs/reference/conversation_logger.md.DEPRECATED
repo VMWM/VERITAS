@@ -1,0 +1,55 @@
+# DEPRECATED: conversation-logger
+
+**This file is kept for historical reference only.**
+
+**Status**: DEPRECATED as of October 2025
+
+**Replaced by**: [claude_transcript_reader.md](claude_transcript_reader.md)
+
+---
+
+## Why Deprecated
+
+The conversation-logger daemon was found to be non-functional:
+
+1. **Monitored wrong file**: Watched `~/.claude.json` which doesn't contain conversation data
+2. **Never logged**: Database remained empty despite daemon running
+3. **Unnecessary complexity**: Required background daemon and SQLite database
+4. **Claude Code already logs**: Conversations are automatically saved to JSONL files
+
+---
+
+## Replacement System
+
+Claude Code natively logs all conversations to JSONL files in `~/.claude/projects/`.
+
+The new **claude-transcript-reader** MCP reads these files directly without needing a daemon.
+
+See [claude_transcript_reader.md](claude_transcript_reader.md) for full documentation.
+
+---
+
+## Migration Guide
+
+If you have the old conversation-logger installed:
+
+1. **Uninstall daemon**:
+   ```bash
+   launchctl unload ~/Library/LaunchAgents/com.veritas.conversation-watcher.plist
+   rm ~/Library/LaunchAgents/com.veritas.conversation-watcher.plist
+   ```
+
+2. **Update configs**:
+   - Replace `conversation-logger` with `claude-transcript-reader` in:
+     - `~/.claude.json`
+     - `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+3. **Install new system**:
+   ```bash
+   cd ~/VERITAS/claude-transcript-reader
+   ./install-cleanup.sh
+   ```
+
+---
+
+**For current documentation, see**: [claude_transcript_reader.md](claude_transcript_reader.md)

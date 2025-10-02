@@ -134,53 +134,54 @@ curl -k https://127.0.0.1:27124/vault/ \
 3. Verify pre-command hook shows citation requirements
 4. Use sequential-thinking for complex research
 
-### Issue: Conversation Logger Not Working
+### Issue: Transcript Reader Not Working
 
-**Symptom**: No conversations being logged or "conversation-logger disconnected" in Claude
+**Symptom**: No transcripts found or "claude-transcript-reader disconnected" in Claude
 
 **Common Causes**:
 
 1. **Moved VERITAS Directory After Installation**
-   - The conversation-logger uses an absolute path in Claude's config
+   - The claude-transcript-reader uses an absolute path in Claude's config
    - If you move ~/VERITAS to a different location, the path becomes invalid
-   
+
    **Solution**: Update the path in your Claude Desktop config:
    ```json
-   "conversation-logger": {
+   "claude-transcript-reader": {
      "command": "node",
-     "args": ["/new/path/to/VERITAS/conversation-logger/index.js"]
+     "args": ["/new/path/to/VERITAS/claude-transcript-reader/index.js"]
    }
    ```
    Location: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
-2. **Dependencies Not Installed**
-   - Check: `ls ~/VERITAS/conversation-logger/node_modules`
-   - Fix: `cd ~/VERITAS/conversation-logger && npm install`
+2. **Path Conversion Issue**
+   - Claude Code converts both `/` and `_` to `-` in directory names
+   - The MCP must handle this conversion correctly
 
-3. **Database Permission Issues**
-   - Check: `ls -la ~/.conversation-logger/conversations.db`
-   - Fix: `chmod 644 ~/.conversation-logger/conversations.db`
+   **Fix**: Ensure you're using the latest version with underscore-to-hyphen conversion:
+   ```bash
+   cd ~/VERITAS && git pull
+   ```
+
+3. **No Conversations Yet**
+   - Claude Code only logs when you use it
+   - Check: `ls ~/.claude/projects/*/`
 
 **Checks**:
-1. Database exists:
+1. JSONL files exist:
    ```bash
-   ls -la ~/.conversation-logger/conversations.db
+   ls ~/.claude/projects/*/
    ```
 
 2. MCP server is running:
    ```bash
-   claude mcp list | grep conversation-logger
+   # Check MCP connection in Claude Code
+   /mcp
    ```
 
-3. SessionEnd hook configured:
+3. Test session stats:
    ```bash
-   grep -A5 "SessionEnd" ~/.claude/settings.local.json
-   ```
-
-4. Test manual logging:
-   ```bash
-   # In Claude conversation
-   /exit  # or however your setup triggers logging
+   # In Claude conversation, ask:
+   "Get session stats"
    ```
 
 ### Issue: Journal Generation Fails
@@ -188,19 +189,25 @@ curl -k https://127.0.0.1:27124/vault/ \
 **Symptom**: Cannot generate daily journal from conversations
 
 **Solution**:
-1. Check conversations exist in database:
+1. Check transcripts exist:
    ```bash
-   sqlite3 ~/.conversation-logger/conversations.db \
-     "SELECT COUNT(*) FROM messages;"
+   ls -lh ~/.claude/projects/*/
    ```
 
-2. Verify date format:
+2. Verify date format and test in Claude Code:
    ```bash
-   # Generate for today
-   mcp__conversation-logger__generate_journal
-   
-   # Generate for specific date
-   mcp__conversation-logger__generate_journal "2024-01-15"
+   # Ask Claude:
+   "Generate journal for today"
+
+   # Or for specific date:
+   "Generate journal for 2024-01-15"
+   ```
+
+3. Check that sessions are being found:
+   ```bash
+   # Ask Claude:
+   "Get session stats"
+   # Should show sessionCount > 0
    ```
 
 ### Issue: Path Not Found Errors
@@ -242,11 +249,12 @@ curl -k https://127.0.0.1:27124/vault/ \
 
 **Solutions**:
 1. Restart Claude periodically
-2. Limit conversation logger retention:
+2. Cleanup runs automatically at 2 AM daily
+3. Manual cleanup if needed:
    ```bash
-   node ~/VERITAS/conversation-logger/cleanup-old-logs.js
+   find ~/.claude/projects -name "*.jsonl" -mtime +5 -delete
    ```
-3. Clear memory MCP knowledge graph if too large
+4. Clear memory MCP knowledge graph if too large
 
 ## Debugging Tools
 
@@ -290,14 +298,14 @@ du -sh ~/.claude/
 
 ## Reset Procedures
 
-### Reset Conversation Logger
+### Reset Transcript Reader
 
 ```bash
-# Backup existing data
-cp ~/.conversation-logger/conversations.db ~/conversations.backup.db
+# Backup existing transcripts
+cp -r ~/.claude/projects ~/claude-projects-backup
 
-# Clear database
-rm ~/.conversation-logger/conversations.db
+# Clear old transcripts (optional - automatic cleanup happens daily)
+find ~/.claude/projects -name "*.jsonl" -mtime +5 -delete
 
 # Restart Claude
 ```
@@ -322,7 +330,6 @@ cd ~/VERITAS
 
 # Or manually:
 rm -rf ~/.claude/logs/*
-rm -rf ~/.conversation-logger/active
 # Re-run setup from VERITAS directory
 ./install/scripts/setup.sh
 ```

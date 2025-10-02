@@ -113,12 +113,12 @@ This multi-checkpoint architecture ensures research integrity at every step.
 
 #### Custom VERITAS Server
 
-6. **Conversation Logger** - Session tracking and journal generation
+6. **Claude Transcript Reader** - Session tracking and journal generation
    - **Special**: Custom-built server that runs from VERITAS directory
-   - **Not copied**: Stays in `/conversation-logger/`, acts as shared service
-   - **Uses absolute path**: Points to `~/VERITAS/conversation-logger/index.js`
+   - **Not copied**: Stays in `/claude-transcript-reader/`, acts as shared service
+   - **Uses absolute path**: Points to `~/VERITAS/claude-transcript-reader/index.js`
    - **Important**: If you move VERITAS after installation, update the path in Claude Desktop config
-   - **Stateful**: Maintains SQLite database of all conversations
+   - **Works with built-in logs**: Reads Claude Code's native JSONL conversation files
 
 ### Enforcement System
 
@@ -158,7 +158,7 @@ The VERITAS repository remains at `~/VERITAS/` with this structure:
 ```
 ~/VERITAS/
 ├── assets/                    # Images and logos
-├── conversation-logger/       # MCP conversation logger
+├── claude-transcript-reader/  # MCP transcript reader (replaces conversation-logger)
 ├── docs/                      # Documentation
 ├── install/
 │   ├── CLAUDE.md             # Constitutional document
@@ -441,17 +441,16 @@ Install VERITAS for me by executing these steps:
    - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install MCP servers for BOTH Claude Desktop AND VS Code:
-   - Install chokidar dependency: cd ~/VERITAS/conversation-logger && npm install
    - Configure Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
    - Configure VS Code per-project: ~/.claude.json (add servers to project's mcpServers object)
-   - Required servers: conversation-logger, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
+   - Required servers: claude-transcript-reader, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
    - Optional: obsidian-rest servers for vault integration
    - Note: PubMed requires NCBI email and API key
-6. Install conversation-logger daemon for automatic logging:
-   - cd ~/VERITAS/conversation-logger
-   - Run: ./install-watcher.sh
-   - This installs a background daemon that automatically logs all conversations
-   - Daemon auto-starts on login and cleans logs older than 5 days at 2 AM
+6. Install transcript cleanup for automatic retention:
+   - cd ~/VERITAS/claude-transcript-reader
+   - Run: ./install-cleanup.sh
+   - This installs a daily cleanup task that deletes transcripts older than 5 days at 2 AM
+   - No daemon needed - Claude Code automatically logs to JSONL files
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)
@@ -475,19 +474,18 @@ Install VERITAS for me by executing these steps:
    - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
    - Save as .claude/agents/hla-research-director.md in my project
 5. Install dependencies and MCP servers:
-   - Run: cd ~/VERITAS/conversation-logger && npm install
    - Configure MCP servers in BOTH locations:
      a) Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
      b) VS Code (per-project): ~/.claude.json under my project's mcpServers object
-   - Required servers: conversation-logger, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
+   - Required servers: claude-transcript-reader, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
    - For pubmed-ncukondo, use wrapper: ~/VERITAS/install/mcp-wrappers/pubmed-wrapper.js
    - Optional: obsidian-rest servers if using Obsidian vaults
    - Note: I'll need to provide my NCBI email and API key for PubMed
-6. Install conversation-logger daemon for automatic logging:
-   - Run: cd ~/VERITAS/conversation-logger && ./install-watcher.sh
-   - This installs a macOS LaunchAgent that runs in background
-   - Automatically logs all conversations to SQLite database
-   - Auto-cleanup of logs older than 5 days at 2 AM daily
+6. Install transcript cleanup for automatic retention:
+   - Run: cd ~/VERITAS/claude-transcript-reader && ./install-cleanup.sh
+   - This installs a macOS LaunchAgent that runs daily at 2 AM
+   - Deletes JSONL transcripts older than 5 days
+   - No daemon needed - Claude Code automatically logs conversations to JSONL files
 7. Test that everything works
 
 After installation: Configure Obsidian manually (see Configuration Guide)

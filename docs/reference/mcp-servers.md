@@ -22,7 +22,7 @@ VERITAS uses two different installation approaches for MCP servers:
 | Sequential Thinking | npx (no install) | @modelcontextprotocol/server-sequential-thinking |
 | Memory | npx (no install) | @modelcontextprotocol/server-memory |
 | Filesystem | npx (no install) | @modelcontextprotocol/server-filesystem |
-| Conversation Logger | Custom (local) | ~/VERITAS/conversation-logger/index.js |
+| Claude Transcript Reader | Custom (local, no deps) | ~/VERITAS/claude-transcript-reader/index.js |
 
 ### Globally Installed Servers (npm install -g)
 These servers are installed once on your system and persist:
@@ -97,19 +97,25 @@ npm install -g @modelcontextprotocol/server-obsidian-rest
 
 ## Custom-Built MCP Server
 
-### Conversation Logger
+### Claude Transcript Reader
 **Purpose**: Conversation tracking and journal generation
-**Location**: `conversation-logger/` directory in this repository
+**Location**: `claude-transcript-reader/` directory in this repository
 **Development**: Custom-built specifically for this research system
 
+**Replaces**: conversation-logger (deprecated - see migration notes)
+
 This is the only MCP server in this system that was developed from scratch rather than installed from external sources. Key features:
-- Persistent conversation memory across Claude sessions
-- Automatic journal generation from actual conversation data
-- SQLite database for conversation storage
-- Direct integration with Obsidian for journal posting
+- Reads Claude Code's built-in JSONL conversation transcripts
+- Journal generation from conversation data
+- Session statistics and search capabilities
+- 5-day retention management via scheduled cleanup
+- No dependencies or background daemon required
 
 **Why Custom-Built?**
-No existing MCP server provided the specific combination of conversation tracking, journal generation, and research-oriented features needed for VERITAS. The Conversation Logger fills this gap with functionality tailored to research documentation workflows.
+No existing MCP server provided access to Claude Code's native JSONL transcript files. The Claude Transcript Reader fills this gap by reading the built-in conversation logs that Claude Code automatically creates, eliminating the need for custom logging infrastructure.
+
+**Key Difference from Old System**:
+Unlike the deprecated conversation-logger which attempted to maintain its own SQLite database via a background daemon, this MCP simply reads the JSONL files that Claude Code already creates automatically.
 
 ## Configuration in Claude Desktop
 
@@ -188,7 +194,8 @@ The system enforces this tool priority:
 2. `mcp__memory__*` - Check existing knowledge
 3. `mcp__pubmed__*` - Citation verification
 4. `mcp__obsidian-rest__*` - Vault operations
-5. `mcp__filesystem-local__*` - Project file access
+5. `mcp__claude-transcript-reader__*` - Journal generation and session tracking
+6. `mcp__filesystem-local__*` - Project file access
 
 ## Updates
 
