@@ -52,23 +52,24 @@ VERITAS embodies the core principle of truth in biomedical research. Designed sp
 
 Unlike other research tools, VERITAS provides:
 
-1. **Real-time Citation Enforcement** - Claims without PMIDs are flagged and violations reported for correction
-2. **Multi-layer Validation** - Pre-command, during execution, and post-command checks ensure compliance
+1. **Real-time Citation Enforcement** - PMID verification through PubMed MCP integration
+2. **Intelligent Tool Usage** - Optimized parallel/sequential execution based on operation type
 3. **Domain Expert System** - Customizable templates for any research field
 4. **Integrated Knowledge Graph** - Automatic knowledge organization via Memory MCP and structured templates
 5. **Professional Templates** - Grant-ready research questions and concept notes out of the box
+6. **Task Tracking** - TodoWrite integration for managing complex research workflows
 
 ## System Architecture
 
 ```
-User Message → Pre-Command Hooks → Claude Processes → Tool Calls → Post-Validation → Response
-                    ↓                      ↓                            ↓
-              (Shows reminders)    (Reads CLAUDE.md)         (Checks what was created)
-                    ↓                      ↓                            ↓
-              (Sets env vars)     (Follows instructions)    (Logs violations & reports)
+User Message → Claude Code reads CLAUDE.md → Follows instructions → Tool Calls → Response
+                           ↓                          ↓                    ↓
+                   (Constitutional rules)    (Domain expert file)   (MCP servers)
+                           ↓                          ↓                    ↓
+                   (Output style config)     (Templates & guidance) (Citations, Memory, etc.)
 ```
 
-This multi-checkpoint architecture ensures research integrity at every step.
+This architecture leverages Claude Code's built-in configuration system to ensure research integrity.
 
 ## Core Features
 
@@ -82,13 +83,12 @@ This multi-checkpoint architecture ensures research integrity at every step.
 ### Quality Enforcement
 
 - **PMID Verification System** - Zero-tolerance policy for citation errors
-  - Automatic verification against PubMed database
-  - Pre-commit hooks block documents with invalid PMIDs
-  - Python script validates author names and publication years
-  - All verifications logged for audit trail
+  - Automatic verification against PubMed database using MCP tools
+  - Validation of author names and publication years
+  - All verifications available through verification scripts
 - **Citation Validation** - Every claim must include (Author et al., Year, PMID: XXXXXXXX)
 - **Format Guidelines** - Tables, headers, and links follow strict standards
-- **Output Verification** - Post-execution checks report compliance status
+- **Smart Execution** - Prevents API errors by sequencing heavy operations (PDFs, large files)
 
 ### Knowledge Integration
 
@@ -120,12 +120,12 @@ This multi-checkpoint architecture ensures research integrity at every step.
    - **Important**: If you move VERITAS after installation, update the path in Claude Desktop config
    - **Works with built-in logs**: Reads Claude Code's native JSONL conversation files
 
-### Enforcement System
+### Configuration System
 
-- **Pre-command hooks** - Display requirements and guidelines before execution
-- **Task router** - Intelligent task detection and routing recommendations
-- **Compliance validator** - Attempts to block incorrect tool usage patterns
-- **Post-command validator** - Reports compliance status and violations
+- **CLAUDE.md** - Constitutional rules enforced through Claude Code's output style
+- **Domain Expert Files** - Field-specific templates and guidance in `.claude/agents/`
+- **Slash Commands** - Quick access to common workflows (optional)
+- **MCP Integration** - Automatic tool availability in Claude Code VS Code extension
 
 ### Your Project After Installation
 
@@ -133,24 +133,22 @@ Once VERITAS is installed, your project will have this structure:
 
 ```
 YourProject/
-├── CLAUDE.md                  # Constitutional rules (read-only)
+├── CLAUDE.md                  # Constitutional rules
 ├── .claude/                   # VERITAS configuration
-│   ├── hooks/                # Enforcement scripts
-│   │   ├── pre-command.sh   # Pre-execution validation
-│   │   ├── post-command.py  # Citation verification
-│   │   ├── pre-citation-hook.sh # PMID verification
-│   │   └── ...              # Other validation hooks
-│   ├── agents/              # Domain expertise
-│   │   └── domain-expert.md # Your field-specific configuration
-│   ├── templates/           # Note templates
+│   ├── agents/               # Domain expertise
+│   │   └── domain-expert.md  # Your field-specific configuration
+│   ├── templates/            # Note templates
 │   │   ├── research_question_template.md
 │   │   ├── concept_template.md
 │   │   └── daily_journal_template.md
-│   ├── scripts/             # Utility scripts
-│   │   └── verify_pmids.py  # PMID validation script
-│   ├── logs/                # Validation logs
-│   └── project.json         # Project configuration
-└── [Your existing files]      # Your research content
+│   ├── commands/             # Slash commands (optional)
+│   │   ├── research-question.md
+│   │   ├── concept-note.md
+│   │   └── verify-citations.md
+│   ├── scripts/              # Utility scripts
+│   │   └── verify_pmids.py   # PMID validation script (manual)
+│   └── project.json          # Project configuration (optional)
+└── [Your existing files]       # Your research content
 ```
 
 The VERITAS repository remains at `~/VERITAS/` with this structure:
@@ -158,21 +156,23 @@ The VERITAS repository remains at `~/VERITAS/` with this structure:
 ```
 ~/VERITAS/
 ├── assets/                    # Images and logos
-├── claude-transcript-reader/  # MCP transcript reader (replaces conversation-logger)
+├── claude-transcript-reader/  # MCP transcript reader server
+│   ├── index.js              # MCP server implementation
+│   ├── cleanup-old-transcripts.sh
+│   └── install-cleanup.sh    # LaunchAgent installer
 ├── docs/                      # Documentation
+│   ├── getting-started.md
+│   ├── configuration-guide.md
+│   └── TROUBLESHOOTING.md
 ├── install/
-│   ├── CLAUDE.md             # Constitutional document
-│   ├── hooks/                # All enforcement hooks
-│   ├── mcp-wrappers/         # MCP compatibility wrappers
-│   │   └── pubmed-wrapper.js # PubMed MCP wrapper for Desktop
+│   ├── CLAUDE.md             # Constitutional document template
 │   ├── scripts/              # Setup and configuration scripts
 │   └── templates/
 │       ├── agents/           # Domain expert templates
-│       ├── config/           # Configuration templates
+│       ├── commands/         # Slash command examples
 │       └── obsidian/         # Note templates
 └── tests/                     # Verification scripts
 ```
-- Documentation and updates
 
 ## Documentation
 
@@ -198,15 +198,15 @@ The VERITAS repository remains at `~/VERITAS/` with this structure:
 ```
 You: "Create a research question about machine learning in medical diagnosis"
 
-VERITAS enforces a workflow that:
-1. Starts with sequential thinking for planning
-2. Searches PubMed for relevant literature  
+VERITAS workflow:
+1. Claude reads domain expert file for templates
+2. Searches PubMed for relevant literature with verified PMIDs
 3. Creates formatted note in Research Questions/
 4. Generates linked concept pages
-5. Validates all citations have PMIDs
-6. Reports compliance status
+5. Stores key entities in Memory MCP
+6. Tracks progress with TodoWrite
 
-The structured templates and Memory MCP work together to organize knowledge automatically
+The CLAUDE.md constitutional rules and domain templates ensure consistency.
 ```
 
 ### Result Structure
@@ -432,28 +432,28 @@ MIT License - See [license](license) file for details
 Install VERITAS for me by executing these steps:
 1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
 2. Create my project directory at [REPLACE: ~/Projects/YourResearchProject]
-3. Copy VERITAS files to my project:
-   - CLAUDE.md as read-only constitution
-   - .claude/ directory with hooks, templates, scripts
-4. Install the HLA research template:
+3. Copy VERITAS core files to my project:
+   - CLAUDE.md (constitutional rules)
+   - .claude/agents/ (domain expert templates)
+   - .claude/templates/ (note templates)
+   - .claude/commands/ (slash commands - optional)
+   - .claude/scripts/ (utility scripts)
+4. Customize the domain expert for my research area:
    - Copy ~/VERITAS/install/templates/agents/hla-research-director.md
-   - Customize for my specific field: [REPLACE: e.g., "cancer immunotherapy" or "neurodegeneration"]
-   - Update grant type if needed: [REPLACE: e.g., "F31", "R01", "K99/R00"]
-   - Save as .claude/agents/hla-research-director.md in my project
-5. Install MCP servers for BOTH Claude Desktop AND VS Code:
-   - Configure Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
-   - Configure VS Code per-project: ~/.claude.json (add servers to project's mcpServers object)
-   - Required servers: claude-transcript-reader, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
-   - Optional: obsidian-rest servers for vault integration
-   - Note: PubMed requires NCBI email and API key
-6. Install transcript cleanup for automatic retention:
+   - Adapt for my field: [REPLACE: e.g., "cancer immunotherapy" or "neurodegeneration"]
+   - Update grant type: [REPLACE: e.g., "F31", "R01", "K99/R00"]
+   - Save as .claude/agents/domain-expert.md in my project
+5. Install transcript cleanup (optional but recommended):
    - cd ~/VERITAS/claude-transcript-reader
    - Run: ./install-cleanup.sh
-   - This installs a daily cleanup task that deletes transcripts older than 5 days at 2 AM
-   - No daemon needed - Claude Code automatically logs to JSONL files
-7. Test that everything works
+   - This creates a LaunchAgent that runs daily at 2 AM to delete old JSONL files
+6. Test the installation:
+   - Open my project in Claude Code
+   - Ask: "What is your role according to CLAUDE.md?"
+   - Verify VERITAS rules are recognized
 
-After installation: Configure Obsidian manually (see Configuration Guide)
+Note for Claude Desktop users: MCP servers require manual configuration in claude_desktop_config.json
+Note for VS Code extension users: MCP servers are automatically available, no configuration needed
 ```
 
 ### Ready-to-Use Example
@@ -464,31 +464,33 @@ After installation: Configure Obsidian manually (see Configuration Guide)
 Install VERITAS for me by executing these steps:
 1. Clone https://github.com/VMWM/VERITAS.git to ~/VERITAS
 2. Create my project directory at ~/Projects/MyBiomedicalResearch
-3. Copy VERITAS files to my project:
-   - CLAUDE.md as read-only constitution
-   - .claude/ directory with hooks, templates, scripts
-4. Install the medical research template:
+3. Copy VERITAS core files to my project:
+   - CLAUDE.md (constitutional rules)
+   - .claude/agents/ (domain expert templates)
+   - .claude/templates/ (note templates)
+   - .claude/commands/ (slash commands for quick workflows)
+   - .claude/scripts/ (utility scripts like verify_pmids.py)
+4. Install the medical research domain expert:
    - Copy ~/VERITAS/install/templates/agents/hla-research-director.md
-   - This template is pre-configured for biomedical research with PMID citations
-   - Update research focus for your specific area (e.g., cancer, neuroscience, immunology)
-   - Modify grant sections for your funding agency (NIH F31, R01, K99/R00, etc.)
-   - Save as .claude/agents/hla-research-director.md in my project
-5. Install dependencies and MCP servers:
-   - Configure MCP servers in BOTH locations:
-     a) Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json
-     b) VS Code (per-project): ~/.claude.json under my project's mcpServers object
-   - Required servers: claude-transcript-reader, sequential-thinking, memory, filesystem-local, pubmed-ncukondo
-   - For pubmed-ncukondo, use wrapper: ~/VERITAS/install/mcp-wrappers/pubmed-wrapper.js
-   - Optional: obsidian-rest servers if using Obsidian vaults
-   - Note: I'll need to provide my NCBI email and API key for PubMed
-6. Install transcript cleanup for automatic retention:
+   - This is pre-configured for biomedical research with PMID enforcement
+   - Customize research focus for my area (cancer, neuroscience, immunology, etc.)
+   - Update grant sections for my funding agency (NIH F31, R01, K99/R00, etc.)
+   - Save as .claude/agents/domain-expert.md in my project
+5. Install transcript cleanup (recommended):
    - Run: cd ~/VERITAS/claude-transcript-reader && ./install-cleanup.sh
-   - This installs a macOS LaunchAgent that runs daily at 2 AM
+   - This creates a macOS LaunchAgent that runs daily at 2 AM
    - Deletes JSONL transcripts older than 5 days
-   - No daemon needed - Claude Code automatically logs conversations to JSONL files
-7. Test that everything works
+   - Claude Code automatically logs conversations - this just manages retention
+6. Test the installation:
+   - Open my project in Claude Code
+   - Ask: "What is your role according to CLAUDE.md?"
+   - Try: "Search PubMed for papers on immunotherapy"
+   - Verify VERITAS constitutional rules are being followed
 
-After installation: Configure Obsidian manually (see Configuration Guide)
+For Claude Desktop users: You'll also need to configure MCP servers manually
+For VS Code extension users: MCP servers work automatically
+
+After installation: Configure Obsidian if you want vault integration (see Configuration Guide)
 ```
 
 ### Option 2: Manual Installation

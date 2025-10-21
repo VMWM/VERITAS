@@ -33,10 +33,10 @@ VERITAS installs these essential MCP servers:
 
 ### Automatic Conversation Logging
 
-Claude Code automatically logs all conversations to JSONL files in `~/.claude/projects/`. The transcript reader provides tools to access this data:
+Claude Code automatically logs all conversations to JSONL files in `~/.claude/projects/`. The transcript reader MCP server provides tools to access this data.
 
+**Install the cleanup script (one-time setup)**:
 ```bash
-# Install the cleanup script (one-time setup)
 cd ~/VERITAS/claude-transcript-reader
 ./install-cleanup.sh
 ```
@@ -47,7 +47,11 @@ This installs a macOS LaunchAgent that:
 - Maintains 5-day retention window
 - Auto-starts on schedule
 
-**No daemon needed!** Claude Code handles logging automatically, the cleanup script just manages retention.
+**No daemon needed!** Claude Code handles logging automatically. The cleanup script only manages retention.
+
+**MCP Configuration**:
+- **VS Code Extension**: Transcript reader MCP is automatically available (no configuration needed)
+- **Claude Desktop**: Requires manual MCP server configuration in `claude_desktop_config.json`
 
 ### Optional Components
 
@@ -57,24 +61,24 @@ This installs a macOS LaunchAgent that:
 
 After installation, verify everything works:
 
-1. **Check MCP Connections**
-   ```bash
-   claude mcp list
+1. **Verify CLAUDE.md is loaded**
    ```
-   You should see all servers listed as "Connected"
+   Start a new conversation and ask:
+   "What is your role according to CLAUDE.md?"
+   ```
+   Claude should respond with awareness of VERITAS rules
 
 2. **Run Functional Tests**
-   Open the functional test guide:
    ```bash
-   cat tests/veritas-functional-test.md
+   cat ~/VERITAS/tests/veritas-functional-test.md
    ```
    Follow the test prompts in a new Claude Code conversation
 
 3. **Test Core Features**
    Try these commands in Claude Code:
-   - "Help me plan a research task" (tests Sequential Thinking)
-   - "Search PubMed for a recent paper on [your topic]" (tests PubMed)
-   - "Generate a journal for today" (tests Conversation Logger)
+   - "Search PubMed for papers on [your topic]" (tests PubMed MCP)
+   - "Remember that [fact]" (tests Memory MCP)
+   - "Generate a journal for today" (tests Transcript Reader)
 
 ## Quick Reference
 
@@ -96,8 +100,9 @@ cd VERITAS
 
 #### Daily Operations
 ```bash
-# Hooks auto-load when Claude runs in project directory
-# Conversation-logger auto-cleans logs older than 5 days
+# CLAUDE.md auto-loads when you open your project
+# Transcript cleanup runs automatically at 2 AM daily
+# No manual intervention needed
 ```
 
 ### File Locations
@@ -105,13 +110,14 @@ cd VERITAS
 #### Your Project
 - `CLAUDE.md` - Constitutional rules (project root)
 - `.claude/agents/` - Domain expert files
-- `.claude/hooks/` - Validation hooks
-- `.claude/logs/` - Validation logs
+- `.claude/templates/` - Note templates
+- `.claude/commands/` - Slash commands (optional)
+- `.claude/scripts/` - Utility scripts
 
 #### System Files
-- `~/.claude.json` - Claude CLI configuration
-- `~/Library/Application Support/Claude/claude_desktop_config.json` - Desktop config
-- `~/.claude/projects/` - JSONL transcript files (automatic)
+- `~/Library/Application Support/Claude/claude_desktop_config.json` - Desktop MCP config (if using Desktop)
+- `~/.claude/projects/` - JSONL transcript files (automatic, managed by Claude Code)
+- `~/Library/LaunchAgents/` - Cleanup script (runs at 2 AM daily)
 
 #### Obsidian (if configured)
 - Vault structure defined in your domain expert
@@ -181,11 +187,11 @@ npm update -g  # Update global packages if needed
 
 | Issue | Fix |
 |-------|-----|
-| "MCP server not found" | Restart Claude |
-| "Cannot connect to vault" | Check Obsidian plugin is running |
+| "MCP server not found" | VS Code: MCP servers auto-available. Desktop: Check config |
+| "Cannot connect to vault" | Check Obsidian Local REST API plugin is running |
 | "No PMIDs found" | Use broader search terms |
-| "Memory not saving" | Check memory MCP in config |
-| "Hooks not running" | Make hooks executable: `chmod +x` |
+| "Memory not saving" | Memory MCP is built-in for VS Code extension |
+| "CLAUDE.md not recognized" | Ensure file is in project root |
 
 ## Next Steps
 

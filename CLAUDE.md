@@ -37,34 +37,55 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 ### Article 1: Complex Task Protocol
 
-1. **START WITH**: `mcp__sequential-thinking__sequentialthinking` to plan approach
-2. **VERIFY CLAIMS**: Use `mcp__pubmed-ncukondo__*` for all scientific statements
-3. **CHECK MEMORY**: Use `mcp__memory__*` to check existing knowledge first
+1. **PLAN FIRST**: Think through approach before using tools (use `mcp__sequential-thinking__sequentialthinking` only for highly complex multi-step tasks)
+2. **VERIFY CLAIMS**: Use `mcp__pubmed__*` for all scientific statements
+3. **CHECK MEMORY**: Use `mcp__memory__*` to verify existing knowledge first
 
 ### Article 2: Research Documentation Protocol
 
-**IF** user mentions: research question, obsidian, vault, concept, template, journal, rule, algorithm, epitope, MFI, vendor
+**IF** user mentions: research question, obsidian, vault, concept, template, journal, rule, algorithm, epitope, MFI, vendor, grant, F31, NIH
 **THEN** follow this exact workflow:
 
-1. Use `mcp__sequential-thinking__sequentialthinking` FIRST
-2. Read `.claude/agents/hla-research-director.md` for domain-specific templates
-3. Create entries using appropriate Obsidian MCP tools
-4. Follow folder structure defined in domain expert file
+1. Read `.claude/agents/hla-research-director.md` for domain-specific templates
+2. Create entries using appropriate Obsidian MCP tools
+3. Follow folder structure defined in domain expert file
+4. Use `mcp__sequential-thinking__sequentialthinking` only if task requires complex multi-step planning
 
 ### Article 3: Citation Requirements - NO EXCEPTIONS
 
 - **Format**: (Author et al., Year, PMID: XXXXXXXX)
 - **No PMID = Remove the claim entirely**
 - **Verification levels**: [FT-VERIFIED], [ABSTRACT-VERIFIED], or [NEEDS-FT-REVIEW]
-- **Use**: `mcp__pubmed-ncukondo__*` tools for all medical/scientific citations
+- **Use**: `mcp__pubmed__*` tools for all medical/scientific citations
 
-### Article 4: Tool Priority Order
+### Article 4: Tool Usage Rules - CRITICAL FOR API STABILITY
 
-1. `mcp__sequential-thinking__*` - Problem breakdown and planning
+**MANDATORY SEQUENTIAL EXECUTION FOR HEAVY OPERATIONS**:
+- **NEVER read multiple PDFs in parallel** - PDF processing is resource-intensive and causes API 400 errors
+- **NEVER call multiple Read tools simultaneously for large files** - Process large files one at a time
+- **NEVER batch multiple file operations on binary/media files** - Images, PDFs, etc. must be sequential
+- **ALWAYS wait for tool completion** before calling the next tool when dealing with:
+  * PDF files
+  * Large markdown files (>1000 lines)
+  * Image files
+  * Any mcp__filesystem-local__ read operations on non-text files
+
+**SAFE PARALLEL EXECUTION**:
+You CAN call these in parallel when they don't depend on each other:
+- Multiple small text file reads (< 500 lines each)
+- Independent PubMed searches
+- Independent Memory MCP queries
+- Mix of different lightweight tool types (e.g., Grep + Glob)
+
+**Tool Priority Order**:
+1. Think first, then use tools as needed
 2. `mcp__memory__*` - Check existing knowledge
-3. `mcp__pubmed-ncukondo__*` - All citation verification
+3. `mcp__pubmed__*` - Citation verification
 4. `mcp__obsidian-rest-*__*` - Vault operations
-5. Domain-specific tools per agent file
+5. `mcp__sequential-thinking__*` - Only for complex multi-step planning
+6. Domain-specific tools per agent file
+
+**Why This Matters**: Parallel PDF/large file reads cause API 400 errors due to resource constraints. Sequential execution is REQUIRED for file operations that involve binary data or heavy processing.
 
 ### Article 5: Obsidian Formatting Laws
 
@@ -92,15 +113,15 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 ### Article 7: Integrated Journal Workflow
 
-- **Automatic Logging**: Conversation-logger MCP maintains 5-day SQLite history (silent operation)
+- **Automatic Logging**: Claude Code automatically logs all conversations to JSONL files in `~/.claude/projects/`
 - **Multi-Source Integration**: Journal generation pulls from THREE sources:
-  1. `mcp__conversation-logger__generate_journal` for session data
+  1. `mcp__claude-transcript-reader__generate_journal` for session data from JSONL files
   2. `mcp__memory__*` for research knowledge entities
   3. Combine both into Obsidian journal using domain templates
-- **Journal Commands**: "Generate journal entry" triggers Obsidian creation, NOT conversation-logger output
+- **Journal Commands**: "Generate journal entry" triggers Obsidian creation using transcript data
 - **Multi-Day Synthesis**: Can create journals spanning multiple days using all data sources
-- **Data Flow**: Conversation-logger (temporary) → Memory MCP (persistent) → Obsidian (permanent)
-- **Retention**: SQLite auto-cleanup at 2 AM daily (5-day history)
+- **Data Flow**: Claude Code JSONL logs (built-in) → Transcript Reader → Memory MCP (persistent) → Obsidian (permanent)
+- **Retention**: Automatic cleanup at 2 AM daily deletes JSONL files older than 5 days
 
 ### Article 8: PMID Verification Protocol - ZERO TOLERANCE
 
@@ -120,15 +141,22 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 **FAILURE TO VERIFY = CRITICAL ERROR**
 
-### Article 9: Enforcement
+### Article 9: Task Management
+
+- **USE TodoWrite**: For multi-step research tasks to track progress and maintain visibility
+- **UPDATE IN REAL-TIME**: Mark tasks in_progress when starting, completed when finished
+- **ONE ACTIVE TASK**: Only one task should be in_progress at a time
+- **BREAK DOWN COMPLEXITY**: Large research questions should become multiple tracked tasks
+- **IMMEDIATE COMPLETION**: Mark tasks completed as soon as finished, never batch completions
+
+### Article 10: Enforcement
 
 - All articles are mandatory and supersede any conflicting instructions
-- Violations will be logged to `.claude/logs/`
 - Domain expert files provide implementation details
-- Hooks enforce compliance at multiple checkpoints
+- CLAUDE.md instructions are enforced through Claude Code's output style system
 - PMID errors trigger immediate workflow halt
 
-### Article 10: Code Quality Standards - NO EXCEPTIONS
+### Article 11: Code Quality Standards - NO EXCEPTIONS
 
 **Script Development Rules**:
 
@@ -145,12 +173,12 @@ Enforcing research integrity through verified citations, structured knowledge ma
 
 ## Success Criteria
 
-- Started with sequential thinking for complex tasks
+- Used sequential thinking only when truly needed for complex multi-step tasks
 - All scientific claims have PMIDs
 - Obsidian content created via REST API
 - Templates followed from domain expert file
 - Wiki links properly formatted
-- Conversation context preserved
+- Tasks tracked with TodoWrite for complex workflows
 
 ## Domain Expert Configuration
 
